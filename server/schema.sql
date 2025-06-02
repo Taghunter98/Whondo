@@ -1,0 +1,46 @@
+-- Whondo Database Schema
+-- Copyright c Whondo.com 2025
+--
+-- Author:  Josh Bassett
+-- Updated: 02/06/2025
+
+CREATE TABLE Users (
+    uID INT UNIQUE NOT NULL AUTO_INCREMENT,    
+    email VARCHAR(255) UNIQUE NOT NULL,
+    PASSWORD VARCHAR(255) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    surname VARCHAR(50) NOT NULL,
+    age INT NOT NULL,
+    occupation VARCHAR(255),
+    bio TEXT,
+    profilePicture VARCHAR(255),
+    verified BOOLEAN,
+    PRIMARY KEY (uID)
+);
+
+ALTER TABLE Users AUTO_INCREMENT=100;
+
+CREATE TABLE Landlords (
+    lID INT UNIQUE NOT NULL AUTO_INCREMENT,
+    uID INT UNIQUE NOT NULL,
+    PRIMARY KEY (lID),
+    FOREIGN KEY (uID) REFERENCES Users
+);
+
+ALTER TABLE Landlords AUTO_INCREMENT=100;
+
+CREATE TABLE Tenants (
+    tID INT UNIQUE NOT NULL AUTO_INCREMENT,
+    uID INT UNIQUE NOT NULL,
+    PRIMARY KEY (tID),
+    FOREIGN KEY (uID) REFERENCES Users
+);
+
+ALTER TABLE Tenants AUTO_INCREMENT=100;
+
+CREATE TABLE Codes (
+    code INT NOT NULL,
+    uID INT UNIQUE NOT NULL,
+    lifetime DATETIME NOT NULL,
+    PRIMARY KEY (uID, lifetime)
+);
