@@ -14,7 +14,7 @@ def authenticate(email:str):
 
     if not email:
         print("ERROR: Email not supplied")
-        return -1
+        return None
         
     connection = connect()
     cursor = connection.cursor()
@@ -33,4 +33,4 @@ def authenticate(email:str):
         return user_id
     else:
         print("ERROR: Email does not match uID records in database")
-        return -1
+        return None
