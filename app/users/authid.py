@@ -5,6 +5,8 @@ def authenticate(email:str):
     A function to authenticate users, by returning the user ID
     by querying the database with the provided email.
 
+    The funtion enforced integer type for the returned user ID.
+
     Args:
         email (str): The user's email
 
@@ -25,12 +27,10 @@ def authenticate(email:str):
         WHERE u.email = "{email}" 
         GROUP BY u.uID
     """
-    cursor.execute(query)
-    
-    result = cursor.fetchone()[0]
 
-    if (int(result)):
-        user_id:int = result
+    cursor.execute(query)
+    if (cursor.fetchone()[0] is not None):
+        user_id:int = cursor.fetchone()[0]
         return user_id
     else:
         print("ERROR: Email does not match uID records in database")
