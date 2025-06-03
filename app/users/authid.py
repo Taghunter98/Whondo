@@ -29,9 +29,9 @@ def authenticate(email:str):
     """
     
     cursor.execute(query)
-    result = cursor.fetchone()[0]
+    result = cursor.fetchone()
 
-    if (result is not None):
+    if (result[0] is not None):
         user_id:int = result
         return user_id
     else:
