@@ -2,12 +2,12 @@ import os
 from flask import Flask
 
 def create_app():
-    # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
 
-    
+    from database import connect
+    app.register_blueprint(connect.db_connect)
 
-    # a simple page that says hello
+    # Base directory for Whondo - currently just says hello world :)
     @app.route('/')
     def hello():
         return 'Hello, World!'
