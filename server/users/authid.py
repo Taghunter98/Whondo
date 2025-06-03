@@ -1,11 +1,11 @@
-from server.database import db_connect
+from ...server.database.connect import connect
 
 def authenticate(email:str):
 
     if not email:
         print("ERROR: Email not supplied")
         
-    connection = db_connect.connect()
+    connection = connect()
     cursor = connection.cursor()
     query = f"""
         SELECT u.uID, u.email 
