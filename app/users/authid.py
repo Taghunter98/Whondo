@@ -26,11 +26,12 @@ def authenticate(email:str):
         GROUP BY u.uID
     """
     cursor.execute(query)
+    
+    result = cursor.fetchone()[0]
 
-    if (cursor.fetchone()[0] is None):
+    if (int(result)):
+        user_id:int = result
+        return user_id
+    else:
         print("ERROR: Email does not match uID records in database")
         return None
-
-    user_id:int = int(cursor.fetchone()[0])
-    return user_id
-    
