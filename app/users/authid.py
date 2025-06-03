@@ -1,4 +1,4 @@
-from app.database.connect import connect
+from app.database.db_connect import connect
 
 def authenticate(email:str):
 
