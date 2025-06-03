@@ -1,5 +1,5 @@
 from flask import Blueprint
-import mysql.connector
+
 
 db_connect = Blueprint('connect', __name__)
 
