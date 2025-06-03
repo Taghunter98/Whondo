@@ -27,10 +27,10 @@ def authenticate(email:str):
     """
     cursor.execute(query)
 
-    user_id:int = int(cursor.fetchone()[0])
-
-    if (user_id):
-        return user_id
-    else:
+    if (cursor.fetchone()[0] is None):
         print("ERROR: Email does not match uID records in database")
         return None
+
+    user_id:int = int(cursor.fetchone()[0])
+    return user_id
+    
