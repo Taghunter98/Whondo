@@ -1,0 +1,1 @@
+from .authid import authenticate
