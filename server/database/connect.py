@@ -5,18 +5,18 @@ from dotenv import load_dotenv
 
 def connect_to_db():
     load_dotenv()
-    cnx = mysql.connector.connect (
-        user=os.getenv('DB_USER'),
-        password= os.getenv('DB_PASS'),
-        host=os.getenv('HOST'),
-        database= os.getenv('DATABASE')
-    )
-
-    if (cnx):
+    try:
+        connect = mysql.connector.connect (
+            user=os.getenv('DB_USER'),
+            password= os.getenv('DB_PASS'),
+            host=os.getenv('HOST'),
+            database= os.getenv('DATABASE')
+        )
+    
         print("Connection Successful")
-    else:
-        print("Connection failed")
-    cnx.close()
+        connect.close()
+    except mysql.connector.Error as err:
+        print(f"ERROR: {err}")
 
 connect_to_db()
 
