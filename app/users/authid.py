@@ -31,6 +31,9 @@ def authenticate(email:str) -> int:
     cursor.execute(query)
     result = cursor.fetchone()
 
+    cursor.close()
+    connection.close()
+
     if (result is not None):
         user_id:int = result[0]
         return user_id

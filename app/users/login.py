@@ -40,7 +40,7 @@ def login():
     connection.close()
 
     if (result is not None):
-        hash_string:str = result[1]
+        hash_string:str = result[0]
         valid:bool = check_password(password, hash_string)
         if (valid is True):
             return jsonify({
