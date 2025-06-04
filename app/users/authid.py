@@ -5,7 +5,7 @@ def authenticate(email:str):
     A function to authenticate users, by returning the user ID
     by querying the database with the provided email.
 
-    The funtion enforced integer type for the returned user ID.
+    The funtion enforces integer type for the returned user ID.
 
     Args:
         email (str): The user's email
