@@ -44,4 +44,4 @@ class TestSecurityHashing(unittest.TestCase):
         """
 
         hash:str = self.setUpClass()
-        self.assertTrue(isinstance(hash, str), "ERROR: Hash is not a string")
+        self.assertTrue(isinstance(hash, str), f"ERROR: Hash is {type(hash)} value: {hash}")
