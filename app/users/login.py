@@ -9,8 +9,8 @@ login_bp = Blueprint("login_bp", __name__)
 @login_bp.route('/login/auth', methods = ['POST'])
 def login():
     data         = request.get_json()
-    email:str    = data.get['email']
-    password:str = data.get['password']
+    email:str    = data.get('email')
+    password:str = data.get('password')
 
     if not email or  not password:
         return jsonify({
