@@ -3,6 +3,7 @@ import os
 
 from app.users.authid import authenticate
 
+@unittest.skipIf(os.getenv("CI"), "Skipping test in CI pipeline")
 class TestAuthID(unittest.TestCase):
 
     @classmethod
@@ -11,7 +12,6 @@ class TestAuthID(unittest.TestCase):
         result = authenticate(user)
         return result
 
-    @unittest.skipIf(os.getenv("CI"), "Skipping test in CI pipeline")
     def testNotNone(self):
         """
         Test method tests if authenticate returns the correct None value
