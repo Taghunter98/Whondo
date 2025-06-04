@@ -15,7 +15,7 @@ class TestSecurityHashing(unittest.TestCase):
         """
 
         input:str = "password123"
-        hash:str = hash_pasword(input)
+        hash:bytes = hash_pasword(input)
         return hash
     
     def testPasswordMatch(self):
@@ -24,7 +24,7 @@ class TestSecurityHashing(unittest.TestCase):
         value with a correct plaintext password.
         """
         
-        hash:str = self.setUpClass()
+        hash:bytes = self.setUpClass()
         result:bool = check_password("password123", hash)
         self.assertTrue(result, "ERROR: Password doesn't match hash")
 
@@ -34,7 +34,7 @@ class TestSecurityHashing(unittest.TestCase):
         value with an incorrect plaintext pasword.
         """
 
-        hash:str = self.setUpClass()
+        hash:bytes = self.setUpClass()
         result:bool = check_password("password1234", hash)
         self.assertFalse(result, f"ERROR: Password matching function returned: {result}")
 
@@ -43,5 +43,5 @@ class TestSecurityHashing(unittest.TestCase):
         Test method tests if hashed value provided is a string.
         """
 
-        hash:str = self.setUpClass()
-        self.assertTrue(isinstance(hash, str), f"ERROR: Hash is {type(hash)} value: {hash}")
+        hash:bytes = self.setUpClass()
+        self.assertTrue(isinstance(hash, bytes), f"ERROR: Hash is {type(hash)} value: {hash}")
