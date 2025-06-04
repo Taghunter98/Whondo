@@ -39,9 +39,6 @@ def login():
     cursor.close()
     connection.close()
 
-    validate_result(result, email, password)
-
-def validate_result(result, email:str, password:str):
     if (result is not None):
         hash_string:str = result[1]
         valid:bool = check_password(password, hash_string)
