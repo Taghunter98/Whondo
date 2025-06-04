@@ -14,12 +14,12 @@ class TestAuthID(unittest.TestCase):
 
     def testNotNone(self):
         """
-        Test method tests if authenticate returns the correct None value
-        for an email that is not in the database.
+        Test method tests if authenticate returns a valid result
+        that is not None.
         """
 
         result = self.setUpClass()
-        self.assertIsNotNone(result, "ERROR: Function is not handling error correctly")
+        self.assertIsNotNone(result, "ERROR: Function is returning None for valid uID")
     
     def testCorrectAuth(self):
         """
