@@ -8,8 +8,15 @@ class TestAuthID(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """
+        Test method sets up authenticate result for testing.
+
+        Returns:
+            int: User ID (uID)
+        """
+
         user:str = "test@test.com"
-        result = authenticate(user)
+        result:int = authenticate(user)
         return result
 
     def testNotNone(self):
