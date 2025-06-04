@@ -1,1 +1,1 @@
-from .login import login_api
+from .login import login_bp

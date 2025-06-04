@@ -4,9 +4,9 @@ from .authid import authenticate
 from app.database.db_connect import connect
 from app.security.hashing import check_password
 
-login_api = Blueprint("login_api", __name__)
+login_bp = Blueprint("login_bp", __name__)
 
-@login_api.route('/login/auth', methods = ('POST'))
+@login_bp.route('/login/auth', methods = ['POST'])
 def login():
 
     email:str    = request.get_data['email']
