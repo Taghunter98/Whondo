@@ -19,9 +19,9 @@ def authenticate(email:str) -> int:
         return None
         
     connection = connect()
-    cursor = connection.cursor()
+    cursor     = connection.cursor()
 
-    query = f"""
+    query:str = f"""
         SELECT u.uID, u.email 
         FROM Users u 
         WHERE u.email = "{email}" 
