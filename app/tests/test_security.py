@@ -14,7 +14,7 @@ class TestSecurityHashing(unittest.TestCase):
     def testPasswordMatch(self):
         
         hash:str = self.setUpClass()
-        result:bool = check_password("password", hash)
+        result:bool = check_password("password123", hash)
         self.assertTrue(result, "ERROR: Password doesn't match hash")
 
     def testPasswordFail(self):
