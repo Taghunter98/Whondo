@@ -27,7 +27,7 @@ class TestAuthID(unittest.TestCase):
         """
 
         result = self.setUpClass()
-        self.assertNotEqual(result, 100, "ERROR: Function is not returning valid uID")
+        self.assertNotEqual(result, 100, f"ERROR: Function is returning uID: {result}")
 
     def testValidInteger(self):
         """
