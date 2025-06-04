@@ -26,8 +26,6 @@ def login():
     
     connection = connect()
     cursor     = connection.cursor()
-    cursor.close()
-    connection.close()
 
     query:str = f"""
         SELECT u.uID, u.password
@@ -37,6 +35,9 @@ def login():
 
     cursor.execute(query)
     result = cursor.fetchone()
+
+    cursor.close()
+    connection.close()
 
     if (result is not None):
         hash_string:str = result[1]
