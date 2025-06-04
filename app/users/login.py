@@ -6,17 +6,6 @@ from app.security.hashing import check_password
 
 login_bp = Blueprint("login_bp", __name__)
 
-def validate_request(data) -> str:
-    
-    email:str    = data.get('email')
-    password:str = data.get('password')
-
-    if not email or  not password:
-        return jsonify({
-            "error": "ERROR: User email or password not provided"
-        }), 400
-    
-    return [email, password]
 
 def authenticate_user(email:str) -> int:
     
@@ -31,7 +20,7 @@ def authenticate_user(email:str) -> int:
 
 def attempt_login(user_id:int, email:str, password:str):
     connection  = connect()
-    cursor     = connection.cursor()
+    cursor      = connection.cursor()
 
     query:str = f"""
         SELECT u.uID, u.password
@@ -64,11 +53,15 @@ def attempt_login(user_id:int, email:str, password:str):
 
 @login_bp.route('/login/auth', methods = ['POST'])
 def login():
-    data           = request.get_json()
-    validated_data = validate_request(data)
-    email:str      = validated_data[0]
-    password:str   = validated_data[1]
+    data         = request.get_json()
+    email:str    = data.get('email')
+    password:str = data.get('password')
+
+    if not email or  not password:
+        return jsonify({
+            "error": "ERROR: User email or password not provided"
+        }), 400
     
-    user_id:int    = authenticate_user(email)
+    user_id:int = authenticate_user(email)
     
     attempt_login(user_id, email, password)
