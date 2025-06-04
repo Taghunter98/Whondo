@@ -11,7 +11,7 @@ class TestSecurityHashing(unittest.TestCase):
         is hashed.
 
         Returns:
-            str: Hashed password value
+            bytes: Hashed password value
         """
 
         input:str = "password123"
@@ -25,7 +25,7 @@ class TestSecurityHashing(unittest.TestCase):
         """
         
         hash:bytes = self.setUpClass()
-        result:bool = check_password("password123", hash)
+        result:bool = check_password("password123", hash.decode("utf-8"))
         self.assertTrue(result, "ERROR: Password doesn't match hash")
 
     def testPasswordFail(self):
@@ -38,9 +38,9 @@ class TestSecurityHashing(unittest.TestCase):
         result:bool = check_password("password1234", hash)
         self.assertFalse(result, f"ERROR: Password matching function returned: {result}")
 
-    def testHashIsString(self):
+    def testHashIsBytes(self):
         """
-        Test method tests if hashed value provided is a string.
+        Test method tests if hashed value provided is a byte object.
         """
 
         hash:bytes = self.setUpClass()
