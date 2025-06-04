@@ -35,7 +35,7 @@ class TestSecurityHashing(unittest.TestCase):
         """
 
         hash:bytes = self.setUpClass()
-        result:bool = check_password("password1234", hash)
+        result:bool = check_password("password1234", hash.decode("utf-8"))
         self.assertFalse(result, f"ERROR: Password matching function returned: {result}")
 
     def testHashIsBytes(self):
