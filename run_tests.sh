@@ -1,2 +1,5 @@
-python3 source /home/ec2-user/Whondo/wserv/bin/activate
-python3 -m unittest discover -s /home/ec2-user/Whondo/app/tests -p "*.py"
+# Simple script that runs all unit tests
+
+source wserv/bin/activate
+# pip install -r requirements.txt
+python3 -m unittest discover -s app/tests -p "*.py"
