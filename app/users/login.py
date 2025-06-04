@@ -6,7 +6,6 @@ from app.security.hashing import check_password
 
 login_bp = Blueprint("login_bp", __name__)
 
-
 @login_bp.route('/login/auth', methods = ['POST'])
 def login():
     data         = request.get_json()
@@ -18,12 +17,6 @@ def login():
             "error": "ERROR: User email or password not provided"
         }), 400
     
-    user_id:int = authenticate_user(email)
-    
-    attempt_login(user_id, email, password)
-
-def authenticate_user(email:str) -> int:
-    
     user_id:int = authenticate(email)
 
     if (user_id is None):
@@ -31,11 +24,8 @@ def authenticate_user(email:str) -> int:
             "error": "ERROR: User email does not match database records"
         }), 401
     
-    return user_id
-
-def attempt_login(user_id:int, email:str, password:str):
-    connection  = connect()
-    cursor      = connection.cursor()
+    connection = connect()
+    cursor     = connection.cursor()
 
     query:str = f"""
         SELECT u.uID, u.password
@@ -49,6 +39,9 @@ def attempt_login(user_id:int, email:str, password:str):
     cursor.close()
     connection.close()
 
+    validate_result(result, email, password)
+
+def validate_result(result, email:str, password:str):
     if (result is not None):
         hash_string:str = result[1]
         valid:bool = check_password(password, hash_string)
