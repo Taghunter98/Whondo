@@ -7,6 +7,21 @@ from app.security.hashing import check_password
 login_bp = Blueprint("login_bp", __name__)
 
 
+@login_bp.route('/login/auth', methods = ['POST'])
+def login():
+    data         = request.get_json()
+    email:str    = data.get('email')
+    password:str = data.get('password')
+
+    if not email or  not password:
+        return jsonify({
+            "error": "ERROR: User email or password not provided"
+        }), 400
+    
+    user_id:int = authenticate_user(email)
+    
+    attempt_login(user_id, email, password)
+
 def authenticate_user(email:str) -> int:
     
     user_id:int = authenticate(email)
@@ -50,18 +65,3 @@ def attempt_login(user_id:int, email:str, password:str):
         return jsonify({
                 "error":"ERROR: User not found"
             }), 404
-
-@login_bp.route('/login/auth', methods = ['POST'])
-def login():
-    data         = request.get_json()
-    email:str    = data.get('email')
-    password:str = data.get('password')
-
-    if not email or  not password:
-        return jsonify({
-            "error": "ERROR: User email or password not provided"
-        }), 400
-    
-    user_id:int = authenticate_user(email)
-    
-    attempt_login(user_id, email, password)
