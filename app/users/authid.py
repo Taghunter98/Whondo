@@ -1,6 +1,6 @@
 from app.database.db_connect import connect
 
-def authenticate(email:str):
+def authenticate(email:str) -> int:
     """
     A function to authenticate users, by returning the user ID
     by querying the database with the provided email.
