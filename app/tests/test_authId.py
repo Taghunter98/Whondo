@@ -28,4 +28,4 @@ class TestAuthID(unittest.TestCase):
         result = authenticate(user)
         
         self.assertNotEqual(result, None, "ERROR: Function is not returning valid uID")
-        self.assertIs(result, type(result), "ERROR: User ID is not a valid integer")
+        self.assertTrue(isinstance(result, int), "ERROR: User ID is not a valid integer")
