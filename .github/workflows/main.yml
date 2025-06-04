@@ -1,0 +1,35 @@
+# Whondo CI Pipeline
+
+name: Run all unit tests on merge
+
+# Run only on merge with dev and main
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          ./venv/bin/pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: ./venv/bin/python -m unittest discover -s app/tests -p "*.py"
