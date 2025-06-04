@@ -3,7 +3,7 @@ import os
 
 from app.users.authid import authenticate
 
-@unittest.skipIf(os.getenv("CI"), "Skipping test in CI pipeline")
+@unittest.SkipTest("Skipping test in CI pipeline: This test needs DB access")
 class TestAuthID(unittest.TestCase):
 
     @classmethod
