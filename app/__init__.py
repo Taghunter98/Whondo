@@ -23,8 +23,8 @@ def create_app():
     )
     app.config["SESSION_PERMANENT"]       = False 
     app.config["SESSION_TYPE"]            = "filesystem"
-    # app.config["SESSION_COOKIE_SECURE"]   = True
-    # app.config["SESSION_COOKIE_HTTPONLY"] = True
+    app.config["SESSION_COOKIE_SECURE"]   = True
+    app.config["SESSION_COOKIE_HTTPONLY"] = True
     # app.config["SESSION_COOKIE_SAMESITE"] = True
     
     Session(app)
