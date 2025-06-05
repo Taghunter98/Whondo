@@ -1,3 +1,14 @@
+"""
+Copyright (c) 2025 Josh Bassett, whondo.com
+
+Filename:    authid.py
+Author:      Josh Bassett
+Date:        05/06/2025
+Version:     1.0
+
+Description: Fetches uID records that match provided email. 
+"""
+
 import logging
 
 from app.database.db_connect import connect

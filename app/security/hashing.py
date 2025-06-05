@@ -1,3 +1,14 @@
+"""
+Copyright (c) 2025 Josh Bassett, whondo.com
+
+Filename:    hashing.py
+Author:      Josh Bassett
+Date:        03/06/2025
+Version:     1.0
+
+Description: Provides functions for pasword hashing and matching.
+"""
+
 from bcrypt import gensalt, hashpw, checkpw
 
 def hash_pasword(input:str) -> bytes:

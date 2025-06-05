@@ -1,3 +1,14 @@
+"""
+Copyright (c) 2025 Josh Bassett, whondo.com
+
+Filename:    __init__.py
+Author:      Josh Bassett
+Date:        02/06/2025
+Version:     1.0
+
+Description: Creates a Flask app instance and sets up logging.
+"""
+
 import os
 from dotenv import load_dotenv
 from flask import Flask, session, redirect, has_request_context, request
