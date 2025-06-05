@@ -146,7 +146,7 @@ def create_app():
 
 def get_client_ip() -> str:
 
-    return request.headers.get('CF-Connecting-IP', request.remote_addr)
+    return request.environ('HTTP_X_FORWARDED_FOR')
 
 class RequestFormatter(logging.Formatter):
     """
