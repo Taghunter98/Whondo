@@ -137,15 +137,15 @@ class TestPasswordFail(unittest.TestCase):
         
         API_URL:str = "https://whondo.com/login/auth"
         API_DATA = {
-            "email": "",
-            "password": ""
+            "email": "test@test.com",
+            "password": "thisisnotapassword"
         }
 
         return requests.post(API_URL, json = API_DATA,)
     
     def testResponse(self):
         """
-        Test method tests if request is a valid object and code 200 UNAUTHORISED.
+        Test method tests if request is a valid object and code 401 UNAUTHORISED.
         """
 
         data = self.setUpClass()
