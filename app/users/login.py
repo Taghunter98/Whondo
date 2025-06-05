@@ -67,4 +67,3 @@ def login():
             }), 401
     else:
         return jsonify({"error":"ERROR: User not found"}), 404
-    
