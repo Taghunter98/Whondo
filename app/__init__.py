@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from flask import Flask, session, redirect
 from flask_session import Session
 
-from logging_setup import setup_logging
+from .logging_setup import setup_logging
 import logging
 
 def create_app():
