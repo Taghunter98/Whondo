@@ -70,4 +70,4 @@ class TestLoginAPIFail(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.json()["error"], "User email does not match database records", f"Request is returing: {data.json()["error"]}")
+        self.assertEqual(data.json()["error"], "User email does not match database records", f"Request is returing: {data.json()['error']}")
