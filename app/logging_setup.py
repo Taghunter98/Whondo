@@ -24,7 +24,7 @@ def setup_logging(log_dir = 'logs', log_file = 'app.log'):
     handler.setLevel(logging.INFO)
     handler.addFilter(ErrorPrefixFilter())
 
-    for h in logging:
+    for h in logging.root.handlers[:]:
         logging.root.removeHandler(h)
     
     logging.root.addHandler(handler)
