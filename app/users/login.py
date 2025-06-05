@@ -12,10 +12,15 @@ def login():
     The REST API is responsibe for logging in the user from an external
     POST request with the user's email and plaintext password.
 
-    The data integrity is verified and the user ID is authenticated based
+    Data integrity is verified and the user ID is authenticated based
     on the provided email.
 
-    The session (uID) is created provided the user ID is valid
+    Database connection is established and query is executed.
+
+    Password is verified against the hashed version and the user is
+    validated.
+
+    Session (uID) value is set to the user ID and valid status is returned.
 
     Returns:
         json: json response of successs or appropriate error message
