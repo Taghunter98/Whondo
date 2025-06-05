@@ -1,16 +1,47 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, session, redirect
+from flask import Flask, session, redirect, has_request_context, request
 from flask_session import Session
-
-from .logging_setup import setup_logging
+from flask.logging import default_handler
 import logging
+from logging.config import dictConfig
+
+class RequestFormatter(logging.Formatter):
+    def format(self, record):
+        if has_request_context():
+            record.url = request.url
+            record.remote_addr = request.remote_addr
+        else:
+            record.url = None
+            record.remote_addr = None
+
+        return super().format(record)
 
 def create_app():
 
-    setup_logging()
-    
     app = Flask(__name__, instance_relative_config=True)
+
+    dictConfig({
+        'version': 1,
+        'formatters': {'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }},
+        'handlers': {'wsgi': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        }},
+        'root': {
+            'level': 'INFO',
+            'handlers': ['wsgi']
+        }
+    })
+
+    formatter = RequestFormatter(
+    '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
+    '%(levelname)s in %(module)s: %(message)s'
+)
+    default_handler.setFormatter(formatter)
 
     load_dotenv()
     SECRET_KEY = os.getenv('SECRET_KEY')
@@ -32,6 +63,15 @@ def create_app():
     from .users.login import login_bp
     app.register_blueprint(login_bp)
 
+    @app.before_request
+    def log_request():
+        app.logger.info(f"Reqyest: {request.method} {request.path} from {request.remote_addr}")
+    
+    @app.after_request
+    def log_response(response):
+        app.logger.info(f"Response: {response.status} for {request.method} {request.path}")
+        return response
+
     # Base directory for Whondo - currently just says hello world :)
     @app.route('/')
     def hello():
@@ -48,5 +88,4 @@ def create_app():
         else:
             return "Please log in"
         
-    logging.info("Flask app created successfully")
     return app

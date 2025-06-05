@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, jsonify
+from flask import Blueprint, request, session, jsonify, current_app
 
 from .authid import authenticate
 from app.database.db_connect import connect
