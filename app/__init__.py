@@ -1,10 +1,19 @@
 import os
+from dotenv import load_dotenv
 from flask import Flask, session, redirect
 
 def create_app():
     
     app = Flask(__name__, instance_relative_config=True)
 
+    load_dotenv()
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    if (not SECRET_KEY):
+        print("No SECRET_KEY variable found")
+        return None
+    app.config.from_mapping(
+        SECRET_KEY = os.getenv('SECRET_KEY')
+    )
     app.config["SESSION_PERMANENT"] = False 
     app.config["SESSION_TYPE"] = "filesystem"
     
