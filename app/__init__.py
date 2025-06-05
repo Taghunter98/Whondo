@@ -126,7 +126,8 @@ def create_app():
 
     @app.before_request
     def log_request():
-        app.logger.info(f"Reqyest: {request.method} {request.path} from {request.remote_addr}")
+        ip:str = get_client_ip()
+        app.logger.info(f"Reqyest: {request.method} {request.path} from {ip}")
     
     @app.after_request
     def log_response(response):
@@ -143,6 +144,10 @@ def create_app():
         
     return app
 
+def get_client_ip() -> str:
+
+    return request.headers.get('CF-Connecting-IP', request.remote_addr)
+
 class RequestFormatter(logging.Formatter):
     """
     A class that creates a formatter for HTTP requests.
@@ -151,7 +156,7 @@ class RequestFormatter(logging.Formatter):
         logging (object): Formatter object for logs
     """
 
-    def format(self, record):
+    def format(self, record:object) -> str:
         """
         A function that configures a formatter for HTTP requests.
 
