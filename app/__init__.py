@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from flask import Flask, session, redirect, has_request_context, request
 from flask_session import Session
 from flask.logging import default_handler
+from werkzeug.middleware.proxy_fix import ProxyFix
 import logging
 from logging.config import dictConfig
 
@@ -23,6 +24,7 @@ def create_app():
     """
 
     app = Flask(__name__, instance_relative_config=True)
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for = 1)
 
     log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app.log')
 
@@ -84,11 +86,7 @@ def create_app():
 
     @app.before_request
     def log_request():
-        if request.headers.getlist("X-Forwarded-For"):
-            ip = request.headers.getlist("X-Forwarded-For")[0]
-        else:
-            ip = request.remote_addr
-        app.logger.info(f"Reqyest: {request.method} {request.path} from {ip}")
+        app.logger.info(f"Reqyest: {request.method} {request.path} from {request.remote_addr}")
     
     @app.after_request
     def log_response(response):
