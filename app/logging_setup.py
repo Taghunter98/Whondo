@@ -12,11 +12,14 @@ class ErrorPrefixFilter(logging.Filter):
 
 def setup_logging():
 
+    os.makedirs('logs', exist_ok = True)
+
     log_path = os.path('logs/app.log')
     handler = RotatingFileHandler(log_path, maxBytes=1_000_000, backupCount=5)
     formatter = logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
     )
+    
     handler.setFormatter(formatter)
     handler.setLevel(logging.INFO)
     handler.addFilter(ErrorPrefixFilter())
