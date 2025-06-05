@@ -1,9 +1,22 @@
+"""
+Copyright (c) 2025 Josh Bassett, whondo.com
+
+Filename:    authid.py
+Author:      Josh Bassett
+Date:        05/06/2025
+Version:     1.0
+
+Description: Fetches uID records that match provided email. 
+"""
+
+import logging
+
 from app.database.db_connect import connect
 
-def authenticate(email:str):
+def authenticate(email:str) -> int:
     """
-    A function to authenticate users, by returning the user ID
-    by querying the database with the provided email.
+    A function to authenticate users, by returning the user ID by querying 
+    the database with the provided email.
 
     The funtion enforces integer type for the returned user ID.
 
@@ -15,13 +28,13 @@ def authenticate(email:str):
     """
 
     if not email:
-        print("ERROR: Email not supplied")
+        logging.error("Email not supplied")
         return None
         
     connection = connect()
-    cursor = connection.cursor()
+    cursor     = connection.cursor()
 
-    query = f"""
+    query:str = f"""
         SELECT u.uID, u.email 
         FROM Users u 
         WHERE u.email = "{email}" 
@@ -31,9 +44,12 @@ def authenticate(email:str):
     cursor.execute(query)
     result = cursor.fetchone()
 
+    cursor.close()
+    connection.close()
+
     if (result is not None):
         user_id:int = result[0]
         return user_id
     else:
-        print("ERROR: Email does not match uID records in database")
+        print("Email does not match uID records in database")
         return None
