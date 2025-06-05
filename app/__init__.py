@@ -131,7 +131,7 @@ def create_app():
     
     @app.after_request
     def log_response(response):
-        
+
         app.logger.info(f"Response: {response.status} for {request.method} {request.path}")
         return response
 
@@ -159,21 +159,19 @@ class RequestFormatter(logging.Formatter):
 
     def format(self, record:object) -> str:
         """
-        A function that configures a formatter for HTTP requests.
-
-        If request has context, then the url and address are set.
-        Otherwise they are set to None.
+        A function that logs HTTP requests with client IP support for Cloudflare.
 
         Args:
-            record (object): Request object containing data
+            record (object): Request object
 
         Returns:
             formatter object: Logger entry   
         """
 
         if has_request_context():
+            ip:str = request.headers.get('CF-Connecting-IP', request.remote_addr)
             record.url = request.url
-            record.remote_addr = request.remote_addr
+            record.remote_addr = ip
         else:
             record.url = None
             record.remote_addr = None
