@@ -18,6 +18,6 @@ class TestLoginAPI(unittest.TestCase):
     def testValidRequest(self):
 
         data = self.setUpClass()
-
+        print(data.error)
         self.assertIsNotNone(data, "Request is not returning valid object")
         self.assertEqual(data.status_code, 200, f"Request is returing code: {data.status_code}")
