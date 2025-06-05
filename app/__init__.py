@@ -26,17 +26,31 @@ def create_app():
 
     dictConfig({
         'version': 1,
-        'formatters': {'default': {
-            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-        }},
-        'handlers': {'wsgi': {
-            'class': 'logging.StreamHandler',
-            'stream': 'ext://flask.logging.wsgi_errors_stream',
-            'formatter': 'default'
-        }},
+        'formatters': {
+            'default': {
+                'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+            },
+            'request': {
+                '()': RequestFormatter,
+                'format': '[%(asctime)s] %(remote_addr)s requested %(url)s\n%(levelname)s in %(module)s: %(message)s',
+            }
+        },
+        'handlers': {
+            'wsgi': {
+                'class': 'logging.StreamHandler',
+                'stream': 'ext://flask.logging.wsgi_errors_stream',
+                'formatter': 'default'
+            },
+            'file': {
+                'class': 'logging.FileHandler',
+                'filename': log_file_path,
+                'formatter': 'request',
+                'level': 'INFO'
+            },
+        },
         'root': {
             'level': 'INFO',
-            'handlers': ['wsgi']
+            'handlers': ['wsgi', 'file']
         }
     })
 
