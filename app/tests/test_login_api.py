@@ -6,15 +6,12 @@ class TestLoginAPI(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        
-        URL:str = "https://whondo.com/login/auth"
-        DATA = {
-            "email": "test@test.com",
-            "password": "testing123"
-        }
-        HEADERS = {"Content-Type": "application/json"}
 
-        return requests.post(URL, DATA, HEADERS)
+        return requests.post(
+            "https://whondo.com/login/auth",
+            data = {"email":"test@test.com", "password": "password123"},
+            headers = {"Content-Type":"application/json"}
+        )
     
     def testValidRequest(self):
 
