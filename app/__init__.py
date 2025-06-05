@@ -127,10 +127,11 @@ def create_app():
     @app.before_request
     def log_request():
     
-        app.logger.info(f"Reqyest: {request.method} {request.path} from {get_client_ip()}")
+        app.logger.info(f"Request: {request.method} {request.path} from {get_client_ip()}")
     
     @app.after_request
     def log_response(response):
+        
         app.logger.info(f"Response: {response.status} for {request.method} {request.path}")
         return response
 
