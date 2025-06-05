@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, session
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -11,5 +11,12 @@ def create_app():
     @app.route('/')
     def hello():
         return 'Hello, World!'
+    
+    @app.route('/login')
+    def check_session():
+        if (session['uID']):
+            return f"User {session['uID']} is logged in"
+        else:
+            return "Please log in"
 
     return app

@@ -12,7 +12,10 @@ def login():
     The REST API is responsibe for logging in the user from an external
     POST request with the user's email and plaintext password.
 
-    The data is
+    The data integrity is verified and the user ID is authenticated based
+    on the provided email.
+
+    The session (uID) is created provided the user ID is valid
 
     Returns:
         json: json response of successs or appropriate error message
@@ -48,8 +51,10 @@ def login():
     connection.close()
 
     if (result is not None):
+        
         hash_string:str = result[1]
         valid:bool = check_password(password, hash_string)
+
         if (valid is True):
             return jsonify({
                 "message" : f"SUCCESS: User {email} logged in successfully",
