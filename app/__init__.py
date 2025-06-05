@@ -3,19 +3,34 @@ from dotenv import load_dotenv
 from flask import Flask, session, redirect
 from flask_session import Session
 
-from .logging_setup import setup_logging
-import logging
+from logging.config import dictConfig
+
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
+
 
 def create_app():
 
-    setup_logging()
     
     app = Flask(__name__, instance_relative_config=True)
 
     load_dotenv()
     SECRET_KEY = os.getenv('SECRET_KEY')
     if (not SECRET_KEY):
-        logging.error("No SECRET_KEY variable found")
+        app.logger.error("No SECRET_KEY variable found")
         return None
     
     app.config.from_mapping(
@@ -48,5 +63,5 @@ def create_app():
         else:
             return "Please log in"
         
-    logging.info("Flask app created successfully")
+    app.logger.info("Flask app created successfully")
     return app

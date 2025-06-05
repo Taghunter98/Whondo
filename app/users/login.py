@@ -33,8 +33,6 @@ def login():
     if (user_id is None):
         return jsonify({"error" : "ERROR: User email does not match database records"}), 401
     
-    session['uID'] = user_id
-    
     connection = connect()
     cursor     = connection.cursor()
 
@@ -51,11 +49,12 @@ def login():
     connection.close()
 
     if (result is not None):
-        
         hash_string:str = result[1]
         valid:bool = check_password(password, hash_string)
 
         if (valid is True):
+            session['uID'] = user_id
+            
             return jsonify({
                 "message" : f"SUCCESS: User {email} logged in successfully",
                 "status"  : True
