@@ -3,12 +3,16 @@ from dotenv import load_dotenv
 from flask import Flask, session, redirect
 from flask_session import Session
 
-from logging_setup import setup_logging
 import logging
+
+logging.basicConfig(
+    filename='app.log',
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineo)d]'
+)
 
 def create_app():
 
-    setup_logging()
     
     app = Flask(__name__, instance_relative_config=True)
 
