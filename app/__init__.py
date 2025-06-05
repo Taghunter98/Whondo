@@ -126,8 +126,8 @@ def create_app():
 
     @app.before_request
     def log_request():
-        ip:str = get_client_ip()
-        app.logger.info(f"Reqyest: {request.method} {request.path} from {ip}")
+    
+        app.logger.info(f"Reqyest: {request.method} {request.path} from {get_client_ip()}")
     
     @app.after_request
     def log_response(response):
@@ -145,8 +145,8 @@ def create_app():
     return app
 
 def get_client_ip() -> str:
-
-    return request.environ('HTTP_X_FORWARDED_FOR')
+    
+    return request.headers.get('CF-Connecting-IP', request.remote_addr)
 
 class RequestFormatter(logging.Formatter):
     """
