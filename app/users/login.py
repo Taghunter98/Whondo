@@ -59,6 +59,7 @@ def login():
 
         if (valid is True):
             session['uID'] = user_id
+            current_app.logger.info(f"User authenticated, starting new Session")
             
             return jsonify({
                 "message" : f"SUCCESS: User {email} logged in successfully",
