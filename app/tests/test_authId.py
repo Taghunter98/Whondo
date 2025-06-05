@@ -26,7 +26,7 @@ class TestAuthID(unittest.TestCase):
         """
 
         result = self.setUpClass()
-        self.assertIsNotNone(result, "ERROR: Function is returning None for valid uID")
+        self.assertIsNotNone(result, "Function is returning None for valid uID")
     
     def testCorrectAuth(self):
         """
@@ -34,7 +34,7 @@ class TestAuthID(unittest.TestCase):
         """
 
         result = self.setUpClass()
-        self.assertEqual(result, 100, f"ERROR: Function is returning uID: {result}")
+        self.assertEqual(result, 100, f"Function is returning uID: {result}")
 
     def testValidInteger(self):
         """
@@ -42,4 +42,4 @@ class TestAuthID(unittest.TestCase):
         """
 
         result = self.setUpClass()
-        self.assertTrue(isinstance(result, int), "ERROR: User ID is not a valid integer")
+        self.assertTrue(isinstance(result, int), "User ID is not a valid integer")

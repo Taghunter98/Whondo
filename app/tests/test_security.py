@@ -26,7 +26,7 @@ class TestSecurityHashing(unittest.TestCase):
         
         hash:bytes = self.setUpClass()
         result:bool = check_password("password123", hash.decode("utf-8"))
-        self.assertTrue(result, "ERROR: Password doesn't match hash")
+        self.assertTrue(result, "Password doesn't match hash")
 
     def testPasswordFail(self):
         """
@@ -36,7 +36,7 @@ class TestSecurityHashing(unittest.TestCase):
 
         hash:bytes = self.setUpClass()
         result:bool = check_password("password1234", hash.decode("utf-8"))
-        self.assertFalse(result, f"ERROR: Password matching function returned: {result}")
+        self.assertFalse(result, f"Password matching function returned: {result}")
 
     def testHashIsBytes(self):
         """
@@ -44,4 +44,4 @@ class TestSecurityHashing(unittest.TestCase):
         """
 
         hash:bytes = self.setUpClass()
-        self.assertTrue(isinstance(hash, bytes), f"ERROR: Hash is {type(hash)} value: {hash}")
+        self.assertTrue(isinstance(hash, bytes), f"Hash is {type(hash)} value: {hash}")
