@@ -24,7 +24,7 @@ def create_app():
 
     app = Flask(__name__, instance_relative_config=True)
 
-    log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__), 'app.log'))
+    log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app.log')
 
     dictConfig({
         'version': 1,
