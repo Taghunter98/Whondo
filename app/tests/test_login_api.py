@@ -10,7 +10,7 @@ class TestLoginAPI(unittest.TestCase):
         URL:str = "https://whondo.com/login/auth"
         DATA = {
             "email": "test@test.com",
-            "password": "testing123"
+            "password": "password123"
         }
 
         return requests.post(URL, json = DATA,)
