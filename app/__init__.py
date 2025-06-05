@@ -6,23 +6,25 @@ from flask.logging import default_handler
 import logging
 from logging.config import dictConfig
 
-class RequestFormatter(logging.Formatter):
-    def format(self, record):
-        if has_request_context():
-            record.url = request.url
-            record.remote_addr = request.remote_addr
-        else:
-            record.url = None
-            record.remote_addr = None
-
-        return super().format(record)
-
 def create_app():
+    """
+    A function that configures logging, creates the Flask config and builds
+    the app.
+
+    App is created with instance relative config set to True, tells the app
+    that the cofig files are relative to the instance folder.
+
+    Log file path is located and then converted into an absolute path (e.g.
+    /home/ec2-user/Whondo/app.log). Directory name containing file is
+    fetched and .. moves up one directory to Whondo/ the root directory.
+
+    Log file path is 
+
+    """
 
     app = Flask(__name__, instance_relative_config=True)
 
-    log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'app.log')
-    log_file_path = os.path.abspath(log_file_path)
+    log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__), 'app.log'))
 
     dictConfig({
         'version': 1,
@@ -106,3 +108,14 @@ def create_app():
             return "Please log in"
         
     return app
+
+class RequestFormatter(logging.Formatter):
+    def format(self, record):
+        if has_request_context():
+            record.url = request.url
+            record.remote_addr = request.remote_addr
+        else:
+            record.url = None
+            record.remote_addr = None
+
+        return super().format(record)
