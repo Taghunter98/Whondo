@@ -38,9 +38,16 @@ class TestLoginAPI(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.json()['status'], True)
+        self.assertEqual(data.json()['status'], True, f"Request is returning status: {data.json()['status']}")
 
-    
+    def testMessage(self):
+        """
+        Test method tests if request returns a valid message.
+        """
+
+        data = self.setUpClass()
+
+        self.assertEqual(data.json()['message'], "User: test@test.com logged in successfully")
 
 class TestLoginAPIFail(unittest.TestCase):
 
@@ -62,6 +69,9 @@ class TestLoginAPIFail(unittest.TestCase):
         return requests.post(API_URL, json = API_DATA,)
     
     def testResponse(self):
+        """
+        Test method tests if request is a valid object and code 401 UNAUTHORISED.
+        """
 
         data = self.setUpClass()
 
@@ -69,6 +79,9 @@ class TestLoginAPIFail(unittest.TestCase):
         self.assertEqual(data.status_code, 401, f"Request is returing code: {data.status_code}")
 
     def testErrorMessage(self):
+        """
+        Test method tests if returned error value is correct.
+        """
 
         data = self.setUpClass()
 
@@ -94,13 +107,66 @@ class TestInvalidData(unittest.TestCase):
         return requests.post(API_URL, json = API_DATA,)
     
     def testResponse(self):
+        """
+        Test method tests if request is a valid object and code 400 BAD REQUEST.
+        """
 
         data = self.setUpClass()
 
         self.assertEqual(data.status_code, 400, f"Request is returing code: {data.status_code}")
 
     def testErrorMessage(self):
+        """
+        Test method tests if returned error value is correct.
+        """
 
         data = self.setUpClass()
 
         self.assertEqual(data.json()["error"], "User email or password not provided", f"Request is returing: {data.json()['error']}")
+
+class TestPasswordFail(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Test method sets up test by calling the API.
+
+        Returns:
+            object: Request object
+        """
+        
+        API_URL:str = "https://whondo.com/login/auth"
+        API_DATA = {
+            "email": "",
+            "password": ""
+        }
+
+        return requests.post(API_URL, json = API_DATA,)
+    
+    def testResponse(self):
+        """
+        Test method tests if request is a valid object and code 200 UNAUTHORISED.
+        """
+
+        data = self.setUpClass()
+
+        self.assertIsNotNone(data, "Request is not returning valid object")
+        self.assertEqual(data.status_code, 401, f"Request is returing code: {data.status_code}")
+
+    def testStatus(self):
+        """
+        Test method tests if request returns a valid status of false.
+        """
+
+        data = self.setUpClass()
+
+        self.assertEqual(data.json()['status'], False, f"Request is returning status: {data.json()['status']}")
+
+    def testErrorMessage(self):
+        """
+        Test method tests if returned error value is correct.
+        """
+
+        data = self.setUpClass()
+
+        self.assertEqual(data.json()["error"], "Incorrect password", f"Request is returing: {data.json()['error']}")
