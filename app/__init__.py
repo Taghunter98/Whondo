@@ -15,7 +15,8 @@ def create_app():
     @app.route('/')
     def hello():
         if (session.get("uID")):
-            return f"Hello, World!\nUser logged in id: {session.get("uID")}"
+            session_id = session.get('uID')
+            return f"Hello, World!\nUser logged in id: {session_id}"
         else:
             return "Hello World!"
     
