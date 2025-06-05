@@ -18,4 +18,4 @@ class TestLoginAPI(unittest.TestCase):
         data = self.setUpClass()
         
         self.assertIsNotNone(data, "Request is not returning valid object")
-        self.assertEqual(data.status_code, 200, f"Request is returing code: {data.status_code}")
+        self.assertEqual(data.status_code, 200, f"Request is returing code: {data.status_code} data: {data.error}")
