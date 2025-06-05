@@ -1,21 +1,33 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, session, redirect
+from flask_session import Session
+
+from .logging_setup import setup_logging
+import logging
 
 def create_app():
+
+    setup_logging()
     
     app = Flask(__name__, instance_relative_config=True)
 
     load_dotenv()
     SECRET_KEY = os.getenv('SECRET_KEY')
     if (not SECRET_KEY):
-        print("No SECRET_KEY variable found")
+        logging.error("No SECRET_KEY variable found")
         return None
+    
     app.config.from_mapping(
         SECRET_KEY = os.getenv('SECRET_KEY')
     )
-    app.config["SESSION_PERMANENT"] = False 
-    app.config["SESSION_TYPE"] = "filesystem"
+    app.config["SESSION_PERMANENT"]       = False 
+    app.config["SESSION_TYPE"]            = "filesystem"
+    app.config["SESSION_COOKIE_SECURE"]   = True
+    app.config["SESSION_COOKIE_HTTPONLY"] = True
+    app.config["SESSION_COOKIE_SAMESITE"] = True
+    
+    Session(app)
     
     from .users.login import login_bp
     app.register_blueprint(login_bp)
@@ -35,5 +47,6 @@ def create_app():
             return redirect("/")
         else:
             return "Please log in"
-
+        
+    logging.info("Flask app created successfully")
     return app

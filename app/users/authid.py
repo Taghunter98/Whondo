@@ -1,3 +1,5 @@
+import logging
+
 from app.database.db_connect import connect
 
 def authenticate(email:str) -> int:
@@ -15,7 +17,7 @@ def authenticate(email:str) -> int:
     """
 
     if not email:
-        print("ERROR: Email not supplied")
+        logging.error("Email not supplied")
         return None
         
     connection = connect()
@@ -38,5 +40,5 @@ def authenticate(email:str) -> int:
         user_id:int = result[0]
         return user_id
     else:
-        print("ERROR: Email does not match uID records in database")
+        print("Email does not match uID records in database")
         return None

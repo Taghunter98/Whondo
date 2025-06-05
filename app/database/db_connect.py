@@ -2,6 +2,7 @@ from flask import Blueprint
 import mysql.connector
 import os
 from dotenv import load_dotenv
+import logging
 
 def connect():
     """
@@ -26,7 +27,7 @@ def connect():
             host     = DB_HOST,
             database = DATABASE
         )
-    
+        
         return connect
     except mysql.connector.Error as err:
-        print(f"ERROR: {err}")
+        logging.error(f"ERROR: {err}")
