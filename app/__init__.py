@@ -84,7 +84,11 @@ def create_app():
 
     @app.before_request
     def log_request():
-        app.logger.info(f"Reqyest: {request.method} {request.path} from {request.remote_addr}")
+        if request.headers.getlist("X-Forwarded-For"):
+            ip = request.headers.getlist("X-Forwarded-For")[0]
+        else:
+            ip = request.remote_addr
+        app.logger.info(f"Reqyest: {request.method} {request.path} from {ip}")
     
     @app.after_request
     def log_response(response):
