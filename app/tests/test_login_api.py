@@ -26,4 +26,4 @@ class TestLoginAPI(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.status, True)
+        self.assertEqual(data.json()['status'], True)
