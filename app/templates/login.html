@@ -17,7 +17,7 @@
       function login() {
         const email = document.getElementById("e").value;
         const password = document.getElementById("p").value;
-        let result = document.getElementById("result").value;
+        let result = document.getElementById("result");
         fetch("/login", {
           method: "POST",
           body: JSON.stringify({
@@ -32,8 +32,10 @@
           .then((json) => {
             if (json['status'] == true) {
               result.innerHTML = json['message'];
+              result.style.color = 'green';
             } else {
               result.innerHTML = json['error'];
+              result.status.color = 'red';
             }
           });
       }
