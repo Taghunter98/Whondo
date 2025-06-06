@@ -15,7 +15,7 @@ def validate_extention(filename:str):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def upload_file(file):
+def upload_file(file, filename):
 
     if file.filename == '':
         current_app.logger.error("File is missing")
