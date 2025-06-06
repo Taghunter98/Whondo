@@ -27,7 +27,7 @@ def register():
     age:int         = int(data.get['age'])
     occupation:str  = data.get['occupation']
     bio:str         = data.get['bio']
-    profile_picture = request.files['profilePicture']
+    profile_picture = request.files['file']
 
     if (not email or not password or not name or not surname or not age):
         return jsonify({"error" : "Required fields not provided"}), 400
