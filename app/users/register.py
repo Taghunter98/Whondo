@@ -16,17 +16,17 @@ from .images import upload_file
 
 register_bp = Blueprint("register_bp", __name__)
 
-@register_bp.route('/register/create', methods = ['POST'])
+@register_bp.route('/register/create', methods = ['GET', 'POST'])
 def register():
 
-    email:str       = request.form.get['email']
-    password:str    = request.form.get['password']
+    email:str       = request.form.get('email')
+    password:str    = request.form.get('password')
     # name:str        = data.get['name']
     # surname:str     = data.get['surname']
     # age:int         = data.get['age']
     # occupation:str  = data.get['occupation']
     # bio:str         = data.get['bio']
-    profile_picture = request.form.get['file']
+    profile_picture = request.form.get('file')
 
     # if (not email or not password or not name or not surname or not age):
     #     return jsonify({"error" : "Required fields not provided"}), 400
