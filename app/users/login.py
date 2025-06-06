@@ -55,7 +55,7 @@ def login():
         query:str = """
             SELECT u.uID, u.password
             FROM Users u
-            WHERE u.uID = %d;
+            WHERE u.uID = %s;
         """
 
         cursor.execute(query, (user_id))
