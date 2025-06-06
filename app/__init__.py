@@ -119,7 +119,7 @@ def create_app():
     app.config["SESSION_COOKIE_SECURE"]   = True
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     app.config["UPLOAD_FOLDER"]           = UPLOAD_FOLDER
-    app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
+    #app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
     # app.config["SESSION_COOKIE_SAMESITE"] = True
     
     Session(app)
