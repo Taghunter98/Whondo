@@ -38,3 +38,5 @@ def register():
             return jsonify({"message" : "Image uploaded successfully"}), 201
         else:
             return jsonify({"error" : "Image failed to upload"})
+        
+    return jsonify({"message" : f"DEBUG {email} {password} {name} {surname} {age}"})
