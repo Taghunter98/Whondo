@@ -44,7 +44,7 @@ def register():
     cursor     = connection.cursor()
 
     query:str = """
-        INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture)
+        INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture, verified)
         VALUES (%s, %s, %s, %s, %d, %s, %s, %s, %s)
     """
 
