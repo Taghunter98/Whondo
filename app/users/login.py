@@ -86,4 +86,4 @@ def login():
             current_app.logger.error(f"User: {email} not found")
             return jsonify({"error":"User not found"}), 404
     else:
-        return render_template("/frontend/templates/login.html")
+        return render_template("frontend/templates/login.html")
