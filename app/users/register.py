@@ -19,18 +19,18 @@ register_bp = Blueprint("register_bp", __name__)
 @register_bp.route('/register/create', methods = ['POST'])
 def register():
 
-    # data            = request.get_json()
-    # email:str       = data.get['email']
-    # password:str    = data.get['password']
-    # name:str        = data.get['name']
-    # surname:str     = data.get['surname']
-    # age:int         = data.get['age']
-    # occupation:str  = data.get['occupation']
-    # bio:str         = data.get['bio']
+    data            = request.get_json()
+    email:str       = data.get['email']
+    password:str    = data.get['password']
+    name:str        = data.get['name']
+    surname:str     = data.get['surname']
+    age:int         = data.get['age']
+    occupation:str  = data.get['occupation']
+    bio:str         = data.get['bio']
     profile_picture = request.files['file']
 
-    # if (not email or not password or not name or not surname or not age):
-    #     return jsonify({"error" : "Required fields not provided"}), 400
+    if (not email or not password or not name or not surname or not age):
+        return jsonify({"error" : "Required fields not provided"}), 400
     
     if (profile_picture):
         status:bool = upload_file(profile_picture)
