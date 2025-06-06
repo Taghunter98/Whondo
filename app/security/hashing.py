@@ -21,14 +21,14 @@ def hash_pasword(input:str) -> bytes:
         input (str): Plaintext password
 
     Returns:
-        bytes: Hashed password value
+        str: Hashed password value
     """
 
     encoded_input:bytes = input.encode("utf-8")
     salt:bytes  = gensalt()
     hash:bytes  = hashpw(encoded_input, salt)
     
-    return hash
+    return hash.decode("utf-8")
 
 def check_password(input:str, comparable:str) -> bool:
     """
