@@ -18,13 +18,14 @@ def validate_extention(filename:str):
 def upload_file(file):
 
     if file.filename == '':
+        current_app.logger.error("File is missing")
         return False
     if file and validate_extention(file.filename):
         filename = validate_extention(file.filename)
         try:
             file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], f"profile/{filename}"))
-            print("file stored successfully")
+            current_app.logger.info("File stored successfully")
             return True
         except Exception as err:
-            print("Can't store file")
+            current_app.logger.error("Can't store file")
             return False
