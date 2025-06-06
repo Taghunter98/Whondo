@@ -60,7 +60,7 @@ def create_app():
     The root directory '/' is served .
     """
 
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, template_folder = 'templates')
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for = 1)
 
     log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app.log')
