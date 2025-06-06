@@ -33,7 +33,7 @@ def register():
     #     return jsonify({"error" : "Required fields not provided"}), 400
     
     if (profile_picture):
-        status:bool = upload_file(profile_picture, profile_picture.filename)
+        status:bool = upload_file(profile_picture)
         if (status):
             return jsonify({"message" : "Image uploaded successfully"}), 201
         else:

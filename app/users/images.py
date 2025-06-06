@@ -15,15 +15,15 @@ def validate_extention(filename:str):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def upload_file(file, filename):
-
+def upload_file(file):
+    
     if file.filename == '':
         current_app.logger.error("File is missing")
         return False
     if file and validate_extention(file.filename):
         filename = validate_extention(file.filename)
         try:
-            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], f"profile/{filename}"))
+            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], f"profile/{file.filename}"))
             current_app.logger.info("File stored successfully")
             return True
         except Exception as err:
