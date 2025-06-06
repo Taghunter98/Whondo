@@ -30,5 +30,5 @@ def upload_file(file):
             return False
         
 # Test program to store file
-file = open("wilson.jpg")
+file = open("app/users/wilson.jpg")
 upload_file(file)
