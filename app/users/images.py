@@ -36,7 +36,10 @@ def upload_file(file:object, email:str):
         try:
             date:str = str(datetime.now())[:10]
             path = os.path.join(f"{current_app.config['UPLOAD_FOLDER']}/Profile", email)
-            os.mkdir(path)
+            
+            if not os.path.exists(path):
+                os.mkdir(path)
+            
             file.save(
                 os.path.join(path, f"{date}_{email}_{file.filename}"))
 
