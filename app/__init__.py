@@ -124,9 +124,11 @@ def create_app():
     
     Session(app)
     
-    from .users.login import login_bp
+    from .users.login    import login_bp
+    from .users.register import register_bp
 
     app.register_blueprint(login_bp)
+    app.register_blueprint(register_bp)
 
     @app.before_request
     def log_request():
