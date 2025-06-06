@@ -35,9 +35,10 @@ def upload_file(file:object, email:str):
     if file and validate_extention(file.filename):
         try:
             date:str = str(datetime.now())[:10]
-            user_directory = os.path.join(f"{current_app.config['UPLOAD_FOLDER']}/Profile", email)
+            path = os.path.join(f"{current_app.config['UPLOAD_FOLDER']}/Profile", email)
+            os.mkdir(path)
             file.save(
-                os.path.join(user_directory, f"{date}_{email}_{file.filename}"))
+                os.path.join(path, f"{date}_{email}_{file.filename}"))
 
             current_app.logger.info("File stored successfully")
             return True
