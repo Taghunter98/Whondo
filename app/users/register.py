@@ -33,9 +33,10 @@ def register():
         return jsonify({"error" : "Required fields not provided"}), 400
     
     if (profile_picture):
-        profile_picture = upload_file(profile_picture, email)
+        image_path:str = upload_file(profile_picture, email)
 
-        if profile_picture is None:
+        if image_path is None:
+            image_path = ''
             return jsonify({"error" : "Image failed to upload"}), 409
     
     hashed_password:str = hash_pasword(password)
@@ -49,10 +50,10 @@ def register():
     """
 
     #DEBUG
-    current_app.logger.info(f"{email}\n{hashed_password}\n{name}\n{surname}\n{age}\n{occupation}\n{bio}\n{profile_picture}")
+    current_app.logger.info(f"{email}\n{hashed_password}\n{name}\n{surname}\n{age}\n{occupation}\n{bio}\n{image_path}")
 
     cursor.execute(
-        query, (email, hashed_password, name, surname, age, occupation, bio, profile_picture)
+        query, (email, hashed_password, name, surname, age, occupation, bio, image_path)
     )
     
     connection.commit()
