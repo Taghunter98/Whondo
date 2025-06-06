@@ -1,0 +1,33 @@
+"""
+Copyright (c) 2025 Josh Bassett, whondo.com
+
+Filename:    register.py
+Author:      Josh Bassett
+Date:        06/06/2025
+Version:     1.0
+
+Description: Serves a Blueprint API for registering a new user. 
+"""
+
+from flask import Blueprint, request, jsonify, current_app
+
+from app.database.db_connect import connect
+
+register_bp = Blueprint("register_bp", __name__)
+
+@register_bp.route('/register/create', methods = ['POST'])
+def register():
+
+    data            = request.get_json()
+    email:str       = data.get['email']
+    password:str    = data.get['password']
+    name:str        = data.get['name']
+    surname:str     = data.get['surname']
+    age:int         = int(data.get['age'])
+    occupation:str  = data.get['occupation']
+    bio:str         = data.get['bio']
+    profile_picture = request.files['profilePicture']
+
+    if not email or not password or not name or not surname or not age:
+        return jsonify({"error" : "Required fields not provided"}), 400
+    

@@ -105,6 +105,8 @@ def create_app():
     load_dotenv()
 
     SECRET_KEY = os.getenv('SECRET_KEY')
+    UPLOAD_FOLDER = '/home/ec2-user/Uploads'
+
     if (not SECRET_KEY):
         logging.error("No SECRET_KEY variable found")
         return None
@@ -116,6 +118,7 @@ def create_app():
     app.config["SESSION_TYPE"]            = "filesystem"
     app.config["SESSION_COOKIE_SECURE"]   = True
     app.config["SESSION_COOKIE_HTTPONLY"] = True
+    app.config["UPLOAD_FOLDER"]           = UPLOAD_FOLDER
     # app.config["SESSION_COOKIE_SAMESITE"] = True
     
     Session(app)
