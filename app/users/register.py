@@ -12,7 +12,8 @@ Description: Serves a Blueprint API for registering a new user.
 from flask import Blueprint, request, jsonify, current_app
 
 from app.database.db_connect import connect
-from .images import upload_file
+from app.security.hashing    import hash_pasword
+from .images                 import upload_file
 
 register_bp = Blueprint("register_bp", __name__)
 
@@ -28,13 +29,34 @@ def register():
     bio:str         = request.form.get('bio')
     profile_picture = request.files.get('file')
 
-    # if (not email or not password or not name or not surname or not age):
-    #     return jsonify({"error" : "Required fields not provided"}), 400
+    if (not email or not password or not name or not surname or not age):
+        return jsonify({"error" : "Required fields not provided"}), 400
     
     if (profile_picture):
-        current_app.logger.info("")
-        status:bool = upload_file(profile_picture, email)
-        if (status):
-            return jsonify({"message" : "Image uploaded successfully"}), 201
-        else:
+        profile_picture = upload_file(profile_picture, email)
+
+        if profile_picture is None:
             return jsonify({"error" : "Image failed to upload"}), 409
+    
+    hashed_password:str = hash_pasword(password)
+
+    connection = connect()
+    cursor     = connection.cursor()
+
+    query:str = """
+        INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture)
+        VALUES (%s, %s, %s, %s, %d, %s, %s, %s, %s)
+    """
+
+    cursor.execute(
+        query, 
+        (email, hashed_password, name, surname, age, occupation, bio, profile_picture, False)
+    )
+    
+    connection.commit()
+    current_app.logger.info(f"MySQL status: {cursor.rowcount}")
+
+    cursor.close()
+    connection.close()
+
+    return jsonify({"message" : f"User {email} created successfully", "status" : True}, ), 201

@@ -11,9 +11,9 @@ Description: Serves a Blueprint API for logging in and verifying users.
 
 from flask import Blueprint, request, session, jsonify, current_app
 
-from .authid import authenticate
+from .authid                 import authenticate
 from app.database.db_connect import connect
-from app.security.hashing import check_password
+from app.security.hashing    import check_password
 
 login_bp = Blueprint("login_bp", __name__)
 
@@ -51,13 +51,13 @@ def login():
     connection = connect()
     cursor     = connection.cursor()
 
-    query:str = f"""
+    query:str = """
         SELECT u.uID, u.password
         FROM Users u
-        WHERE u.uID = {user_id};
+        WHERE u.uID = %d;
     """
 
-    cursor.execute(query)
+    cursor.execute(query, (user_id))
     result = cursor.fetchone()
 
     cursor.close()
