@@ -18,7 +18,7 @@
         const email = document.getElementById("e").value;
         const password = document.getElementById("p").value;
         const result = document.getElementById("result");
-        fetch("/login/auth", {
+        fetch("/login", {
           method: "POST",
           body: JSON.stringify({
             email: email,

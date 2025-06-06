@@ -17,7 +17,7 @@ from app.security.hashing    import check_password
 
 login_bp = Blueprint("login_bp", __name__)
 
-@login_bp.route('/login/auth', methods = ['POST', 'GET'])
+@login_bp.route('/login', methods = ['POST', 'GET'])
 def login():
     """
     The REST API is responsibe for logging in the user from an external POST
