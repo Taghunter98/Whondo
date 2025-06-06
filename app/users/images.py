@@ -1,5 +1,6 @@
 from flask import request, current_app
 import os
+from datetime import datetime
 
 def validate_extention(filename:str):
     """
@@ -15,7 +16,7 @@ def validate_extention(filename:str):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def upload_file(file):
+def upload_file(file:object, email:str):
     
     if file.filename == '':
         current_app.logger.error("File is missing")
@@ -23,7 +24,10 @@ def upload_file(file):
     if file and validate_extention(file.filename):
         filename = validate_extention(file.filename)
         try:
-            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], f"profile/{file.filename}"))
+            file.save(
+                os.path.join(current_app.config['UPLOAD_FOLDER'], 
+                f"profile/{file.filename}_{datetime.now}_{email}"
+            ))
             current_app.logger.info("File stored successfully")
             return True
         except Exception as err:

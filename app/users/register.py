@@ -33,10 +33,8 @@ def register():
     
     if (profile_picture):
         current_app.logger.info("")
-        status:bool = upload_file(profile_picture)
+        status:bool = upload_file(profile_picture, email)
         if (status):
             return jsonify({"message" : "Image uploaded successfully"}), 201
         else:
-            return jsonify({"error" : "Image failed to upload"})
-        
-    return jsonify({"message" : f"DEBUG {email} {password}"}), 200
+            return jsonify({"error" : "Image failed to upload"}), 409
