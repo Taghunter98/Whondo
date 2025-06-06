@@ -52,13 +52,13 @@ def login():
         connection = connect()
         cursor     = connection.cursor()
 
-        query:str = """
+        query:str = f"""
             SELECT u.uID, u.password
             FROM Users u
-            WHERE u.uID = %s;
+            WHERE u.uID = {user_id};
         """
 
-        cursor.execute(query, (user_id))
+        cursor.execute(query)
         result = cursor.fetchone()
 
         cursor.close()
