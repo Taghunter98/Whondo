@@ -46,7 +46,7 @@ def register():
 
     query:str = """
         INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture)
-        VALUES (%s, %s, %s, %s, %d, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     #DEBUG
