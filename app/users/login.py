@@ -40,7 +40,7 @@ def login():
     email:str    = data.get('email')
     password:str = data.get('password')
 
-    if not email or not password:
+    if (not email or not password):
         return jsonify({"error" : "User email or password not provided"}), 400
     
     user_id:int = authenticate(email)

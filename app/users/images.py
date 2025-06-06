@@ -28,7 +28,3 @@ def upload_file(file):
         except Exception as err:
             print("Can't store file")
             return False
-        
-# Test program to store file
-file = open("app/users/wilson.jpg")
-upload_file(file)
