@@ -44,13 +44,13 @@ def register():
     cursor     = connection.cursor()
 
     query:str = """
-        INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture, verified)
-        VALUES (%s, %s, %s, %s, %d, %s, %s, %s, %s)
+        INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture)
+        VALUES (%s, %s, %s, %s, %d, %s, %s, %s)
     """
 
     cursor.execute(
         query, 
-        (email, hashed_password, name, surname, age, occupation, bio, profile_picture, False)
+        (email, hashed_password, name, surname, age, occupation, bio, profile_picture)
     )
     
     connection.commit()
