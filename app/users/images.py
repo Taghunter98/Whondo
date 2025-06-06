@@ -17,20 +17,31 @@ def validate_extention(filename:str):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def upload_file(file:object, email:str):
+    """
+    The function handles file upload
+
+    Args:
+        file (object): _description_
+        email (str): _description_
+
+    Returns:
+        _type_: _description_
+    """
     
     if file.filename == '':
         current_app.logger.error("File is missing")
         return False
+    
     if file and validate_extention(file.filename):
-        filename = validate_extention(file.filename)
         try:
             date:str = str(datetime.now())[:10]
+            user_directory = os.path.join(f"{current_app.config['UPLOAD_FOLDER']}/Profile", email)
             file.save(
-                os.path.join(current_app.config['UPLOAD_FOLDER'], 
-                f"profile/{date}_{email}_{file.filename}"
-            ))
+                os.path.join(user_directory, f"{date}_{email}_{file.filename}"))
+
             current_app.logger.info("File stored successfully")
             return True
+        
         except Exception as err:
             current_app.logger.error("Can't store file")
             return False
