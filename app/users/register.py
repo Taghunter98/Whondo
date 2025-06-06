@@ -18,7 +18,7 @@ register_bp = Blueprint("register_bp", __name__)
 
 @register_bp.route('/register/create', methods = ['POST'])
 def register():
-
+    request.get_json()
     email:str       = request.form.get["email"]
     password:str    = request.form.get["password"]
     name:str        = request.form.get["name"]
