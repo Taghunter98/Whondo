@@ -48,9 +48,11 @@ def register():
         VALUES (%s, %s, %s, %s, %d, %s, %s, %s)
     """
 
+    #DEBUG
+    current_app.logger.info(f"{email}\n{hashed_password}\n{name}\n{surname}\n{age}\n{occupation}\n{bio}\n{profile_picture}")
+
     cursor.execute(
-        query, 
-        (email, hashed_password, name, surname, age, occupation, bio, profile_picture)
+        query, (email, hashed_password, name, surname, age, occupation, bio, profile_picture)
     )
     
     connection.commit()
