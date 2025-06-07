@@ -14,36 +14,39 @@ from flask import Blueprint, request, jsonify, current_app, render_template, ses
 from app.database.db_connect import connect
 from app.security.hashing    import hash_pasword
 from .images                 import upload_file
+from .authid                 import authenticate
+from app.utilities.mailgun   import send_email
 
-register_bp = Blueprint("register_bp", __name__)
+register_bp: str = Blueprint("register_bp", __name__)
 
 @register_bp.route('/register', methods = ['GET', 'POST'])
 def register():
 
     if (request.method == 'POST'):
-        email:str       = request.form.get('email')
-        password:str    = request.form.get('password')
-        name:str        = request.form.get('name')
-        surname:str     = request.form.get('surname')
-        age:int         = request.form.get('age')
-        occupation:str  = request.form.get('occupation')
-        bio:str         = request.form.get('bio')
-        profile_picture = request.files.get('file')
+
+        email: str              = request.form.get('email')
+        password: str           = request.form.get('password')
+        name: str               = request.form.get('name')
+        surname: str            = request.form.get('surname')
+        age: int                = request.form.get('age')
+        occupation: str         = request.form.get('occupation')
+        bio: str                = request.form.get('bio')
+        profile_picture: object = request.files.get('file')
 
         if (not email or not password or not name or not surname or not age):
             return jsonify({"error" : "Required fields not provided"}), 400
 
-        image_path:str = upload_file(profile_picture, email)
+        image_path: str = upload_file(profile_picture, email)
 
         if image_path is None:
             return jsonify({"error" : "Image failed to upload"}), 409
         
-        hashed_password:str = hash_pasword(password)
+        hashed_password: str = hash_pasword(password)
 
-        connection = connect()
-        cursor     = connection.cursor()
+        connection: object = connect()
+        cursor: object     = connection.cursor()
 
-        query:str = """
+        query: str = """
             INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
@@ -58,9 +61,25 @@ def register():
         cursor.close()
         connection.close()
 
+        user_id: int     = authenticate(email)
+        session['uID']   = user_id
         session['email'] = email
 
-        # return jsonify({"message" : f"User {email} created successfully", "status" : True}, ), 201
-        return render_template("created.html", name = name, surname = surname)
+        link: str    = "https://whondo.com/login/verify"
+        email: str   = "noreply@whondo.com"
+        subject: str = "Activate Your Whondo Account"
+        body: str    = f"Hi {name}!\nPlease follow this link to activate your new account.\n\n{link}"
+
+        data: str = send_email(email, name, email, subject, body)
+
+        if (data.status_code == 200):
+            return render_template(
+                "created.html", 
+                name = name, 
+                surname = surname, 
+                email = email
+            )
+        else:
+            return jsonify({"error": "Email address is not valid"}), 424
     else:
         return render_template("register.html")

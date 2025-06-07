@@ -9,11 +9,11 @@ Version:     1.0
 Description: Provides functions for image validation and storage. 
 """
 
-from flask import request, current_app
-import os
+from flask    import request, current_app
 from datetime import datetime
+import os
 
-def validate_extention(filename:str) -> bool:
+def validate_extention(filename: str) -> bool:
     """
     The function validates the filename's extention is allowed.
 
@@ -24,10 +24,11 @@ def validate_extention(filename:str) -> bool:
         bool: File validation
     """
 
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    ALLOWED_EXTENSIONS: list = {'png', 'jpg', 'jpeg', 'gif'}
+
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def upload_file(file:object, email:str) -> str:
+def upload_file(file: object, email: str) -> str:
     """
     The function handles file upload and creates a directory for the user's
     profile image within /Uploads/Profile/.
@@ -46,8 +47,8 @@ def upload_file(file:object, email:str) -> str:
     
     if file and validate_extention(file.filename):
         try:
-            date:str = str(datetime.now())[:10]
-            path = os.path.join(f"{current_app.config['UPLOAD_FOLDER']}/Profile", email)
+            date: str = str(datetime.now())[:10]
+            path: str = os.path.join(f"{current_app.config['UPLOAD_FOLDER']}/Profile", email)
             
             if not os.path.exists(path):
                 os.mkdir(path)

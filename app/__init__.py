@@ -9,16 +9,16 @@ Version:     1.0
 Description: Creates a Flask app instance and sets up logging.
 """
 
-import os
-from dotenv import load_dotenv
-from flask import Flask, session, redirect, has_request_context, request
-from flask_session import Session
-from flask.logging import default_handler
+from flask                         import Flask, session, redirect, has_request_context, request
+from flask_session                 import Session
+from flask.logging                 import default_handler
 from werkzeug.middleware.proxy_fix import ProxyFix
+from logging.config                import dictConfig
+from dotenv                        import load_dotenv
 import logging
-from logging.config import dictConfig
+import os
 
-def create_app():
+def create_app() -> Flask:
     """
     A function that configures logging, creates the Flask config and builds
     the app.
@@ -60,10 +60,10 @@ def create_app():
     The root directory '/' is served .
     """
 
-    app = Flask(__name__, instance_relative_config=True, template_folder = 'templates')
+    app: Flask  = Flask(__name__, instance_relative_config=True, template_folder = 'templates')
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for = 1)
 
-    log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app.log')
+    log_file_path:str = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app.log')
 
     dictConfig({
         'version': 1,
@@ -95,7 +95,7 @@ def create_app():
         }
     })
 
-    formatter = RequestFormatter(
+    formatter: RequestFormatter = RequestFormatter(
         '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
         '%(levelname)s in %(module)s: %(message)s'
     )
@@ -104,8 +104,8 @@ def create_app():
 
     load_dotenv()
 
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    UPLOAD_FOLDER = '/home/ec2-user/Uploads'
+    SECRET_KEY: str    = os.getenv('SECRET_KEY')
+    UPLOAD_FOLDER: str = '/home/ec2-user/Uploads'
 
     if (not SECRET_KEY):
         logging.error("No SECRET_KEY variable found")
@@ -119,7 +119,7 @@ def create_app():
     app.config["SESSION_COOKIE_SECURE"]   = True
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     app.config["UPLOAD_FOLDER"]           = UPLOAD_FOLDER
-    #app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
     # app.config["SESSION_COOKIE_SAMESITE"] = True
     
     Session(app)
@@ -132,7 +132,7 @@ def create_app():
 
     @app.before_request
     def log_request():
-    
+
         app.logger.info(f"Request: {request.method} {request.path} from {get_client_ip()}")
     
     @app.after_request
@@ -163,7 +163,7 @@ class RequestFormatter(logging.Formatter):
         logging (object): Formatter object for logs
     """
 
-    def format(self, record:object) -> str:
+    def format(self, record: object) -> str:
         """
         A function that logs HTTP requests with client IP support for Cloudflare.
 
@@ -175,11 +175,11 @@ class RequestFormatter(logging.Formatter):
         """
 
         if has_request_context():
-            ip:str = request.headers.get('CF-Connecting-IP', request.remote_addr)
-            record.url = request.url
+            ip: str            = request.headers.get('CF-Connecting-IP', request.remote_addr)
+            record.url         = request.url
             record.remote_addr = ip
         else:
-            record.url = None
+            record.url         = None
             record.remote_addr = None
 
         return super().format(record)

@@ -37,22 +37,22 @@ def login():
     """    
 
     if request.method == 'POST':
-        data         = request.get_json()
-        email:str    = data.get('email')
-        password:str = data.get('password')
+        data: list    = request.get_json()
+        email: str    = data.get('email')
+        password: str = data.get('password')
 
         if (not email or not password):
             return jsonify({"error" : "User email or password not provided"}), 400
         
-        user_id:int = authenticate(email)
+        user_id: int = authenticate(email)
 
         if (user_id is None):
             return jsonify({"error" : "User email does not match database records"}), 401
         
-        connection = connect()
-        cursor     = connection.cursor()
+        connection: object = connect()
+        cursor: object     = connection.cursor()
 
-        query:str = f"""
+        query: str = f"""
             SELECT u.uID, u.password
             FROM Users u
             WHERE u.uID = {user_id};
@@ -65,13 +65,13 @@ def login():
         connection.close()
 
         if (result is not None):
-            hash_string:str = result[1]
-            valid:bool = check_password(password, hash_string)
+            hash_string: str = result[1]
+            valid: bool      = check_password(password, hash_string)
 
             if (valid is True):
                 session['uID']   = user_id
                 session['email'] = email
-                
+
                 current_app.logger.info(f"User authenticated, starting new Session")
                 
                 return jsonify({
