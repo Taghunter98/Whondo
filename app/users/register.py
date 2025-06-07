@@ -67,11 +67,11 @@ def register():
         session['email'] = email
 
         link: str    = "https://whondo.com/login/verify"
-        email: str   = "noreply@whondo.com"
+        sender: str   = "noreply@whondo.com"
         subject: str = "Activate Your Whondo Account"
         body: str    = f"Hi {name}!\nPlease follow this link to activate your new account.\n\n{link}"
 
-        send_email(email, name, email, subject, body)
+        send_email(sender, name, email, subject, body)
 
         return render_template(
             "created.html", 
