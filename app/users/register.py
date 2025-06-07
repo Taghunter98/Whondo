@@ -17,7 +17,7 @@ from .images                 import upload_file
 
 register_bp = Blueprint("register_bp", __name__)
 
-@register_bp.route('/register/create', methods = ['GET', 'POST'])
+@register_bp.route('/register', methods = ['GET', 'POST'])
 def register():
 
     if (request.method == 'POST'):
