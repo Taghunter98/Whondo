@@ -71,16 +71,14 @@ def register():
         subject: str = "Activate Your Whondo Account"
         body: str    = f"Hi {name}!\nPlease follow this link to activate your new account.\n\n{link}"
 
-        data: str = send_email(email, name, email, subject, body)
+        send_email(email, name, email, subject, body)
 
-        if (data is not None):
-            return render_template(
-                "created.html", 
-                name = name, 
-                surname = surname, 
-                email = email
-            )
-        else:
-            return jsonify({"error": "Email address is not valid"}), 424
+        return render_template(
+            "created.html", 
+            name = name, 
+            surname = surname, 
+            email = email
+        )
+        
     else:
         return render_template("register.html")

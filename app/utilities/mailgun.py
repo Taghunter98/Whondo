@@ -35,7 +35,7 @@ def send_email(sender: str, reciever_name: str, reciever: str, subject: str, mes
     MAILGUN_API_KEY: str = os.getenv('MAILGUN_API_KEY')
     MAILGUN_URL: str     = os.getenv('MAILGUN_URL')
 
-    if (not MAILGUN_API_KEY or MAILGUN_URL):
+    if (not MAILGUN_API_KEY and not MAILGUN_URL):
         current_app.logger.error("Mailgun API credentials not found or missing")
         return None
     
