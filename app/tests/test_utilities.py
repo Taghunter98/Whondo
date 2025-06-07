@@ -51,11 +51,17 @@ class TestAuthID(unittest.TestCase):
 class TestEmailExists(unittest.TestCase):
 
     def testEmailExits(self):
+        """
+        Test methods tests if email exists in database.
+        """
 
         result: bool = check_email_exits("test@test.com")
         self.assertTrue(result, f"Function is returning: {result}")
 
     def testEmailInvalid(self):
+        """
+        Test methods tests if email doesn't exist in database
+        """
 
         result: bool = check_email_exits("notinthedb@test.com")
         self.assertFalse(result, f"Function is returning: {result}")

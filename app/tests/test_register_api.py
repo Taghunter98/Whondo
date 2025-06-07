@@ -4,8 +4,12 @@ import os
 
 class TestRegisterAPI(unittest.TestCase):
 
+    @classmethod
+    def setUpClass(self):
+        self.URL = 'https://whondo.com/register/create'
+
     def testRequiredFields(self):
-        URL = 'https://whondo.com/register/create'
+       
         JSON = {
             "email" : "thisisatest@test.com",
             "password" : "password",
@@ -13,6 +17,18 @@ class TestRegisterAPI(unittest.TestCase):
             "surname" : "Cool",
         }
         
-        response = requests.post(url=URL, data = JSON).json()
+        response = requests.post(url=self.URL, data = JSON).json()
         self.assertTrue(response['error'], f"Response: {response}")
+    
+    def testAccountExists(self):
         
+        JSON = {
+            "email" : "thisisatest@test.com",
+            "password" : "password",
+            "name": "Joe",
+            "surname" : "Cool",
+            "age" : 26
+        }
+
+        response = requests.post(url=self.URL, data = JSON).json()
+        self.assertTrue(response['error'], f"Response: {response}")
