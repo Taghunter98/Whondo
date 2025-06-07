@@ -12,7 +12,7 @@ def check_email_exits(email: str) -> bool:
     """
 
     cursor.execute(query, (email,))
-    count: int = cursor.fetchone()
+    count: int = cursor.rowcount()
 
     cursor.close()
     connection.close()
