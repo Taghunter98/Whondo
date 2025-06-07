@@ -58,7 +58,7 @@ def register():
         if (not email or not password or not name or not surname or not age):
             return jsonify({"error" : "Required fields not provided"}), 400
 
-        if (not check_email_exits(email)):
+        if (check_email_exits(email)):
             return jsonify({"error" : "Account already exists"}), 403
 
         image_path: str = upload_file(profile_picture, email)
