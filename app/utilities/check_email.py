@@ -17,5 +17,5 @@ def check_email_exits(email: str) -> bool:
     cursor.close()
     connection.close()
 
-    return True if (count == 1) else  False
+    return True if (count != 0) else  False
     
