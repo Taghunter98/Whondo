@@ -16,6 +16,7 @@ from app.security.hashing    import hash_pasword
 from .images                 import upload_file
 from .authid                 import authenticate
 from app.utilities.mailgun   import send_email
+import requests
 
 register_bp: str = Blueprint("register_bp", __name__)
 
@@ -72,7 +73,7 @@ def register():
 
         data: str = send_email(email, name, email, subject, body)
 
-        if (data.status_code == 200):
+        if (data is not None):
             return render_template(
                 "created.html", 
                 name = name, 
