@@ -9,6 +9,9 @@ class TestRegisterAPI(unittest.TestCase):
         self.URL = 'https://whondo.com/register'
 
     def testRequiredFields(self):
+        """
+        Test method tests that required fields are accepted only.
+        """
        
         JSON = {
             "email" : "thisisatest@test.com",
@@ -17,18 +20,24 @@ class TestRegisterAPI(unittest.TestCase):
             "surname" : "Cool",
         }
         
-        response = requests.post(url=self.URL, data = JSON).status_code
-        self.assertEqual(response, 400, f"Response: {response}")
+        response = requests.post(url=self.URL, data = JSON)
+        
+        self.assertEqual(response.status_code, 400, f"Response: {response.status_code}")
+        self.assertEqual(response.json()['error'], "Required fields not provided", f"Response: {response.json()}")
     
     def testAccountExists(self):
+        """
+        Test method tests that accounts that already exist are not created.
+        """
         
         JSON = {
-            "email" : "thisisatest@test.com",
+            "email" : "test@test.com",
             "password" : "password",
             "name": "Joe",
             "surname" : "Cool",
             "age" : 26
         }
 
-        response = requests.post(url=self.URL, data = JSON).status_code
-        self.assertEqual(response, 403, f"Response: {response}")
+        response = requests.post(url=self.URL, data = JSON)
+        self.assertEqual(response.status_code, 403, f"Response: {response.status_code}")
+        self.assertEqual(response.json()['error'], "Account already exists", f"Response: {response.json()}")
