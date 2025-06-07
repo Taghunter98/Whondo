@@ -51,14 +51,12 @@ def upload_file(file:object, email:str) -> str:
             
             if not os.path.exists(path):
                 os.mkdir(path)
-            
-            file_path:str = f"{date}_{email}_{file.filename}"
 
             file.save(
-                os.path.join(path, file_path))
+                os.path.join(path, f"{date}_{email}_{file.filename}"))
 
             current_app.logger.info("File stored successfully")
-            return file_path
+            return f"{path}/{date}_{email}_{file.filename}"
         
         except Exception as err:
             current_app.logger.error("Can't store file")
