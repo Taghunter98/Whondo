@@ -69,7 +69,9 @@ def login():
             valid:bool = check_password(password, hash_string)
 
             if (valid is True):
-                session['uID'] = user_id
+                session['uID']   = user_id
+                session['email'] = email
+                
                 current_app.logger.info(f"User authenticated, starting new Session")
                 
                 return jsonify({
