@@ -27,7 +27,7 @@ def authenticate(email: str) -> int:
     """
 
     if not email:
-        logging.error("Email not supplied")
+        current_app.logger.error("Email not supplied")
         return None
         
     connection: object = connect()

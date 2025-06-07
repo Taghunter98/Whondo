@@ -14,7 +14,7 @@ from flask import Blueprint, request, jsonify, current_app, render_template, ses
 from app.database.db_connect import connect
 from app.security.hashing    import hash_pasword
 from .images                 import upload_file
-from .authid                 import authenticate
+from ..utilities.authid      import authenticate
 from app.utilities.mailgun   import send_email
 import requests
 
@@ -22,6 +22,24 @@ register_bp: str = Blueprint("register_bp", __name__)
 
 @register_bp.route('/register', methods = ['GET', 'POST'])
 def register():
+    """
+    The REST API is responsible for creating a new user in the MySQL databse.
+
+    The HTML form elements are parsed and required fields are verified.
+
+    The attached profile picture is stored in the server and an image path is generated.
+
+    Database connection is established and query is executed.
+
+    Session (uID) value is set to the user ID and valid status is returned. Session
+    (email) value is set to the user's email address.
+
+    Verification email is sent to new user, with a link to /register/verify.
+
+    Returns:
+        json: Response of successs or appropriate error message
+        html: Template render for account creation success
+    """    
 
     if (request.method == 'POST'):
 
@@ -67,7 +85,7 @@ def register():
         session['email'] = email
 
         link: str    = "https://whondo.com/login/verify"
-        sender: str   = "noreply@whondo.com"
+        sender: str  = "noreply@whondo.com"
         subject: str = "Activate Your Whondo Account"
         body: str    = f"Hi {name}!\nPlease follow this link to activate your new account.\n\n{link}"
 

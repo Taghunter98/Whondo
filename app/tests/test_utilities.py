@@ -1,7 +1,9 @@
 import unittest
+import requests
 import os
 
-from app.users.authid import authenticate
+from app.utilities.authid import authenticate
+from app.utilities.check_email import check_email_exits
 
 @unittest.skipIf(os.environ.get("CI") == "true", "Skipping test in CI pipeline: This test needs DB access")
 class TestAuthID(unittest.TestCase):
@@ -43,3 +45,17 @@ class TestAuthID(unittest.TestCase):
 
         result = self.setUpClass()
         self.assertTrue(isinstance(result, int), "User ID is not a valid integer")
+
+
+@unittest.skipIf(os.environ.get("CI") == "true", "Skipping test in CI pipeline: This test needs DB access")
+class TestEmailExists(unittest.TestCase):
+
+    def testEmailExits(self):
+
+        result: bool = check_email_exits("test@test.com")
+        self.assertTrue(result, f"Function is returning: {result}")
+
+    def testEmailInvalid(self):
+
+        result: bool = check_email_exits("notinthedb@test.com")
+        self.assertFalse(result, f"Function is returning: {result}")

@@ -11,7 +11,7 @@ Description: Serves a Blueprint API for logging in and verifying users.
 
 from flask import Blueprint, request, session, jsonify, current_app, render_template
 
-from .authid                 import authenticate
+from ..utilities.authid      import authenticate
 from app.database.db_connect import connect
 from app.security.hashing    import check_password
 
@@ -30,10 +30,12 @@ def login():
 
     Password is verified against the hashed version and the user is validated.
 
-    Session (uID) value is set to the user ID and valid status is returned.
+    Session (uID) value is set to the user ID and valid status is returned. Session
+    (email) value is set to the user's email address.
 
     Returns:
-        json: json response of successs or appropriate error message
+        json: Response of successs or appropriate error message
+        html: Template render of login.html
     """    
 
     if request.method == 'POST':
