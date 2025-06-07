@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <div id="form">
+        <h2>Register</h2>
+        <form id="register" action="/register" enctype="multipart/form-data" method="post">
+            <input type="text" name="email" id="e" placeholder="Email" required>
+            <input type="password" name="password" id="p" placeholder="Password" required>
+            <input type="text" name="name" id="n" placeholder="Name" required>
+            <input type="text" name="surname" id="s" placeholder="Surname">
+            <input type="number" name="age" id="a" placeholder="Age" required>
+            <input type="text" name="occupation" id="o" placeholder="Occupation">
+            <input type="text" name="bio" id="b" placeholder="Bio">
+            <input type="file" name="file" id="f">
+            <button type="submit">Register</button>
+        </form>
+
+    </div>
+    <style>
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+</body>
+</html>

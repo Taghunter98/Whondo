@@ -13,7 +13,7 @@ class TestLoginAPI(unittest.TestCase):
             object: Request object
         """
         
-        API_URL:str = "https://whondo.com/login/auth"
+        API_URL:str = "https://whondo.com/login"
         API_DATA = {
             "email": "test@test.com",
             "password": "password123"
@@ -60,7 +60,7 @@ class TestLoginAPIFail(unittest.TestCase):
             object: Request object
         """
         
-        API_URL:str = "https://whondo.com/login/auth"
+        API_URL:str = "https://whondo.com/login"
         API_DATA = {
             "email": "wrong@wrong.com",
             "password": "wrongpassword"
@@ -98,7 +98,7 @@ class TestInvalidData(unittest.TestCase):
             object: Request object
         """
         
-        API_URL:str = "https://whondo.com/login/auth"
+        API_URL:str = "https://whondo.com/login"
         API_DATA = {
             "email": "",
             "password": ""
@@ -135,7 +135,7 @@ class TestPasswordFail(unittest.TestCase):
             object: Request object
         """
         
-        API_URL:str = "https://whondo.com/login/auth"
+        API_URL:str = "https://whondo.com/login"
         API_DATA = {
             "email": "test@test.com",
             "password": "thisisnotapassword"

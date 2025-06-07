@@ -9,11 +9,10 @@ Version:     1.0
 Description: Fetches uID records that match provided email. 
 """
 
-import logging
-
+from flask                   import current_app
 from app.database.db_connect import connect
 
-def authenticate(email:str) -> int:
+def authenticate(email: str) -> int:
     """
     A function to authenticate users, by returning the user ID by querying 
     the database with the provided email.
@@ -28,13 +27,13 @@ def authenticate(email:str) -> int:
     """
 
     if not email:
-        logging.error("Email not supplied")
+        current_app.logger.error("Email not supplied")
         return None
         
-    connection = connect()
-    cursor     = connection.cursor()
+    connection: object = connect()
+    cursor: object     = connection.cursor()
 
-    query:str = f"""
+    query: str = f"""
         SELECT u.uID, u.email 
         FROM Users u 
         WHERE u.email = "{email}" 
@@ -48,8 +47,8 @@ def authenticate(email:str) -> int:
     connection.close()
 
     if (result is not None):
-        user_id:int = result[0]
+        user_id: int = result[0]
         return user_id
     else:
-        print("Email does not match uID records in database")
+        current_app.logger.error("Email does not match uID records in database")
         return None

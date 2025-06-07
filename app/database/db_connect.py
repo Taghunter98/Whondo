@@ -9,12 +9,12 @@ Version:     1.0
 Description: Provides a connection to the Whondo MySQL database. 
 """
 
-from flask import current_app
+from flask  import current_app
+from dotenv import load_dotenv
 import mysql.connector
 import os
-from dotenv import load_dotenv
 
-def connect():
+def connect() -> object:
     """
     The function aattempts a connection to the MySQL database.
 
@@ -25,16 +25,16 @@ def connect():
     try:
         load_dotenv()
 
-        DB_USER  = os.getenv('DB_USER')
-        DB_PASS  = os.getenv('DB_PASS')
-        DB_HOST  = os.getenv('DB_HOST')
-        DATABASE = os.getenv('DATABASE')
+        DB_USER: str  = os.getenv('DB_USER')
+        DB_PASS: str  = os.getenv('DB_PASS')
+        DB_HOST: str  = os.getenv('DB_HOST')
+        DATABASE: str = os.getenv('DATABASE')
 
-        connect = mysql.connector.connect (
-            user     = DB_USER,
-            password = DB_PASS,
-            host     = DB_HOST,
-            database = DATABASE
+        connect: object = mysql.connector.connect (
+            user        = DB_USER,
+            password    = DB_PASS,
+            host        = DB_HOST,
+            database    = DATABASE
         )
         
         return connect
