@@ -11,7 +11,7 @@ def check_email_exits(email: str) -> bool:
         WHERE email = %s;
     """
 
-    cursor.execute(query, (email))
+    cursor.execute(query, (email,))
     count: int = cursor.fetchone()
 
     cursor.close()
