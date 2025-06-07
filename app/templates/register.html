@@ -8,7 +8,7 @@
 <body>
     <div>
         <h2>Register</h2>
-        <form id="register" action="/register" method="post">
+        <form id="register" action="/register" enctype="multipart/form-data" method="post">
             <input type="text" name="email" id="e" placeholder="Email" required>
             <input type="password" name="password" id="p" placeholder="Password" required>
             <input type="text" name="name" id="n" placeholder="Name" required>
@@ -17,7 +17,7 @@
             <input type="text" name="occupation" id="o" placeholder="Occupation">
             <input type="text" name="bio" id="b" placeholder="Bio">
             <input type="file" name="file" id="f">
-            <input type="submit">
+            <button type="submit">Register</button>
         </form>
 
     </div>
