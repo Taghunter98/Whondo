@@ -11,11 +11,12 @@ Description: Serves a Blueprint API for registering a new user.
 
 from flask import Blueprint, request, jsonify, current_app, render_template, session
 
-from app.database.db_connect import connect
-from app.security.hashing    import hash_pasword
-from .images                 import upload_file
-from ..utilities.authid      import authenticate
-from app.utilities.mailgun   import send_email
+from app.database.db_connect   import connect
+from app.security.hashing      import hash_pasword
+from .images                   import upload_file
+from ..utilities.authid        import authenticate
+from app.utilities.mailgun     import send_email
+from app.utilities.check_email import check_email_exits
 import requests
 
 register_bp: str = Blueprint("register_bp", __name__)
@@ -26,6 +27,8 @@ def register():
     The REST API is responsible for creating a new user in the MySQL databse.
 
     The HTML form elements are parsed and required fields are verified.
+
+    Email availability is checked to avoid duplicate accounts.
 
     The attached profile picture is stored in the server and an image path is generated.
 
@@ -54,6 +57,9 @@ def register():
 
         if (not email or not password or not name or not surname or not age):
             return jsonify({"error" : "Required fields not provided"}), 400
+
+        if (not check_email_exits(email)):
+            return jsonify({"error" : "Account already exists"}), 403
 
         image_path: str = upload_file(profile_picture, email)
 

@@ -2,7 +2,7 @@ import unittest
 import requests
 import os
 
-from app.utilities.authid import authenticate
+from app.utilities.authid      import authenticate
 from app.utilities.check_email import check_email_exits
 
 @unittest.skipIf(os.environ.get("CI") == "true", "Skipping test in CI pipeline: This test needs DB access")
