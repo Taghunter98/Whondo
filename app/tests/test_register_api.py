@@ -18,7 +18,7 @@ class TestRegisterAPI(unittest.TestCase):
         }
         
         response = requests.post(url=self.URL, data = JSON).json()
-        self.assertTrue(response['error'], f"Response: {response}")
+        self.assertIn(response['error'], response, f"Response: {response}")
     
     def testAccountExists(self):
         
@@ -31,4 +31,4 @@ class TestRegisterAPI(unittest.TestCase):
         }
 
         response = requests.post(url=self.URL, data = JSON).json()
-        self.assertTrue(response['error'], f"Response: {response}")
+        self.assertIn(response['error'], response, f"Response: {response}")
