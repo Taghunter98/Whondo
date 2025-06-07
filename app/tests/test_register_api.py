@@ -6,7 +6,7 @@ class TestRegisterAPI(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        self.URL = 'https://whondo.com/register/create'
+        self.URL = 'https://whondo.com/register'
 
     def testRequiredFields(self):
        
