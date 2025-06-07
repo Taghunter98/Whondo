@@ -17,8 +17,8 @@ class TestRegisterAPI(unittest.TestCase):
             "surname" : "Cool",
         }
         
-        response = requests.post(url=self.URL, data = JSON).json()
-        self.assertIn(response['error'], response, f"Response: {response}")
+        response = requests.post(url=self.URL, data = JSON).status_code
+        self.assertEqual(response, 400, f"Response: {response}")
     
     def testAccountExists(self):
         
@@ -30,5 +30,5 @@ class TestRegisterAPI(unittest.TestCase):
             "age" : 26
         }
 
-        response = requests.post(url=self.URL, data = JSON).json()
-        self.assertIn(response['error'], response, f"Response: {response}")
+        response = requests.post(url=self.URL, data = JSON).status_code
+        self.assertEqual(response, 403, f"Response: {response}")
