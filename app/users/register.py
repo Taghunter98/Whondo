@@ -63,6 +63,6 @@ def register():
         session['email'] = email
 
         # return jsonify({"message" : f"User {email} created successfully", "status" : True}, ), 201
-        return render_template('created.html', name = name, surname = surname)
+        return render_template("created.html", name = name, surname = surname)
     else:
-        return render_template('register.html')
+        return render_template("register.html")
