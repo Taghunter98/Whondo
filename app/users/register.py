@@ -30,14 +30,15 @@ def register():
         bio:str         = request.form.get('bio')
         profile_picture = request.files.get('file')
 
+        image_path:str = 'Default'
+
         if (not email or not password or not name or not surname or not age):
             return jsonify({"error" : "Required fields not provided"}), 400
-        
+
         if (profile_picture):
             image_path:str = upload_file(profile_picture, email)
 
             if image_path is None:
-                image_path = ''
                 return jsonify({"error" : "Image failed to upload"}), 409
         
         hashed_password:str = hash_pasword(password)
