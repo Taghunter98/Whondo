@@ -1,4 +1,4 @@
-import '../components/card.js';
+import './components/TEST_card.js';
 
 class TestCardHousing extends HTMLElement {
   constructor() {
@@ -9,7 +9,7 @@ class TestCardHousing extends HTMLElement {
     
     this.innerHTML = `
       <comp-card id="testCard"></comp-card>
-      <button id="refreshBtn">Refresh Card</button>
+      <comp-button id="refreshBtn">Refresh Card</comp-button>
     `;
 
     
@@ -17,20 +17,21 @@ class TestCardHousing extends HTMLElement {
     const btn = document.getElementById("refreshBtn");
 
       
-    card.cardTitle = "Normal Title";
-    card.cardText = "Card description";
-    card.buttonText = "Click to change";
+    card.cardTitle = "Super cool title";
+    card.cardText = "Super cool card description";
+    card.buttonText = "Click";
 
     btn.addEventListener("click", () => {
         
         card.cardTitle = "New TITLE";
         card.cardText = "New Text";
-        if (card && typeof card.refreshComponent === "function") {
-          card.refreshComponent();
-          console.log("refreshComponent was called on comp-card.");
+
+        if (card.cardTitle === "New TITLE") {
+            console.log("Card Title updated successsfully");
         } else {
-          console.error("refreshComponent is not defined on comp-card", card);
+            console.log("Update failed");
         }
+        
       });
   }
 }

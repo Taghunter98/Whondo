@@ -12,22 +12,24 @@ class Card extends Comp {
         this.compHTML_ = this.createHTML();
         this.compCSS_  = this.createCSS();
 
-        this.renderComponent();
     }
 
     set cardTitle(value) {
         this.cardTitle_ = value;
+        console.log("Setting cardTitle...")
         const newHTML = this.createHTML();
         this.updateComponent(newHTML, this.compCSS_);
     }
 
     set cardText(value) {
         this.cardText_ = value;
+        console.log("Setting cardText...")
         const newHTML = this.createHTML();
         this.updateComponent(newHTML, this.compCSS_);
     }
 
     set buttonText(value) {
+        console.log("Setting buttonText...")
         this.buttonText_ = value;
         const newHTML = this.createHTML();
         this.updateComponent(newHTML, this.compCSS_);
@@ -46,7 +48,7 @@ class Card extends Comp {
     }
 
     createHTML() {
-        return `
+        return /* html */ `
         <div class="container">
             <h2>${this.cardTitle_}</h2>
             <p>${this.cardText_}</p>
@@ -56,7 +58,7 @@ class Card extends Comp {
     }
 
     createCSS() {
-        return `
+        return /* css */ `
         h2, p {
             margin: 0;
             padding: 0;
@@ -76,7 +78,7 @@ class Card extends Comp {
     onRender() {
         const cardButton = this.shadowRoot.getElementById("test");
         cardButton.buttonText = this.buttonText_;
-        cardButton.onclick = () => this.debugComponent();
+        cardButton.onclick = () => console.log("Button clicked");
 
         // cardButton.addEventListener("click", () => {
         //     console.log("Click time");

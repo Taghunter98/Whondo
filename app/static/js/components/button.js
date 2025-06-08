@@ -23,20 +23,29 @@ class TestComponent extends Comp {
     }
 
     createHTML() {
-        return `
+        return /* html */ `
         <button id="button" class="button">${this.buttonText_}</button>
         `;
     }
 
     createCSS() {
-        return `
+        return /* css */ `
         .button {
-            background: black;
-            color: white;
+            background: var(--black100);
+            color: var(--white);
             font-size: 16px;
-            padding: 8px 24px;
+            font-weight: 400;
+            padding: 9px 16px;
             border-radius: 8px;
             border: none;
+            cursor: pointer;
+            transition: background 0.1s ease-in-out;
+        }
+        .button:hover {
+            background: var(--black80);
+        }
+        .button:active {
+            background: var(--)
         }
         `;
     }
