@@ -4,8 +4,8 @@ export class Comp extends HTMLElement {
         super();
         
         this.compName_ = "Component Name";
-        this.compHTML_ = "<p>Add HTML here</p>";
-        this.compCSS_  = "p {color: red}";
+        this.compHTML_ = "";
+        this.compCSS_  = "";
 
         this.attachShadow({ mode: "open"});
     }
@@ -34,6 +34,13 @@ export class Comp extends HTMLElement {
         return this.compCSS_;
     }
 
+    createTemplate(html, css) {
+        return `
+        ${html}
+        <style>${css}</style>
+        `
+    }
+
     debugComponent() {
         console.log("DEBUG COMPONENT: " + this.compName + "\n")
         console.log(this.compName);
@@ -43,11 +50,14 @@ export class Comp extends HTMLElement {
         console.log("\n");
     }
 
-    render() {
-        return  `
-        ${this.compHTML_}
-        <style>${this.compCSS_}</style>
-        `
+    renderComponent() {
+        this.shadowRoot.innerHTML = this.createTemplate(this.compHTML_, this.compCSS_);
+    }
+
+    updateComponent(newHTML, newCSS) {
+        this.compHTML_ = newHTML;
+        this.compCSS_  = newCSS;
+        this.renderComponent();
     }
 
 }

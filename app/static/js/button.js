@@ -5,16 +5,23 @@ class TestComponent extends Comp {
     constructor() {
         super();
 
+        this.buttonText_ = "This is a button";
+
         this.compName_ = "Button";
-        this.compHTML_ = this.createHTML();
+        this.compHTML_ = this.createHTML(this.buttonText_);
         this.compCSS_  = this.createCSS();
 
-        this.buttonText_ = '';
+        this.renderComponent();
     }
 
     set buttonText(value) {
         this.buttonText_ = value;
-        this.renderComponent();
+        const newHTML = this.createHTML(this.buttonText_);
+        this.updateComponent(newHTML, this.compCSS_);
+    }
+
+    get buttonText() {
+        return this.buttonText_;
     }
 
     createHTML() {
@@ -35,28 +42,8 @@ class TestComponent extends Comp {
         `
     }
 
-    testFunction() {
-        alert("This is a test");
-    }
-
-    debug() {
-        this.debugComponent();
-    }
-
     connectedCallback() {
         this.renderComponent();
-    }
-
-    renderComponent() {
-        const COMP_CODE = this.render();
-
-        this.shadowRoot.innerHTML = `
-        ${COMP_CODE}
-        `
-
-        const button = this.shadowRoot.getElementById("test");
-        button.buttonText = "THIS IS A COOL BUTTON";
-        button.onclick = () => this.testFunction();
     }
 }
 
