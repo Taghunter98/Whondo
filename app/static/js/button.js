@@ -4,9 +4,10 @@ class TestComponent extends Comp {
 
     constructor() {
         super();
-        this.compName = "Element";
-        this.compHTML = this.createHTML();
-        this.compCSS = this.createCSS();
+
+        this.compName_ = "Button";
+        this.compHTML_ = this.createHTML();
+        this.compCSS_  = this.createCSS();
     }
 
     createHTML() {
@@ -31,21 +32,11 @@ class TestComponent extends Comp {
         alert("This is a test");
     }
 
-    renderTestComponent() {
-
-        const code = this.render();
-        console.log(code);
-
-        this.shadowRoot.innerHTML = `
-        ${code}
-        `
-
-        const button = this.shadowRoot.getElementById("test");
-        button.onclick =  () => this.testFunction();
+    debug() {
+        this.debugComponent();
     }
-
     connectedCallback() {
-        this.renderTestComponent();
+        this.renderComponent();
     }
 }
 

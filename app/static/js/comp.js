@@ -1,10 +1,12 @@
 export class Comp extends HTMLElement {
 
-    constructor(compName, compHTML, compCSS) {
+    constructor() {
         super();
-        this.compName_ = compName;
-        this.compHTML_ = compHTML;
-        this.compCSS   = compCSS;
+        
+        this.compName_ = "Component Name";
+        this.compHTML_ = "<p>Add HTML here</p>";
+        this.compCSS_  = "p {color: red}";
+
         this.attachShadow({ mode: "open"});
     }
 
@@ -32,10 +34,25 @@ export class Comp extends HTMLElement {
         return this.compCSS_;
     }
 
+    debugComponent() {
+        console.log(this.compName);
+        console.log(this.compHTML);
+        console.log(this.compCSS);
+    }
+
     render() {
         return  `
         ${this.compHTML_}
-        <style>${this.compCSS}</style>
+        <style>${this.compCSS_}</style>
+        `
+    }
+
+    renderComponent() {
+
+        const COMP_CODE = this.render();
+
+        this.shadowRoot.innerHTML = `
+        ${COMP_CODE}
         `
     }
 }
