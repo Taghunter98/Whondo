@@ -38,6 +38,7 @@ class TestComponent extends Comp {
             font-size: 16px;
             padding: 8px 24px;
             border-radius: 8px;
+            border: none;
         }
         `
     }
