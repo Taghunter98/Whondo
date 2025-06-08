@@ -1,4 +1,4 @@
-import {Comp} from '../comp.js'
+import {Comp} from './comp.js'
 
 class TestComponent extends Comp {
 
