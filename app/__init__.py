@@ -9,6 +9,10 @@ Version:     1.0
 Description: Creates a Flask app instance and sets up logging.
 """
 
+import mimetypes
+mimetypes.add_type('application/javascript', '.js')
+mimetypes.add_type('text/css', '.css')
+
 from flask                         import Flask, session, redirect, has_request_context, request
 from flask_session                 import Session
 from flask.logging                 import default_handler
