@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+
+*{
+    font-family: "Geist", sans-serif;
+}
+:root {
+    --white: #FFFF;
+    --black100: #242424;
+    --black80:  #505050;
+    --black60: #7c7c7c;
+    --black40: #d3d3d3;
+    --black20: #e9e9e9;
+}
