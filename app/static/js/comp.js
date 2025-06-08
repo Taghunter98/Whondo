@@ -35,9 +35,12 @@ export class Comp extends HTMLElement {
     }
 
     debugComponent() {
+        console.log("DEBUG COMPONENT: " + this.compName + "\n")
         console.log(this.compName);
         console.log(this.compHTML);
         console.log(this.compCSS);
+        console.log(this.compJS);
+        console.log("\n");
     }
 
     render() {
@@ -47,12 +50,4 @@ export class Comp extends HTMLElement {
         `
     }
 
-    renderComponent() {
-
-        const COMP_CODE = this.render();
-
-        this.shadowRoot.innerHTML = `
-        ${COMP_CODE}
-        `
-    }
 }

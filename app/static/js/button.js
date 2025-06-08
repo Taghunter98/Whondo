@@ -8,11 +8,18 @@ class TestComponent extends Comp {
         this.compName_ = "Button";
         this.compHTML_ = this.createHTML();
         this.compCSS_  = this.createCSS();
+
+        this.buttonText_ = '';
+    }
+
+    set buttonText(value) {
+        this.buttonText_ = value;
+        this.renderComponent();
     }
 
     createHTML() {
         return `
-        <button id="test" class="test">CLICK ME</button>
+        <button id="test" class="test">${this.buttonText_}</button>
         `
     }
 
@@ -35,8 +42,21 @@ class TestComponent extends Comp {
     debug() {
         this.debugComponent();
     }
+
     connectedCallback() {
         this.renderComponent();
+    }
+
+    renderComponent() {
+        const COMP_CODE = this.render();
+
+        this.shadowRoot.innerHTML = `
+        ${COMP_CODE}
+        `
+
+        const button = this.shadowRoot.getElementById("test");
+        button.buttonText = "THIS IS A COOL BUTTON";
+        button.onclick = () => this.testFunction();
     }
 }
 
