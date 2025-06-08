@@ -8,7 +8,7 @@ Version:     1.0
 
 Description: Creates a Flask app instance and sets up logging.
 """
-
+import mimetypes
 from flask                         import Flask, session, redirect, has_request_context, request
 from flask_session                 import Session
 from flask.logging                 import default_handler
@@ -121,6 +121,9 @@ def create_app() -> Flask:
     app.config["UPLOAD_FOLDER"]           = UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
     # app.config["SESSION_COOKIE_SAMESITE"] = True
+
+    mimetypes.add_type('application/javascript', '.js')
+    mimetypes.add_type('text/css', '.css')
     
     Session(app)
     
