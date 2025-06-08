@@ -9,8 +9,7 @@
     <h2>Login to Whondo</h2>
     <input type="text" name="email" id="e" />
     <input type="password" name="password" id="p" />
-    <input type="submit" onclick="login()" />
-    <comp-button></comp-button>
+    <comp-button id="submit_button"></comp-button>
 
     <p id="result"></p>
 
@@ -47,6 +46,8 @@
           });
       }
 
+      const submit_button = document.getElementById("submit_button");
+      submit_button.onclick = () => login();
     
     </script>
   </body>
