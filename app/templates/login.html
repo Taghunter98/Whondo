@@ -14,7 +14,8 @@
 
     <p id="result"></p>
 
-    <script type="module" src="/app/static/buttons/button.js"></script>
+    <script type="module"  src="{{ url_for('static', filename='js/button.js') }}"
+></script>
 
     <script>
       function login() {
