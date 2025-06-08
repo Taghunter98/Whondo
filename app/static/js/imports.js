@@ -1,4 +1,4 @@
-import './comp.js'
-import './button.js'
-import './secondry.js'
-import './card.js'
+import './comp.js';
+import './components/button.js';
+import './components/card.js';
+import './components/login.js';

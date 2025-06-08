@@ -1,4 +1,4 @@
-import { Comp } from "./comp.js";
+import { Comp } from "../comp.js";
 
 class Card extends Comp {
     constructor() {
@@ -9,16 +9,40 @@ class Card extends Comp {
         this.buttonText_ = "Register";
 
         this.compName_ = "Card";
-        this.compHTML_ = this.createHTML(this.cardTitle_, this.cardText_);
+        this.compHTML_ = this.createHTML();
         this.compCSS_  = this.createCSS();
 
         this.renderComponent();
     }
 
     set cardTitle(value) {
-        this.cardTitle = value;
-        const newHTML = this.createHTML(this.cardTitle_);
+        this.cardTitle_ = value;
+        const newHTML = this.createHTML();
         this.updateComponent(newHTML, this.compCSS_);
+    }
+
+    set cardText(value) {
+        this.cardText_ = value;
+        const newHTML = this.createHTML();
+        this.updateComponent(newHTML, this.compCSS_);
+    }
+
+    set buttonText(value) {
+        this.buttonText_ = value;
+        const newHTML = this.createHTML();
+        this.updateComponent(newHTML, this.compCSS_);
+    }
+
+    get cardTitle() {
+        return this.cardTitle_;
+    }
+
+    get cardText() {
+        return this.cardText_;
+    }
+
+    get buttonText() {
+        return this.buttonText_;
     }
 
     createHTML() {
@@ -49,21 +73,18 @@ class Card extends Comp {
         `
     }
 
-    connectedCallback() {
-        this.renderComponent();
-
+    onRender() {
         const cardButton = this.shadowRoot.getElementById("test");
         cardButton.buttonText = this.buttonText_;
+        cardButton.onclick = () => this.debugComponent();
 
-        // cardButton.onclick = () => this.debugComponent();
+        // cardButton.addEventListener("click", () => {
+        //     console.log("Click time");
+        // })
+    }
 
-        cardButton.addEventListener("click", () => {
-            console.log("Click time");
-        })
-
-        cardButton.onmouseover = () => {
-            alert("Hover time");
-        }
+    connectedCallback() {
+        this.renderComponent();
     }
 }
 

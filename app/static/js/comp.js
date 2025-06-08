@@ -46,17 +46,24 @@ export class Comp extends HTMLElement {
         console.log(this.compName);
         console.log(this.compHTML);
         console.log(this.compCSS);
-        console.log(this.compJS);
         console.log("\n");
     }
 
     renderComponent() {
         this.shadowRoot.innerHTML = this.createTemplate(this.compHTML_, this.compCSS_);
+
+        if (typeof this.onRender === "function") {
+            this.onRender();
+        }
     }
 
     updateComponent(newHTML, newCSS) {
         this.compHTML_ = newHTML;
         this.compCSS_  = newCSS;
+        this.renderComponent();
+    }
+
+    refreshComponent() {
         this.renderComponent();
     }
 
