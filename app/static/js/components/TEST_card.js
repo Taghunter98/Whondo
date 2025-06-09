@@ -1,35 +1,32 @@
 import { Comp } from "../comp.js";
+import { Style } from "../style.js";
 
 class Card extends Comp {
     constructor() {
         super();
 
-        this.cardTitle_ = "This is a card";
-        this.cardText_  = "Lorem ipsum dolor sit amet";
+        this.cardTitle_ = "Card header";
+        this.cardText_  = "Card text goes here.";
         this.buttonText_ = "Card Action";
         
         this.compName_ = "Card";
         this.compHTML_ = this.createHTML();
         this.compCSS_  = this.createCSS();
-
     }
 
     set cardTitle(value) {
         this.cardTitle_ = value;
-        console.log("Setting cardTitle...")
         const newHTML = this.createHTML();
         this.updateComponent(newHTML, this.compCSS_);
     }
 
     set cardText(value) {
         this.cardText_ = value;
-        console.log("Setting cardText...")
         const newHTML = this.createHTML();
         this.updateComponent(newHTML, this.compCSS_);
     }
 
     set buttonText(value) {
-        console.log("Setting buttonText...")
         this.buttonText_ = value;
         const newHTML = this.createHTML();
         this.updateComponent(newHTML, this.compCSS_);
@@ -58,31 +55,15 @@ class Card extends Comp {
     }
 
     createCSS() {
+        const style = new Style();
+        let cardStyle = style.styleCard("container");
         return /* css */ `
-        h2, p {
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            max-width: 500px;
-            border-radius: 8px;
-            border: solid 2px black;
-            gap: 20px;
-        }
+        ${cardStyle}
         `
     }
 
     cardAction(cardButton) {
         cardButton.onclick = () => console.log("Button clicked");
-    }
-
-    cardActionAlt(cardButton) {
-        cardButton.addEventListener("mouseover", () => {
-            alert("Hover Function");
-        });
     }
 
     onRender() {
@@ -91,7 +72,6 @@ class Card extends Comp {
         console.log(cardButton.buttonVarient_);
 
         this.cardAction(cardButton);
-        this.cardActionAlt(cardButton);
     }
 
     connectedCallback() {

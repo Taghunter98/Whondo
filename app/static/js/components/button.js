@@ -1,16 +1,16 @@
 import { Comp }  from '../comp.js';
 import { Style } from '../style.js'
 
-class TestComponent extends Comp {
+class Button extends Comp {
     constructor() {
         super();                                                    
 
         this.buttonText_ = "This is a button";  // Component specific variabl
-        this.buttonVarient_ = 1;
+        this.buttonVarient_ = 1;                // Varient primary, secondry
+        
         this.compName_ = "Button";
         this.compHTML_ = this.createHTML();
         this.compCSS_  = this.createCSS();
-
     }
 
     set buttonText(value) {
@@ -41,17 +41,15 @@ class TestComponent extends Comp {
 
     createCSS() {
         const style = new Style();
-        let primary = style.styleButton("button", "--white", "--black100", "--black80");
-        let secondry = style.styleButton("button", "--black100", "--black20", "--black80", "--black60");
-        console.log("CURRENT VARIENT: " + this.buttonVarient_);
+
+        let primary  = style.styleButton("button", "--white", "--black100", "--black80", "--black60");
+        let secondry = style.styleButton("button", "--black100", "--black20", "--black40", "--black60");
         
         if (this.buttonVarient_ == 1) {
-            console.log("Built template 1");
             return /* css */ `
             ${primary}
             `;
         } else if (this.buttonVarient_ == 2) {
-            console.log("Built template 2");
             return /* css */ `
             ${secondry}
             `;
@@ -63,4 +61,4 @@ class TestComponent extends Comp {
     }
 }
 
-customElements.define("comp-button", TestComponent);
+customElements.define("comp-button", Button);
