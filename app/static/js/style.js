@@ -22,23 +22,43 @@ export class Style {
         `
     }
 
-    styleCard(valueID) {
+    styleContainer(direction, maxWidth, padding) {
+        return  `
+        display: flex;
+        flex-direction: ${direction};
+        padding: ${padding}px;
+        max-width: ${maxWidth}px;
+        `
+    }
+
+    styleImage() {
+        return /* css */ `
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        `
+    }
+
+    styleCard(containerID, direction, maxWidth, padding) {
+        
         return /* css */ `
         h2, p {
             margin: 0;
             padding: 0;
         }
-        .${valueID} {
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            max-width: 500px;
+        
+        ${this.styleImage()}
+        
+        .${containerID} {
+            ${this.styleContainer(direction, maxWidth, padding)}
             border-radius: 12px;
             border: solid 1px var(--black40);
-            gap: 20px;
+            gap: 15px;
         }
-        .${valueID}:hover {
-            background: var(--black20);
+        .${containerID}:hover {
+            background: var(--black10);
             transition: background 0.4s;
         }
         `

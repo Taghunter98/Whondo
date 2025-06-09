@@ -22,6 +22,7 @@ class TestCardHousing extends HTMLElement {
     card.cardTitle = "Super cool title";
     card.cardText = "Super cool card description";
     card.buttonText = "Click";
+    card.cardImage = "https://images.pexels.com/photos/333083/pexels-photo-333083.jpeg?_gl=1*q46dzz*_ga*MjEyOTMwNTE2Ni4xNzQyMTQxMzY3*_ga_8JE65Q40S6*czE3NDk0ODYyOTckbzQkZzAkdDE3NDk0ODYyOTckajYwJGwwJGgw";
 
     btn.addEventListener("click", () => {
         

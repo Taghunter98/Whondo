@@ -8,6 +8,7 @@ class Card extends Comp {
         this.cardTitle_ = "Card header";
         this.cardText_  = "Card text goes here.";
         this.buttonText_ = "Card Action";
+        this.cardImage_ = "";
         
         this.compName_ = "Card";
         this.compHTML_ = this.createHTML();
@@ -32,6 +33,12 @@ class Card extends Comp {
         this.updateComponent(newHTML, this.compCSS_);
     }
 
+    set cardImage(value) {
+        this.cardImage_ = value;
+        const newHTML = this.createHTML();
+        this.updateComponent(newHTML, this.compCSS_);
+    }
+
     get cardTitle() {
         return this.cardTitle_;
     }
@@ -45,8 +52,13 @@ class Card extends Comp {
     }
 
     createHTML() {
+        let imageHTML = '';
+
+        if (this.cardImage_ != "") imageHTML = `<img src="${this.cardImage_}">`;
+        
         return /* html */ `
         <div class="container">
+            ${imageHTML}
             <h2>${this.cardTitle_}</h2>
             <p>${this.cardText_}</p>
             <comp-button id="test" class="test"></comp-button>
@@ -56,7 +68,8 @@ class Card extends Comp {
 
     createCSS() {
         const style = new Style();
-        let cardStyle = style.styleCard("container");
+        let cardStyle = style.styleCard("container", "column", 500, 20);
+
         return /* css */ `
         ${cardStyle}
         `
@@ -69,7 +82,6 @@ class Card extends Comp {
     onRender() {
         const cardButton = this.shadowRoot.getElementById("test");
         cardButton.buttonVarient = 2;
-        console.log(cardButton.buttonVarient_);
 
         this.cardAction(cardButton);
     }
