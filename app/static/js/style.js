@@ -1,10 +1,34 @@
+/**
+ * Copyright (c) 2025 Josh Bassett, whondo.com
+ * 
+ * Filename:    style.js
+ * Author:      Josh Bassett
+ * Date:        09/06/2025
+ * Version:     1.0
+ * 
+ * Description: Base style class for CSS injection for components.
+ */
+
 export class Style {
     
-    styleButton(valueID, colour, background, hoverBackground, activeBackground) {
-        return /* css */`
-        .${valueID} {
-            background: var(${background});
-            color: var(${colour});
+    /**
+     * @brief The function provides styling for button components.
+     * 
+     * @param {string} valueID 
+     * @param {string} colour 
+     * @param {string} background 
+     * @param {string} hoverBackground 
+     * @param {string} activeBackground
+     * 
+     * @returns CSS values to be injected into component.
+     */
+    styleButton(buttonID, text, colour, hoverColour, activeColour) {
+
+        return /* css */ `
+        .${buttonID} {
+            background: var(${colour});
+            color: var(${text});
+            width: auto;
             font-size: 16px;
             font-weight: 400;
             padding: 9px 16px;
@@ -13,51 +37,90 @@ export class Style {
             cursor: pointer;
             transition: background 0.1s ease-in-out;
         }
-        .${valueID}:hover {
-            background: var(${hoverBackground});
+        .${buttonID}:hover {
+            background: var(${hoverColour});
         }
-        .${valueID}:active {
-            background: var(${activeBackground});
+        .${buttonID}:active {
+            background: var(${activeColour});
         }
         `
     }
 
+    /**
+     * @brief The function provides styling for containers.
+     * 
+     * @param {string} direction 
+     * @param {int}    maxWidth 
+     * @param {int}    padding 
+     * 
+     * @returns CSS container values to be injected into component.
+     */
     styleContainer(direction, maxWidth, padding) {
+
         return  `
-        display: flex;
-        flex-direction: ${direction};
-        padding: ${padding}px;
-        max-width: ${maxWidth}px;
+            display: flex;
+            flex-direction: ${direction};
+            padding: ${padding}px;
+            max-width: ${maxWidth}px;
         `
     }
 
-    styleImage() {
+    /**
+     * @brief The function styles default images.
+     * 
+     * @param {boolean} borderRadius
+     * 
+     * @returns CSS image values to be injected into component.
+     */
+    styleImage(borderRadius, maxHeight) {
+        
+        let radius;
+
+        if (borderRadius) radius = 8;
+
         return /* css */ `
         img {
             width: 100%;
             height: 100%;
+            max-height: ${maxHeight}px;
             object-fit: cover;
+            border-radius: ${radius}px;
         }
         `
     }
 
-    styleCard(containerID, direction, maxWidth, padding) {
+    /**
+     * @brief The function styles a modular card.
+     * 
+     * @param {string}  containerID 
+     * @param {string}  direction 
+     * @param {int}     maxWidth 
+     * @param {int}     padding
+     * @param {int}     gap
+     * @param {boolean} border
+     * 
+     * @returns CSS card values to be injected into component.
+     */
+    styleCard(cardID, direction, maxWidth, padding, gap, border) {
         
+        let cardBorder = '';
+        if (border) cardBorder = "solid 1px var(--black40)"
+
         return /* css */ `
         h2, p {
             margin: 0;
             padding: 0;
         }
         
-        ${this.styleImage()}
+        ${this.styleImage(true, 200)}
         
-        .${containerID} {
+        .${cardID} {
             ${this.styleContainer(direction, maxWidth, padding)}
             border-radius: 12px;
-            border: solid 1px var(--black40);
-            gap: 15px;
+            border: ${cardBorder};
+            gap: ${gap}px;
         }
-        .${containerID}:hover {
+        .${cardID}:hover {
             background: var(--black10);
             transition: background 0.4s;
         }

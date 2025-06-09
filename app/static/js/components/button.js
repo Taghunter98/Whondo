@@ -5,8 +5,8 @@ class Button extends Comp {
     constructor() {
         super();                                                    
 
-        this.buttonText_ = "This is a button";  // Component specific variabl
-        this.buttonVarient_ = 1;                // Varient primary, secondry
+        this.buttonText_ = "This is a button";
+        this.buttonVarient_ = 1;                
         
         this.compName_ = "Button";
         this.compHTML_ = this.createHTML();

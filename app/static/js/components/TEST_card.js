@@ -54,13 +54,15 @@ class Card extends Comp {
     createHTML() {
         let imageHTML = '';
 
-        if (this.cardImage_ != "") imageHTML = `<img src="${this.cardImage_}">`;
-        
+        if (this.cardImage_) imageHTML = /* html */`<img src="${this.cardImage_}">`;
+
         return /* html */ `
         <div class="container">
             ${imageHTML}
-            <h2>${this.cardTitle_}</h2>
-            <p>${this.cardText_}</p>
+            <div class="textContainer">
+                <h2>${this.cardTitle_}</h2>
+                <p>${this.cardText_}</p>
+            </div>
             <comp-button id="test" class="test"></comp-button>
         </div>
         `
@@ -68,10 +70,13 @@ class Card extends Comp {
 
     createCSS() {
         const style = new Style();
-        let cardStyle = style.styleCard("container", "column", 500, 20);
+        
+        let cardStyle = style.styleCard("container", "column", 500, 20, 15, true);
+        let textCardStyle = style.styleCard("textContainer", "column", 500, 0, 5);
 
         return /* css */ `
         ${cardStyle}
+        ${textCardStyle}
         `
     }
 
