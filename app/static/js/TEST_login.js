@@ -9,11 +9,13 @@ class TestCardHousing extends HTMLElement {
     
     this.innerHTML = `
       <comp-card id="testCard"></comp-card>
+      <comp-card id="testCard2"></comp-card>
       <comp-button id="refreshBtn">Refresh Card</comp-button>
     `;
 
     
     const card = document.getElementById("testCard");
+    const card2 = document.getElementById("testCard2");
     const btn = document.getElementById("refreshBtn");
 
       
@@ -25,6 +27,8 @@ class TestCardHousing extends HTMLElement {
         
         card.cardTitle = "New TITLE";
         card.cardText = "New Text";
+        card2.cardTitle = "TEST";
+        card2.cardText = "This is cool text";
 
         if (card.cardTitle === "New TITLE") {
             console.log("Card Title updated successsfully");

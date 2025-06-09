@@ -1,11 +1,12 @@
-import { Comp } from '../comp.js';
+import { Comp }  from '../comp.js';
+import { Style } from '../style.js'
 
 class TestComponent extends Comp {
     constructor() {
-        super();
+        super();                                                    
 
-        this.buttonText_ = "This is a button";
-
+        this.buttonText_ = "This is a button";  // Component specific variabl
+        this.buttonVarient_ = 1;
         this.compName_ = "Button";
         this.compHTML_ = this.createHTML();
         this.compCSS_  = this.createCSS();
@@ -18,8 +19,18 @@ class TestComponent extends Comp {
         this.updateComponent(newHTML, this.compCSS_);
     }
 
+    set buttonVarient(value) {
+        this.buttonVarient_ = value;
+        const newCSS = this.createCSS()
+        this.updateComponent(this.compHTML_, newCSS);
+    }
+
     get buttonText() {
         return this.buttonText_;
+    }
+
+    get buttonVarient() {
+        return this.buttonVarient_;
     }
 
     createHTML() {
@@ -29,25 +40,22 @@ class TestComponent extends Comp {
     }
 
     createCSS() {
-        return /* css */ `
-        .button {
-            background: var(--black100);
-            color: var(--white);
-            font-size: 16px;
-            font-weight: 400;
-            padding: 9px 16px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: background 0.1s ease-in-out;
+        const style = new Style();
+        let primary = style.styleButton("button", "--white", "--black100", "--black80");
+        let secondry = style.styleButton("button", "--black100", "--black20", "--black80", "--black60");
+        console.log("CURRENT VARIENT: " + this.buttonVarient_);
+        
+        if (this.buttonVarient_ == 1) {
+            console.log("Built template 1");
+            return /* css */ `
+            ${primary}
+            `;
+        } else if (this.buttonVarient_ == 2) {
+            console.log("Built template 2");
+            return /* css */ `
+            ${secondry}
+            `;
         }
-        .button:hover {
-            background: var(--black80);
-        }
-        .button:active {
-            background: var(--)
-        }
-        `;
     }
 
     connectedCallback() {

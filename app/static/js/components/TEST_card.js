@@ -6,8 +6,8 @@ class Card extends Comp {
 
         this.cardTitle_ = "This is a card";
         this.cardText_  = "Lorem ipsum dolor sit amet";
-        this.buttonText_ = "Register";
-
+        this.buttonText_ = "Card Action";
+        
         this.compName_ = "Card";
         this.compHTML_ = this.createHTML();
         this.compCSS_  = this.createCSS();
@@ -75,14 +75,23 @@ class Card extends Comp {
         `
     }
 
+    cardAction(cardButton) {
+        cardButton.onclick = () => console.log("Button clicked");
+    }
+
+    cardActionAlt(cardButton) {
+        cardButton.addEventListener("mouseover", () => {
+            alert("Hover Function");
+        });
+    }
+
     onRender() {
         const cardButton = this.shadowRoot.getElementById("test");
-        cardButton.buttonText = this.buttonText_;
-        cardButton.onclick = () => console.log("Button clicked");
+        cardButton.buttonVarient = 2;
+        console.log(cardButton.buttonVarient_);
 
-        // cardButton.addEventListener("click", () => {
-        //     console.log("Click time");
-        // })
+        this.cardAction(cardButton);
+        this.cardActionAlt(cardButton);
     }
 
     connectedCallback() {
