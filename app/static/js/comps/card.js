@@ -19,26 +19,22 @@ class CardComp extends Comp {
 
     set cardTitle(value) {
         this.cardTitle_ = value;
-        const newHTML = this.createHTML();
-        this.updateComp(newHTML, this.compCSS_);
+        this.updateComp(this.createHTML(), this.compCSS_);
     }
 
     set cardText(value) {
         this.cardText_ = value;
-        const newHTML = this.createHTML();
-        this.updateComp(newHTML, this.compCSS_);
+        this.updateComp(this.createHTML(), this.compCSS_);
     }
 
     set buttonText(value) {
         this.buttonText_ = value;
-        const newHTML = this.createHTML();
-        this.updateComp(newHTML, this.compCSS_);
+        this.updateComp(this.createHTML(), this.compCSS_);
     }
 
     set cardImage(value) {
         this.cardImage_ = value;
-        const newHTML = this.createHTML();
-        this.updateComp(newHTML, this.compCSS_);
+        this.updateComp(this.createHTML(), this.compCSS_);
     }
 
     get cardTitle() {

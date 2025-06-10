@@ -1,4 +1,5 @@
 import { Comp } from './comp.js';
+import { Style } from './style.js';
 
 class LoginPageComp extends Comp {
   constructor() {
@@ -14,6 +15,7 @@ class LoginPageComp extends Comp {
 
   createHTML() {
     return /* html */ `
+    <h1>${this.title_}</h1>
     <comp-card id="testCard"></comp-card>
     <comp-card id="testCard2"></comp-card>
     <comp-button id="refreshBtn">Refresh Card</comp-button>
@@ -21,7 +23,11 @@ class LoginPageComp extends Comp {
   }
 
   createCSS() {
-    return ``;
+    const style = new Style();
+    
+    return `
+    ${style.stylePage()}
+    `;
   }
 
   testButton(button, card, card2) {
@@ -44,7 +50,6 @@ class LoginPageComp extends Comp {
     const card = this.shadowRoot.getElementById("testCard");
     const card2 = this.shadowRoot.getElementById("testCard2");
     const button = this.shadowRoot.getElementById("refreshBtn");
-
       
     card.cardTitle = "Super cool title";
     card.cardText = "Super cool card description";

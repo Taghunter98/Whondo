@@ -10,6 +10,15 @@
  */
 
 export class Style {
+
+    stylePage() {
+        return /* css */ `
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        `
+    }
     
     /**
      * @brief The function provides styling for button components.

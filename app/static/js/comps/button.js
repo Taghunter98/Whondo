@@ -17,14 +17,12 @@ class ButtonComp extends Comp {
 
     set buttonText(value) {
         this.buttonText_ = value;
-        const newHTML = this.createHTML();
-        this.updateComp(newHTML, this.compCSS_);
+        this.updateComp(this.createHTML(), this.compCSS_);
     }
 
     set buttonVarient(value) {
         this.buttonVarient_ = value;
-        const newCSS = this.createCSS()
-        this.updateComp(this.compHTML_, newCSS);
+        this.updateComp(this.compHTML_, this.createCSS());
     }
 
     get buttonText() {
@@ -44,18 +42,24 @@ class ButtonComp extends Comp {
     createCSS() {
         const style = new Style();
 
-        let primary  = style.styleButton("button", "--white", "--black100", "--black80", "--black60");
-        let secondry = style.styleButton("button", "--black100", "--black20", "--black40", "--black60");
+        let primary  = style.styleButton(
+            "button",
+            "--white",
+            "--black100",
+            "--black80",
+            "--black60"
+        );
+
+        let secondry = style.styleButton(
+            "button",
+            "--black100",
+            "--black20",
+            "--black40",
+            "--black60"
+        );
         
-        if (this.buttonVarient_ == 1) {
-            return /* css */ `
-            ${primary}
-            `;
-        } else if (this.buttonVarient_ == 2) {
-            return /* css */ `
-            ${secondry}
-            `;
-        }
+        if (this.buttonVarient_ == 1) return ` ${primary}`;
+        else if (this.buttonVarient_ == 2) return `${secondry}`;
     }
 }
 
