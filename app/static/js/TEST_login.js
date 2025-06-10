@@ -57,6 +57,7 @@ class LoginPageComp extends Comp {
     card.buttonAction = "register";
     card.cardImage = "https://images.pexels.com/photos/333083/pexels-photo-333083.jpeg?_gl=1*q46dzz*_ga*MjEyOTMwNTE2Ni4xNzQyMTQxMzY3*_ga_8JE65Q40S6*czE3NDk0ODYyOTckbzQkZzAkdDE3NDk0ODYyOTckajYwJGwwJGgw";
 
+    card2.buttonAction = "/";
     card2.cardImage = "https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg?_gl=1*rhtkzi*_ga*MjEyOTMwNTE2Ni4xNzQyMTQxMzY3*_ga_8JE65Q40S6*czE3NDk1MDAwMDEkbzYkZzEkdDE3NDk1MDAwMjUkajM2JGwwJGgw"
 
     this.testButton(button, card, card2);
