@@ -25,6 +25,8 @@ class CardComp extends Comp {
         this.compName_   = "Card";
         this.compHTML_   = this.createHTML();
         this.compCSS_    = this.createCSS();
+
+        this.renderComp();
     }
 
     /**
@@ -189,24 +191,20 @@ class CardComp extends Comp {
      * 
      * @param {*} cardButton 
      */
-    cardAction(cardButton) {
+    onButtonClick(event) {
+        
+        event.preventDefault();
+
         const url = "https://whondo.com/" + this.buttonAction_;
-        cardButton.onclick = (event) => {
-            event.preventDefault(); 
-            window.location.href = url;
-        };
+        window.location.assign(url);
     }
 
     compHook() {
-        customElements.whenDefined("comp-button").then(() => {
         const cardButton = this.shadowRoot.getElementById("test");
-        if (cardButton) {
-            // Set additional properties on the button if needed.
-            cardButton.buttonVarient = 2;
-            this.cardAction(cardButton);
-        }});
-    }
+        cardButton.buttonVarient = 2;
 
+        cardButton.addEventListener("click", this.onButtonClick(this))
+    }
 }
 
 customElements.define("comp-card", CardComp);
