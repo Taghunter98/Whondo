@@ -193,7 +193,7 @@ class CardComp extends Comp {
      */
     cardAction(cardButton) {
         const url = "https://whondo.com/" + this.buttonAction_;
-        cardButton.onclick = () => window.location = url;
+        cardButton.onclick = () => window.open (url, '_self');
     }
 
     compHook() {
