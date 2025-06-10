@@ -94,7 +94,7 @@ export class Comp extends HTMLElement {
      */
     createTemplate(html, css) {
 
-        const defaultCompStyle = this.compStyle.styleDefaultComp();
+        let defaultCompStyle = this.compStyle.styleDefaultComp();
 
         return /* html */ `
         ${html}
