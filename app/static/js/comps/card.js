@@ -1,7 +1,7 @@
 import { Comp } from "../comp.js";
 import { Style } from "../style.js";
 
-class Card extends Comp {
+class CardComp extends Comp {
     constructor() {
         super();
 
@@ -13,30 +13,32 @@ class Card extends Comp {
         this.compName_ = "Card";
         this.compHTML_ = this.createHTML();
         this.compCSS_  = this.createCSS();
+
+        this.renderComp();
     }
 
     set cardTitle(value) {
         this.cardTitle_ = value;
         const newHTML = this.createHTML();
-        this.updateComponent(newHTML, this.compCSS_);
+        this.updateComp(newHTML, this.compCSS_);
     }
 
     set cardText(value) {
         this.cardText_ = value;
         const newHTML = this.createHTML();
-        this.updateComponent(newHTML, this.compCSS_);
+        this.updateComp(newHTML, this.compCSS_);
     }
 
     set buttonText(value) {
         this.buttonText_ = value;
         const newHTML = this.createHTML();
-        this.updateComponent(newHTML, this.compCSS_);
+        this.updateComp(newHTML, this.compCSS_);
     }
 
     set cardImage(value) {
         this.cardImage_ = value;
         const newHTML = this.createHTML();
-        this.updateComponent(newHTML, this.compCSS_);
+        this.updateComp(newHTML, this.compCSS_);
     }
 
     get cardTitle() {
@@ -71,8 +73,8 @@ class Card extends Comp {
     createCSS() {
         const style = new Style();
         
-        let cardStyle = style.styleCard("container", "column", 500, 20, 15, true);
-        let textCardStyle = style.styleCard("textContainer", "column", 500, 0, 5);
+        let cardStyle     = style.styleCard("container", "column", 500, 15, 20, true);
+        let textCardStyle = style.styleCard("textContainer", "column", 500, 0, 5, false);
 
         return /* css */ `
         ${cardStyle}
@@ -84,16 +86,12 @@ class Card extends Comp {
         cardButton.onclick = () => console.log("Button clicked");
     }
 
-    onRender() {
+    compHook() {
         const cardButton = this.shadowRoot.getElementById("test");
         cardButton.buttonVarient = 2;
 
         this.cardAction(cardButton);
     }
-
-    connectedCallback() {
-        this.renderComponent();
-    }
 }
 
-customElements.define("comp-card", Card);
+customElements.define("comp-card", CardComp);

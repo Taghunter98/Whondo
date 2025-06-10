@@ -6,7 +6,7 @@
  * Date:        08/06/2025
  * Version:     1.0
  * 
- * Description: Base component class that handles all inner component logic.
+ * Description: Base comp class that handles all comp inner logic.
  */
 
 export class Comp extends HTMLElement {
@@ -22,39 +22,39 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A setter method that sets the component's name.
+     * @brief A setter method that sets the comp's name.
      * 
-     * @param {string} newComponentName  
+     * @param {string} newCompName  
      */
-    set compName(newComponentName) {
+    set compName(newCompName) {
 
-        this.name_ = newComponentName;
+        this.name_ = newCompName;
     }
 
     /**
-     * @brief A setter method that sets the component's HTML value.
+     * @brief A setter method that sets the comp's HTML value.
      * 
-     * @param {string} newComponentHTML  
+     * @param {string} newCompHTML  
      */
-    set compHTML(newComponentHTML) {
+    set compHTML(newCompHTML) {
 
-        this.compHTML_ = newComponentHTML;
+        this.compHTML_ = newCompHTML;
     }
 
     /**
-     * @brief A setter method that sets the component's CSS value.
+     * @brief A setter method that sets the comp's CSS value.
      * 
-     * @param {string} newComponentCSS  
+     * @param {string} newCompCSS  
      */
-    set compCSS(newComponentCSS) {
+    set compCSS(newCompCSS) {
 
-        this.compCSS_ = newComponentCSS;
+        this.compCSS_ = newCompCSS;
     }
 
     /**
-     * @brief A getter method that returns the component's name.
+     * @brief A getter method that returns the comp's name.
      * 
-     * @returns {string} Component's name value
+     * @returns {string} comp's name value
      */
     get compName() {
 
@@ -62,9 +62,9 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A getter method that returns the component's HTML value.
+     * @brief A getter method that returns the comp's HTML value.
      * 
-     * @returns {string} Component's HTML value
+     * @returns {string} comp's HTML value
      */
     get compHTML() {
 
@@ -72,9 +72,9 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A getter method that returns the component's CSS value.
+     * @brief A getter method that returns the comp's CSS value.
      * 
-     * @returns {string} Component's CSS value
+     * @returns {string} comp's CSS value
      */
     get compCSS() {
 
@@ -97,11 +97,11 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A method for debugging a component, logs the component's base values.
+     * @brief A method for debugging a comp, logs the comp's base values.
      */
-    debugComponent() {
+    debugComp() {
 
-        console.log("DEBUG COMPONENT: " + this.compName + "\n")
+        console.log("DEBUG COMP: " + this.compName + "\n")
         console.log(this.compName);
         console.log(this.compHTML);
         console.log(this.compCSS);
@@ -109,32 +109,32 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A method for rendering the component. Method starts by setting the shadow root HTML
+     * @brief A method for rendering the comp. Method starts by setting the shadow root HTML
      *        to the template built by createTemplate(). Then it checks for an internal onRender()
      *        function which in turn calls  
      */
-    renderComponent() {
+    renderComp() {
 
         this.shadowRoot.innerHTML = this.createTemplate(this.compHTML_, this.compCSS_);
 
-        if (typeof this.onRender === "function") {
-            this.onRender();
+        if (typeof this.compHook === "function") {
+            this.compHook();
         }
     }
 
     /**
-     * @brief A method for updating the component, simply calls render component with the updated
+     * @brief A method for updating the comp, simply calls render comp with the updated
      *        HTML and CSS values.
      * 
      * @param {string} newHTML 
      * @param {string} newCSS 
      */
-    updateComponent(newHTML, newCSS) {
+    updateComp(newHTML, newCSS) {
 
         this.compHTML_ = newHTML;
         this.compCSS_  = newCSS;
 
-        this.renderComponent();
+        this.renderComp();
     }
 
 }

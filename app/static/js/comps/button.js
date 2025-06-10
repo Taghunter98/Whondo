@@ -1,7 +1,7 @@
 import { Comp }  from '../comp.js';
 import { Style } from '../style.js'
 
-class Button extends Comp {
+class ButtonComp extends Comp {
     constructor() {
         super();                                                    
 
@@ -11,18 +11,20 @@ class Button extends Comp {
         this.compName_ = "Button";
         this.compHTML_ = this.createHTML();
         this.compCSS_  = this.createCSS();
+
+        this.renderComp();
     }
 
     set buttonText(value) {
         this.buttonText_ = value;
         const newHTML = this.createHTML();
-        this.updateComponent(newHTML, this.compCSS_);
+        this.updateComp(newHTML, this.compCSS_);
     }
 
     set buttonVarient(value) {
         this.buttonVarient_ = value;
         const newCSS = this.createCSS()
-        this.updateComponent(this.compHTML_, newCSS);
+        this.updateComp(this.compHTML_, newCSS);
     }
 
     get buttonText() {
@@ -55,10 +57,6 @@ class Button extends Comp {
             `;
         }
     }
-
-    connectedCallback() {
-        this.renderComponent();
-    }
 }
 
-customElements.define("comp-button", Button);
+customElements.define("comp-button", ButtonComp);
