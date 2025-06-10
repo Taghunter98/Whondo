@@ -25,6 +25,8 @@ class CardComp extends Comp {
         this.compName_   = "Card";
         this.compHTML_   = this.createHTML();
         this.compCSS_    = this.createCSS();
+
+        this.renderComp();
     }
 
     /**
@@ -147,7 +149,7 @@ class CardComp extends Comp {
                 <h2>${this.cardTitle_}</h2>
                 <p>${this.cardText_}</p>
             </div>
-            <comp-button id="test" class="test"></comp-button>
+            <a href="${"https://whondo.com/" + this.buttonAction_}" target="_self"><comp-button id="test" class="test"></comp-button>
         </div>
         `
     }
@@ -182,26 +184,6 @@ class CardComp extends Comp {
         ${cardStyle}
         ${textCardStyle}
         `
-    }
-
-    /**
-     * @brief A method that opens a new page
-     * 
-     * @param {*} cardButton 
-     */
-    cardAction(cardButton) {
-        const url = "https://whondo.com/" + this.buttonAction_;
-        cardButton.onclick = (event) => {
-            event.preventDefault(); 
-            window.location.href = url;
-        };
-    }
-
-    compHook() {
-        const cardButton = this.shadowRoot.getElementById("test");
-        cardButton.buttonVarient = 2;
-
-        this.cardAction(cardButton);
     }
 }
 
