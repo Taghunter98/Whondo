@@ -192,8 +192,8 @@ class CardComp extends Comp {
      * @param {*} cardButton 
      */
     cardAction(cardButton) {
-        const url = "https://whondo.com/" + this.buttonAction_;
-        cardButton.onclick = () => window.open (url, '_self');
+    const url = "https://whondo.com/" + this.buttonAction_;
+    cardButton.onclick = () => window.location.href = url;
     }
 
     compHook() {
