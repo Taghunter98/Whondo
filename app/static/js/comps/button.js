@@ -1,7 +1,19 @@
+/**
+ * Copyright (c) 2025 Josh Bassett, whondo.com
+ * 
+ * Filename:    button.js
+ * Author:      Josh Bassett
+ * Date:        10/06/2025
+ * Version:     1.0
+ * 
+ * Description: Button Comp class that creates a reusable Comp.
+ */
+
 import { Comp }  from '../comp.js';
 import { Style } from '../style.js'
 
 class ButtonComp extends Comp {
+
     constructor() {
         super();                                                    
 
@@ -15,31 +27,65 @@ class ButtonComp extends Comp {
         this.renderComp();
     }
 
-    set buttonText(value) {
-        this.buttonText_ = value;
+    /**
+     * @brief A setter method that sets the Comp's button text.
+     * 
+     * @param {string} newButtonText
+     */
+    set buttonText(newButtonText) {
+
+        this.buttonText_ = newButtonText;
         this.updateComp(this.createHTML(), this.compCSS_);
     }
 
-    set buttonVarient(value) {
-        this.buttonVarient_ = value;
+    /**
+     * @brief A setter method that sets the Comp's button varient (1, 2, 3).
+     * 
+     * @param {string} newButtonVarient
+     */
+    set buttonVarient(newButtonVarient) {
+
+        this.buttonVarient_ = newButtonVarient;
         this.updateComp(this.compHTML_, this.createCSS());
     }
-
+    
+    /**
+     * @brief A getter method that returns the Comp's button text.
+     * 
+     * @returns {string} Comp's button text. 
+     */
     get buttonText() {
+
         return this.buttonText_;
     }
 
+    /**
+     * @brief A getter method that returns the Comp's button varient.
+     * 
+     * @returns {int} Comp's button varient. 
+     */
     get buttonVarient() {
+
         return this.buttonVarient_;
     }
 
+    /**
+     * @brief A method that builds the button's HTML.
+     * 
+     * @returns {literal} HTML to be injected into Comp. 
+     */
     createHTML() {
-        return /* html */ `
-        <button id="button" class="button">${this.buttonText_}</button>
-        `;
+
+        return /* html */ `<button id="button" class="button">${this.buttonText_}</button>`;
     }
 
+    /**
+     * @brief A method that builds the button's CSS.
+     * 
+     * @returns {literal} CSS to be injected into Comp.
+     */
     createCSS() {
+
         const style = new Style();
 
         let primary  = style.styleButton(
@@ -47,7 +93,8 @@ class ButtonComp extends Comp {
             "--white",
             "--black100",
             "--black80",
-            "--black60"
+            "--black60",
+            false
         );
 
         let secondry = style.styleButton(
@@ -55,11 +102,22 @@ class ButtonComp extends Comp {
             "--black100",
             "--black20",
             "--black40",
-            "--black60"
+            "--black60",
+            false
+        );
+
+        let tertiary = style.styleButton(
+            "button",
+            "--black100",
+            "--white",
+            "--black10",
+            "--black20",
+            true
         );
         
-        if (this.buttonVarient_ == 1) return ` ${primary}`;
+        if (this.buttonVarient_ == 1)      return ` ${primary}`;
         else if (this.buttonVarient_ == 2) return `${secondry}`;
+        else if (this.buttonVarient_ == 3) return `${tertiary}`;
     }
 }
 

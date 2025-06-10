@@ -6,7 +6,7 @@
  * Date:        08/06/2025
  * Version:     1.0
  * 
- * Description: Base comp class that handles all comp inner logic.
+ * Description: Base Comp class that handles all Comp inner logic.
  */
 
 export class Comp extends HTMLElement {
@@ -22,7 +22,7 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A setter method that sets the comp's name.
+     * @brief A setter method that sets the Comp's name.
      * 
      * @param {string} newCompName  
      */
@@ -32,7 +32,7 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A setter method that sets the comp's HTML value.
+     * @brief A setter method that sets the Comp's HTML value.
      * 
      * @param {string} newCompHTML  
      */
@@ -42,7 +42,7 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A setter method that sets the comp's CSS value.
+     * @brief A setter method that sets the Comp's CSS value.
      * 
      * @param {string} newCompCSS  
      */
@@ -52,9 +52,9 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A getter method that returns the comp's name.
+     * @brief A getter method that returns the Comp's name.
      * 
-     * @returns {string} comp's name value
+     * @returns {string} Comp's name value
      */
     get compName() {
 
@@ -62,9 +62,9 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A getter method that returns the comp's HTML value.
+     * @brief A getter method that returns the Comp's HTML value.
      * 
-     * @returns {string} comp's HTML value
+     * @returns {string} Comp's HTML value
      */
     get compHTML() {
 
@@ -72,9 +72,9 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A getter method that returns the comp's CSS value.
+     * @brief A getter method that returns the Comp's CSS value.
      * 
-     * @returns {string} comp's CSS value
+     * @returns {string} Comp's CSS value
      */
     get compCSS() {
 
@@ -86,7 +86,8 @@ export class Comp extends HTMLElement {
      * .
      * @param   {string} html 
      * @param   {string} css 
-     * @returns {string literal} HTML template string literal 
+     * 
+     * @returns {literal} HTML template string literal 
      */
     createTemplate(html, css) {
 
@@ -97,7 +98,7 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A method for debugging a comp, logs the comp's base values.
+     * @brief A method for debugging a Comp, logs the Comp's base values.
      */
     debugComp() {
 
@@ -109,9 +110,9 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A method for rendering the comp. Method starts by setting the shadow root HTML
-     *        to the template built by createTemplate(). Then it checks for an internal onRender()
-     *        function which in turn calls  
+     * @brief A method for rendering the Comp. Method starts by setting the shadow root HTML
+     *        to the template built by createTemplate(). Then it checks for an internal 
+     *        compHook() function which defines the Comp JavaScript logic. 
      */
     renderComp() {
 
@@ -123,11 +124,11 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A method for updating the comp, simply calls render comp with the updated
+     * @brief A method for updating the Comp, simply calls render Comp with the updated
      *        HTML and CSS values.
      * 
-     * @param {string} newHTML 
-     * @param {string} newCSS 
+     * @param {literal} newHTML 
+     * @param {literal} newCSS 
      */
     updateComp(newHTML, newCSS) {
 

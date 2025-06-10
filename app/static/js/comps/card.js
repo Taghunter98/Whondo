@@ -69,17 +69,32 @@ class CardComp extends Comp {
     createCSS() {
         const style = new Style();
         
-        let cardStyle     = style.styleCard("container", "column", 500, 15, 20, true);
-        let textCardStyle = style.styleCard("textContainer", "column", 500, 0, 5, false);
+        let cardStyle = style.styleCard(
+            "container", 
+            "column", 
+            500, 
+            15,
+            20,
+            true
+        );
 
-        return /* css */ `
+        let textCardStyle = style.styleCard(
+            "textContainer", 
+            "column", 
+            500, 
+            0, 
+            5, 
+            false
+        );
+
+        return `
         ${cardStyle}
         ${textCardStyle}
         `
     }
 
     cardAction(cardButton) {
-        cardButton.onclick = () => console.log("Button clicked");
+        cardButton.onclick = () => window.open("/register");
     }
 
     compHook() {

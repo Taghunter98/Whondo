@@ -19,50 +19,15 @@ export class Style {
         }
         `
     }
-    
-    /**
-     * @brief The function provides styling for button components.
-     * 
-     * @param {string} valueID 
-     * @param {string} colour 
-     * @param {string} background 
-     * @param {string} hoverBackground 
-     * @param {string} activeBackground
-     * 
-     * @returns CSS values to be injected into component.
-     */
-    styleButton(buttonID, text, colour, hoverColour, activeColour) {
-
-        return /* css */ `
-        .${buttonID} {
-            background: var(${colour});
-            color: var(${text});
-            width: auto;
-            font-size: 16px;
-            font-weight: 400;
-            padding: 9px 16px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: background 0.1s ease-in-out;
-        }
-        .${buttonID}:hover {
-            background: var(${hoverColour});
-        }
-        .${buttonID}:active {
-            background: var(${activeColour});
-        }
-        `
-    }
 
     /**
-     * @brief The function provides styling for containers.
+     * @brief a method that provides styling for containers.
      * 
      * @param {string} direction 
      * @param {int}    maxWidth 
      * @param {int}    padding 
      * 
-     * @returns CSS container values to be injected into component.
+     * @returns {literal} CSS container values to be injected into component.
      */
     styleContainer(direction, maxWidth, padding) {
 
@@ -75,11 +40,20 @@ export class Style {
     }
 
     /**
-     * @brief The function styles default images.
+     * 
+     * @returns 
+     */
+    styleBorder() {
+
+        return `solid 1px var(--black40)`;
+    }
+
+    /**
+     * @brief a method that styles default images.
      * 
      * @param {boolean} borderRadius
      * 
-     * @returns CSS image values to be injected into component.
+     * @returns {literal} CSS image values to be injected into component.
      */
     styleImage(borderRadius, maxHeight) {
         
@@ -99,7 +73,46 @@ export class Style {
     }
 
     /**
-     * @brief The function styles a modular card.
+     * @brief a method that returns styling for button components.
+     * 
+     * @param {string}  valueID 
+     * @param {string}  colour 
+     * @param {string}  background 
+     * @param {string}  hoverBackground 
+     * @param {string}  activeBackground
+     * @param {boolean} border
+     * 
+     * @returns {literal} CSS values to be injected into component.
+     */
+    styleButton(buttonID, text, colour, hoverColour, activeColour, border) {
+
+        let buttonBorder = 'None';
+        if (border) buttonBorder = this.styleBorder();
+
+        return /* css */ `
+        .${buttonID} {
+            background: var(${colour});
+            color: var(${text});
+            width: auto;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 9px 16px;
+            border-radius: 8px;
+            border: ${buttonBorder};
+            cursor: pointer;
+            transition: background 0.1s ease-in-out;
+        }
+        .${buttonID}:hover {
+            background: var(${hoverColour});
+        }
+        .${buttonID}:active {
+            background: var(${activeColour});
+        }
+        `
+    }
+
+    /**
+     * @brief a method that styles a modular card.
      * 
      * @param {string}  containerID 
      * @param {string}  direction 
@@ -108,12 +121,12 @@ export class Style {
      * @param {int}     gap
      * @param {boolean} border
      * 
-     * @returns CSS card values to be injected into component.
+     * @returns {literal} CSS card values to be injected into component.
      */
     styleCard(cardID, direction, maxWidth, padding, gap, border) {
         
-        let cardBorder = '';
-        if (border) cardBorder = "solid 1px var(--black40)"
+        let cardBorder = 'None';
+        if (border) cardBorder = this.styleBorder();
 
         return /* css */ `
         h2, p {
