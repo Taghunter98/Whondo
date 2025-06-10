@@ -11,6 +11,22 @@
 
 export class Style {
 
+    /**
+     * @brief A method that provides standard CSS to remove all margin/padding.
+     * 
+     * @returns {literal} CSS default values with no margin/padding.
+     */
+    styleDefaultComp() {
+
+        return /* css */ `
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ${this.styleFont()}
+        `
+    }
+
     styleFont() {
         
         return /* css */ `
@@ -54,21 +70,6 @@ export class Style {
             font-size:   12px;
             font-weight: 500;
             line-height: 16pt;
-        }
-        `
-    }
-
-    /**
-     * @brief A method that provides standard CSS to remove all margin/padding.
-     * 
-     * @returns {literal} CSS default values with no margin/padding.
-     */
-    styleDefaultPage() {
-
-        return /* css */ `
-        * {
-            margin: 0;
-            padding: 0;
         }
         `
     }

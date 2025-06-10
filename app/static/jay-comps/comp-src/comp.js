@@ -97,8 +97,7 @@ export class Comp extends HTMLElement {
         return /* html */ `
         ${html}
         <style>
-            ${this.compStyle.styleDefaultPage()}
-            ${this.compStyle.styleFont()}
+            ${this.compStyle.styleDefaultComp()}
             ${css}
         </style>
         `
