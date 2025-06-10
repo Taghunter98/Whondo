@@ -8,6 +8,7 @@ class CardComp extends Comp {
         this.cardTitle_ = "Card header";
         this.cardText_  = "Card text goes here.";
         this.buttonText_ = "Card Action";
+        this.buttonAction_ = ""
         this.cardImage_ = "";
         
         this.compName_ = "Card";
@@ -32,6 +33,11 @@ class CardComp extends Comp {
         this.updateComp(this.createHTML(), this.compCSS_);
     }
 
+    set buttonAction(value) {
+        this.buttonAction_ = value;
+        this.updateComp(this.createHTML(), this.compCSS_);
+    }
+
     set cardImage(value) {
         this.cardImage_ = value;
         this.updateComp(this.createHTML(), this.compCSS_);
@@ -43,6 +49,10 @@ class CardComp extends Comp {
 
     get cardText() {
         return this.cardText_;
+    }
+
+    get buttonAction() {
+        return this.buttonAction_;
     }
 
     get buttonText() {
@@ -94,7 +104,7 @@ class CardComp extends Comp {
     }
 
     cardAction(cardButton) {
-        cardButton.onclick = () => window.open("/register");
+        cardButton.onclick = () => window.open("https://whondo.com/" + this.buttonAction_);
     }
 
     compHook() {
