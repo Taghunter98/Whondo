@@ -6,7 +6,7 @@
  * Date:        10/06/2025
  * Version:     1.0
  * 
- * Description: Button Comp class that creates a reusable Comp.
+ * Description: Class that creates a reusable Button Comp.
  */
 
 import { Comp }  from '../comp.js';
@@ -17,7 +17,7 @@ class ButtonComp extends Comp {
     constructor() {
         super();                                                    
 
-        this.buttonText_ = "This is a button";
+        this.buttonText_    = "This is a button";
         this.buttonVarient_ = 1;                
         
         this.compName_ = "Button";
