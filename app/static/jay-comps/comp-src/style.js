@@ -18,12 +18,14 @@ export class Style {
      */
     styleDefaultComp() {
 
+        const styleFont = this.styleFont();
+
         return /* css */ `
         * {
             margin: 0;
             padding: 0;
         }
-        ${this.styleFont()}
+        ${styleFont}
         `
     }
 
