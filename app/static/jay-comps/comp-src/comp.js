@@ -94,10 +94,12 @@ export class Comp extends HTMLElement {
      */
     createTemplate(html, css) {
 
+        const fontStyle = this.styleFonts();
+
         return /* html */ `
         ${html}
         <style>
-            ${this.compStyle.styleDefaultComp()}
+            ${fontStyle}
             ${css}
         </style>
         `
