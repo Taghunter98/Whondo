@@ -25,8 +25,6 @@ class CardComp extends Comp {
         this.compName_   = "Card";
         this.compHTML_   = this.createHTML();
         this.compCSS_    = this.createCSS();
-
-        this.renderComp();
     }
 
     /**
@@ -194,11 +192,10 @@ class CardComp extends Comp {
     cardAction(cardButton) {
         const url = "https://whondo.com/" + this.buttonAction_;
         cardButton.onclick = (event) => {
-        event.preventDefault(); 
-        window.location.href = url;
-    };
-}
-
+            event.preventDefault(); 
+            window.location.href = url;
+        };
+    }
 
     compHook() {
         const cardButton = this.shadowRoot.getElementById("test");
