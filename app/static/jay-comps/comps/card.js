@@ -9,8 +9,8 @@
  * Description: Class that creates a reusable Card Comp.
  */
 
-import { Comp } from "../comp.js";
-import { Style } from "../style.js";
+import { Comp }  from '../comp-src/comp.js';
+import { Style } from '../comp-src/style.js';
 
 class CardComp extends Comp {
 
@@ -149,7 +149,7 @@ class CardComp extends Comp {
                 <h2>${this.cardTitle_}</h2>
                 <p>${this.cardText_}</p>
             </div>
-            <comp-button id="test" class="test"></comp-button>
+            <comp-button id="button"></comp-button>
         </div>
         `
     }
@@ -187,23 +187,26 @@ class CardComp extends Comp {
     }
 
     /**
-     * @brief A method that opens a new page
+     * @brief A method that opens a new page, with Safari support.
      * 
-     * @param {*} cardButton 
+     * @param {any} event 
      */
     onButtonClick(event) {
 
         event.preventDefault();
-
         const url = "https://whondo.com/" + this.buttonAction_;
         window.location.assign(url);
     }
 
+    /**
+     * @brief A method that runs a build hook when the Component is rendered it
+     *        provides the inner JavaScript logic for the Comp. 
+     */
     compHook() {
-        const cardButton = this.shadowRoot.getElementById("test");
+
+        const cardButton         = this.shadowRoot.getElementById("button");
         cardButton.buttonVarient = 2;
 
-        
         cardButton.addEventListener("click", this.onButtonClick.bind(this));
     }
 }

@@ -9,8 +9,8 @@
  * Description: Class that creates a reusable Button Comp.
  */
 
-import { Comp }  from '../comp.js';
-import { Style } from '../style.js'
+import { Comp }  from '../comp-src/comp.js';
+import { Style } from '../comp-src/style.js';
 
 class ButtonComp extends Comp {
 

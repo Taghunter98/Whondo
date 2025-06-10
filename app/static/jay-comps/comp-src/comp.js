@@ -112,7 +112,7 @@ export class Comp extends HTMLElement {
     /**
      * @brief A method for rendering the Comp. Method starts by setting the shadow root HTML
      *        to the template built by createTemplate(). Then it checks for an internal 
-     *        compHook() function which defines the Comp JavaScript logic. 
+     *        compHook() function which defines the Comp's inner JavaScript logic. 
      */
     renderComp() {
 
