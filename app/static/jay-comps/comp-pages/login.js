@@ -5,6 +5,7 @@ class LoginPageComp extends Comp {
   constructor() {
     super();
     this.title_ = "Login to Whondo";
+    this.description_ = "This is placeholder text";
 
     this.compName_ = "Login Page";
     this.compHTML_ = this.createHTML();
@@ -14,16 +15,10 @@ class LoginPageComp extends Comp {
   }
 
   createHTML() {
-    const text = "Finding a new home has never been so much fun"
+    
     return /* html */ `
-    <h1>${this.title_}</h1>
-    <h2>${this.title_}</h2>
-    <h3>${this.title_}</h3>
     <h4>${this.title_}</h4>
-    <h5>${this.title_}</h5>
-    <h6>${this.title_}</h6>
-    <p>${this.title_}</p>
-    <label>${this.title_}</label>
+    <p>${this.description_}</p>
     <comp-card id="testCard"></comp-card>
     <comp-card id="testCard2"></comp-card>
     <comp-button id="refreshBtn">Refresh Card</comp-button>
