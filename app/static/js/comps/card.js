@@ -192,7 +192,7 @@ class CardComp extends Comp {
      * @param {*} cardButton 
      */
     onButtonClick(event) {
-        
+
         event.preventDefault();
 
         const url = "https://whondo.com/" + this.buttonAction_;
@@ -203,7 +203,8 @@ class CardComp extends Comp {
         const cardButton = this.shadowRoot.getElementById("test");
         cardButton.buttonVarient = 2;
 
-        cardButton.addEventListener("click", this.onButtonClick(this))
+        cardButton.removeEventListener("click", this.onButtonClick);
+        cardButton.addEventListener("click", this.onButtonClick.bind(this));
     }
 }
 
