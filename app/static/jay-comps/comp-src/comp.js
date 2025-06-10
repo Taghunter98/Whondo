@@ -94,12 +94,10 @@ export class Comp extends HTMLElement {
      */
     createTemplate(html, css) {
 
-        let defaultCompStyle = this.compStyle.styleDefaultComp();
-
         return /* html */ `
         ${html}
         <style>
-            ${defaultCompStyle}
+            ${this.compStyle.styleDefaultComp()}
             ${css}
         </style>
         `
