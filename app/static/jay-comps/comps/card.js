@@ -10,7 +10,6 @@
  */
 
 import { Comp }  from '../comp-src/comp.js';
-import { Style } from '../comp-src/style.js';
 
 class CardComp extends Comp {
 
@@ -160,9 +159,8 @@ class CardComp extends Comp {
      * @returns {literal} CSS to be injected into Comp.
      */
     createCSS() {
-        const style = new Style();
         
-        let cardStyle = style.styleCard(
+        let cardStyle = this.compStyle.styleCard(
             "container", 
             "column", 
             500, 
@@ -171,7 +169,7 @@ class CardComp extends Comp {
             true
         );
 
-        let textCardStyle = style.styleCard(
+        let textCardStyle = this.compStyle.styleCard(
             "textContainer", 
             "column", 
             500, 

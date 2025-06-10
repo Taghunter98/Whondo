@@ -10,7 +10,6 @@
  */
 
 import { Comp }  from '../comp-src/comp.js';
-import { Style } from '../comp-src/style.js';
 
 class ButtonComp extends Comp {
 
@@ -18,7 +17,7 @@ class ButtonComp extends Comp {
         super();                                                    
 
         this.buttonText_    = "This is a button";
-        this.buttonVarient_ = 1;                
+        this.buttonVarient_ = 1;    
         
         this.compName_ = "Button";
         this.compHTML_ = this.createHTML();
@@ -86,9 +85,7 @@ class ButtonComp extends Comp {
      */
     createCSS() {
 
-        const style = new Style();
-
-        let primary  = style.styleButton(
+        let primary  = this.compStyle.styleButton(
             "button",
             "--white",
             "--black100",
@@ -97,7 +94,7 @@ class ButtonComp extends Comp {
             false
         );
 
-        let secondry = style.styleButton(
+        let secondary = this.compStyle.styleButton(
             "button",
             "--black100",
             "--black20",
@@ -106,7 +103,7 @@ class ButtonComp extends Comp {
             false
         );
 
-        let tertiary = style.styleButton(
+        let tertiary = this.compStyle.styleButton(
             "button",
             "--black100",
             "--white",
@@ -116,7 +113,7 @@ class ButtonComp extends Comp {
         );
         
         if (this.buttonVarient_ == 1)      return ` ${primary}`;
-        else if (this.buttonVarient_ == 2) return `${secondry}`;
+        else if (this.buttonVarient_ == 2) return `${secondary}`;
         else if (this.buttonVarient_ == 3) return `${tertiary}`;
     }
 }

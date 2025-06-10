@@ -11,7 +11,60 @@
 
 export class Style {
 
-    stylePage() {
+    styleFont() {
+        
+        return /* css */ `
+        h1 {
+            font-size:   57px;
+            font-weight: 500;
+            line-height: 64pt;
+            
+        }
+        h2 {
+            font-size:   45px;
+            font-weight: 500;
+            line-height: 52pt;
+        }
+        h3 {
+            font-size:   36px;
+            font-weight: 500;
+            line-height: 44pt;
+        }
+        h4 {
+            font-size:   32px;
+            font-weight: 400;
+            line-height: 40pt;
+        }
+        h5 {
+            font-size:   28px;
+            font-weight: 400;
+            line-height: 36pt;
+        }
+        h6 {
+            font-size:   24px;
+            font-weight: 400;
+            line-height: 32pt;
+        }
+        p {
+            font-size:   16px;
+            font-weight: 400;
+            line-height: 24pt;
+        }
+        label {
+            font-size:   12px;
+            font-weight: 500;
+            line-height: 16pt;
+        }
+        `
+    }
+
+    /**
+     * @brief A method that provides standard CSS to remove all margin/padding.
+     * 
+     * @returns {literal} CSS default values with no margin/padding.
+     */
+    styleDefaultPage() {
+
         return /* css */ `
         * {
             margin: 0;
@@ -21,7 +74,7 @@ export class Style {
     }
 
     /**
-     * @brief a method that provides styling for containers.
+     * @brief A method that provides styling for containers.
      * 
      * @param {string} direction 
      * @param {int}    maxWidth 
@@ -31,7 +84,7 @@ export class Style {
      */
     styleContainer(direction, maxWidth, padding) {
 
-        return  `
+        return  /* style */ `
             display: flex;
             flex-direction: ${direction};
             padding: ${padding}px;

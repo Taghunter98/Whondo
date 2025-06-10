@@ -14,8 +14,16 @@ class LoginPageComp extends Comp {
   }
 
   createHTML() {
+    const text = "Finding a new home has never been so much fun"
     return /* html */ `
-    <h1>${this.title_}</h1>
+    <h1>${text}</h1>
+    <h2>${text}</h2>
+    <h3>${text}</h3>
+    <h4>${text}</h4>
+    <h5>${text}</h5>
+    <h6>${text}</h6>
+    <p>${text}</p>
+    <label>${text}</label>
     <comp-card id="testCard"></comp-card>
     <comp-card id="testCard2"></comp-card>
     <comp-button id="refreshBtn">Refresh Card</comp-button>
@@ -23,10 +31,8 @@ class LoginPageComp extends Comp {
   }
 
   createCSS() {
-    const style = new Style();
     
     return `
-    ${style.stylePage()}
     `;
   }
 

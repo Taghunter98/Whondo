@@ -9,6 +9,8 @@
  * Description: Base Comp class that handles all Comp inner logic.
  */
 
+import { Style } from "./style.js";
+
 export class Comp extends HTMLElement {
     
     constructor() {
@@ -17,6 +19,7 @@ export class Comp extends HTMLElement {
         this.compName_ = "Component Name";
         this.compHTML_ = "";
         this.compCSS_  = "";
+        this.compStyle = new Style();
 
         this.attachShadow({ mode: "open"});
     }
@@ -93,7 +96,11 @@ export class Comp extends HTMLElement {
 
         return /* html */ `
         ${html}
-        <style>${css}</style>
+        <style>
+            ${this.compStyle.styleDefaultPage()}
+            ${this.compStyle.styleFont()}
+            ${css}
+        </style>
         `
     }
 
