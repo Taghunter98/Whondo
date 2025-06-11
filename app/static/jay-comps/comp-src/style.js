@@ -24,7 +24,7 @@ export class Style {
             padding: 0;
         }
         ${this.styleFont()}
-        `
+        `;
     }
 
     styleFont() {
@@ -71,7 +71,7 @@ export class Style {
             font-weight: 500;
             line-height: 16pt;
         }
-        `
+        `;
     }
 
     /**
@@ -90,7 +90,7 @@ export class Style {
             flex-direction: ${direction};
             padding: ${padding}px;
             max-width: ${maxWidth}px;
-        `
+        `;
     }
 
     /**
@@ -123,7 +123,7 @@ export class Style {
             object-fit: cover;
             border-radius: ${radius}px;
         }
-        `
+        `;
     }
 
     /**
@@ -162,7 +162,7 @@ export class Style {
         .${buttonID}:active {
             background: var(${activeColour});
         }
-        `
+        `;
     }
 
     /**
@@ -200,6 +200,6 @@ export class Style {
             background: var(--black10);
             transition: background 0.4s;
         }
-        `
+        `;
     }
 }
