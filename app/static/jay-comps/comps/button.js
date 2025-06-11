@@ -14,6 +14,7 @@ import { Comp }  from '../comp-src/comp.js';
 class ButtonComp extends Comp {
 
     constructor() {
+
         super();                                                    
 
         this.buttonText_    = "This is a button";
@@ -24,6 +25,7 @@ class ButtonComp extends Comp {
         this.compCSS_  = this.createCSS();
 
         this.renderComp();
+    
     }
 
     /**
@@ -35,6 +37,7 @@ class ButtonComp extends Comp {
 
         this.buttonText_ = newButtonText;
         this.updateComp(this.createHTML(), this.compCSS_);
+    
     }
 
     /**
@@ -46,6 +49,7 @@ class ButtonComp extends Comp {
 
         this.buttonVarient_ = newButtonVarient;
         this.updateComp(this.compHTML_, this.createCSS());
+    
     }
     
     /**
@@ -56,6 +60,7 @@ class ButtonComp extends Comp {
     get buttonText() {
 
         return this.buttonText_;
+    
     }
 
     /**
@@ -66,6 +71,7 @@ class ButtonComp extends Comp {
     get buttonVarient() {
 
         return this.buttonVarient_;
+    
     }
 
     /**
@@ -76,6 +82,7 @@ class ButtonComp extends Comp {
     createHTML() {
 
         return /* html */ `<button id="button" class="button">${this.buttonText_}</button>`;
+    
     }
 
     /**
@@ -115,7 +122,9 @@ class ButtonComp extends Comp {
         if (this.buttonVarient_ == 1)      return ` ${primary}`;
         else if (this.buttonVarient_ == 2) return `${secondary}`;
         else if (this.buttonVarient_ == 3) return `${tertiary}`;
+    
     }
+
 }
 
 customElements.define("comp-button", ButtonComp);

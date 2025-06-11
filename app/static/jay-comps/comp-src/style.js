@@ -25,6 +25,7 @@ export class Style {
         }
         ${this.styleFont()}
         `;
+    
     }
 
     styleFont() {
@@ -72,6 +73,7 @@ export class Style {
             line-height: 16pt;
         }
         `;
+    
     }
 
     /**
@@ -91,6 +93,7 @@ export class Style {
             padding: ${padding}px;
             max-width: ${maxWidth}px;
         `;
+    
     }
 
     /**
@@ -100,6 +103,7 @@ export class Style {
     styleBorder() {
 
         return `solid 1px var(--black40)`;
+    
     }
 
     /**
@@ -124,6 +128,7 @@ export class Style {
             border-radius: ${radius}px;
         }
         `;
+    
     }
 
     /**
@@ -163,6 +168,7 @@ export class Style {
             background: var(${activeColour});
         }
         `;
+    
     }
 
     /**
@@ -201,5 +207,7 @@ export class Style {
             transition: background 0.4s;
         }
         `;
+    
     }
+
 }

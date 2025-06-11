@@ -1,44 +1,71 @@
+/**
+ * Copyright (c) 2025 Josh Bassett, whondo.com
+ * 
+ * Filename:    api.js
+ * Author:      Josh Bassett
+ * Date:        08/06/2025
+ * Version:     1.0
+ * 
+ * Description: Base API class that handles all Comp HTTP request logic.
+ */
+
 export class API {
 
-    constructor(apiURL, apiValues, apiMethod) {
-        this.apiURL_    = apiURL;
-        this.apiValues_ = apiValues;
-        this.apiMethod_ = apiMethod;
-    }
+    /**
+     * @brief A method that handles GET and POST HTTP requests.
+     * 
+     * @param {string} apiURL 
+     * @param {string} apiMethod 
+     * @param {object} apiData 
+     * 
+     * @returns {Promise} JSON data to be parsed
+     */
+    async request(apiURL, apiMethod, apiData = null) {
 
-    jsonify(array) {
-        return `'[${JSON.stringify(array)}]'`;
-    }
+        if (apiMethod === "POST") {
+        
+            try {
 
-    async request() {
-
-        let response;
-
-        if (this.apiMethod_ == "POST") {
-            const json = this.jsonify(this.apiValues_);
-
-            console.log(json);
-            fetch(this.apiURL_, {
-                method: this.apiMethod_,
-                body: json,
-                headers: {
-                    "Content-type": "application/json",
-                },
-            })
-                .then((response) => response.json())
-                .then((json) => {
-                    if (json['status'] == true) {
-                        result.innerHTML   = json['message'];
-                        result.style.color = 'green';
-                    } else {
-                        result.innerHTML   = json['error'];
-                        result.style.color = 'red';
-                    }
+                const response = await fetch(apiURL, {
+                    method: apiMethod,
+                    body: JSON.stringify(apiData),
+                    headers: {
+                        "Content-type": "application/json",
+                    },
                 });
-        } else if (this.apiMethod_ == "GET") {
-            response = await fetch(this.apiURL_);
-            if (!response.ok) throw new Error(`ERROR: ${response.status}`);
-            return response;
+
+                return await response.json();
+        
+            } catch (error) {
+
+                throw new Error("ERROR: Unable to execute request check if the URL is correct");
+            
+            }
+        
+        } 
+        
+        if (apiMethod === "GET") {
+
+            try {
+
+                const response = await fetch(apiURL, {
+                    method: apiMethod,
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                });
+                
+                return await response.json(); 
+        
+            } catch (error) {
+
+                throw new Error("ERROR: Unable to execute request check if the URL is correct");
+            
+            }
+        
         }
+
     }
+
+
 }
