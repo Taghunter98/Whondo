@@ -17,10 +17,11 @@ class CardComp extends Comp {
 
         super();
 
-        this.cardTitle_  = "Card header";
-        this.cardText_   = "Card text goes here.";
-        this.buttonText_ = "Card Action";
-        this.cardImage_  = "";
+        this.cardTitle_    = "Card header";
+        this.cardText_     = "Card text goes here.";
+        this.buttonText_   = "Card Action";
+        this.buttonAction_ = this.debugComp;
+        this.cardImage_    = "";
 
         this.compName_ = "Card";
         this.compHTML_ = this.createHTML();
@@ -209,8 +210,8 @@ class CardComp extends Comp {
     onButtonClick(event) {
 
         event.preventDefault();
-        const url = "https://whondo.com/" + this.buttonAction_;
-        window.location.assign(url);
+ 
+        this.buttonAction_();
     
     }
 

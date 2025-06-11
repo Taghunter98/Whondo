@@ -1,30 +1,40 @@
+/**
+ * Copyright (c) 2025 Josh Bassett, whondo.com
+ * 
+ * Filename:    api.js
+ * Author:      Josh Bassett
+ * Date:        08/06/2025
+ * Version:     1.0
+ * 
+ * Description: Base API class that handles all Comp HTTP request logic.
+ */
+
 export class API {
 
-    jsonify(array) {
-
-        return JSON.stringify(array);
-    
-    }
-
+    /**
+     * @brief A method that handles GET and POST HTTP requests.
+     * 
+     * @param {string} apiURL 
+     * @param {string} apiMethod 
+     * @param {object} apiData 
+     * 
+     * @returns {Promise} JSON data to be parsed
+     */
     async request(apiURL, apiMethod, apiData = null) {
 
         if (apiMethod === "POST") {
-
-            const json = this.jsonify(apiData);
         
             try {
 
                 const response = await fetch(apiURL, {
                     method: apiMethod,
-                    body: json,
+                    body: JSON.stringify(apiData),
                     headers: {
                         "Content-type": "application/json",
                     },
                 });
 
-                const jsonData = await response.json();
-                
-                return jsonData;
+                return await response.json();
         
             } catch (error) {
 
@@ -32,7 +42,9 @@ export class API {
             
             }
         
-        } else if (apiMethod === "GET") {
+        } 
+        
+        if (apiMethod === "GET") {
 
             try {
 
@@ -43,9 +55,7 @@ export class API {
                     },
                 });
                 
-                const jsonData = await response.json();
-
-                return jsonData; 
+                return await response.json(); 
         
             } catch (error) {
 
