@@ -46,10 +46,14 @@ class LoginPageComp extends Comp {
     
     }
 
-    async login(json) {
+    async login() {
+
+        const email = "bassettjosh397@gmail.com";
+        const pass  = "Happ1ne55";
+        let array   = {email : email, password : pass};
 
         const api = new API();
-        let data  = await api.request("https://whondo.com/login", "POST", json);
+        let data  = await api.request("/login", "POST", array);
         console.log(data['message']);
     
     }
@@ -73,11 +77,7 @@ class LoginPageComp extends Comp {
             
             } 
 
-            const email = "bassettjosh397@gmail.com";
-            const pass  = "Happ1ne55";
-            let array   = {email : email, passsword : pass};
-
-            this.login(array);
+            this.login();
         
         });
     

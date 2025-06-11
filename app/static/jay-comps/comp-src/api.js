@@ -2,7 +2,7 @@ export class API {
 
     jsonify(array) {
 
-        return `'[${JSON.stringify(array)}]'`;
+        return JSON.stringify(array);
     
     }
 
@@ -23,7 +23,7 @@ export class API {
                 });
 
                 const jsonData = await response.json();
-
+                
                 return jsonData;
         
             } catch (error) {
