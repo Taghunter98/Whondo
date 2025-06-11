@@ -14,6 +14,7 @@ import { Style } from "./style.js";
 export class Comp extends HTMLElement {
 
     constructor() {
+
         super();
 
         this.compName_ = "Component Name";
@@ -22,6 +23,7 @@ export class Comp extends HTMLElement {
         this.compStyle = new Style();
 
         this.attachShadow({ mode: "open" });
+    
     }
 
     /**
@@ -32,6 +34,7 @@ export class Comp extends HTMLElement {
     set compName(newCompName) {
 
         this.name_ = newCompName;
+    
     }
 
     /**
@@ -42,6 +45,7 @@ export class Comp extends HTMLElement {
     set compHTML(newCompHTML) {
 
         this.compHTML_ = newCompHTML;
+    
     }
 
     /**
@@ -52,6 +56,7 @@ export class Comp extends HTMLElement {
     set compCSS(newCompCSS) {
 
         this.compCSS_ = newCompCSS;
+    
     }
 
     /**
@@ -62,6 +67,7 @@ export class Comp extends HTMLElement {
     get compName() {
 
         return this.compName_;
+    
     }
 
     /**
@@ -72,6 +78,7 @@ export class Comp extends HTMLElement {
     get compHTML() {
 
         return this.compHTML_;
+    
     }
 
     /**
@@ -82,6 +89,7 @@ export class Comp extends HTMLElement {
     get compCSS() {
 
         return this.compCSS_;
+    
     }
 
     /**
@@ -101,6 +109,7 @@ export class Comp extends HTMLElement {
             ${css}
         </style>
         `;
+    
     }
 
     /**
@@ -113,6 +122,7 @@ export class Comp extends HTMLElement {
         console.log(this.compHTML);
         console.log(this.compCSS);
         console.log("\n");
+    
     }
 
     /**
@@ -125,8 +135,11 @@ export class Comp extends HTMLElement {
         this.shadowRoot.innerHTML = this.createTemplate(this.compHTML_, this.compCSS_);
 
         if (typeof this.compHook === "function") {
+
             this.compHook();
+        
         }
+    
     }
 
     /**
@@ -142,6 +155,7 @@ export class Comp extends HTMLElement {
         this.compCSS_  = newCSS;
 
         this.renderComp();
+    
     }
 
 }

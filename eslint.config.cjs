@@ -19,6 +19,9 @@ module.exports = defineConfig([
             "align-assignments/align-assignments": "error",
             "indent": ["error", 4],
             "semi": ["error", "always"],
+            "padded-blocks": ["error", "always"],
+            "no-inline-comments": ["error", { "ignorePattern": "(html|css|style)" }],
+            "camelcase": "error"
         }
     },
 ]);

@@ -14,6 +14,7 @@ import { Comp }  from '../comp-src/comp.js';
 class CardComp extends Comp {
 
     constructor() {
+
         super();
 
         this.cardTitle_  = "Card header";
@@ -26,6 +27,7 @@ class CardComp extends Comp {
         this.compCSS_  = this.createCSS();
 
         this.renderComp();
+    
     }
 
     /**
@@ -37,6 +39,7 @@ class CardComp extends Comp {
 
         this.cardTitle_ = newCardTitle;
         this.updateComp(this.createHTML(), this.compCSS_);
+    
     }
 
     /**
@@ -48,6 +51,7 @@ class CardComp extends Comp {
 
         this.cardText_ = newCompText;
         this.updateComp(this.createHTML(), this.compCSS_);
+    
     }
 
     /**
@@ -59,6 +63,7 @@ class CardComp extends Comp {
 
         this.buttonText_ = newButtonText;
         this.updateComp(this.createHTML(), this.compCSS_);
+    
     }
 
     /**
@@ -70,6 +75,7 @@ class CardComp extends Comp {
 
         this.buttonAction_ = newButtonAction;
         this.updateComp(this.compHTML_, this.compCSS_);
+    
     }
 
     /**
@@ -81,6 +87,7 @@ class CardComp extends Comp {
 
         this.cardImage_ = newCardImage;
         this.updateComp(this.createHTML(), this.compCSS_);
+    
     }
 
     /**
@@ -91,6 +98,7 @@ class CardComp extends Comp {
     get cardTitle() {
 
         return this.cardTitle_;
+    
     }
 
     /**
@@ -99,7 +107,9 @@ class CardComp extends Comp {
      * @returns {string} Comp's text. 
      */
     get cardText() {
+
         return this.cardText_;
+    
     }
 
     /**
@@ -108,7 +118,9 @@ class CardComp extends Comp {
      * @returns {string} Comp's button text. 
      */
     get buttonText() {
+
         return this.buttonText_;
+    
     }
 
     /**
@@ -119,6 +131,7 @@ class CardComp extends Comp {
     get buttonAction() {
         
         return this.buttonAction_;
+    
     }
 
     /**
@@ -129,6 +142,7 @@ class CardComp extends Comp {
     get cardImage() {
 
         return this.cardImage_;
+    
     }
     
     /**
@@ -137,6 +151,7 @@ class CardComp extends Comp {
      * @returns {literal} HTML to be injected into Comp. 
      */
     createHTML() {
+
         let imageHTML = '';
 
         if (this.cardImage_) imageHTML = /* html */`<img src="${this.cardImage_}">`;
@@ -151,6 +166,7 @@ class CardComp extends Comp {
             <comp-button id="button"></comp-button>
         </div>
         `;
+    
     }
 
     /**
@@ -182,6 +198,7 @@ class CardComp extends Comp {
         ${cardStyle}
         ${textCardStyle}
         `;
+    
     }
 
     /**
@@ -194,6 +211,7 @@ class CardComp extends Comp {
         event.preventDefault();
         const url = "https://whondo.com/" + this.buttonAction_;
         window.location.assign(url);
+    
     }
 
     /**
@@ -206,7 +224,9 @@ class CardComp extends Comp {
         cardButton.buttonVarient = 2;
 
         cardButton.addEventListener("click", this.onButtonClick.bind(this));
+    
     }
+
 }
 
 customElements.define("comp-card", CardComp);
