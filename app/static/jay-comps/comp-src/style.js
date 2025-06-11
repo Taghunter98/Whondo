@@ -28,7 +28,7 @@ export class Style {
     }
 
     styleFont() {
-        
+
         return /* css */ `
         h1 {
             font-size:   57px;
@@ -110,7 +110,7 @@ export class Style {
      * @returns {literal} CSS image values to be injected into component.
      */
     styleImage(borderRadius, maxHeight) {
-        
+
         let radius;
 
         if (borderRadius) radius = 8;
@@ -178,7 +178,7 @@ export class Style {
      * @returns {literal} CSS card values to be injected into component.
      */
     styleCard(cardID, direction, maxWidth, padding, gap, border) {
-        
+
         let cardBorder = 'None';
         if (border) cardBorder = this.styleBorder();
 
