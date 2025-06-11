@@ -12,16 +12,16 @@
 import { Style } from "./style.js";
 
 export class Comp extends HTMLElement {
-    
+
     constructor() {
         super();
-        
+
         this.compName_ = "Component Name";
         this.compHTML_ = "";
         this.compCSS_  = "";
         this.compStyle = new Style();
 
-        this.attachShadow({ mode: "open"});
+        this.attachShadow({ mode: "open" });
     }
 
     /**
@@ -83,7 +83,7 @@ export class Comp extends HTMLElement {
 
         return this.compCSS_;
     }
-    
+
     /**
      * @brief A method that creates an HTML template to be rendered.
      * .
@@ -100,7 +100,7 @@ export class Comp extends HTMLElement {
             ${this.compStyle.styleDefaultComp()}
             ${css}
         </style>
-        `
+        `;
     }
 
     /**
@@ -108,7 +108,7 @@ export class Comp extends HTMLElement {
      */
     debugComp() {
 
-        console.log("DEBUG COMP: " + this.compName + "\n")
+        console.log("DEBUG COMP: " + this.compName + "\n");
         console.log(this.compName);
         console.log(this.compHTML);
         console.log(this.compCSS);

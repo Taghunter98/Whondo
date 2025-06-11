@@ -85,7 +85,7 @@ class ButtonComp extends Comp {
      */
     createCSS() {
 
-        let primary  = this.compStyle.styleButton(
+        let primary = this.compStyle.styleButton(
             "button",
             "--white",
             "--black100",

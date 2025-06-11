@@ -21,9 +21,9 @@ class CardComp extends Comp {
         this.buttonText_ = "Card Action";
         this.cardImage_  = "";
 
-        this.compName_   = "Card";
-        this.compHTML_   = this.createHTML();
-        this.compCSS_    = this.createCSS();
+        this.compName_ = "Card";
+        this.compHTML_ = this.createHTML();
+        this.compCSS_  = this.createCSS();
 
         this.renderComp();
     }
@@ -150,7 +150,7 @@ class CardComp extends Comp {
             </div>
             <comp-button id="button"></comp-button>
         </div>
-        `
+        `;
     }
 
     /**
@@ -181,7 +181,7 @@ class CardComp extends Comp {
         return `
         ${cardStyle}
         ${textCardStyle}
-        `
+        `;
     }
 
     /**

@@ -24,11 +24,11 @@ export class Style {
             padding: 0;
         }
         ${this.styleFont()}
-        `
+        `;
     }
 
     styleFont() {
-        
+
         return /* css */ `
         h1 {
             font-size:   57px;
@@ -71,7 +71,7 @@ export class Style {
             font-weight: 500;
             line-height: 16pt;
         }
-        `
+        `;
     }
 
     /**
@@ -90,7 +90,7 @@ export class Style {
             flex-direction: ${direction};
             padding: ${padding}px;
             max-width: ${maxWidth}px;
-        `
+        `;
     }
 
     /**
@@ -110,7 +110,7 @@ export class Style {
      * @returns {literal} CSS image values to be injected into component.
      */
     styleImage(borderRadius, maxHeight) {
-        
+
         let radius;
 
         if (borderRadius) radius = 8;
@@ -123,7 +123,7 @@ export class Style {
             object-fit: cover;
             border-radius: ${radius}px;
         }
-        `
+        `;
     }
 
     /**
@@ -162,7 +162,7 @@ export class Style {
         .${buttonID}:active {
             background: var(${activeColour});
         }
-        `
+        `;
     }
 
     /**
@@ -178,7 +178,7 @@ export class Style {
      * @returns {literal} CSS card values to be injected into component.
      */
     styleCard(cardID, direction, maxWidth, padding, gap, border) {
-        
+
         let cardBorder = 'None';
         if (border) cardBorder = this.styleBorder();
 
@@ -200,6 +200,6 @@ export class Style {
             background: var(--black10);
             transition: background 0.4s;
         }
-        `
+        `;
     }
 }
