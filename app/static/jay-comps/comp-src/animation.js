@@ -21,9 +21,34 @@ export class Animation {
    */
     createTransition(prop, duration, timing = "linear", delay = "0s") {
         return `
-    
+      
       transition: ${prop} ${duration} ${timing} ${delay};
 
     `;
+
     }
+
+    createAnimationProp(aniName, duration, timing, delay, iterate, direction ){
+        return `
+        animation: ${aniName} ${duration} ${timing} ${delay} ${iterate} ${direction}
+      `;
+    }
+
+    fadeInKeyframes(){
+        return `
+          @keyframes {
+            from{opacity: 0;}
+            to{opacity: 1;}
+          }
+      `;
+    }
+
+    createFadeIn(){
+        return `
+        .fade{
+          ${this.createAnimationProp()}
+        }
+      `;
+    }
+
 }

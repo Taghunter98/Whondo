@@ -9,7 +9,13 @@
  * Description: Base style class for CSS injection for components.
  */
 
+import { Animation } from "./animation";
+
 export class Style {
+
+    constructor(){
+        this.animation = new Animation();
+    }
 
     /**
      * @brief A method that provides standard CSS to remove all margin/padding.
@@ -89,7 +95,7 @@ export class Style {
             display: flex;
             flex-direction: ${direction};
             padding: ${padding}px;
-            max-width: ${maxWidth}px;
+            max-width: ${maxWidth}px;   
         `;
     }
 
@@ -154,7 +160,7 @@ export class Style {
             border-radius: 8px;
             border: ${buttonBorder};
             cursor: pointer;
-            transition: background 0.1s ease-in-out;
+            ${this.animation.createTransition(background, "0.1", "ease-in-ou")}
         }
         .${buttonID}:hover {
             background: var(${hoverColour});
@@ -199,6 +205,11 @@ export class Style {
         .${cardID}:hover {
             background: var(--black10);
             transition: background 0.4s;
+        }
+        .${cardID} {
+            ${this.animation.createTransition("opacity", "0.3s")}
+            ${this.animation.createAnimationProp("fadeIN", "0.5")}
+            ${this.animation.createFadeIn()}
         }
         `;
     }
