@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 Sarit Samkumpim, whondo.com
+ * Copyright (c) 2025 Josh Bassett, whondo.com
  * 
  * Filename:    animation.js
  * Author:      Sarit Samkumpim

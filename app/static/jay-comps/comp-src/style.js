@@ -9,7 +9,7 @@
  * Description: Base style class for CSS injection for components.
  */
 
-import { Animation } from "./animation";
+import { Animation } from "./animation.js";
 
 export class Style {
 
@@ -160,7 +160,7 @@ export class Style {
             border-radius: 8px;
             border: ${buttonBorder};
             cursor: pointer;
-            ${this.animation.createTransition(background, "0.1", "ease-in-ou")}
+            ${this.animation.createTransition("background", "0.1", "ease-in-ou")}
         }
         .${buttonID}:hover {
             background: var(${hoverColour});
