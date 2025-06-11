@@ -19,36 +19,42 @@ export class Animation {
    * @param {string} delay - Delay before animation starts (default "0s")
    * @return {string} - A CSS string with the transition declaration
    */
-    createTransition(prop, duration, timing = "linear", delay = "0s") {
-        return `
-      
-      transition: ${prop} ${duration} ${timing} ${delay};
-
-    `;
-
-    }
-
-    createAnimationProp(aniName, duration, timing, delay, iterate, direction ){
-        return `
-        animation: ${aniName} ${duration} ${timing} ${delay} ${iterate} ${direction}
-      `;
+    createTransition(prop, duration, timing = "linear", delay = 0) {
+        return  `transition: ${prop} ${duration}s ${timing} ${delay}s;`;
     }
 
     fadeInKeyframes(){
-        return `
-          @keyframes {
-            from{opacity: 0;}
-            to{opacity: 1;}
-          }
-      `;
-    }
+        return /* css */ `
+          @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
 
-    createFadeIn(){
-        return `
-        .fade{
-          ${this.createAnimationProp()}
+            100% {
+                opacity: 1;
+            }
         }
       `;
     }
+
+    fadeOutKeyframes(){
+        return /* css */ `
+          @keyframes fadeOutAnimation {
+            100% {
+                opacity: 0;
+            }
+
+            0% {
+                opacity: 1;
+            }
+        }
+      `;
+    }
+
+    addAnimationName(aniName, duration, timing = "forwards") {
+        return `animation: ${aniName} ${duration}s ${timing};`;
+    }
+
+    
 
 }

@@ -160,7 +160,7 @@ export class Style {
             border-radius: 8px;
             border: ${buttonBorder};
             cursor: pointer;
-            ${this.animation.createTransition("background", "0.1", "ease-in-ou")}
+            ${this.animation.createTransition("background", .2, "ease-in-out")}
         }
         .${buttonID}:hover {
             background: var(${hoverColour});
@@ -201,16 +201,15 @@ export class Style {
             border-radius: 12px;
             border: ${cardBorder};
             gap: ${gap}px;
+            
+            ${this.animation.addAnimationName("fadeInAnimation", .4,  "ease-in-out")}
+            ${this.animation.createTransition("background", .2, "ease-in-out")}
         }
         .${cardID}:hover {
             background: var(--black10);
-            transition: background 0.4s;
         }
-        .${cardID} {
-            ${this.animation.createTransition("opacity", "0.3s")}
-            ${this.animation.createAnimationProp("fadeIN", "0.5")}
-            ${this.animation.createFadeIn()}
-        }
+
+        ${this.animation.fadeInKeyframes()}
         `;
     }
 }
