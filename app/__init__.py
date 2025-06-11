@@ -10,6 +10,7 @@ Description: Creates a Flask app instance and sets up logging.
 """
 
 from flask                         import Flask, session, redirect, has_request_context, request
+from flask_cors                    import CORS
 from flask_session                 import Session
 from flask.logging                 import default_handler
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -62,6 +63,7 @@ def create_app() -> Flask:
 
     app: Flask  = Flask(__name__, instance_relative_config=True, template_folder = 'templates')
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for = 1)
+    CORS(app, resources={r"/*": {"origins": "*"}})
 
     log_file_path:str = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app.log')
 
