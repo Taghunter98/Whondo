@@ -37,6 +37,23 @@ class LoginPageComp extends Comp {
     
     }
 
+    async fetchData() {
+
+        const api = new API();
+        let data  = await api.request("https://catfact.ninja/fact", "GET");
+        
+        console.log(data['fact']);
+    
+    }
+
+    async login(json) {
+
+        const api = new API();
+        let data  = await api.request("https://whondo.com/login", "POST", json);
+        console.log(data['message']);
+    
+    }
+
     testButton(button, card, card2) {
 
         button.addEventListener("click", () => {
@@ -60,9 +77,7 @@ class LoginPageComp extends Comp {
             const pass  = "Happ1ne55";
             let array   = {email : email, passsword : pass};
 
-            const api  = new API("https://catfact.ninja/fact", array, "GET");
-            const data = api.request();
-            console.log(data.fact);
+            this.login(array);
         
         });
     

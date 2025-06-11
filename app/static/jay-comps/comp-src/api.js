@@ -1,60 +1,61 @@
 export class API {
 
-    constructor(apiURL, apiValues, apiMethod) {
-
-        this.apiURL_    = apiURL;
-        this.apiValues_ = apiValues;
-        this.apiMethod_ = apiMethod;
-    
-    }
-
     jsonify(array) {
 
         return `'[${JSON.stringify(array)}]'`;
     
     }
 
-    async request() {
+    async request(apiURL, apiMethod, apiData = null) {
 
-        let response;
+        if (apiMethod === "POST") {
 
-        if (this.apiMethod_ == "POST") {
-
-            const json = this.jsonify(this.apiValues_);
-
-            console.log(json);
-            fetch(this.apiURL_, {
-                method: this.apiMethod_,
-                body: json,
-                headers: {
-                    "Content-type": "application/json",
-                },
-            })
-                .then((response) => response.json())
-                .then((json) => {
-
-                    if (json['status'] == true) {
-
-                        result.innerHTML   = json['message'];
-                        result.style.color = 'green';
-                    
-                    } else {
-
-                        result.innerHTML   = json['error'];
-                        result.style.color = 'red';
-                    
-                    }
-                
-                });
+            const json = this.jsonify(apiData);
         
-        } else if (this.apiMethod_ == "GET") {
+            try {
 
-            response = await fetch(this.apiURL_);
-            if (!response.ok) throw new Error(`ERROR: ${response.status}`);
-            return response;
+                const response = await fetch(apiURL, {
+                    method: apiMethod,
+                    body: json,
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                });
+
+                const jsonData = await response.json();
+
+                return jsonData;
+        
+            } catch (error) {
+
+                throw new Error("ERROR: Unable to execute request check if the URL is correct");
+            
+            }
+        
+        } else if (apiMethod === "GET") {
+
+            try {
+
+                const response = await fetch(apiURL, {
+                    method: apiMethod,
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                });
+                
+                const jsonData = await response.json();
+
+                return jsonData; 
+        
+            } catch (error) {
+
+                throw new Error("ERROR: Unable to execute request check if the URL is correct");
+            
+            }
         
         }
-    
+
     }
+
 
 }
