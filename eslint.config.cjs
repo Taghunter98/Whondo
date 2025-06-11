@@ -1,11 +1,31 @@
-// eslint.config.cjs (at root)
+/**
+ * Copyright (c) 2025 Josh Bassett, whondo.com
+ * 
+ * Filename:    eslint.conf.cjs.js
+ * Author:      Josh Bassett
+ * Date:        11/06/2025
+ * Version:     1.0
+ * 
+ * Description: ESLint config file for code quality enforcement.
+ */
+
 const globals = require("globals");
 const { defineConfig } = require("eslint/config");
 const alignAssignments = require("eslint-plugin-align-assignments");
 
+/**
+ * The config enforces:
+ * 
+ *  - Aligns assignments
+ *  - Four space indentation
+ *  - Semi colons
+ *  - Padding inside functions
+ *  - No inline comments
+ *  - Camel case variables
+ *      
+ */
 module.exports = defineConfig([
     {
-        // Update the glob to target files inside app/static/jay-comps
         files: ["app/static/jay-comps/**/*.{js,jsx,ts,tsx}"],
         languageOptions: {
             globals: globals.browser,

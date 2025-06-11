@@ -47,7 +47,7 @@ class LoginPageComp extends Comp {
 
     openWindow() {
 
-        window.location.assign("https://whondo.com/register");
+        window.location.assign("/register");
     
     }
 
