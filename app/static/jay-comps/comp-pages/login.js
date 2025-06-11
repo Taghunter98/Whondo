@@ -49,8 +49,8 @@ class LoginPageComp extends Comp {
         const email = "bassettjosh397@gmail.com";
         const pass  = "Happ1ne55";
         let array   = {email : email, password : pass};
-        let data    = await this.compAPI.request("https://whondo.com/login", "POST", array);
-        
+
+        let data = await this.compAPI.request("/login", "POST", array);
         console.log(data['message']);
     
     }
