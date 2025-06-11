@@ -1,5 +1,4 @@
 import { Comp } from '../comp-src/comp.js';
-import { API  } from '../comp-src/api.js';
 
 class LoginPageComp extends Comp {
 
@@ -39,8 +38,7 @@ class LoginPageComp extends Comp {
 
     async fetchData() {
 
-        const api = new API();
-        let data  = await api.request("https://catfact.ninja/fact", "GET");
+        let data = await this.compAPI.request("https://catfact.ninja/fact", "GET");
         
         console.log(data['fact']);
     
@@ -51,9 +49,8 @@ class LoginPageComp extends Comp {
         const email = "bassettjosh397@gmail.com";
         const pass  = "Happ1ne55";
         let array   = {email : email, password : pass};
-
-        const api = new API();
-        let data  = await api.request("/login", "POST", array);
+        let data    = await this.compAPI.request("/login", "POST", array);
+        
         console.log(data['message']);
     
     }

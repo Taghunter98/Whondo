@@ -10,6 +10,7 @@
  */
 
 import { Style } from "./style.js";
+import  { API } from "./api.js";
 
 export class Comp extends HTMLElement {
 
@@ -21,6 +22,7 @@ export class Comp extends HTMLElement {
         this.compHTML_ = "";
         this.compCSS_  = "";
         this.compStyle = new Style();
+        this.compAPI   = new API();
 
         this.attachShadow({ mode: "open" });
     
