@@ -1,5 +1,5 @@
 import { Comp } from '../comp-src/comp.js';
-import { Style } from '../comp-src/style.js';
+import { API  } from '../comp-src/api.js';
 
 class LoginPageComp extends Comp {
   constructor() {
@@ -7,9 +7,9 @@ class LoginPageComp extends Comp {
     this.title_ = "Login to Whondo";
     this.description_ = "This is placeholder text";
 
-    this.compName_ = "Login Page";
+    this.compName_    = "Login Page";
     this.compHTML_ = this.createHTML();
-    this.compCSS_  = this.createCSS();
+    this.compCSS_ = this.createCSS();
     
     this.renderComp();
   }
@@ -44,6 +44,14 @@ class LoginPageComp extends Comp {
       } else {
           console.log("Update failed");
       } 
+
+      const email = "bassettjosh397@gmail.com";
+      const pass  = "Happ1ne55";
+      let array = {email : email, passsword : pass};
+
+      const api = new API("https://catfact.ninja/fact", array, "GET");
+      const data = api.request();
+      console.log(data.fact);
     });
   }
 
