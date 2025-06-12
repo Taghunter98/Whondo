@@ -9,6 +9,7 @@ class InputComp extends Comp {
         this.inputLabel_  = "Label";
         this.inputType_   = "text";
         this.inputPrompt_ = "Enter text";
+        this.inputValue_  = this.shadowRoot.querySelector("input");
 
         this.compName_ = "Input";
         this.compHTML_ = this.createHTML();
@@ -34,7 +35,7 @@ class InputComp extends Comp {
 
     set inputPrompt(newInputPrompt) {
 
-        this.inputLabel_ = newInputPrompt;
+        this.inputPrompt_ = newInputPrompt;
         this.updateComp(this.createHTML(), this.compCSS_);
     
     }
@@ -57,12 +58,19 @@ class InputComp extends Comp {
     
     }
 
+    get inputValue() {
+
+        return this.shadowRoot.getElementById("input").value;
+
+    }
+
+
     createHTML() {
 
         return /* html */ `
         <div class="inputContainer">
             <label>${this.inputLabel_}</label>
-            <input type="${this.inputType_}" placeholder="${this.inputPrompt_}">
+            <input id="input" type="${this.inputType_}" placeholder="${this.inputPrompt_}">
         </div>
         `;
     
@@ -73,12 +81,13 @@ class InputComp extends Comp {
         const inputContainer = this.compStyle.styleContainer(
             "column",
             "100%",
-            "None",
+            "none",
             0,
             "start",
             12,
             false,
-            10
+            10,
+            "--white"
         );
 
         return /* css */ `
@@ -86,11 +95,19 @@ class InputComp extends Comp {
             ${inputContainer}
         }
         input {
-            font-size: 16;
+            display: block;
+            font-size: 16px;
             width: 100%;
             padding: 8px 12px;
             border: ${this.compStyle.styleBorder(true)};
-            border-radius: 12px;
+            border-radius: 8px;
+            box-sizing:     border-box;
+        }
+        input:hover {
+            outline: solid 2px var(--black60);
+        }
+        input:focus {
+            outline: solid 2px var(--black100);
         }
         `;
     

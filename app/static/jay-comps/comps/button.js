@@ -66,7 +66,7 @@ class ButtonComp extends Comp {
     /**
      * @brief A getter method that returns the Comp's button varient.
      * 
-     * @returns {int} Comp's button varient. 
+     * @returns {number} Comp's button varient. 
      */
     get buttonVarient() {
 

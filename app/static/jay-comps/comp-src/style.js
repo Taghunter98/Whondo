@@ -12,17 +12,22 @@
 export class Style {
 
     /**
-     * @brief A method that provides standard CSS to remove all margin/padding.
+     * @brief A method that provides standard CSS to remove all margin/padding. The host
+     *        settings ensure that shadow DOM child elements are rendered as blocks.
      * 
      * @returns {literal} CSS default values with no margin/padding.
      */
     styleDefaultComp() {
 
-        return /* css */ `
+        return  `
         * {
             margin: 0;
             padding: 0;
         }
+        :host {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
 
         ${this.styleFont()}
         `;
@@ -78,31 +83,46 @@ export class Style {
     }
 
     /**
+     * @brief A method that checks value type.
+     * 
+     * @param {string | number} value 
+     * 
+     * @returns 
+     */
+    styleCheck(value) {
+
+        return typeof value === 'number' ? `${value}px` : value;
+    
+    }
+
+    /**
      * @brief A method that provides styling for containers.
      * 
      * @param {string}  direction 
      * @param {string}  width
      * @param {string}  maxWidth 
-     * @param {int}     padding 
+     * @param {number}     padding 
      * @param {string}  alignItems 
-     * @param {int}     borderRadius 
+     * @param {number}     borderRadius 
      * @param {boolean} border 
-     * @param {int}     gap 
+     * @param {number}     gap 
      * 
-     * @returns CSS container values to be injected into component.
+     * @returns CSS container values to be injected numbero component.
      */
-    styleContainer(direction, width, maxWidth = "auto", padding, alignItems = "start", borderRadius = 0, border, gap) {
+    styleContainer(direction, width, maxWidth = "auto", padding, alignItems = "start", borderRadius = 0, border, gap, background) {
 
         return  /* style */ `
             display: flex;
             flex-direction: ${direction};
-            padding:        ${padding}px;
-            width:          ${width};
-            max-width:      ${maxWidth};
+            padding:        ${this.styleCheck(padding)};
+            width:          ${this.styleCheck(width)};
+            max-width:      ${this.styleCheck(maxWidth)};
             align-items:    ${alignItems};
-            border-radius:  ${borderRadius}px;
+            border-radius:  ${this.styleCheck(borderRadius)};
             border:         ${this.styleBorder(border)};
-            gap:            ${gap}px;
+            gap:            ${this.styleCheck(gap)};
+            background:     var(${background});
+            box-sizing:     border-box;
         `;
     
     }
@@ -113,7 +133,7 @@ export class Style {
      */
     styleBorder(border) {
 
-        return (border) ? `solid 1px var(--black40)` : "None";
+        return (border) ? `solid 1px var(--black40)` : "none";
     
     }
 
@@ -122,7 +142,7 @@ export class Style {
      * 
      * @param {boolean} borderRadius
      * 
-     * @returns {literal} CSS image values to be injected into component.
+     * @returns {literal} CSS image values to be injected numbero component.
      */
     styleImage(borderRadius, maxHeight) {
 
@@ -152,7 +172,7 @@ export class Style {
      * @param {string}  activeBackground
      * @param {boolean} border
      * 
-     * @returns {literal} CSS values to be injected into component.
+     * @returns {literal} CSS values to be injected numbero component.
      */
     styleButton(buttonID, text, colour, hoverColour, activeColour, border) {
 
@@ -184,12 +204,12 @@ export class Style {
      * 
      * @param {string}  containerID 
      * @param {string}  direction 
-     * @param {int}     maxWidth 
-     * @param {int}     padding
-     * @param {int}     gap
+     * @param {number}     maxWidth 
+     * @param {number}     padding
+     * @param {number}     gap
      * @param {boolean} border
      * 
-     * @returns {literal} CSS card values to be injected into component.
+     * @returns {literal} CSS card values to be injected numbero component.
      */
     styleCard(cardID, direction, width, maxWidth, padding, gap, border) {
 

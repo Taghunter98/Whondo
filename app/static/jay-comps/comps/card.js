@@ -181,7 +181,7 @@ class CardComp extends Comp {
             "container", 
             "column",
             "100%", 
-            "", 
+            500, 
             20,
             15,
             true
@@ -191,7 +191,7 @@ class CardComp extends Comp {
             "textContainer", 
             "column", 
             "100%",
-            "", 
+            500, 
             0, 
             5, 
             false

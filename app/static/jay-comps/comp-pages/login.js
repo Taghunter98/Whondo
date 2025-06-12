@@ -6,8 +6,7 @@ class LoginPageComp extends Comp {
 
         super();
         
-        this.title_       = "Login to Whondo";
-        this.description_ = "This is placeholder text";
+        this.title_ = "Login to Whondo";
 
         this.compName_ = "Login Page";
         this.compHTML_ = this.createHTML();
@@ -23,16 +22,15 @@ class LoginPageComp extends Comp {
         <div class="background">
             <div class="container">
                 <h3>${this.title_}</h3>
-                <p>${this.description_}</p>
 
-                <comp-input id="name" name="email"></comp-input>
-                <comp-input id="password" name="password"></cop-input>
-                    
-                </div>
+                <comp-input id="email" name="email"></comp-input>
+                <comp-input id="password" name="password"></comp-input>
 
                 <comp-button id="submit">Refresh Card</comp-button>
+                <p id="result"></p>
+            </div>
+            
         </div>
-        <p id="result"></p>
         `;
     
     }
@@ -47,18 +45,32 @@ class LoginPageComp extends Comp {
             "center",
             0,
             false,
-            0
+            0,
+            "--black10"
         );
 
         const container = this.compStyle.styleContainer(
             "column",
-            "50%",
-            "500px",
+            "auto",
+            500,
             20,
             "start",
             16,
             true,
-            15
+            15,
+            "--white"
+        );
+
+        const inputs = this.compStyle.styleContainer(
+            "column",
+            "100%",
+            500,
+            0,
+            "start",
+            0,
+            false,
+            20,
+            "--white"
         );
     
         return /* css */ `
@@ -67,6 +79,9 @@ class LoginPageComp extends Comp {
         }
         .container {
             ${container}
+        }
+        .inputs {
+            ${inputs}
         }
         @media (max-width: 600px) {
             .background {
@@ -78,14 +93,6 @@ class LoginPageComp extends Comp {
             }
         }
         `;
-    
-    }
-
-    async fetchData() {
-
-        let data = await this.compAPI.request("https://catfact.ninja/fact", "GET");
-        
-        console.log(data['fact']);
     
     }
 
@@ -107,14 +114,19 @@ class LoginPageComp extends Comp {
 
         const compButton = this.shadowRoot.getElementById("submit");
         const result     = this.shadowRoot.getElementById("result");
+        const email      = this.shadowRoot.getElementById("email");
+        const pass       = this.shadowRoot.getElementById("password");
         
         compButton.buttonText = "Login";
+        email.inputLabel      = "Email";
+        email.inputPrompt     = "Enter email";
+        pass.inputLabel       = "Password";
+        pass.inputType        = "password";
+        pass.inputPrompt      = "Enter password";
 
         compButton.addEventListener("click", () => {
 
-            const email    = this.shadowRoot.getElementById("email").value;
-            const pass     = this.shadowRoot.getElementById("password").value;
-            const jsonData = {email : email, password : pass};
+            const jsonData = {email : email.inputValue, password : pass.inputValue};
 
             this.login(result, jsonData);
         
