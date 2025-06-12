@@ -14,10 +14,12 @@ class LoginPageComp extends Comp {
         this.renderComp();
     }
 
+
+
     createHTML() {
     
         return /* html */ `
-    <h4>${this.title_}</h4>
+    <h4 id="typeEfx">${this.title_}</h4>
     <p>${this.description_}</p>
     <comp-card id="testCard"></comp-card>
     <comp-card id="testCard2"></comp-card>
@@ -27,8 +29,20 @@ class LoginPageComp extends Comp {
 
     createCSS() {
     
+        let headerEfx    = this.compStyle.headerTypeEfx("typeEfx", "relative", 24, 30, 2, "center" );
+        const typeWriter = this.compStyle.animation.typeAnimaKeyframes();
+        const blinking   = this.compStyle.animation.blinkingCursorKeyframe();
+
         return `
-    `;
+
+            ${typeWriter}
+            ${blinking}
+            #typeEfx{
+                ${headerEfx}
+            }
+
+        `; 
+    
     }
 
     testButton(button, card, card2) {

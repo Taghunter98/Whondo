@@ -212,4 +212,33 @@ export class Style {
         ${this.animation.fadeInKeyframes()}
         `;
     }
+
+    headerTypeEfx(headerID, position, width, fontSize, border, textAlign){
+
+        const type   = this.animation.addAnimationName("typewriter", 5,  "ease-in-out", "both", 1, 1, "normal");
+        const cursor =  this.animation.addAnimationName("blinkingCursor", 0.5,  "ease-in-out","", 0, "infinite", "normal" );
+
+        return `
+        #${headerID} {
+            position: ${position};
+            width: ${width}em;
+            margin: 0 auto
+            border-right: ${border}px solid rgba(255, 255, 255, .75);
+            font-size: ${fontSize}px;
+            text-align: ${textAlign};
+            white-space: nowrap;
+            overflow: hidden;
+            transform: translateY(-50%);  
+            animation: ${type}, ${cursor};
+            
+        }
+            ${this.animation.typeAnimaKeyframes()}
+            ${this.animation.typeAnimaKeyframes()}
+        
+        `;
+        
+    }
+
+    
+    
 }
