@@ -20,12 +20,13 @@ class LoginPageComp extends Comp {
     createHTML() {
     
         return /* html */ `
-        <h4>${this.title_}</h4>
+        <h3>${this.title_}</h3>
         <p>${this.description_}</p>
-        <comp-card id="testCard"></comp-card>
-        <comp-card id="testCard2"></comp-card>
-        <comp-card></comp-card>
-        <comp-button id="refreshBtn">Refresh Card</comp-button>
+        <!-- <comp-card id="testCard"></comp-card> -->
+        <input type="text" name="email" id="email" />
+        <input type="password" name="password" id="password" />
+        <comp-button id="submit">Refresh Card</comp-button>
+        <p id="result"></p>
         `;
     
     }
@@ -51,57 +52,30 @@ class LoginPageComp extends Comp {
     
     }
 
-    async login() {
+    async login(result, json) {
 
-        const email = "bassettjosh397@gmail.com";
-        const pass  = "Happ1ne55";
-        let array   = {email : email, password : pass};
-
-        let data = await this.compAPI.request("/login", "POST", array);
-        console.log(data['message']);
-    
-    }
-
-    testButton(button, card, card2) {
-
-        button.addEventListener("click", () => {
+        let data = await this.compAPI.request("/login", "POST", json);
         
-            card.cardTitle  = "New TITLE";
-            card.cardText   = "New Text";
-            card2.cardTitle = "TEST";
-            card2.cardText  = "This is cool text";
-
-            if (card.cardTitle === "New TITLE") {
-
-                console.log("Card Title updated successsfully");
-            
-            } else {
-
-                console.log("Update failed");
-            
-            } 
-
-            this.fetchData();
-        
-        });
+        (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
     
     }
 
     compHook() {
 
-        const card   = this.shadowRoot.getElementById("testCard");
-        const card2  = this.shadowRoot.getElementById("testCard2");
-        const button = this.shadowRoot.getElementById("refreshBtn");
-      
-        card.cardTitle  = "Super cool title";
-        card.cardText   = "Super cool card description";
-        card.buttonText = "Click";
-        card.cardImage  = "https://images.pexels.com/photos/333083/pexels-photo-333083.jpeg?_gl=1*q46dzz*_ga*MjEyOTMwNTE2Ni4xNzQyMTQxMzY3*_ga_8JE65Q40S6*czE3NDk0ODYyOTckbzQkZzAkdDE3NDk0ODYyOTckajYwJGwwJGgw";
+        const compButton = this.shadowRoot.getElementById("submit");
+        const result     = this.shadowRoot.getElementById("result");
+        
+        compButton.buttonText = "Login";
 
-        card.buttonAction  = this.openWindow;
-        card2.buttonAction = this.fetchData;
+        compButton.addEventListener("click", () => {
 
-        this.testButton(button, card, card2);
+            const email = this.shadowRoot.getElementById("email").value;
+            const pass  = this.shadowRoot.getElementById("password").value;
+            let json    = {email : email, password : pass};
+
+            this.login(result, json);
+        
+        });
     
     }
   
