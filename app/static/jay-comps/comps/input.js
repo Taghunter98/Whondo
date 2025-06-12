@@ -9,7 +9,6 @@ class InputComp extends Comp {
         this.inputLabel_  = "Label";
         this.inputType_   = "text";
         this.inputPrompt_ = "Enter text";
-        this.inputValue_  = this.shadowRoot.querySelector("input");
 
         this.compName_ = "Input";
         this.compHTML_ = this.createHTML();
