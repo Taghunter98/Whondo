@@ -160,7 +160,9 @@ export class Style {
             border-radius: 8px;
             border: ${buttonBorder};
             cursor: pointer;
+            ${this.animation.addAnimationProp("scaleInAnimation", 2, "ease", 0, 1, "normal", "both")}
             ${this.animation.createTransition("background", .2, "ease-in-out")}
+            
         }
         .${buttonID}:hover {
             background: var(${hoverColour});
@@ -168,6 +170,9 @@ export class Style {
         .${buttonID}:active {
             background: var(${activeColour});
         }
+
+        ${this.animation.scaleInKeyframes()}
+
         `;
     }
 
@@ -202,16 +207,14 @@ export class Style {
             border: ${cardBorder};
             gap: ${gap}px;
             
-            /* ${this.animation.addAnimationName("fadeInAnimation", .4,  "ease-in-out", 0, 1, "normal" , "none")} */
-           /*  ${this.animation.addAnimationName("fadeLeftAnimation", 3, "ease", 0, 1, "normal", "both")} */
-           ${this.animation.addAnimationName("fadeRightAnimation", 3, "ease", 0, 1, "normal", "both")}
-            ${this.animation.createTransition("background", .2, "ease-in-out")}
+          ${this.animation.addAnimationProp("slideDownAnimation", 3, "ease", 0, 1, "normal", "both")}
+           ${this.animation.createTransition("background", .2, "ease-in-out")}
         }
         .${cardID}:hover {
             background: var(--black10);
         }
 
-        ${this.animation.fadeRightKeyframes()}
+        ${this.animation.slideDownKeyframes()}
         `;
     }    
     

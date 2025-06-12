@@ -23,11 +23,23 @@ export class Animation {
         return  `transition: ${prop} ${duration}s ${timing} ${delay}s;`;
     }
 
-
-    addAnimationName(aniName, duration, timing = "ease", delay = "0", iterate = "1", direction = "normal", fillMode = "none" ) {
+    /**
+     * @brief A method that provides a animation shorthand property.
+     * 
+     * @param {string} aniName - Name of the animation.
+     * @param {int} duration - duration how long it took animation to complete.
+     * @param {string} timing - speed of animation like "ease" slow start then fast  the slowly end.
+     * @param {int} delay - the delay before the animation start.
+     * @param {int} iterate - how many time the animation repeats.
+     * @param {string} direction - in simple should it play forward or backward etc.
+     * @param {string} fillMode - how should animation effect the elements
+     * @returns 
+     */
+    addAnimationProp(aniName, duration, timing = "ease", delay = "0", iterate = "1", direction = "normal", fillMode = "none" ) {
         return `animation: ${aniName} ${duration}s ${timing} ${delay}s ${iterate} ${direction} ${fillMode};`;
     }
 
+   
     fadeInKeyframes(){
         return /* css */ `
           @keyframes fadeInAnimation {
@@ -91,6 +103,55 @@ export class Animation {
             }
         `;
     } 
+
+    slideUpKeyframes(){
+        return /* css */ `
+            @keyframes slideUpAnimation {
+                0% {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+
+    }
+
+    slideDownKeyframes() {
+        return /*css */ `
+            @keyframes slideDownAnimation {
+                0% {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+    }
+
+    scaleInKeyframes(){
+        return /*css */ `
+            @keyframes scaleInAnimation {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        `;
+    }
         
 
 
