@@ -167,11 +167,17 @@ export class Style {
         .${buttonID}:hover {
             background: var(${hoverColour});
         }
+
+        .${buttonID}:hover{
+            ${this.animation.addAnimationProp("pulsingAnimation", 1.5, "ease-in-out", 0, 1, "normal", "both")}
+        }
+
         .${buttonID}:active {
             background: var(${activeColour});
         }
 
         ${this.animation.scaleInKeyframes()}
+        ${this.animation.pulsKeyframes()}
 
         `;
     }
