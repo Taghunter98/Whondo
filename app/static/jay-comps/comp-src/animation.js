@@ -55,23 +55,5 @@ export class Animation {
         return `animation: ${aniName} ${duration}s ${timing} ${fillMode} ${delay}s; ${iterate} ${direction}`;
     }
 
-    typeAnimaKeyframes(){
-        return /*style */`
-            @keyframes typewriter{
-             from {width: 0;}
-             to {width: 100%}
-            }
-        `;
-    }
-
-
-    blinkingCursorKeyframe(){
-        return /*style */ `
-            @keyframes blinkingCursor{
-                from {border-right-color: rgba(255,255,255,.75);}
-                to {border-right: transparent;} 
-            }
-        `;
-    }
 
 }
