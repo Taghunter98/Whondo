@@ -23,6 +23,7 @@ export class Style {
             margin: 0;
             padding: 0;
         }
+
         ${this.styleFont()}
         `;
     
@@ -80,7 +81,8 @@ export class Style {
      * @brief A method that provides styling for containers.
      * 
      * @param {string}  direction 
-     * @param {int}     maxWidth 
+     * @param {string}  width
+     * @param {string}  maxWidth 
      * @param {int}     padding 
      * @param {string}  alignItems 
      * @param {int}     borderRadius 
@@ -89,15 +91,16 @@ export class Style {
      * 
      * @returns CSS container values to be injected into component.
      */
-    styleContainer(direction, maxWidth, padding, alignItems = "start", borderRadius = 0, border, gap) {
+    styleContainer(direction, width, maxWidth = "auto", padding, alignItems = "start", borderRadius = 0, border, gap) {
 
         return  /* style */ `
             display: flex;
             flex-direction: ${direction};
             padding:        ${padding}px;
-            max-width:      ${maxWidth}px;
+            width:          ${width};
+            max-width:      ${maxWidth};
             align-items:    ${alignItems};
-            border-radius:  ${borderRadius};
+            border-radius:  ${borderRadius}px;
             border:         ${this.styleBorder(border)};
             gap:            ${gap}px;
         `;
@@ -188,7 +191,7 @@ export class Style {
      * 
      * @returns {literal} CSS card values to be injected into component.
      */
-    styleCard(cardID, direction, maxWidth, padding, gap, border) {
+    styleCard(cardID, direction, width, maxWidth, padding, gap, border) {
 
         return /* css */ `
         h2, p {
@@ -199,7 +202,7 @@ export class Style {
         ${this.styleImage(true, 200)}
         
         .${cardID} {
-            ${this.styleContainer(direction, maxWidth, padding, "start", 12, border, gap)}
+            ${this.styleContainer(direction, width, maxWidth, padding, "start", 12, border, gap)}
         }
         .${cardID}:hover {
             background: var(--black10);

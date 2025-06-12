@@ -179,17 +179,19 @@ class CardComp extends Comp {
         
         let cardStyle = this.compStyle.styleCard(
             "container", 
-            "column", 
-            500, 
-            15,
+            "column",
+            "100%", 
+            "", 
             20,
+            15,
             true
         );
 
         let textCardStyle = this.compStyle.styleCard(
             "textContainer", 
             "column", 
-            500, 
+            "100%",
+            "", 
             0, 
             5, 
             false

@@ -20,21 +20,105 @@ class LoginPageComp extends Comp {
     createHTML() {
     
         return /* html */ `
-        <comp-card id="testCard"></comp-card>
-        <h3>${this.title_}</h3>
-        <p>${this.description_}</p>
-        <input type="text" name="email" id="email" />
-        <input type="password" name="password" id="password" />
-        <comp-button id="submit">Refresh Card</comp-button>
+        <div class="background">
+            <div class="container">
+                <h3>${this.title_}</h3>
+                <p>${this.description_}</p>
+
+                <div class="textContainer">
+                
+                    <div class="inputContainer">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" />
+                    </div>
+                    
+                    <div class="inputContainer">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" />
+                    </div>
+                    
+                </div>
+
+                <comp-button id="submit">Refresh Card</comp-button>
+            </div>
+        </div>
         <p id="result"></p>
         `;
     
     }
 
     createCSS() {
+
+        const background = this.compStyle.styleContainer(
+            "column",
+            "auto",
+            "auto",
+            100,
+            "center",
+            0,
+            false,
+            0
+        );
+
+        const container = this.compStyle.styleContainer(
+            "column",
+            "50%",
+            "500px",
+            20,
+            "start",
+            16,
+            true,
+            15
+        );
+
+        const textContainer = this.compStyle.styleContainer(
+            "row",
+            "auto%",
+            "auto",
+            0,
+            "start",
+            12,
+            false,
+            15
+        );
+
+        const inputContainer = this.compStyle.styleContainer(
+            "column",
+            "auto%",
+            500,
+            0,
+            "start",
+            12,
+            false,
+            10
+        );
     
-        return `
-    `;
+        return /* css */ `
+        .background {
+            ${background}
+        }
+        .container {
+            ${container}
+        }
+        .textContainer {
+            ${textContainer}
+        }
+        .inputContainer {
+            ${inputContainer}
+        }
+        @media (max-width: 600px) {
+            .background {
+                width: auto;
+                padding: 20px;
+            }
+            .container {
+                width: auto;
+            }
+            .textContainer {
+                flex-direction: column;
+            }
+        }
+        `;
     
     }
 
@@ -54,7 +138,7 @@ class LoginPageComp extends Comp {
 
     async login(result, json) {
 
-        let data = await this.compAPI.request("https://whondo.com/login", "POST", json);
+        let data = await this.compAPI.request("/login", "POST", json);
         
         (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
     
