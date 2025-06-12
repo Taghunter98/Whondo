@@ -202,7 +202,7 @@ export class Style {
             border: ${cardBorder};
             gap: ${gap}px;
             
-            ${this.animation.addAnimationName("fadeInAnimation", .4,  "ease-in-out")}
+            ${this.animation.addAnimationName("fadeInAnimation", .4,  "ease-in-out", "none", 0, 1, "normal")}
             ${this.animation.createTransition("background", .2, "ease-in-out")}
         }
         .${cardID}:hover {

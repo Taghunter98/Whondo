@@ -51,8 +51,8 @@ export class Animation {
       `;
     }
 
-    addAnimationName(aniName, duration, timing = "", fillMode = "", delay = "0s", iterate = "1", direction = "normal" ) {
-        return `animation: ${aniName} ${duration}s ${timing} ${fillMode} ${delay}s ${iterate} ${direction}`;
+    addAnimationName(aniName, duration, timing = "", fillMode = "", delay = "0", iterate = "1", direction = "" ) {
+        return `animation: ${aniName} ${duration}s ${timing} ${fillMode} ${delay}s; ${iterate} ${direction}`;
     }
 
     typeAnimaKeyframes(){

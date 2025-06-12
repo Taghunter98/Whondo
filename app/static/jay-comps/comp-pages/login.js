@@ -28,21 +28,7 @@ class LoginPageComp extends Comp {
     }
 
     createCSS() {
-    
-        let headerEfx    = this.compStyle.headerTypeEfx("typeEfx", "relative", 24, 30, 2, "center" );
-        const typeWriter = this.compStyle.animation.typeAnimaKeyframes();
-        const blinking   = this.compStyle.animation.blinkingCursorKeyframe();
-
-        return `
-
-            ${typeWriter}
-            ${blinking}
-            #typeEfx{
-                ${headerEfx}
-            }
-
-        `; 
-    
+        return ``;
     }
 
     testButton(button, card, card2) {
