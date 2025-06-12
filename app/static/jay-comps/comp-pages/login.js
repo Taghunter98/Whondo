@@ -25,22 +25,12 @@ class LoginPageComp extends Comp {
                 <h3>${this.title_}</h3>
                 <p>${this.description_}</p>
 
-                <div class="textContainer">
-                
-                    <div class="inputContainer">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" id="email" />
-                    </div>
-                    
-                    <div class="inputContainer">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" />
-                    </div>
+                <comp-input id="name" name="email"></comp-input>
+                <comp-input id="password" name="password"></cop-input>
                     
                 </div>
 
                 <comp-button id="submit">Refresh Card</comp-button>
-            </div>
         </div>
         <p id="result"></p>
         `;
@@ -70,28 +60,6 @@ class LoginPageComp extends Comp {
             true,
             15
         );
-
-        const textContainer = this.compStyle.styleContainer(
-            "row",
-            "auto%",
-            "auto",
-            0,
-            "start",
-            12,
-            false,
-            15
-        );
-
-        const inputContainer = this.compStyle.styleContainer(
-            "column",
-            "auto%",
-            500,
-            0,
-            "start",
-            12,
-            false,
-            10
-        );
     
         return /* css */ `
         .background {
@@ -100,12 +68,6 @@ class LoginPageComp extends Comp {
         .container {
             ${container}
         }
-        .textContainer {
-            ${textContainer}
-        }
-        .inputContainer {
-            ${inputContainer}
-        }
         @media (max-width: 600px) {
             .background {
                 width: auto;
@@ -113,9 +75,6 @@ class LoginPageComp extends Comp {
             }
             .container {
                 width: auto;
-            }
-            .textContainer {
-                flex-direction: column;
             }
         }
         `;
