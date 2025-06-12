@@ -202,14 +202,16 @@ export class Style {
             border: ${cardBorder};
             gap: ${gap}px;
             
-            ${this.animation.addAnimationName("fadeInAnimation", .4,  "ease-in-out", "none", 0, 1, "normal")}
+            /* ${this.animation.addAnimationName("fadeInAnimation", .4,  "ease-in-out", 0, 1, "normal" , "none")} */
+           /*  ${this.animation.addAnimationName("fadeLeftAnimation", 3, "ease", 0, 1, "normal", "both")} */
+           ${this.animation.addAnimationName("fadeRightAnimation", 3, "ease", 0, 1, "normal", "both")}
             ${this.animation.createTransition("background", .2, "ease-in-out")}
         }
         .${cardID}:hover {
             background: var(--black10);
         }
 
-        ${this.animation.fadeInKeyframes()}
+        ${this.animation.fadeRightKeyframes()}
         `;
     }    
     

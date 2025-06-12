@@ -23,6 +23,11 @@ export class Animation {
         return  `transition: ${prop} ${duration}s ${timing} ${delay}s;`;
     }
 
+
+    addAnimationName(aniName, duration, timing = "ease", delay = "0", iterate = "1", direction = "normal", fillMode = "none" ) {
+        return `animation: ${aniName} ${duration}s ${timing} ${delay}s ${iterate} ${direction} ${fillMode};`;
+    }
+
     fadeInKeyframes(){
         return /* css */ `
           @keyframes fadeInAnimation {
@@ -51,9 +56,42 @@ export class Animation {
       `;
     }
 
-    addAnimationName(aniName, duration, timing = "", fillMode = "", delay = "0", iterate = "1", direction = "" ) {
-        return `animation: ${aniName} ${duration}s ${timing} ${fillMode} ${delay}s; ${iterate} ${direction}`;
+    fadeLeftKeyframes(){
+        return /*css */ `
+            @keyframes fadeLeftAnimation {
+                0% {
+                    opacity: 0;
+                    transform: translateX(100px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateX(0);
+
+                }
+
+            }
+        `;
     }
+
+    fadeRightKeyframes() {
+        return /*css*/ `
+            @keyframes fadeRightAnimation {
+                0% {
+                    opacity: 0;
+                    transform: translate(0);
+
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translate(10px);
+
+                }
+            }
+        `;
+    } 
+        
 
 
 }
