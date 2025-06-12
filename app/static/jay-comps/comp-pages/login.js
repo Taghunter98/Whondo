@@ -20,9 +20,9 @@ class LoginPageComp extends Comp {
     createHTML() {
     
         return /* html */ `
+        <comp-card id="testCard"></comp-card>
         <h3>${this.title_}</h3>
         <p>${this.description_}</p>
-        <!-- <comp-card id="testCard"></comp-card> -->
         <input type="text" name="email" id="email" />
         <input type="password" name="password" id="password" />
         <comp-button id="submit">Refresh Card</comp-button>
@@ -54,7 +54,7 @@ class LoginPageComp extends Comp {
 
     async login(result, json) {
 
-        let data = await this.compAPI.request("/login", "POST", json);
+        let data = await this.compAPI.request("https://whondo.com/login", "POST", json);
         
         (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
     
@@ -69,11 +69,11 @@ class LoginPageComp extends Comp {
 
         compButton.addEventListener("click", () => {
 
-            const email = this.shadowRoot.getElementById("email").value;
-            const pass  = this.shadowRoot.getElementById("password").value;
-            let json    = {email : email, password : pass};
+            const email    = this.shadowRoot.getElementById("email").value;
+            const pass     = this.shadowRoot.getElementById("password").value;
+            const jsonData = {email : email, password : pass};
 
-            this.login(result, json);
+            this.login(result, jsonData);
         
         });
     

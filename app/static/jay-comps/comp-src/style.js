@@ -79,19 +79,27 @@ export class Style {
     /**
      * @brief A method that provides styling for containers.
      * 
-     * @param {string} direction 
-     * @param {int}    maxWidth 
-     * @param {int}    padding 
+     * @param {string}  direction 
+     * @param {int}     maxWidth 
+     * @param {int}     padding 
+     * @param {string}  alignItems 
+     * @param {int}     borderRadius 
+     * @param {boolean} border 
+     * @param {int}     gap 
      * 
-     * @returns {literal} CSS container values to be injected into component.
+     * @returns CSS container values to be injected into component.
      */
-    styleContainer(direction, maxWidth, padding) {
+    styleContainer(direction, maxWidth, padding, alignItems = "start", borderRadius = 0, border, gap) {
 
         return  /* style */ `
             display: flex;
             flex-direction: ${direction};
-            padding: ${padding}px;
-            max-width: ${maxWidth}px;
+            padding:        ${padding}px;
+            max-width:      ${maxWidth}px;
+            align-items:    ${alignItems};
+            border-radius:  ${borderRadius};
+            border:         ${this.styleBorder(border)};
+            gap:            ${gap}px;
         `;
     
     }
@@ -100,9 +108,9 @@ export class Style {
      * 
      * @returns 
      */
-    styleBorder() {
+    styleBorder(border) {
 
-        return `solid 1px var(--black40)`;
+        return (border) ? `solid 1px var(--black40)` : "None";
     
     }
 
@@ -145,9 +153,6 @@ export class Style {
      */
     styleButton(buttonID, text, colour, hoverColour, activeColour, border) {
 
-        let buttonBorder = 'None';
-        if (border) buttonBorder = this.styleBorder();
-
         return /* css */ `
         .${buttonID} {
             background: var(${colour});
@@ -157,7 +162,7 @@ export class Style {
             font-weight: 400;
             padding: 9px 16px;
             border-radius: 8px;
-            border: ${buttonBorder};
+            border: ${this.styleBorder(border)};
             cursor: pointer;
             transition: background 0.1s ease-in-out;
         }
@@ -185,9 +190,6 @@ export class Style {
      */
     styleCard(cardID, direction, maxWidth, padding, gap, border) {
 
-        let cardBorder = 'None';
-        if (border) cardBorder = this.styleBorder();
-
         return /* css */ `
         h2, p {
             margin: 0;
@@ -197,10 +199,7 @@ export class Style {
         ${this.styleImage(true, 200)}
         
         .${cardID} {
-            ${this.styleContainer(direction, maxWidth, padding)}
-            border-radius: 12px;
-            border: ${cardBorder};
-            gap: ${gap}px;
+            ${this.styleContainer(direction, maxWidth, padding, "start", 12, border, gap)}
         }
         .${cardID}:hover {
             background: var(--black10);
