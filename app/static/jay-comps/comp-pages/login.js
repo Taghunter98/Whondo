@@ -37,46 +37,42 @@ class LoginPageComp extends Comp {
 
     createCSS() {
 
-        const fadeIn          = this.compStyle.animation.fadeIn();
-        const fadeInAnimation = this.compStyle.animation.addAnimationProp("fadeInAnimation", 2, "ease", "0", "1", "normal", "forwards");
-
+        const animation = this.compStyle.animation.addAnimationProp("slideUp", .5);
 
         const background = this.compStyle.styleCompCSS({
-            valueID: "background",
+            class: "background",
             display: "flex",
             flexDirection: "column",
             width: "100%",
             padding: "50px 0px",
-            alignItems: "center",
+            alignItems: "centre",
             border: false,
             gap: 0,
             background: "black10",
         });
 
         const backgroundMobile = this.compStyle.styleCompCSS({
-            valueID: "background",
+            class: "background",
             padding: 20,
             width: "auto"
         });
 
         const container = this.compStyle.styleCompCSS({
-            valueID: "container",
+            class: "container",
             display: "flex",
             flexDirection: "column",
             width: "auto",
             maxWidth: 500,
             padding: 20,
             alignItems: "start",
-            border: true,
+            border: "border",
             borderRadius: 16,
             gap: 15,
             background: "white",
-            opacity: 0,
-            animation: fadeInAnimation
+            animation: animation
         });
     
         return /* css */ `
-        ${fadeIn}
         
         ${background}
         

@@ -69,7 +69,7 @@ class InputComp extends Comp {
         return /* html */ `
         <div class="inputContainer">
             <label>${this.inputLabel_}</label>
-            <input id="input" type="${this.inputType_}" placeholder="${this.inputPrompt_}">
+            <input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">
         </div>
         `;
     
@@ -78,37 +78,47 @@ class InputComp extends Comp {
     createCSS() {
 
         const inputContainer = this.compStyle.styleCompCSS({
-            valueID: "inputContainer",
-            direction: "column",
+            class: "inputContainer",
+            display: "flex",
+            flexDirection: "column",
             width: "100%",
             maxWidth: "none",
             padding: 0,
             alignItems: "start",
-            border: false,
-            borderRadius: true,
             gap: 10,
             background: "--white"
+        });
+
+        const input = this.compStyle.styleCompCSS({
+            class: "inputValue",
+            display: "block",
+            fontSize: 12,
+            width: "100%",
+            padding: "8px 12px",
+            border: "border",
+            borderRadius: 8,
+            boxSizing: "border-box"
+        });
+
+        const inputHover = this.compStyle.styleCompCSS({
+            class: "inputValue",
+            psuedoClass: "hover",
+            outline: "solid 2px var(--black60)"
+        });
+
+        const inputActive = this.compStyle.styleCompCSS({
+            class: "inputValue",
+            psuedoClass: "focus",
+            outline: "solid 2px var(--black100)"
         });
 
         return /* css */ `
         
         ${inputContainer}
         
-        input {
-            display: block;
-            font-size: 16px;
-            width: 100%;
-            padding: 8px 12px;
-            border: ${this.compStyle.styleBorder(true)};
-            border-radius: 8px;
-            box-sizing:     border-box;
-        }
-        input:hover {
-            outline: solid 2px var(--black60);
-        }
-        input:focus {
-            outline: solid 2px var(--black100);
-        }
+        ${input}
+        ${inputHover}
+        ${inputActive}
         `;
     
     }

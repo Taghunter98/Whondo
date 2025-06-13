@@ -95,47 +95,46 @@ class ButtonComp extends Comp {
         let button, buttonHover, buttonActive;
 
         const primary = this.compStyle.styleCompCSS({
-            valueID: "button",
+            class: "button",
             colour: "white",
             background: "black100",
             padding: "9px 16px",
-            border: false,
+            border: "border",
             borderRadius: 8,
             cursor: "pointer",
             transition: "background 0.1s ease-in-out"
         });
 
         const primaryHover = this.compStyle.styleCompCSS({
-            valueID: "button",
+            class: "button",
             psuedoClass: "hover",
             background: "black80"
         });
 
         const primaryActive = this.compStyle.styleCompCSS({
-            valueID: "button",
+            class: "button",
             psuedoClass: "active",
             background: "black60"
         });
 
         const secondary = this.compStyle.styleCompCSS({
-            valueID: "button",
+            class: "button",
             colour: "black100",
             background: "black10",
             padding: "9px 16px",
-            border: false,
             borderRadius: 8,
             cursor: "pointer",
             transition: "background 0.1s ease-in-out"
         });
 
         const secondaryHover = this.compStyle.styleCompCSS({
-            valueID: "button",
+            class: "button",
             psuedoClass: "hover",
             background: "black20"
         });
 
         const secondaryActive = this.compStyle.styleCompCSS({
-            valueID: "button",
+            class: "button",
             psuedoClass: "active",
             background: "black40"
         });

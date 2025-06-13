@@ -55,7 +55,7 @@ export class Animation {
     fadeIn(){
 
         return /* css */ `
-        @keyframes fadeInAnimation {
+        @keyframes fadeIn {
             0% {
                 opacity: 0;
             }
@@ -76,7 +76,7 @@ export class Animation {
     fadeOut(){
 
         return /* css */ `
-        @keyframes fadeOutAnimation {
+        @keyframes fadeOut {
             100% {
                 opacity: 0;
             }
@@ -99,7 +99,7 @@ export class Animation {
     fadeLeft(x){
 
         return /*css */ `
-            @keyframes fadeLeftAnimation {
+            @keyframes fadeLeft {
                 0% {
                     opacity: 0;
                     transform: translateX(${x}px);
@@ -126,7 +126,7 @@ export class Animation {
     fadeRight(x) {
 
         return /*css*/ `
-            @keyframes fadeRightAnimation {
+            @keyframes fadeRight {
                 0% {
                     opacity: 0;
                     transform: translateX(0);
@@ -153,7 +153,7 @@ export class Animation {
     slideUp(y){
 
         return /* css */ `
-            @keyframes slideUpAnimation {
+            @keyframes slideUp {
                 0% {
                     opacity: 0;
                     transform: translateY(${y}px);
@@ -179,7 +179,7 @@ export class Animation {
     slideDown(y) {
 
         return /*css */ `
-            @keyframes slideDownAnimation {
+            @keyframes slideDown {
                 0% {
                     opacity: 0;
                     transform: translateY(${y}px);
@@ -205,7 +205,7 @@ export class Animation {
     scale(to, from){
 
         return /*css */ `
-            @keyframes scaleInAnimation {
+            @keyframes scaleIn {
                 0% {
                     opacity: 0;
                     transform: scale(${to});
@@ -228,7 +228,7 @@ export class Animation {
     pulse() {
 
         return /*css */ `
-            @keyframes pulsingAnimation {
+            @keyframes pulsing {
                 0% {
                     transform: scale(1);
                 }
@@ -255,7 +255,7 @@ export class Animation {
     fadeOutRight(x){
 
         return /*css */ `
-            @keyframes fadeOutRightAnima {
+            @keyframes fadeOutRight {
                 0% {
                     opacity: 1;
                     transform: translateX(0)
@@ -283,7 +283,7 @@ export class Animation {
     fadeOutLeft(x) {
 
         return /* css */ `
-            @keyframes fadeOutLeftAnima {
+            @keyframes fadeOutLeft {
                 0% {
                     opacity: 1;
                     transform: translateX(0)

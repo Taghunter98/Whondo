@@ -178,7 +178,7 @@ class CardComp extends Comp {
     createCSS() {
         
         const cardStyle = this.compStyle.styleCompCSS({
-            valueID: "cardContainer",
+            class: "cardContainer",
             display: "flex",
             flexDirection: "column",
             boxSizing: "border-box",
@@ -193,7 +193,7 @@ class CardComp extends Comp {
         });
 
         const textCardStyle = this.compStyle.styleCompCSS({
-            valueID: "textContainer",
+            class: "textContainer",
             direction: "column", 
             width: "100%",
             maxWidth: 500, 

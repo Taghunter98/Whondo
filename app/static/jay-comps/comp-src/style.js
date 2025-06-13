@@ -27,7 +27,7 @@ export class Style {
      */
     styleDefaultComp() {
 
-        return  `
+        return  /* css */ `
         * {
             margin: 0;
             padding: 0;
@@ -37,15 +37,6 @@ export class Style {
             width: 100%;
             box-sizing: border-box;
         }
-
-        ${this.styleFont()}
-        `;
-    
-    }
-
-    styleFont() {
-
-        return /* css */ `
         h1 {
             font-size:   57px;
             font-weight: 500;
@@ -87,6 +78,17 @@ export class Style {
             font-weight: 500;
             line-height: 16pt;
         }
+
+        ${this.animation.pulse()}
+        ${this.animation.scale()}
+        ${this.animation.slideUp(20)}
+        ${this.animation.slideDown(-20)}
+        ${this.animation.fadeIn()}
+        ${this.animation.fadeOut()}
+        ${this.animation.fadeLeft(-20)}
+        ${this.animation.fadeRight(20)}
+        ${this.animation.fadeOutLeft(-20)}
+        ${this.animation.fadeOutRight(20)}
         `;
     
     }
@@ -104,10 +106,23 @@ export class Style {
 
     }
 
-    americaniseColour(value) {
+    /**
+     * @brief A method that converts British to American English for CSS compliance.
+     * 
+     * @param {string | number} value 
+     * 
+     * @returns {string | number} Compilable CSS value
+     */
+    americanise(value) {
 
-        return "color";
-    
+        const britishToAmerican = {
+            "colour": "color",
+            "centre": "center",
+            "grey": "gray",
+            "behaviour": "behavior"
+        };
+        return britishToAmerican[value] || value;
+
     }
 
     /**
@@ -115,7 +130,7 @@ export class Style {
      * 
      * @param {string | number} value 
      * 
-     * @returns 
+     * @returns {string | number} Compilable CSS value
      */
     styleCheck(value) {
 
@@ -123,6 +138,13 @@ export class Style {
     
     }
 
+    /**
+     * @brief A method that checks font type.
+     * 
+     * @param {string | number} value 
+     * 
+     * @returns Compilable CSS value
+     */
     styleCheckFont(value) {
 
         return typeof value === 'number' ? `${value}pt` : value;
@@ -130,10 +152,59 @@ export class Style {
     }
 
     /**
-     * A method to generate CSS for containers.
-     *
+     * @brief A method to generate CSS for containers.
+     * 
+     *        To use, write the JavaScript object key and value exactly like typical
+     *        CSS values, except with some additonal conditions:
+     * 
+     *        - A CSS style is defined by calling the Comp's compStyle variable
+     *        - CSS value names are written in camel case
+     *        - The CSS values are written in British English!
+     *        - Global CSS variables can be defined in the globalCSS sheet var(--example).
+     *          These can be used for most values, but all colours must be defined as CSS
+     *          variables for simplicity.
+     *  
+     * @example
+     *  const cssConfig = this.compStyle.styleCompCSS {
+     *      valueID: "container",
+     *      psuedoClass: "hover",
+     *      display: "flex",
+     *      flexDirection: "column",
+     *      boxSizing: "border-box",
+     *      width: "100%",
+     *      maxWidth: 500,
+     *      padding: 20,
+     *      alignItems: "center",
+     *      border: true,
+     *      borderRadius: 10,
+     *      background: "white",
+     *      colour: "black100",
+     *      fontSize: 16,
+     *      fontWeight: 400,
+     *      opacity: 1
+     *  };
+     *  const cssString = styleCompCSS(cssConfig);
+     * 
+     *  // Compiles CSS that looks similar to:
+     *  `.container:hover {
+     *      display: flex;
+     *      flex-direction: column;
+     *      box-sizing: border-box;
+     *      width: 100%;
+     *      max-width: 500px;
+     *      padding: 20px;
+     *      align-items: center;
+     *      border: var(--border);
+     *      border-radius: 10px;
+     *      background: var(--white);
+     *      color: var(--black100);
+     *      // font-weight is skipped with internal handling if not needed
+     *      font-size: 16px;
+     *      opacity: 1
+     *  }`
+     * 
      * @param {Object} css 
-     * @param {string} css.valueID
+     * @param {string} css.class
      * @param {string} css.psuedoClass       
      * @param {string} css.display       
      * @param {string} css.flexDirection 
@@ -154,110 +225,53 @@ export class Style {
      */
     styleCompCSS(css) {
 
-        let cssSelector = (css.psuedoClass) ? `${css.valueID}:${css.psuedoClass}` : css.valueID;
+        let cssSelector = (css.psuedoClass) ? `${css.class}:${css.psuedoClass}` : css.class;
 
         return  /* css */ `
         .${cssSelector} {
-            ${this.parseCSS(css)}
+            ${this.compileCSS(css)}
         }
         `;
     
     }
 
-    parseCSS(css) {
+    /**
+     * @brief A method that compiles JavaScript object data to CSS values. It works by
+     *        taking the object key and value, then running checks to evaluate for CSS
+     *        compilable values.
+     * 
+     *        The checks catch:
+     *          - Camel case keys
+     *          - CSS var values
+     *          - Appropriate number checks (px, pt)
+     *          - British -> American CSS property names
+     * 
+     * @param {object} css
+     * 
+     * @returns {literal} Compiled CSS code to be injected
+     */
+    compileCSS(css) {
 
         let cssString = "";
 
         for (let value in css) {
 
-            if (value === "valueID") continue;  
+            if (value === "valueID") continue;
 
             let cssValue = css[value];
 
-            if (value === "border") cssValue = this.styleBorder(cssValue);
-            else if (value === "fontSize") cssValue = this.styleCheckFont(cssValue);
-            else if (value === "background" || value === "colour") cssValue = `var(--${cssValue})`;
+            if (value === "fontSize") cssValue = this.styleCheckFont(cssValue);
+            else if (value === "background" || value === "colour" || value === "border") cssValue = `var(--${cssValue})`;
             else if (value === "fontWeight") continue;
             else if (value === "opacity") cssValue = cssValue;
             else cssValue = this.styleCheck(cssValue);
 
-            if (value === "colour") value = this.americaniseColour(value);
-
-            cssString += `${this.parseVariableName(value)}: ${cssValue};\n`;
+            cssString += `${this.americanise(this.parseVariableName(value))}: ${this.americanise(cssValue)};\n`;
         
         }
 
-        return cssString; 
+        return cssString;
 
     }
-
-
-    /**
-     * 
-     * @returns 
-     */
-    styleBorder(border) {
-
-        return (border) ? `solid 1px var(--black40)` : "none";
-    
-    }
-
-    /**
-     * @brief a method that styles default images.
-     * 
-     * @param {boolean} borderRadius
-     * 
-     * @returns {literal} CSS image values to be injected numbero component.
-     */
-    styleImage(borderRadius, maxHeight) {
-
-        let radius;
-
-        if (borderRadius) radius = 8;
-
-        return /* css */ `
-        img {
-            width: 100%;
-            height: 100%;
-            max-height: ${maxHeight}px;
-            object-fit: cover;
-            border-radius: ${radius}px;
-        }
-        `;
-    
-    }
-
-    // /**
-    //  * @brief a method that styles a modular card.
-    //  * 
-    //  * @param {string}  containerID 
-    //  * @param {string}  direction 
-    //  * @param {number}     maxWidth 
-    //  * @param {number}     padding
-    //  * @param {number}     gap
-    //  * @param {boolean} border
-    //  * 
-    //  * @returns {literal} CSS card values to be injected numbero component.
-    //  */
-    // styleCard(cardID, direction, width, maxWidth, padding, gap, border) {
-
-    //     return /* css */ `
-    //     h2, p {
-    //         margin: 0;
-    //         padding: 0;
-    //     }
-        
-    //     ${this.styleImage(true, 200)}
-        
-    //     .${cardID} {
-    //         ${this.styleContainer(direction, width, maxWidth, padding, "start", 12, border, gap)}
-    //     }
-    //     .${cardID}:hover {
-    //         background: var(--black10);
-    //         transition: background 0.4s;
-    //     }
-    //     `;
-    
-    // }
 
 }
