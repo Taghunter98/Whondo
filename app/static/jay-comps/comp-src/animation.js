@@ -42,7 +42,7 @@ export class Animation {
     /**
     * 
     * @brief This animation go from translucent to solid better user for card or container
-    * 
+    * @param {int} opacity - how translucent item was
     */
     fadeInKeyframes(){
         return /* css */ `
@@ -61,6 +61,7 @@ export class Animation {
     /**
      * 
      * @brief This animation go from solid to translucent better use with card or container
+     * @param {int} opacity - how translucent item was
      */
     fadeOutKeyframes(){
         return /* css */ `
@@ -79,6 +80,8 @@ export class Animation {
     /**
      * 
      * @brief This animation fade in a item from left side start with translucent then solid
+     * @param {int} opacity - how translucent item was
+     * @param {function} transform - two dimension transformation can be X or Y 
      */
     fadeLeftKeyframes(){
         return /*css */ `
@@ -101,6 +104,8 @@ export class Animation {
     /**
      * 
      * @brief This animation fade in a item from right side start with translucent then solid
+     * @param {int} opacity - how translucent item was
+     * @param {function} transform - two dimension transformation can be X or Y 
      */
     fadeRightKeyframes() {
         return /*css*/ `
@@ -123,6 +128,8 @@ export class Animation {
     /**
      * 
      * @brief This animation fade up a item from bottom start with translucent then solid
+     * @param {int} opacity - how translucent item was
+     * @param {function} transform - two dimension transformation can be X or Y 
      */
     slideUpKeyframes(){
         return /* css */ `
@@ -144,6 +151,8 @@ export class Animation {
     /**
      * 
      * @brief This animation fade up a item from top start with translucent then solid
+     * @param {int} opacity - how translucent item was
+     * @param {function} transform - two dimension transformation can be X or Y 
      */
     slideDownKeyframes() {
         return /*css */ `
@@ -164,6 +173,8 @@ export class Animation {
     /**
      * 
      * @brief This animation scale-up item when the page load better you with button
+     * @param {int} opacity - how translucent item was
+     * @param {function} transform - this one use scale() transform function define scale of item in each animation step
      */
     scaleInKeyframes(){
         return /*css */ `
@@ -184,6 +195,8 @@ export class Animation {
     /**
      * 
      * @brief This animation serve a micro-interaction make an item pulsing Ex use with :hover
+     * @param {int} opacity - how translucent item was
+     * @param {function} transform - this one use scale() transform function define scale of item in each animation step
      */
     pulsKeyframes() {
         return /*css */ `
@@ -206,6 +219,8 @@ export class Animation {
     /**
      * 
      * @brief This animation fade out a item to the right  start with solid then translucent
+     * @param {int} opacity - how translucent item was
+     * @param {function} transform - two dimension transformation can be X or Y 
      */
     fadeOutRightKeyframes(){
         return /*css */ `
@@ -229,6 +244,8 @@ export class Animation {
     /**
      * 
      * @brief This animation fade out a item to the left  start with solid then translucent
+     * @param {int} opacity - how translucent item was
+     * @param {function} transform - two dimension transformation can be X or Y 
      */
     fadeOutLeftKeyframes() {
         return /* css */ `
