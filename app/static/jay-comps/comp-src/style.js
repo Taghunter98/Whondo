@@ -228,7 +228,7 @@ export class Style {
      * 
      * @returns {string} A CSS string to be injected into the component.
      */
-    styleCompCSS(css) {
+    CSS(css) {
 
         let cssSelector = (css.psuedoClass) ? `${css.class}:${css.psuedoClass}` : css.class;
 

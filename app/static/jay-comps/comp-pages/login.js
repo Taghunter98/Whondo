@@ -37,9 +37,9 @@ class LoginPageComp extends Comp {
 
     createCSS() {
 
-        const animation = this.compStyle.animation.addAnimationProp("slideUp", .5);
+        const animation = this.compStyle.animation.add("slideUp", .5);
 
-        const background = this.compStyle.styleCompCSS({
+        const background = this.compStyle.CSS({
             class: "background",
             display: "flex",
             flexDirection: "column",
@@ -51,13 +51,13 @@ class LoginPageComp extends Comp {
             background: "black10",
         });
 
-        const backgroundMobile = this.compStyle.styleCompCSS({
+        const backgroundMobile = this.compStyle.CSS({
             class: "background",
             padding: 20,
             width: "auto"
         });
 
-        const container = this.compStyle.styleCompCSS({
+        const container = this.compStyle.CSS({
             class: "container",
             display: "flex",
             flexDirection: "column",
