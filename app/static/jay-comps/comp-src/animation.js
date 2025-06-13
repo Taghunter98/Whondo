@@ -91,13 +91,13 @@ export class Animation {
             @keyframes fadeRightAnimation {
                 0% {
                     opacity: 0;
-                    transform: translate(0);
+                    transform: translateX(0);
 
                 }
 
                 100% {
                     opacity: 1;
-                    transform: translate(10px);
+                    transform: translateX(10px);
 
                 }
             }
@@ -171,4 +171,39 @@ export class Animation {
         `;
     }
 
+    fadeOutRightKeyframes(){
+        return /*css */ `
+            @keyframes fadeOutRightAnima {
+                0% {
+                    opacity: 1;
+                    transform: translateX(0)
+
+                }
+
+                100% {
+                    opacity: 0;
+                    transform: translateX(20px)
+
+                }
+            }
+        `;
+    }
+
+    fadeOutLeftKeyframes() {
+        return /* css */ `
+            @keyframes fadeOutLeftAnima {
+                0% {
+                    opacity: 1;
+                    transform: translateX(0)
+                }
+
+                100% {
+                    opacity: 0;
+                    transform: translateX(-20px)
+                }
+            }
+        `;
+    }
+
+    
 }
