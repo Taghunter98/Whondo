@@ -20,8 +20,13 @@ export class Style {
     }
 
     /**
-     * @brief A method that provides standard CSS to remove all margin/padding. The host
-     *        settings ensure that shadow DOM child elements are rendered as blocks.
+     * @brief A method that provides standard CSS to remove all margin/padding. 
+     * 
+     * The host settings ensure that shadow DOM child elements are rendered as blocks.
+     * 
+     * The default styles include typography styles that use Material 3 font settings.
+     * 
+     * Default animation library is aslo included for all Comps.
      * 
      * @returns {literal} CSS default values with no margin/padding.
      */
@@ -152,17 +157,17 @@ export class Style {
     }
 
     /**
-     * @brief A method to generate CSS for containers.
+     * @brief A method to generate `CSS` for containers.
      * 
-     *        To use, write the JavaScript object key and value exactly like typical
-     *        CSS values, except with some additonal conditions:
+     * To use, write the JavaScript `Object` key and value exactly like typical `CSS`
+     * values, except with some additonal conditions:
      * 
-     *        - A CSS style is defined by calling the Comp's compStyle variable
-     *        - CSS value names are written in camel case
-     *        - The CSS values are written in British English!
-     *        - Global CSS variables can be defined in the globalCSS sheet var(--example).
-     *          These can be used for most values, but all colours must be defined as CSS
-     *          variables for simplicity.
+     * - A CSS style is defined by calling the Comp's compStyle variable
+     * - CSS value names are written in `camel case`
+     * - The CSS values are written in British English!
+     * - Global CSS variables can be defined in the globalCSS sheet `var(--example)`.
+     *   These can be used for most values, but all colours must be defined as CSS
+     *   variables for simplicity.
      *  
      * @example
      *  const cssConfig = this.compStyle.styleCompCSS {
@@ -236,15 +241,16 @@ export class Style {
     }
 
     /**
-     * @brief A method that compiles JavaScript object data to CSS values. It works by
-     *        taking the object key and value, then running checks to evaluate for CSS
-     *        compilable values.
+     * @brief A method that compiles JavaScript `Object` data to CSS values. 
      * 
-     *        The checks catch:
-     *          - Camel case keys
-     *          - CSS var values
-     *          - Appropriate number checks (px, pt)
-     *          - British -> American CSS property names
+     * Method works by taking the `Object` key and value, then running checks to evaluate 
+     * for CSS compilable values.
+     * 
+     * The checks catch:
+     *   - Camel case keys
+     *   - CSS var values
+     *   - Appropriate number checks (px, pt)
+     *   - British -> American CSS property names
      * 
      * @param {object} css
      * 

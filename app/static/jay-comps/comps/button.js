@@ -73,23 +73,13 @@ class ButtonComp extends Comp {
         return this.buttonVarient_;
     
     }
-
-    /**
-     * @brief A method that builds the button's HTML.
-     * 
-     * @returns {literal} HTML to be injected into Comp. 
-     */
+    
     createHTML() {
 
         return /* html */ `<button id="button" class="button">${this.buttonText_}</button>`;
     
     }
 
-    /**
-     * @brief A method that builds the button's CSS.
-     * 
-     * @returns {literal} CSS to be injected into Comp.
-     */
     createCSS() {
 
         let button, buttonHover, buttonActive;

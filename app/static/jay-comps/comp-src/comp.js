@@ -96,7 +96,7 @@ export class Comp extends HTMLElement {
 
     /**
      * @brief A method that creates an HTML template to be rendered.
-     * .
+     * 
      * @param   {string} html 
      * @param   {string} css 
      * 
@@ -128,9 +128,11 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A method for rendering the Comp. Method starts by setting the shadow root HTML
-     *        to the template built by createTemplate(). Then it checks for an internal 
-     *        compHook() function which defines the Comp's inner JavaScript logic. 
+     * @brief A method for rendering the Comp. 
+     *          
+     * Method starts by setting the `shadowRoot` HTML to the template built by `createTemplate()`.
+     * Then it checks for an internal `compHook()` function which defines the Comp's inner 
+     * JavaScript logic. 
      */
     renderComp() {
 
@@ -145,8 +147,18 @@ export class Comp extends HTMLElement {
     }
 
     /**
-     * @brief A method for updating the Comp, simply calls render Comp with the updated
-     *        HTML and CSS values.
+     * @brief A method for updating the Comp's HTML/CSS.
+     * 
+     * This Method simply updates Comp with the new values. Then renders the Comp.
+     * 
+     * @example
+     * // To update -> HTML
+     * const newHTML = this.createHTML();
+     * this.updateComp(newHTML, this.compCSS_);
+     *        
+     * // To update -> CSS
+     * const newCSS = this.createCSS();
+     * this.updateComp(this.compHTML_, newCSS);
      * 
      * @param {literal} newHTML 
      * @param {literal} newCSS 
@@ -157,6 +169,61 @@ export class Comp extends HTMLElement {
         this.compCSS_  = newCSS;
 
         this.renderComp();
+    
+    }
+
+    /**
+   * @brief A method to create an HTML template for the Comp.
+   *
+   * This method should be overridden in your Comp to return the Comp’s HTML markup.
+   * By enforcing an override, we ensure that every Comp provides its own structure.
+   * 
+   * - Ensure all Comp HTML objects are prefaced with `comp-`
+   *
+   * @abstract
+   * @returns {string}
+   *
+   * @example
+   * createHTML() {
+   *     return `
+   *         <div class="comp-object">
+   *             <h1>Hello, World!</h1>
+   *         </div>
+   *     `;
+   * }
+   */
+    createHTML() {
+
+        throw new Error("Method 'createHTML()' must be overridden in the derived component.");
+    
+    }
+
+    /**
+   * @brief A method to create the CSS style for the component.
+   *
+   * This method should be overridden in your derived component to return the CSS rules
+   * that will be injected into the component's `shadow DOM`. Use `Style` to generate CSS with
+   * `styleCompCSS()`.
+   *
+   * @abstract
+   * @returns {string} 
+   *
+   * @example
+   * createCSS() {
+   *         
+   *     const cssConfig = this.compStyle.styleCompCSS {
+   *         valueID: "container",
+   *         psuedoClass: "hover",
+   *         display: "flex",
+   *         // Omitted values...
+   *     });
+   * 
+   *     return `${cssConfig}`; // Return the string literal
+   * }
+   */
+    createCSS() {
+
+        throw new Error("Method 'createCSS()' must be overridden in the derived component.");
     
     }
 
