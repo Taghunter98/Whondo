@@ -11,13 +11,14 @@
 
 export class Animation {
     /**
-   * @brief A method that provides a transition effect for a CSS property.
+   * @brief A method that provides a basic transition animation.
    * 
-   * @param {string} prop - The CSS property to animate (e.g. "background")
-   * @param {string} duration - Duration with units (e.g. "0.3s" or "500ms")
-   * @param {string} timing - Timing function (default "linear")
-   * @param {string} delay - Delay before animation starts (default "0s")
-   * @return {string} - A CSS string with the transition declaration
+   * @param {string} prop 
+   * @param {string} duration 
+   * @param {string} timing 
+   * @param {string} delay 
+   * 
+   * @return {literal} A CSS string literal with the transition declaration
    */
     createTransition(prop, duration, timing = "linear", delay = 0) {
         return  `transition: ${prop} ${duration}s ${timing} ${delay}s;`;
@@ -26,25 +27,27 @@ export class Animation {
     /**
      * @brief A method that provides a animation shorthand property.
      * 
-     * @param {string} aniName - Name of the animation.
-     * @param {int} duration - duration how long it took animation to complete.
-     * @param {string} timing - speed of animation like "ease" slow start then fast  the slowly end.
-     * @param {int} delay - the delay before the animation start.
-     * @param {int} iterate - how many time the animation repeats.
-     * @param {string} direction - in simple should it play forward or backward etc.
-     * @param {string} fillMode - how should animation effect the elements
-     * @returns 
+     * @param {string} aniName 
+     * @param {int}    duration 
+     * @param {string} timing 
+     * @param {int}    delay 
+     * @param {int}    iterate 
+     * @param {string} direction
+     * 
+     * @param {string} fillMode 
+     * 
+     * @returns {literal} A CSS string literal with animation properties
      */
     addAnimationProp(aniName, duration, timing = "ease", delay = "0", iterate = "1", direction = "normal", fillMode = "none" ) {
         return `animation: ${aniName} ${duration}s ${timing} ${delay}s ${iterate} ${direction} ${fillMode};`;
     }
 
     /**
+    * @brief A method that provides an animation for fading in an element.
     * 
-    * @brief This animation go from translucent to solid better user for card or container
-    * @param {int} opacity - how translucent item was
+    * @returns {literal} A CSS string literal with animation properties
     */
-    fadeInKeyframes(){
+    fadeIn(){
         return /* css */ `
           @keyframes fadeInAnimation {
             0% {
@@ -59,11 +62,11 @@ export class Animation {
     }
 
     /**
-     * 
-     * @brief This animation go from solid to translucent better use with card or container
-     * @param {int} opacity - how translucent item was
+     * @brief A method that provides an animation for fading out an element.
+     *
+     * @returns {literal} A CSS string literal with animation properties
      */
-    fadeOutKeyframes(){
+    fadeOut(){
         return /* css */ `
           @keyframes fadeOutAnimation {
             100% {
@@ -78,17 +81,18 @@ export class Animation {
     }
 
     /**
+     * @brief A method that provides an animation for fading in an element from the left.
      * 
-     * @brief This animation fade in a item from left side start with translucent then solid
-     * @param {int} opacity - how translucent item was
-     * @param {function} transform - two dimension transformation can be X or Y 
+     * @param {number} x
+     * 
+     * @returns {literal} A CSS string literal with animation properties
      */
-    fadeLeftKeyframes(){
+    fadeLeft(x){
         return /*css */ `
             @keyframes fadeLeftAnimation {
                 0% {
                     opacity: 0;
-                    transform: translateX(100px);
+                    transform: translateX(${x}px);
                 }
 
                 100% {
@@ -102,12 +106,13 @@ export class Animation {
     }
 
     /**
+     * @brief A method that provides an animation for fading in an element from the right.
      * 
-     * @brief This animation fade in a item from right side start with translucent then solid
-     * @param {int} opacity - how translucent item was
-     * @param {function} transform - two dimension transformation can be X or Y 
+     * @param {number} x
+     * 
+     * @returns {literal} A CSS string literal with animation properties
      */
-    fadeRightKeyframes() {
+    fadeRight(x) {
         return /*css*/ `
             @keyframes fadeRightAnimation {
                 0% {
@@ -118,7 +123,7 @@ export class Animation {
 
                 100% {
                     opacity: 1;
-                    transform: translateX(10px);
+                    transform: translateX(${x}px);
 
                 }
             }
@@ -126,17 +131,18 @@ export class Animation {
     } 
 
     /**
+     * @brief A method that provides an animation for sliding an element from the bottom.
      * 
-     * @brief This animation fade up a item from bottom start with translucent then solid
-     * @param {int} opacity - how translucent item was
-     * @param {function} transform - two dimension transformation can be X or Y 
+     * @param {number} y
+     * 
+     * @returns {literal} A CSS string literal with animation properties
      */
-    slideUpKeyframes(){
+    slideUp(y){
         return /* css */ `
             @keyframes slideUpAnimation {
                 0% {
                     opacity: 0;
-                    transform: translateY(20px);
+                    transform: translateY(${y}px);
                 }
 
                 100% {
@@ -150,16 +156,18 @@ export class Animation {
 
     /**
      * 
-     * @brief This animation fade up a item from top start with translucent then solid
-     * @param {int} opacity - how translucent item was
-     * @param {function} transform - two dimension transformation can be X or Y 
+     * @brief A method that provides an animation for sliding an element from the top.
+     * 
+     * @param {number} y
+     *
+     * @returns {literal} A CSS string literal with animation properties
      */
-    slideDownKeyframes() {
+    slideDown(y) {
         return /*css */ `
             @keyframes slideDownAnimation {
                 0% {
                     opacity: 0;
-                    transform: translateY(-20px);
+                    transform: translateY(${y}px);
                 }
 
                 100% {
@@ -171,34 +179,35 @@ export class Animation {
     }
 
     /**
+     * @brief A method that provides an animation for scaling an element.
      * 
-     * @brief This animation scale-up item when the page load better you with button
-     * @param {int} opacity - how translucent item was
-     * @param {function} transform - this one use scale() transform function define scale of item in each animation step
+     * @param {number} to
+     * @param {number} from
+     * 
+     * @returns {literal} A CSS string literal with animation properties
      */
-    scaleInKeyframes(){
+    scale(to, from){
         return /*css */ `
             @keyframes scaleInAnimation {
                 0% {
                     opacity: 0;
-                    transform: scale(0.9);
+                    transform: scale(${to});
                 }
 
                 100% {
                     opacity: 1;
-                    transform: scale(1);
+                    transform: scale(${from});
                 }
             }
         `;
     }
     
     /**
+     * @brief A method that provides an animation for pulsing an element, scales then shrinks.
      * 
-     * @brief This animation serve a micro-interaction make an item pulsing Ex use with :hover
-     * @param {int} opacity - how translucent item was
-     * @param {function} transform - this one use scale() transform function define scale of item in each animation step
+     * @returns {literal} A CSS string literal with animation properties
      */
-    pulsKeyframes() {
+    pulse() {
         return /*css */ `
             @keyframes pulsingAnimation {
                 0% {
@@ -217,12 +226,13 @@ export class Animation {
     }
 
     /**
+     * @brief A method that provides an animation for fading out an element to the right.
      * 
-     * @brief This animation fade out a item to the right  start with solid then translucent
-     * @param {int} opacity - how translucent item was
-     * @param {function} transform - two dimension transformation can be X or Y 
+     * @param {number} x
+     * 
+     * @returns {literal} A CSS string literal with animation properties
      */
-    fadeOutRightKeyframes(){
+    fadeOutRight(x){
         return /*css */ `
             @keyframes fadeOutRightAnima {
                 0% {
@@ -233,7 +243,7 @@ export class Animation {
 
                 100% {
                     opacity: 0;
-                    transform: translateX(20px)
+                    transform: translateX(${x}px)
 
                 }
             }
@@ -242,12 +252,13 @@ export class Animation {
 
 
     /**
+     * @brief A method that provides an animation for fading out an element to the left.
      * 
-     * @brief This animation fade out a item to the left  start with solid then translucent
-     * @param {int} opacity - how translucent item was
-     * @param {function} transform - two dimension transformation can be X or Y 
+     * @param {number} x
+     * 
+     * @returns {literal} A CSS string literal with animation properties
      */
-    fadeOutLeftKeyframes() {
+    fadeOutLeft(x) {
         return /* css */ `
             @keyframes fadeOutLeftAnima {
                 0% {
@@ -257,7 +268,7 @@ export class Animation {
 
                 100% {
                     opacity: 0;
-                    transform: translateX(-20px)
+                    transform: translateX(${x}px)
                 }
             }
         `;
