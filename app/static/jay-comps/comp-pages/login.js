@@ -46,7 +46,13 @@ class LoginPageComp extends Comp {
             alignItems: "center",
             border: false,
             gap: 0,
-            background: "black10"
+            background: "black10",
+        });
+
+        const backgroundMobile = this.compStyle.styleCompCSS({
+            valueID: "background",
+            padding: 20,
+            width: "auto"
         });
 
         const container = this.compStyle.styleCompCSS({
@@ -62,8 +68,7 @@ class LoginPageComp extends Comp {
             gap: 15,
             background: "white",
             fontWeight: 400
-        }
-        );
+        });
     
         return /* css */ `
         ${background}
@@ -71,13 +76,7 @@ class LoginPageComp extends Comp {
         ${container}
         
         @media (max-width: 600px) {
-            .background {
-                width: auto;
-                padding: 20px;
-            }
-            .container {
-                width: auto;
-            }
+            ${backgroundMobile}
         }
         `;
     

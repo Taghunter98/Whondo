@@ -123,30 +123,32 @@ export class Style {
     /**
      * A method to generate CSS for containers.
      *
-     * @param {Object} values 
-     * @param {string} values.valueID       
-     * @param {string} values.display       
-     * @param {string} values.flexDirection 
-     * @param {string} values.boxSizing     
-     * @param {string | number} values.width 
-     * @param {string | number} values.maxWidth 
-     * @param {number} values.padding 
-     * @param {string} values.alignItems 
-     * @param {boolean} values.border 
-     * @param {number} values.borderRadius 
-     * @param {string} values.background 
-     * @param {string} values.colour 
-     * @param {number} values.fontSize 
-     * @param {number | string} values.fontWeight 
+     * @param {Object} css 
+     * @param {string} css.valueID
+     * @param {string} css.psuedoClass       
+     * @param {string} css.display       
+     * @param {string} css.flexDirection 
+     * @param {string} css.boxSizing     
+     * @param {string | number} css.width 
+     * @param {string | number} css.maxWidth 
+     * @param {number} css.padding 
+     * @param {string} css.alignItems 
+     * @param {boolean} css.border 
+     * @param {number} css.borderRadius 
+     * @param {string} css.background 
+     * @param {string} css.colour 
+     * @param {number} css.fontSize 
+     * @param {number | string} css.fontWeight 
      * 
      * @returns {string} A CSS string to be injected into the component.
      */
+    styleCompCSS(css) {
 
-    styleCompCSS(values) {
+        let cssSelector = (css.psuedoClass) ? `${css.valueID}:${css.psuedoClass}` : css.valueID;
 
         return  /* css */ `
-        .${values.valueID} {
-            ${this.parseCSS(values)}
+        .${cssSelector} {
+            ${this.parseCSS(css)}
         }
         `;
     

@@ -106,14 +106,21 @@ class ButtonComp extends Comp {
         });
 
         const primaryHover = this.compStyle.styleCompCSS({
-            valueID: "button:hover",
+            valueID: "button",
+            psuedoClass: "hover",
             background: "black80"
+        });
+
+        const primaryActive = this.compStyle.styleCompCSS({
+            valueID: "button",
+            psuedoClass: "active",
+            background: "black60"
         });
 
         const secondary = this.compStyle.styleCompCSS({
             valueID: "button",
             colour: "black100",
-            background: "black20",
+            background: "black10",
             padding: "9px 16px",
             border: false,
             borderRadius: 8,
@@ -122,19 +129,39 @@ class ButtonComp extends Comp {
         });
 
         const secondaryHover = this.compStyle.styleCompCSS({
-            valueID: "button:hover",
+            valueID: "button",
+            psuedoClass: "hover",
+            background: "black20"
+        });
+
+        const secondaryActive = this.compStyle.styleCompCSS({
+            valueID: "button",
+            psuedoClass: "active",
             background: "black40"
         });
 
         let tertiary;
         
-        if (this.buttonVarient_ == 1)      button = primary, buttonHover = primaryHover;
-        else if (this.buttonVarient_ == 2) button = secondary, buttonHover = secondaryHover;
+        if (this.buttonVarient_ == 1) {
+
+            button       = primary;
+            buttonHover  = primaryHover;
+            buttonActive = primaryActive;
+        
+        }
+        else if (this.buttonVarient_ == 2) {
+
+            button       = secondary;
+            buttonHover  = secondaryHover;
+            buttonActive = secondaryActive;
+        
+        }
         else if (this.buttonVarient_ == 3) button = tertiary;
 
         return `
         ${button}
         ${buttonHover}
+        ${buttonActive}
         `;
     
     }
