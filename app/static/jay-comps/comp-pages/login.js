@@ -20,6 +20,7 @@ class LoginPageComp extends Comp {
     
         return /* html */ `
         <div class="background">
+            <comp-card></comp-card>
             <div class="container">
                 <h3>${this.title_}</h3>
 
@@ -37,52 +38,41 @@ class LoginPageComp extends Comp {
 
     createCSS() {
 
-        const background = this.compStyle.styleContainer(
-            "column",
-            "auto",
-            "auto",
-            100,
-            "center",
-            0,
-            false,
-            0,
-            "--black10"
-        );
+        const background = this.compStyle.styleCompCSS({
+            valueID: "background",
+            direction: "column",
+            width: "auto",
+            maxWidth: 500,
+            padding: 100,
+            alignItems: "center",
+            border: false,
+            gap: 0,
+            background: "--black10"
+        });
 
-        const container = this.compStyle.styleContainer(
-            "column",
-            "auto",
-            500,
-            20,
-            "start",
-            16,
-            true,
-            15,
-            "--white"
-        );
-
-        const inputs = this.compStyle.styleContainer(
-            "column",
-            "100%",
-            500,
-            0,
-            "start",
-            0,
-            false,
-            20,
-            "--white"
+        const container = this.compStyle.styleCompCSS({
+            valueID: "container",
+            direction: "column",
+            width: "auto",
+            maxidth: 500,
+            padding: 20,
+            alignItems: "start",
+            border: true,
+            borderRadius: 16,
+            gap: 15,
+            background: "--white",
+            fontWeight: 400
+        },
+        {
+            cursor: "pointer"
+        }
         );
     
         return /* css */ `
-        .background {
-            ${background}
-        }
-        .container {
-            ${container}
-        }
-        .inputs {
-            ${inputs}
-        }
+        ${background}
+        
+        ${container}
+        
         @media (max-width: 600px) {
             .background {
                 width: auto;

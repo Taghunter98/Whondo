@@ -158,7 +158,7 @@ class CardComp extends Comp {
         if (this.cardImage_) imageHTML = /* html */`<img src="${this.cardImage_}">`;
 
         return /* html */ `
-        <div class="container">
+        <div class="cardContainer">
             ${imageHTML}
             <div class="textContainer">
                 <h2>${this.cardTitle_}</h2>
@@ -177,25 +177,28 @@ class CardComp extends Comp {
      */
     createCSS() {
         
-        let cardStyle = this.compStyle.styleCard(
-            "container", 
-            "column",
-            "100%", 
-            500, 
-            20,
-            15,
-            true
-        );
+        const cardStyle = this.compStyle.styleCompCSS({
+            valueID: "cardContainer",
+            direction: "column",
+            width: "100%", 
+            maxWidth: 500, 
+            padding: 20,
+            alignItems: "start",
+            border: true,
+            borderRadius: 15,
+            gap: 20,
+            background: "--white"
+        });
 
-        let textCardStyle = this.compStyle.styleCard(
-            "textContainer", 
-            "column", 
-            "100%",
-            500, 
-            0, 
-            5, 
-            false
-        );
+        const textCardStyle = this.compStyle.styleCompCSS({
+            valueID: "textContainer",
+            direction: "column", 
+            width: "100%",
+            maxWidth: 500, 
+            padding: 0, 
+            alignItems: "start", 
+            border: false
+        });
 
         return `
         ${cardStyle}

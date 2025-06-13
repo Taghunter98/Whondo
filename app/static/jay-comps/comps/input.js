@@ -77,22 +77,23 @@ class InputComp extends Comp {
 
     createCSS() {
 
-        const inputContainer = this.compStyle.styleContainer(
-            "column",
-            "100%",
-            "none",
-            0,
-            "start",
-            12,
-            false,
-            10,
-            "--white"
-        );
+        const inputContainer = this.compStyle.styleCompCSS({
+            valueID: "inputContainer",
+            direction: "column",
+            width: "100%",
+            maxWidth: "none",
+            padding: 0,
+            alignItems: "start",
+            border: false,
+            borderRadius: true,
+            gap: 10,
+            background: "--white"
+        });
 
         return /* css */ `
-        .inputContainer {
-            ${inputContainer}
-        }
+        
+        ${inputContainer}
+        
         input {
             display: block;
             font-size: 16px;

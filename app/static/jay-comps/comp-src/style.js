@@ -4,7 +4,7 @@
  * Filename:    style.js
  * Author:      Josh Bassett
  * Date:        09/06/2025
- * Version:     1.0
+ * Version:     1.1
  * 
  * Description: Base style class for CSS injection for components.
  */
@@ -83,6 +83,18 @@ export class Style {
     }
 
     /**
+     * Converts a camelCase string to kebab-case.
+     *
+     * @param {string} variableName
+     * 
+     * @returns {string} CSS friendly variable name
+     */
+    parseVariableName(variableName) {
+
+        return variableName.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+    }
+    /**
      * @brief A method that checks value type.
      * 
      * @param {string | number} value 
@@ -95,37 +107,85 @@ export class Style {
     
     }
 
-    /**
-     * @brief A method that provides styling for containers.
-     * 
-     * @param {string}  direction 
-     * @param {string}  width
-     * @param {string}  maxWidth 
-     * @param {number}     padding 
-     * @param {string}  alignItems 
-     * @param {number}     borderRadius 
-     * @param {boolean} border 
-     * @param {number}     gap 
-     * 
-     * @returns CSS container values to be injected numbero component.
-     */
-    styleContainer(direction, width, maxWidth = "auto", padding, alignItems = "start", borderRadius = 0, border, gap, background) {
+    styleCheckFont(value) {
 
-        return  /* style */ `
-            display: flex;
-            flex-direction: ${direction};
-            padding:        ${this.styleCheck(padding)};
-            width:          ${this.styleCheck(width)};
-            max-width:      ${this.styleCheck(maxWidth)};
-            align-items:    ${alignItems};
-            border-radius:  ${this.styleCheck(borderRadius)};
-            border:         ${this.styleBorder(border)};
-            gap:            ${this.styleCheck(gap)};
-            background:     var(${background});
-            box-sizing:     border-box;
+        return typeof value === 'number' ? `${value}pt` : value;
+    
+    }
+
+    /**
+     * @brief A method to generate CSS for containers
+     * 
+     * @param {{
+     * valueID: string,
+     * direction: string, 
+     * width: string | number,
+     * max-width: string | number,
+     * padding: number,
+     * alignItems: string,
+     * border: boolean
+     * borderRadius: number,
+     * background: string,
+     * colour: string,
+     * fontSize: number,
+     * fontWeight: number | string
+     * }} values 
+     * @param {object} extention additional CSS values
+     * 
+     * @returns {literal} CSS to be injected into Comp
+     */
+    styleCompCSS(values, extention) {
+
+        return  /* css */ `
+        .${values.valueID} {
+            ${this.parseCSS(values)}
+
+            ${this.parseCSS(extention)}
+        }
         `;
     
     }
+
+    /**
+     * 
+     * display: flex;
+            flex-direction: ${values.direction};
+            padding:        ${this.styleCheck(values.padding)};
+            width:          ${this.styleCheck(values.width)};
+            max-width:      ${this.styleCheck(values.maxWidth)};
+            align-items:    ${values.alignItems};
+            border-radius:  ${this.styleCheck(values.borderRadius)};
+            border:         ${this.styleBorder(values.border)};
+            gap:            ${this.styleCheck(values.gap)};
+            background:     var(${values.background});
+            box-sizing:     border-box;
+            color:          ${values.colour};
+            font-size:      ${this.styleCheck(values.fontSize)};
+            font-weight:    ${this.styleCheckFont(values.fontWeight)};
+     */
+
+    parseCSS(css) {
+
+        let cssString = "";
+
+        for (const value in css) {
+
+            if (value === "valueID") continue;  
+
+            let cssValue = css[value];
+
+            if (value === "border") cssValue = this.styleBorder(cssValue);
+            else if (value === "fontSize") cssValue = this.styleCheckFont(cssValue);
+            else cssValue = this.styleCheck(cssValue);
+
+            cssString += `${this.parseVariableName(value)}: ${cssValue};\n`; 
+        
+        }
+
+        return cssString; 
+
+    }
+
 
     /**
      * 
