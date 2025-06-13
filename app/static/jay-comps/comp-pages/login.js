@@ -38,7 +38,8 @@ class LoginPageComp extends Comp {
     createCSS() {
 
         const fadeIn          = this.compStyle.animation.fadeIn();
-        const fadeInAnimation = this.compStyle.animation.addAnimationProp("fadeInAnimation", 2);
+        const fadeInAnimation = this.compStyle.animation.addAnimationProp("fadeInAnimation", 2, "ease", "0", "1", "normal", "forwards");
+
 
         const background = this.compStyle.styleCompCSS({
             valueID: "background",
@@ -70,6 +71,7 @@ class LoginPageComp extends Comp {
             borderRadius: 16,
             gap: 15,
             background: "white",
+            opacity: 0,
             animation: fadeInAnimation
         });
     

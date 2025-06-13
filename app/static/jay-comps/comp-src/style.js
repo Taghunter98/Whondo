@@ -36,6 +36,7 @@ export class Style {
             display: block;
             width: 100%;
             box-sizing: border-box;
+        }
 
         ${this.styleFont()}
         `;
@@ -183,7 +184,6 @@ export class Style {
             if (value === "colour") value = this.americaniseColour(value);
 
             cssString += `${this.parseVariableName(value)}: ${cssValue};\n`;
-            console.log(cssString); 
         
         }
 
