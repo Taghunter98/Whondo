@@ -213,14 +213,14 @@ export class Style {
             border: ${cardBorder};
             gap: ${gap}px;
             
-          ${this.animation.addAnimationProp("fadeOutLeftAnima", 3, "ease", 0, 1, "normal", "both")}
-           ${this.animation.createTransition("background", .2, "ease-in-out")}
+          ${this.animation.addAnimationProp("fadeOutAnimation", 3, "ease", 0, 1, "normal", "both")}
+          ${this.animation.createTransition("background", .2, "ease-in-out")}
         }
         .${cardID}:hover {
             background: var(--black10);
         }
 
-        ${this.animation.fadeOutLeftKeyframes()}
+        ${this.animation.fadeOutKeyframes()}
         `;
     }    
     

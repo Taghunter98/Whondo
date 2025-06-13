@@ -39,7 +39,11 @@ export class Animation {
         return `animation: ${aniName} ${duration}s ${timing} ${delay}s ${iterate} ${direction} ${fillMode};`;
     }
 
-   
+    /**
+    * 
+    * @brief This animation go from translucent to solid better user for card or container
+    * 
+    */
     fadeInKeyframes(){
         return /* css */ `
           @keyframes fadeInAnimation {
@@ -54,6 +58,10 @@ export class Animation {
       `;
     }
 
+    /**
+     * 
+     * @brief This animation go from solid to translucent better use with card or container
+     */
     fadeOutKeyframes(){
         return /* css */ `
           @keyframes fadeOutAnimation {
@@ -68,6 +76,10 @@ export class Animation {
       `;
     }
 
+    /**
+     * 
+     * @brief This animation fade in a item from left side start with translucent then solid
+     */
     fadeLeftKeyframes(){
         return /*css */ `
             @keyframes fadeLeftAnimation {
@@ -86,6 +98,10 @@ export class Animation {
         `;
     }
 
+    /**
+     * 
+     * @brief This animation fade in a item from right side start with translucent then solid
+     */
     fadeRightKeyframes() {
         return /*css*/ `
             @keyframes fadeRightAnimation {
@@ -104,6 +120,10 @@ export class Animation {
         `;
     } 
 
+    /**
+     * 
+     * @brief This animation fade up a item from bottom start with translucent then solid
+     */
     slideUpKeyframes(){
         return /* css */ `
             @keyframes slideUpAnimation {
@@ -121,6 +141,10 @@ export class Animation {
 
     }
 
+    /**
+     * 
+     * @brief This animation fade up a item from top start with translucent then solid
+     */
     slideDownKeyframes() {
         return /*css */ `
             @keyframes slideDownAnimation {
@@ -137,6 +161,10 @@ export class Animation {
         `;
     }
 
+    /**
+     * 
+     * @brief This animation scale-up item when the page load better you with button
+     */
     scaleInKeyframes(){
         return /*css */ `
             @keyframes scaleInAnimation {
@@ -152,7 +180,11 @@ export class Animation {
             }
         `;
     }
-        
+    
+    /**
+     * 
+     * @brief This animation serve a micro-interaction make an item pulsing Ex use with :hover
+     */
     pulsKeyframes() {
         return /*css */ `
             @keyframes pulsingAnimation {
@@ -171,6 +203,10 @@ export class Animation {
         `;
     }
 
+    /**
+     * 
+     * @brief This animation fade out a item to the right  start with solid then translucent
+     */
     fadeOutRightKeyframes(){
         return /*css */ `
             @keyframes fadeOutRightAnima {
@@ -189,6 +225,11 @@ export class Animation {
         `;
     }
 
+
+    /**
+     * 
+     * @brief This animation fade out a item to the left  start with solid then translucent
+     */
     fadeOutLeftKeyframes() {
         return /* css */ `
             @keyframes fadeOutLeftAnima {
