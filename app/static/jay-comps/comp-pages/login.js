@@ -37,6 +37,8 @@ class LoginPageComp extends Comp {
 
     createCSS() {
 
+        const fadeIn = this.compStyle.animation.fadeIn();
+
         const background = this.compStyle.styleCompCSS({
             valueID: "background",
             display: "flex",
@@ -67,13 +69,16 @@ class LoginPageComp extends Comp {
             borderRadius: 16,
             gap: 15,
             background: "white",
-            fontWeight: 400
+            fontWeight: 400,
+            animation: "fadeInAnimation"
         });
     
         return /* css */ `
         ${background}
         
         ${container}
+
+        ${fadeIn}
         
         @media (max-width: 600px) {
             ${backgroundMobile}

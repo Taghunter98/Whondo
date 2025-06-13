@@ -9,7 +9,15 @@
  * Description: Base style class for CSS injection for components.
  */
 
+import { Animation } from "./animation.js";
+
 export class Style {
+
+    constructor() {
+
+        this.animation = new Animation();
+    
+    }
 
     /**
      * @brief A method that provides standard CSS to remove all margin/padding. The host
@@ -167,6 +175,7 @@ export class Style {
             if (value === "border") cssValue = this.styleBorder(cssValue);
             else if (value === "fontSize") cssValue = this.styleCheckFont(cssValue);
             else if (value === "background" || value === "colour") cssValue = `var(--${cssValue})`;
+            else if (value === "fontWeight") continue;
             else cssValue = this.styleCheck(cssValue);
 
             if (value === "colour") value = this.americaniseColour(value);

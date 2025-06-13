@@ -10,6 +10,7 @@
  */
 
 export class Animation {
+
     /**
    * @brief A method that provides a basic transition animation.
    * 
@@ -21,7 +22,9 @@ export class Animation {
    * @return {literal} A CSS string literal with the transition declaration
    */
     createTransition(prop, duration, timing = "linear", delay = 0) {
+
         return  `transition: ${prop} ${duration}s ${timing} ${delay}s;`;
+    
     }
 
     /**
@@ -39,7 +42,9 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     addAnimationProp(aniName, duration, timing = "ease", delay = "0", iterate = "1", direction = "normal", fillMode = "none" ) {
+
         return `animation: ${aniName} ${duration}s ${timing} ${delay}s ${iterate} ${direction} ${fillMode};`;
+    
     }
 
     /**
@@ -48,6 +53,7 @@ export class Animation {
     * @returns {literal} A CSS string literal with animation properties
     */
     fadeIn(){
+
         return /* css */ `
           @keyframes fadeInAnimation {
             0% {
@@ -59,6 +65,7 @@ export class Animation {
             }
         }
       `;
+    
     }
 
     /**
@@ -67,6 +74,7 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     fadeOut(){
+
         return /* css */ `
           @keyframes fadeOutAnimation {
             100% {
@@ -78,6 +86,7 @@ export class Animation {
             }
         }
       `;
+    
     }
 
     /**
@@ -88,6 +97,7 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     fadeLeft(x){
+
         return /*css */ `
             @keyframes fadeLeftAnimation {
                 0% {
@@ -103,6 +113,7 @@ export class Animation {
 
             }
         `;
+    
     }
 
     /**
@@ -113,6 +124,7 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     fadeRight(x) {
+
         return /*css*/ `
             @keyframes fadeRightAnimation {
                 0% {
@@ -128,6 +140,7 @@ export class Animation {
                 }
             }
         `;
+    
     } 
 
     /**
@@ -138,6 +151,7 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     slideUp(y){
+
         return /* css */ `
             @keyframes slideUpAnimation {
                 0% {
@@ -163,6 +177,7 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     slideDown(y) {
+
         return /*css */ `
             @keyframes slideDownAnimation {
                 0% {
@@ -176,6 +191,7 @@ export class Animation {
                 }
             }
         `;
+    
     }
 
     /**
@@ -187,6 +203,7 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     scale(to, from){
+
         return /*css */ `
             @keyframes scaleInAnimation {
                 0% {
@@ -200,6 +217,7 @@ export class Animation {
                 }
             }
         `;
+    
     }
     
     /**
@@ -208,6 +226,7 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     pulse() {
+
         return /*css */ `
             @keyframes pulsingAnimation {
                 0% {
@@ -223,6 +242,7 @@ export class Animation {
                 }
             }
         `;
+    
     }
 
     /**
@@ -233,6 +253,7 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     fadeOutRight(x){
+
         return /*css */ `
             @keyframes fadeOutRightAnima {
                 0% {
@@ -248,6 +269,7 @@ export class Animation {
                 }
             }
         `;
+    
     }
 
 
@@ -259,6 +281,7 @@ export class Animation {
      * @returns {literal} A CSS string literal with animation properties
      */
     fadeOutLeft(x) {
+
         return /* css */ `
             @keyframes fadeOutLeftAnima {
                 0% {
@@ -272,6 +295,7 @@ export class Animation {
                 }
             }
         `;
+    
     }
 
     
