@@ -146,7 +146,8 @@ export class Style {
      * @param {string} css.background 
      * @param {string} css.colour 
      * @param {number} css.fontSize 
-     * @param {number | string} css.fontWeight 
+     * @param {number | string} css.fontWeight
+     * @param {number} css.opacity
      * 
      * @returns {string} A CSS string to be injected into the component.
      */
@@ -176,11 +177,13 @@ export class Style {
             else if (value === "fontSize") cssValue = this.styleCheckFont(cssValue);
             else if (value === "background" || value === "colour") cssValue = `var(--${cssValue})`;
             else if (value === "fontWeight") continue;
+            else if (value === "opacity") cssValue = cssValue;
             else cssValue = this.styleCheck(cssValue);
 
             if (value === "colour") value = this.americaniseColour(value);
 
-            cssString += `${this.parseVariableName(value)}: ${cssValue};\n`; 
+            cssString += `${this.parseVariableName(value)}: ${cssValue};\n`;
+            console.log(cssString); 
         
         }
 

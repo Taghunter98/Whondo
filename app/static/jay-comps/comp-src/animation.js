@@ -43,7 +43,7 @@ export class Animation {
      */
     addAnimationProp(aniName, duration, timing = "ease", delay = "0", iterate = "1", direction = "normal", fillMode = "none" ) {
 
-        return `animation: ${aniName} ${duration}s ${timing} ${delay}s ${iterate} ${direction} ${fillMode};`;
+        return `${aniName} ${duration}s ${timing} ${delay}s ${iterate} ${direction} ${fillMode};`;
     
     }
 
@@ -55,7 +55,7 @@ export class Animation {
     fadeIn(){
 
         return /* css */ `
-          @keyframes fadeInAnimation {
+        @keyframes fadeInAnimation {
             0% {
                 opacity: 0;
             }
@@ -76,7 +76,7 @@ export class Animation {
     fadeOut(){
 
         return /* css */ `
-          @keyframes fadeOutAnimation {
+        @keyframes fadeOutAnimation {
             100% {
                 opacity: 0;
             }
