@@ -92,36 +92,50 @@ class ButtonComp extends Comp {
      */
     createCSS() {
 
-        let primary = this.compStyle.styleButton(
-            "button",
-            "--white",
-            "--black100",
-            "--black80",
-            "--black60",
-            false
-        );
+        let button, buttonHover, buttonActive;
 
-        let secondary = this.compStyle.styleButton(
-            "button",
-            "--black100",
-            "--black20",
-            "--black40",
-            "--black60",
-            false
-        );
+        const primary = this.compStyle.styleCompCSS({
+            valueID: "button",
+            colour: "white",
+            background: "black100",
+            padding: "9px 16px",
+            border: false,
+            borderRadius: 8,
+            cursor: "pointer",
+            transition: "background 0.1s ease-in-out"
+        });
 
-        let tertiary = this.compStyle.styleButton(
-            "button",
-            "--black100",
-            "--white",
-            "--black10",
-            "--black20",
-            true
-        );
+        const primaryHover = this.compStyle.styleCompCSS({
+            valueID: "button:hover",
+            background: "black80"
+        });
+
+        const secondary = this.compStyle.styleCompCSS({
+            valueID: "button",
+            colour: "black100",
+            background: "black20",
+            padding: "9px 16px",
+            border: false,
+            borderRadius: 8,
+            cursor: "pointer",
+            transition: "background 0.1s ease-in-out"
+        });
+
+        const secondaryHover = this.compStyle.styleCompCSS({
+            valueID: "button:hover",
+            background: "black40"
+        });
+
+        let tertiary;
         
-        if (this.buttonVarient_ == 1)      return ` ${primary}`;
-        else if (this.buttonVarient_ == 2) return `${secondary}`;
-        else if (this.buttonVarient_ == 3) return `${tertiary}`;
+        if (this.buttonVarient_ == 1)      button = primary, buttonHover = primaryHover;
+        else if (this.buttonVarient_ == 2) button = secondary, buttonHover = secondaryHover;
+        else if (this.buttonVarient_ == 3) button = tertiary;
+
+        return `
+        ${button}
+        ${buttonHover}
+        `;
     
     }
 

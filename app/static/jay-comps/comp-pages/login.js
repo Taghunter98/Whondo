@@ -20,7 +20,6 @@ class LoginPageComp extends Comp {
     
         return /* html */ `
         <div class="background">
-            <comp-card></comp-card>
             <div class="container">
                 <h3>${this.title_}</h3>
 
@@ -40,31 +39,29 @@ class LoginPageComp extends Comp {
 
         const background = this.compStyle.styleCompCSS({
             valueID: "background",
-            direction: "column",
-            width: "auto",
-            maxWidth: 500,
-            padding: 100,
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            padding: "50px 0px",
             alignItems: "center",
             border: false,
             gap: 0,
-            background: "--black10"
+            background: "black10"
         });
 
         const container = this.compStyle.styleCompCSS({
             valueID: "container",
-            direction: "column",
+            display: "flex",
+            flexDirection: "column",
             width: "auto",
-            maxidth: 500,
+            maxWidth: 500,
             padding: 20,
             alignItems: "start",
             border: true,
             borderRadius: 16,
             gap: 15,
-            background: "--white",
+            background: "white",
             fontWeight: 400
-        },
-        {
-            cursor: "pointer"
         }
         );
     
