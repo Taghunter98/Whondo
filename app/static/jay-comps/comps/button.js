@@ -20,11 +20,11 @@ class ButtonComp extends Comp {
         this.buttonText_    = "This is a button";
         this.buttonVarient_ = 1;    
         
-        this.compName_ = "Button";
-        this.compHTML_ = this.createHTML();
-        this.compCSS_  = this.createCSS();
+        this.name_ = "Button";
+        this.html_ = this.createHTML();
+        this.css_  = this.createCSS();
 
-        this.renderComp();
+        this.render();
     
     }
 
@@ -36,7 +36,7 @@ class ButtonComp extends Comp {
     set buttonText(newButtonText) {
 
         this.buttonText_ = newButtonText;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -48,7 +48,7 @@ class ButtonComp extends Comp {
     set buttonVarient(newButtonVarient) {
 
         this.buttonVarient_ = newButtonVarient;
-        this.updateComp(this.compHTML_, this.createCSS());
+        this.update(this.html_, this.createCSS());
     
     }
     
@@ -84,7 +84,7 @@ class ButtonComp extends Comp {
 
         let button, buttonHover, buttonActive;
 
-        const primary = this.compStyle.styleCompCSS({
+        const primary = this.design.CSS({
             class: "button",
             colour: "white",
             background: "black100",
@@ -95,19 +95,19 @@ class ButtonComp extends Comp {
             transition: "background 0.1s ease-in-out"
         });
 
-        const primaryHover = this.compStyle.styleCompCSS({
+        const primaryHover = this.design.CSS({
             class: "button",
             psuedoClass: "hover",
             background: "black80"
         });
 
-        const primaryActive = this.compStyle.styleCompCSS({
+        const primaryActive = this.design.CSS({
             class: "button",
             psuedoClass: "active",
             background: "black60"
         });
 
-        const secondary = this.compStyle.styleCompCSS({
+        const secondary = this.design.CSS({
             class: "button",
             colour: "black100",
             background: "black10",
@@ -117,13 +117,13 @@ class ButtonComp extends Comp {
             transition: "background 0.1s ease-in-out"
         });
 
-        const secondaryHover = this.compStyle.styleCompCSS({
+        const secondaryHover = this.design.CSS({
             class: "button",
             psuedoClass: "hover",
             background: "black20"
         });
 
-        const secondaryActive = this.compStyle.styleCompCSS({
+        const secondaryActive = this.design.CSS({
             class: "button",
             psuedoClass: "active",
             background: "black40"

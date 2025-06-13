@@ -12,22 +12,6 @@
 export class Animation {
 
     /**
-   * @brief A method that provides a basic transition animation.
-   * 
-   * @param {string} prop 
-   * @param {string} duration 
-   * @param {string} timing 
-   * @param {string} delay 
-   * 
-   * @return {literal} A CSS string literal with the transition declaration
-   */
-    createTransition(prop, duration, timing = "linear", delay = 0) {
-
-        return  `transition: ${prop} ${duration}s ${timing} ${delay}s;`;
-    
-    }
-
-    /**
      * @brief A method that provides a animation shorthand property.
      * 
      * @param {string} aniName 
@@ -41,7 +25,7 @@ export class Animation {
      * 
      * @returns {literal} A CSS string literal with animation properties
      */
-    add(aniName, duration, timing = "ease", delay = "0", iterate = "1", direction = "normal", fillMode = "none" ) {
+    prop(aniName, duration, timing = "ease", delay = "0", iterate = "1", direction = "normal", fillMode = "none" ) {
 
         return `${aniName} ${duration}s ${timing} ${delay}s ${iterate} ${direction} ${fillMode};`;
     

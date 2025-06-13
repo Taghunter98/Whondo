@@ -10,32 +10,32 @@ class InputComp extends Comp {
         this.inputType_   = "text";
         this.inputPrompt_ = "Enter text";
 
-        this.compName_ = "Input";
-        this.compHTML_ = this.createHTML();
-        this.compCSS_  = this.createCSS();
+        this.name_ = "Input";
+        this.html_ = this.createHTML();
+        this.css_  = this.createCSS();
 
-        this.renderComp();
+        this.render();
     
     }
 
     set inputLabel(newInputLabel) {
 
         this.inputLabel_ = newInputLabel;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
     set inputType(newInputType) {
 
         this.inputType_ = newInputType;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
     set inputPrompt(newInputPrompt) {
 
         this.inputPrompt_ = newInputPrompt;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -77,7 +77,7 @@ class InputComp extends Comp {
 
     createCSS() {
 
-        const inputContainer = this.compStyle.styleCompCSS({
+        const inputContainer = this.design.CSS({
             class: "inputContainer",
             display: "flex",
             flexDirection: "column",
@@ -89,7 +89,7 @@ class InputComp extends Comp {
             background: "--white"
         });
 
-        const input = this.compStyle.styleCompCSS({
+        const input = this.design.CSS({
             class: "inputValue",
             display: "block",
             fontSize: 12,
@@ -100,13 +100,13 @@ class InputComp extends Comp {
             boxSizing: "border-box"
         });
 
-        const inputHover = this.compStyle.styleCompCSS({
+        const inputHover = this.design.CSS({
             class: "inputValue",
             psuedoClass: "hover",
             outline: "solid 2px var(--black60)"
         });
 
-        const inputActive = this.compStyle.styleCompCSS({
+        const inputActive = this.design.CSS({
             class: "inputValue",
             psuedoClass: "focus",
             outline: "solid 2px var(--black100)"

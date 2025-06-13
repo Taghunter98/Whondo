@@ -23,11 +23,11 @@ class CardComp extends Comp {
         this.buttonAction_ = this.debugComp;
         this.cardImage_    = "";
 
-        this.compName_ = "Card";
-        this.compHTML_ = this.createHTML();
-        this.compCSS_  = this.createCSS();
+        this.name_ = "Card";
+        this.html_ = this.createHTML();
+        this.css_  = this.createCSS();
 
-        this.renderComp();
+        this.render();
     
     }
 
@@ -39,7 +39,7 @@ class CardComp extends Comp {
     set cardTitle(newCardTitle) {
 
         this.cardTitle_ = newCardTitle;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -51,7 +51,7 @@ class CardComp extends Comp {
     set cardText(newCompText) {
 
         this.cardText_ = newCompText;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -63,7 +63,7 @@ class CardComp extends Comp {
     set buttonText(newButtonText) {
 
         this.buttonText_ = newButtonText;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -75,7 +75,7 @@ class CardComp extends Comp {
     set buttonAction(newButtonAction) {
 
         this.buttonAction_ = newButtonAction;
-        this.updateComp(this.compHTML_, this.compCSS_);
+        this.update(this.html_, this.css_);
     
     }
 
@@ -87,7 +87,7 @@ class CardComp extends Comp {
     set cardImage(newCardImage) {
 
         this.cardImage_ = newCardImage;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -177,7 +177,7 @@ class CardComp extends Comp {
      */
     createCSS() {
         
-        const cardStyle = this.compStyle.CSS({
+        const cardStyle = this.design.CSS({
             valueID: "cardContainer",
             display: "flex",
             flexDirection: "column",
@@ -192,7 +192,7 @@ class CardComp extends Comp {
             background: "white"
         });
 
-        const textCardStyle = this.compStyle.CSS({
+        const textCardStyle = this.design.CSS({
             valueID: "textContainer",
             direction: "column", 
             width: "100%",

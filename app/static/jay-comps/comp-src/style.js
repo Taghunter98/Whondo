@@ -15,7 +15,7 @@ export class Style {
 
     constructor() {
 
-        this.animation = new Animation();
+        this.animate = new Animation();
     
     }
 
@@ -30,7 +30,7 @@ export class Style {
      * 
      * @returns {literal} CSS default values with no margin/padding.
      */
-    styleDefaultComp() {
+    defaultComp() {
 
         return  /* css */ `
         * {
@@ -84,16 +84,16 @@ export class Style {
             line-height: 16pt;
         }
 
-        ${this.animation.pulse()}
-        ${this.animation.scale()}
-        ${this.animation.slideUp(20)}
-        ${this.animation.slideDown(-20)}
-        ${this.animation.fadeIn()}
-        ${this.animation.fadeOut()}
-        ${this.animation.fadeLeft(-20)}
-        ${this.animation.fadeRight(20)}
-        ${this.animation.fadeOutLeft(-20)}
-        ${this.animation.fadeOutRight(20)}
+        ${this.animate.pulse()}
+        ${this.animate.scale()}
+        ${this.animate.slideUp(20)}
+        ${this.animate.slideDown(-20)}
+        ${this.animate.fadeIn()}
+        ${this.animate.fadeOut()}
+        ${this.animate.fadeLeft(-20)}
+        ${this.animate.fadeRight(20)}
+        ${this.animate.fadeOutLeft(-20)}
+        ${this.animate.fadeOutRight(20)}
         `;
     
     }
@@ -105,7 +105,7 @@ export class Style {
      * 
      * @returns {string} CSS friendly variable name
      */
-    parseVariableName(variableName) {
+    parseVariables(variableName) {
 
         return variableName.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
@@ -137,7 +137,7 @@ export class Style {
      * 
      * @returns {string | number} Compilable CSS value
      */
-    styleCheck(value) {
+    check(value) {
 
         return typeof value === 'number' ? `${value}px` : value;
     
@@ -150,7 +150,7 @@ export class Style {
      * 
      * @returns Compilable CSS value
      */
-    styleCheckFont(value) {
+    checkFont(value) {
 
         return typeof value === 'number' ? `${value}pt` : value;
     
@@ -170,7 +170,7 @@ export class Style {
      *   variables for simplicity.
      *  
      * @example
-     *  const cssConfig = this.compStyle.styleCompCSS {
+     *  const cssConfig = this.compStyle.CSS {
      *      valueID: "container",
      *      psuedoClass: "hover",
      *      display: "flex",
@@ -188,7 +188,7 @@ export class Style {
      *      fontWeight: 400,
      *      opacity: 1
      *  };
-     *  const cssString = styleCompCSS(cssConfig);
+     *  const cssString = CSS(cssConfig);
      * 
      *  // Compiles CSS that looks similar to:
      *  `.container:hover {
@@ -266,13 +266,13 @@ export class Style {
 
             let cssValue = css[value];
 
-            if (value === "fontSize") cssValue = this.styleCheckFont(cssValue);
+            if (value === "fontSize") cssValue = this.checkFont(cssValue);
             else if (value === "background" || value === "colour" || value === "border") cssValue = `var(--${cssValue})`;
             else if (value === "fontWeight") continue;
             else if (value === "opacity") cssValue = cssValue;
-            else cssValue = this.styleCheck(cssValue);
+            else cssValue = this.check(cssValue);
 
-            cssString += `${this.americanise(this.parseVariableName(value))}: ${this.americanise(cssValue)};\n`;
+            cssString += `${this.americanise(this.parseVariables(value))}: ${this.americanise(cssValue)};\n`;
         
         }
 

@@ -18,11 +18,11 @@ export class Comp extends HTMLElement {
 
         super();
 
-        this.compName_ = "Component Name";
-        this.compHTML_ = "";
-        this.compCSS_  = "";
-        this.compStyle = new Style();
-        this.compAPI   = new API();
+        this.name_  = "Component Name";
+        this.html_  = "";
+        this.css_   = "";
+        this.design = new Style();
+        this.api    = new API();
 
         this.attachShadow({ mode: "open" });
     
@@ -46,7 +46,7 @@ export class Comp extends HTMLElement {
      */
     set compHTML(newCompHTML) {
 
-        this.compHTML_ = newCompHTML;
+        this.html_ = newCompHTML;
     
     }
 
@@ -57,7 +57,7 @@ export class Comp extends HTMLElement {
      */
     set compCSS(newCompCSS) {
 
-        this.compCSS_ = newCompCSS;
+        this.css_ = newCompCSS;
     
     }
 
@@ -68,7 +68,7 @@ export class Comp extends HTMLElement {
      */
     get compName() {
 
-        return this.compName_;
+        return this.name_;
     
     }
 
@@ -79,7 +79,7 @@ export class Comp extends HTMLElement {
      */
     get compHTML() {
 
-        return this.compHTML_;
+        return this.html_;
     
     }
 
@@ -90,7 +90,7 @@ export class Comp extends HTMLElement {
      */
     get compCSS() {
 
-        return this.compCSS_;
+        return this.css_;
     
     }
 
@@ -107,7 +107,7 @@ export class Comp extends HTMLElement {
         return /* html */ `
         ${html}
         <style>
-            ${this.compStyle.styleDefaultComp()}
+            ${this.design.defaultComp()}
             ${css}
         </style>
         `;
@@ -134,9 +134,9 @@ export class Comp extends HTMLElement {
      * Then it checks for an internal `compHook()` function which defines the Comp's inner 
      * JavaScript logic. 
      */
-    renderComp() {
+    render() {
 
-        this.shadowRoot.innerHTML = this.createTemplate(this.compHTML_, this.compCSS_);
+        this.shadowRoot.innerHTML = this.createTemplate(this.html_, this.css_);
 
         if (typeof this.compHook === "function") {
 
@@ -163,12 +163,12 @@ export class Comp extends HTMLElement {
      * @param {literal} newHTML 
      * @param {literal} newCSS 
      */
-    updateComp(newHTML, newCSS) {
+    update(newHTML, newCSS) {
 
-        this.compHTML_ = newHTML;
-        this.compCSS_  = newCSS;
+        this.html_ = newHTML;
+        this.css_  = newCSS;
 
-        this.renderComp();
+        this.render();
     
     }
 
