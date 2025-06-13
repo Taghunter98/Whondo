@@ -4,33 +4,34 @@
  * Filename:    style.js
  * Author:      Josh Bassett
  * Date:        09/06/2025
- * Version:     1.0
+ * Version:     1.1
  * 
  * Description: Base style class for CSS injection for components.
  */
 
-import { Animation } from "./animation.js";
-
 export class Style {
 
-    constructor(){
-        this.animation = new Animation();
-    }
-
     /**
-     * @brief A method that provides standard CSS to remove all margin/padding.
+     * @brief A method that provides standard CSS to remove all margin/padding. The host
+     *        settings ensure that shadow DOM child elements are rendered as blocks.
      * 
      * @returns {literal} CSS default values with no margin/padding.
      */
     styleDefaultComp() {
 
-        return /* css */ `
+        return  `
         * {
             margin: 0;
             padding: 0;
         }
+        :host {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+
         ${this.styleFont()}
         `;
+    
     }
 
     styleFont() {
@@ -78,34 +79,115 @@ export class Style {
             line-height: 16pt;
         }
         `;
+    
     }
 
     /**
-     * @brief A method that provides styling for containers.
+     * Converts a camelCase string to kebab-case.
+     *
+     * @param {string} variableName
      * 
-     * @param {string} direction 
-     * @param {int}    maxWidth 
-     * @param {int}    padding 
-     * 
-     * @returns {literal} CSS container values to be injected into component.
+     * @returns {string} CSS friendly variable name
      */
-    styleContainer(direction, maxWidth, padding) {
+    parseVariableName(variableName) {
 
-        return  /* style */ `
-            display: flex;
-            flex-direction: ${direction};
-            padding: ${padding}px;
-            max-width: ${maxWidth}px;   
-        `;
+        return variableName.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
     }
+
+    americaniseColour(value) {
+
+        return "color";
+    
+    }
+
+    /**
+     * @brief A method that checks value type.
+     * 
+     * @param {string | number} value 
+     * 
+     * @returns 
+     */
+    styleCheck(value) {
+
+        return typeof value === 'number' ? `${value}px` : value;
+    
+    }
+
+    styleCheckFont(value) {
+
+        return typeof value === 'number' ? `${value}pt` : value;
+    
+    }
+
+    /**
+     * A method to generate CSS for containers.
+     *
+     * @param {Object} css 
+     * @param {string} css.valueID
+     * @param {string} css.psuedoClass       
+     * @param {string} css.display       
+     * @param {string} css.flexDirection 
+     * @param {string} css.boxSizing     
+     * @param {string | number} css.width 
+     * @param {string | number} css.maxWidth 
+     * @param {number} css.padding 
+     * @param {string} css.alignItems 
+     * @param {boolean} css.border 
+     * @param {number} css.borderRadius 
+     * @param {string} css.background 
+     * @param {string} css.colour 
+     * @param {number} css.fontSize 
+     * @param {number | string} css.fontWeight 
+     * 
+     * @returns {string} A CSS string to be injected into the component.
+     */
+    styleCompCSS(css) {
+
+        let cssSelector = (css.psuedoClass) ? `${css.valueID}:${css.psuedoClass}` : css.valueID;
+
+        return  /* css */ `
+        .${cssSelector} {
+            ${this.parseCSS(css)}
+        }
+        `;
+    
+    }
+
+    parseCSS(css) {
+
+        let cssString = "";
+
+        for (let value in css) {
+
+            if (value === "valueID") continue;  
+
+            let cssValue = css[value];
+
+            if (value === "border") cssValue = this.styleBorder(cssValue);
+            else if (value === "fontSize") cssValue = this.styleCheckFont(cssValue);
+            else if (value === "background" || value === "colour") cssValue = `var(--${cssValue})`;
+            else cssValue = this.styleCheck(cssValue);
+
+            if (value === "colour") value = this.americaniseColour(value);
+
+            cssString += `${this.parseVariableName(value)}: ${cssValue};\n`; 
+        
+        }
+
+        return cssString; 
+
+    }
+
 
     /**
      * 
      * @returns 
      */
-    styleBorder() {
+    styleBorder(border) {
 
-        return `solid 1px var(--black40)`;
+        return (border) ? `solid 1px var(--black40)` : "none";
+    
     }
 
     /**
@@ -113,7 +195,7 @@ export class Style {
      * 
      * @param {boolean} borderRadius
      * 
-     * @returns {literal} CSS image values to be injected into component.
+     * @returns {literal} CSS image values to be injected numbero component.
      */
     styleImage(borderRadius, maxHeight) {
 
@@ -130,98 +212,40 @@ export class Style {
             border-radius: ${radius}px;
         }
         `;
-    }
-
-    /**
-     * @brief a method that returns styling for button components.
-     * 
-     * @param {string}  valueID 
-     * @param {string}  colour 
-     * @param {string}  background 
-     * @param {string}  hoverBackground 
-     * @param {string}  activeBackground
-     * @param {boolean} border
-     * 
-     * @returns {literal} CSS values to be injected into component.
-     */
-    styleButton(buttonID, text, colour, hoverColour, activeColour, border) {
-
-        let buttonBorder = 'None';
-        if (border) buttonBorder = this.styleBorder();
-
-        return /* css */ `
-        .${buttonID} {
-            background: var(${colour});
-            color: var(${text});
-            width: auto;
-            font-size: 16px;
-            font-weight: 400;
-            padding: 9px 16px;
-            border-radius: 8px;
-            border: ${buttonBorder};
-            cursor: pointer;
-            
-            ${this.animation.createTransition("background", .2, "ease-in-out")}
-            
-        }
-        .${buttonID}:hover {
-            background: var(${hoverColour});
-        }
-
-        .${buttonID}:hover{
-            ${this.animation.addAnimationProp("pulsingAnimation", 1.5, "ease-in-out", 0, 1, "normal", "both")}
-        }
-
-        .${buttonID}:active {
-            background: var(${activeColour});
-        }
-
-       
-        ${this.animation.pulsKeyframes()}
-
-        `;
-    }
-
-    /**
-     * @brief a method that styles a modular card.
-     * 
-     * @param {string}  containerID 
-     * @param {string}  direction 
-     * @param {int}     maxWidth 
-     * @param {int}     padding
-     * @param {int}     gap
-     * @param {boolean} border
-     * 
-     * @returns {literal} CSS card values to be injected into component.
-     */
-    styleCard(cardID, direction, maxWidth, padding, gap, border) {
-
-        let cardBorder = 'None';
-        if (border) cardBorder = this.styleBorder();
-
-        return /* css */ `
-        h2, p {
-            margin: 0;
-            padding: 0;
-        }
-        
-        ${this.styleImage(true, 200)}
-        
-        .${cardID} {
-            ${this.styleContainer(direction, maxWidth, padding)}
-            border-radius: 12px;
-            border: ${cardBorder};
-            gap: ${gap}px;
-            
-          ${this.animation.addAnimationProp("slideUpAnimation", 3, "ease", 0, 1, "normal", "both")}
-          ${this.animation.createTransition("background", .2, "ease-in-out")}
-        }
-        .${cardID}:hover {
-            background: var(--black10);
-        }
-
-        ${this.animation.slideUpKeyframes()}
-        `;
-    }    
     
+    }
+
+    // /**
+    //  * @brief a method that styles a modular card.
+    //  * 
+    //  * @param {string}  containerID 
+    //  * @param {string}  direction 
+    //  * @param {number}     maxWidth 
+    //  * @param {number}     padding
+    //  * @param {number}     gap
+    //  * @param {boolean} border
+    //  * 
+    //  * @returns {literal} CSS card values to be injected numbero component.
+    //  */
+    // styleCard(cardID, direction, width, maxWidth, padding, gap, border) {
+
+    //     return /* css */ `
+    //     h2, p {
+    //         margin: 0;
+    //         padding: 0;
+    //     }
+        
+    //     ${this.styleImage(true, 200)}
+        
+    //     .${cardID} {
+    //         ${this.styleContainer(direction, width, maxWidth, padding, "start", 12, border, gap)}
+    //     }
+    //     .${cardID}:hover {
+    //         background: var(--black10);
+    //         transition: background 0.4s;
+    //     }
+    //     `;
+    
+    // }
+
 }
