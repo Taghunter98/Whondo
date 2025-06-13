@@ -12,7 +12,21 @@
 export class API {
 
     /**
-     * @brief A method that handles GET and POST HTTP requests.
+     * @brief A method that handles `GET` and `POST` HTTP requests.
+     * 
+     * The request logic is handled internally, to retrieve an HTTP request value,
+     * specify the URL and Method (GET/POST) and data if applicable.
+     * 
+     * The data needs to be handled in an `async` function to deal with the `Promise` object.
+     * 
+     * @example
+     * // Function returns login REST API values
+     * async login(result, json) {
+     * 
+     *      let data = await this.compAPI.request("/login", "POST", json);
+     * 
+     *      (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
+     * }
      * 
      * @param {string} apiURL 
      * @param {string} apiMethod 

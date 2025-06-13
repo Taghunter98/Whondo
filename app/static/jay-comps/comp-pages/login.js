@@ -6,8 +6,7 @@ class LoginPageComp extends Comp {
 
         super();
         
-        this.title_       = "Login to Whondo";
-        this.description_ = "This is placeholder text";
+        this.title_ = "Login to Whondo";
 
         this.compName_ = "Login Page";
         this.compHTML_ = this.createHTML();
@@ -20,28 +19,69 @@ class LoginPageComp extends Comp {
     createHTML() {
     
         return /* html */ `
-        <h4>${this.title_}</h4>
-        <p>${this.description_}</p>
-        <comp-card id="testCard"></comp-card>
-        <comp-card id="testCard2"></comp-card>
-        <comp-card></comp-card>
-        <comp-button id="refreshBtn">Refresh Card</comp-button>
+        <div class="background">
+            <div class="container">
+                <h3>${this.title_}</h3>
+
+                <comp-input id="email" name="email"></comp-input>
+                <comp-input id="password" name="password"></comp-input>
+
+                <comp-button id="submit">Refresh Card</comp-button>
+                <p id="result"></p>
+            </div>
+            
+        </div>
         `;
     
     }
 
     createCSS() {
-    
-        return `
-    `;
-    
-    }
 
-    async fetchData() {
+        const animation = this.compStyle.animation.addAnimationProp("slideUp", .5);
 
-        let data = await this.compAPI.request("https://catfact.ninja/fact", "GET");
+        const background = this.compStyle.styleCompCSS({
+            class: "background",
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            padding: "50px 0px",
+            alignItems: "centre",
+            border: false,
+            gap: 0,
+            background: "black10",
+        });
+
+        const backgroundMobile = this.compStyle.styleCompCSS({
+            class: "background",
+            padding: 20,
+            width: "auto"
+        });
+
+        const container = this.compStyle.styleCompCSS({
+            class: "container",
+            display: "flex",
+            flexDirection: "column",
+            width: "auto",
+            maxWidth: 500,
+            padding: 20,
+            alignItems: "start",
+            border: "border",
+            borderRadius: 16,
+            gap: 15,
+            background: "white",
+            animation: animation
+        });
+    
+        return /* css */ `
         
-        console.log(data['fact']);
+        ${background}
+        
+        ${container}
+        
+        @media (max-width: 600px) {
+            ${backgroundMobile}
+        }
+        `;
     
     }
 
@@ -51,57 +91,35 @@ class LoginPageComp extends Comp {
     
     }
 
-    async login() {
+    async login(result, json) {
 
-        const email = "bassettjosh397@gmail.com";
-        const pass  = "Happ1ne55";
-        let array   = {email : email, password : pass};
-
-        let data = await this.compAPI.request("/login", "POST", array);
-        console.log(data['message']);
-    
-    }
-
-    testButton(button, card, card2) {
-
-        button.addEventListener("click", () => {
+        let data = await this.compAPI.request("/login", "POST", json);
         
-            card.cardTitle  = "New TITLE";
-            card.cardText   = "New Text";
-            card2.cardTitle = "TEST";
-            card2.cardText  = "This is cool text";
-
-            if (card.cardTitle === "New TITLE") {
-
-                console.log("Card Title updated successsfully");
-            
-            } else {
-
-                console.log("Update failed");
-            
-            } 
-
-            this.fetchData();
-        
-        });
+        (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
     
     }
 
     compHook() {
 
-        const card   = this.shadowRoot.getElementById("testCard");
-        const card2  = this.shadowRoot.getElementById("testCard2");
-        const button = this.shadowRoot.getElementById("refreshBtn");
-      
-        card.cardTitle  = "Super cool title";
-        card.cardText   = "Super cool card description";
-        card.buttonText = "Click";
-        card.cardImage  = "https://images.pexels.com/photos/333083/pexels-photo-333083.jpeg?_gl=1*q46dzz*_ga*MjEyOTMwNTE2Ni4xNzQyMTQxMzY3*_ga_8JE65Q40S6*czE3NDk0ODYyOTckbzQkZzAkdDE3NDk0ODYyOTckajYwJGwwJGgw";
+        const compButton = this.shadowRoot.getElementById("submit");
+        const result     = this.shadowRoot.getElementById("result");
+        const email      = this.shadowRoot.getElementById("email");
+        const pass       = this.shadowRoot.getElementById("password");
+        
+        compButton.buttonText = "Login";
+        email.inputLabel      = "Email";
+        email.inputPrompt     = "Enter email";
+        pass.inputLabel       = "Password";
+        pass.inputType        = "password";
+        pass.inputPrompt      = "Enter password";
 
-        card.buttonAction  = this.openWindow;
-        card2.buttonAction = this.fetchData;
+        compButton.addEventListener("click", () => {
 
-        this.testButton(button, card, card2);
+            const jsonData = {email : email.inputValue, password : pass.inputValue};
+
+            this.login(result, jsonData);
+        
+        });
     
     }
   

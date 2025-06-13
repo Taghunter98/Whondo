@@ -4,33 +4,44 @@
  * Filename:    style.js
  * Author:      Josh Bassett
  * Date:        09/06/2025
- * Version:     1.0
+ * Version:     1.1
  * 
  * Description: Base style class for CSS injection for components.
  */
 
+import { Animation } from "./animation.js";
+
 export class Style {
 
+    constructor() {
+
+        this.animation = new Animation();
+    
+    }
+
     /**
-     * @brief A method that provides standard CSS to remove all margin/padding.
+     * @brief A method that provides standard CSS to remove all margin/padding. 
+     * 
+     * The host settings ensure that shadow DOM child elements are rendered as blocks.
+     * 
+     * The default styles include typography styles that use Material 3 font settings.
+     * 
+     * Default animation library is aslo included for all Comps.
      * 
      * @returns {literal} CSS default values with no margin/padding.
      */
     styleDefaultComp() {
 
-        return /* css */ `
+        return  /* css */ `
         * {
             margin: 0;
             padding: 0;
         }
-        ${this.styleFont()}
-        `;
-    
-    }
-
-    styleFont() {
-
-        return /* css */ `
+        :host {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
         h1 {
             font-size:   57px;
             font-weight: 500;
@@ -72,142 +83,201 @@ export class Style {
             font-weight: 500;
             line-height: 16pt;
         }
+
+        ${this.animation.pulse()}
+        ${this.animation.scale()}
+        ${this.animation.slideUp(20)}
+        ${this.animation.slideDown(-20)}
+        ${this.animation.fadeIn()}
+        ${this.animation.fadeOut()}
+        ${this.animation.fadeLeft(-20)}
+        ${this.animation.fadeRight(20)}
+        ${this.animation.fadeOutLeft(-20)}
+        ${this.animation.fadeOutRight(20)}
         `;
     
     }
 
     /**
-     * @brief A method that provides styling for containers.
+     * Converts a camelCase string to kebab-case.
+     *
+     * @param {string} variableName
      * 
-     * @param {string} direction 
-     * @param {int}    maxWidth 
-     * @param {int}    padding 
-     * 
-     * @returns {literal} CSS container values to be injected into component.
+     * @returns {string} CSS friendly variable name
      */
-    styleContainer(direction, maxWidth, padding) {
+    parseVariableName(variableName) {
 
-        return  /* style */ `
-            display: flex;
-            flex-direction: ${direction};
-            padding: ${padding}px;
-            max-width: ${maxWidth}px;
+        return variableName.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+    }
+
+    /**
+     * @brief A method that converts British to American English for CSS compliance.
+     * 
+     * @param {string | number} value 
+     * 
+     * @returns {string | number} Compilable CSS value
+     */
+    americanise(value) {
+
+        const britishToAmerican = {
+            "colour": "color",
+            "centre": "center",
+            "grey": "gray",
+            "behaviour": "behavior"
+        };
+        return britishToAmerican[value] || value;
+
+    }
+
+    /**
+     * @brief A method that checks value type.
+     * 
+     * @param {string | number} value 
+     * 
+     * @returns {string | number} Compilable CSS value
+     */
+    styleCheck(value) {
+
+        return typeof value === 'number' ? `${value}px` : value;
+    
+    }
+
+    /**
+     * @brief A method that checks font type.
+     * 
+     * @param {string | number} value 
+     * 
+     * @returns Compilable CSS value
+     */
+    styleCheckFont(value) {
+
+        return typeof value === 'number' ? `${value}pt` : value;
+    
+    }
+
+    /**
+     * @brief A method to generate `CSS` for containers.
+     * 
+     * To use, write the JavaScript `Object` key and value exactly like typical `CSS`
+     * values, except with some additonal conditions:
+     * 
+     * - A CSS style is defined by calling the Comp's compStyle variable
+     * - CSS value names are written in `camel case`
+     * - The CSS values are written in British English!
+     * - Global CSS variables can be defined in the globalCSS sheet `var(--example)`.
+     *   These can be used for most values, but all colours must be defined as CSS
+     *   variables for simplicity.
+     *  
+     * @example
+     *  const cssConfig = this.compStyle.styleCompCSS {
+     *      valueID: "container",
+     *      psuedoClass: "hover",
+     *      display: "flex",
+     *      flexDirection: "column",
+     *      boxSizing: "border-box",
+     *      width: "100%",
+     *      maxWidth: 500,
+     *      padding: 20,
+     *      alignItems: "center",
+     *      border: true,
+     *      borderRadius: 10,
+     *      background: "white",
+     *      colour: "black100",
+     *      fontSize: 16,
+     *      fontWeight: 400,
+     *      opacity: 1
+     *  };
+     *  const cssString = styleCompCSS(cssConfig);
+     * 
+     *  // Compiles CSS that looks similar to:
+     *  `.container:hover {
+     *      display: flex;
+     *      flex-direction: column;
+     *      box-sizing: border-box;
+     *      width: 100%;
+     *      max-width: 500px;
+     *      padding: 20px;
+     *      align-items: center;
+     *      border: var(--border);
+     *      border-radius: 10px;
+     *      background: var(--white);
+     *      color: var(--black100);
+     *      // font-weight is skipped with internal handling if not needed
+     *      font-size: 16px;
+     *      opacity: 1
+     *  }`
+     * 
+     * @param {Object} css 
+     * @param {string} css.class
+     * @param {string} css.psuedoClass       
+     * @param {string} css.display       
+     * @param {string} css.flexDirection 
+     * @param {string} css.boxSizing     
+     * @param {string | number} css.width 
+     * @param {string | number} css.maxWidth 
+     * @param {number} css.padding 
+     * @param {string} css.alignItems 
+     * @param {boolean} css.border 
+     * @param {number} css.borderRadius 
+     * @param {string} css.background 
+     * @param {string} css.colour 
+     * @param {number} css.fontSize 
+     * @param {number | string} css.fontWeight
+     * @param {number} css.opacity
+     * 
+     * @returns {string} A CSS string to be injected into the component.
+     */
+    styleCompCSS(css) {
+
+        let cssSelector = (css.psuedoClass) ? `${css.class}:${css.psuedoClass}` : css.class;
+
+        return  /* css */ `
+        .${cssSelector} {
+            ${this.compileCSS(css)}
+        }
         `;
     
     }
 
     /**
+     * @brief A method that compiles JavaScript `Object` data to CSS values. 
      * 
-     * @returns 
+     * Method works by taking the `Object` key and value, then running checks to evaluate 
+     * for CSS compilable values.
+     * 
+     * The checks catch:
+     *   - Camel case keys
+     *   - CSS var values
+     *   - Appropriate number checks (px, pt)
+     *   - British -> American CSS property names
+     * 
+     * @param {object} css
+     * 
+     * @returns {literal} Compiled CSS code to be injected
      */
-    styleBorder() {
+    compileCSS(css) {
 
-        return `solid 1px var(--black40)`;
-    
-    }
+        let cssString = "";
 
-    /**
-     * @brief a method that styles default images.
-     * 
-     * @param {boolean} borderRadius
-     * 
-     * @returns {literal} CSS image values to be injected into component.
-     */
-    styleImage(borderRadius, maxHeight) {
+        for (let value in css) {
 
-        let radius;
+            if (value === "valueID") continue;
 
-        if (borderRadius) radius = 8;
+            let cssValue = css[value];
 
-        return /* css */ `
-        img {
-            width: 100%;
-            height: 100%;
-            max-height: ${maxHeight}px;
-            object-fit: cover;
-            border-radius: ${radius}px;
-        }
-        `;
-    
-    }
+            if (value === "fontSize") cssValue = this.styleCheckFont(cssValue);
+            else if (value === "background" || value === "colour" || value === "border") cssValue = `var(--${cssValue})`;
+            else if (value === "fontWeight") continue;
+            else if (value === "opacity") cssValue = cssValue;
+            else cssValue = this.styleCheck(cssValue);
 
-    /**
-     * @brief a method that returns styling for button components.
-     * 
-     * @param {string}  valueID 
-     * @param {string}  colour 
-     * @param {string}  background 
-     * @param {string}  hoverBackground 
-     * @param {string}  activeBackground
-     * @param {boolean} border
-     * 
-     * @returns {literal} CSS values to be injected into component.
-     */
-    styleButton(buttonID, text, colour, hoverColour, activeColour, border) {
-
-        let buttonBorder = 'None';
-        if (border) buttonBorder = this.styleBorder();
-
-        return /* css */ `
-        .${buttonID} {
-            background: var(${colour});
-            color: var(${text});
-            width: auto;
-            font-size: 16px;
-            font-weight: 400;
-            padding: 9px 16px;
-            border-radius: 8px;
-            border: ${buttonBorder};
-            cursor: pointer;
-            transition: background 0.1s ease-in-out;
-        }
-        .${buttonID}:hover {
-            background: var(${hoverColour});
-        }
-        .${buttonID}:active {
-            background: var(${activeColour});
-        }
-        `;
-    
-    }
-
-    /**
-     * @brief a method that styles a modular card.
-     * 
-     * @param {string}  containerID 
-     * @param {string}  direction 
-     * @param {int}     maxWidth 
-     * @param {int}     padding
-     * @param {int}     gap
-     * @param {boolean} border
-     * 
-     * @returns {literal} CSS card values to be injected into component.
-     */
-    styleCard(cardID, direction, maxWidth, padding, gap, border) {
-
-        let cardBorder = 'None';
-        if (border) cardBorder = this.styleBorder();
-
-        return /* css */ `
-        h2, p {
-            margin: 0;
-            padding: 0;
-        }
+            cssString += `${this.americanise(this.parseVariableName(value))}: ${this.americanise(cssValue)};\n`;
         
-        ${this.styleImage(true, 200)}
-        
-        .${cardID} {
-            ${this.styleContainer(direction, maxWidth, padding)}
-            border-radius: 12px;
-            border: ${cardBorder};
-            gap: ${gap}px;
         }
-        .${cardID}:hover {
-            background: var(--black10);
-            transition: background 0.4s;
-        }
-        `;
-    
+
+        return cssString;
+
     }
 
 }
