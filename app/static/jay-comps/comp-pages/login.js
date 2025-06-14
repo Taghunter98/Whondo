@@ -8,11 +8,11 @@ class LoginPageComp extends Comp {
         
         this.title_ = "Login to Whondo";
 
-        this.compName_ = "Login Page";
-        this.compHTML_ = this.createHTML();
-        this.compCSS_  = this.createCSS();
+        this.name_ = "Login Page";
+        this.html_ = this.createHTML();
+        this.css_  = this.createCSS();
     
-        this.renderComp();
+        this.render();
     
     }
 
@@ -37,9 +37,9 @@ class LoginPageComp extends Comp {
 
     createCSS() {
 
-        const animation = this.compStyle.animation.addAnimationProp("slideUp", .5);
+        const animation = this.animate.prop("slideUp", .5);
 
-        const background = this.compStyle.styleCompCSS({
+        const background = this.design.create({
             class: "background",
             display: "flex",
             flexDirection: "column",
@@ -51,13 +51,13 @@ class LoginPageComp extends Comp {
             background: "black10",
         });
 
-        const backgroundMobile = this.compStyle.styleCompCSS({
+        const backgroundMobile = this.design.create({
             class: "background",
             padding: 20,
             width: "auto"
         });
 
-        const container = this.compStyle.styleCompCSS({
+        const container = this.design.create({
             class: "container",
             display: "flex",
             flexDirection: "column",
@@ -93,13 +93,13 @@ class LoginPageComp extends Comp {
 
     async login(result, json) {
 
-        let data = await this.compAPI.request("/login", "POST", json);
+        let data = await this.api.request("/login", "POST", json);
         
         (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
     
     }
 
-    compHook() {
+    hook() {
 
         const compButton = this.shadowRoot.getElementById("submit");
         const result     = this.shadowRoot.getElementById("result");

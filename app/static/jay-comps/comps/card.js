@@ -20,14 +20,14 @@ class CardComp extends Comp {
         this.cardTitle_    = "Card header";
         this.cardText_     = "Card text goes here.";
         this.buttonText_   = "Card Action";
-        this.buttonAction_ = this.debugComp;
+        this.buttonAction_ = this.debug;
         this.cardImage_    = "";
 
-        this.compName_ = "Card";
-        this.compHTML_ = this.createHTML();
-        this.compCSS_  = this.createCSS();
+        this.name_ = "Card";
+        this.html_ = this.createHTML();
+        this.css_  = this.createCSS();
 
-        this.renderComp();
+        this.render();
     
     }
 
@@ -39,7 +39,7 @@ class CardComp extends Comp {
     set cardTitle(newCardTitle) {
 
         this.cardTitle_ = newCardTitle;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -51,7 +51,7 @@ class CardComp extends Comp {
     set cardText(newCompText) {
 
         this.cardText_ = newCompText;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -63,7 +63,7 @@ class CardComp extends Comp {
     set buttonText(newButtonText) {
 
         this.buttonText_ = newButtonText;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -75,7 +75,7 @@ class CardComp extends Comp {
     set buttonAction(newButtonAction) {
 
         this.buttonAction_ = newButtonAction;
-        this.updateComp(this.compHTML_, this.compCSS_);
+        this.update(this.html_, this.css_);
     
     }
 
@@ -87,7 +87,7 @@ class CardComp extends Comp {
     set cardImage(newCardImage) {
 
         this.cardImage_ = newCardImage;
-        this.updateComp(this.createHTML(), this.compCSS_);
+        this.update(this.createHTML(), this.css_);
     
     }
 
@@ -177,8 +177,8 @@ class CardComp extends Comp {
      */
     createCSS() {
         
-        const cardStyle = this.compStyle.styleCompCSS({
-            class: "cardContainer",
+        const cardStyle = this.design.create({
+            valueID: "cardContainer",
             display: "flex",
             flexDirection: "column",
             boxSizing: "border-box",
@@ -192,8 +192,8 @@ class CardComp extends Comp {
             background: "white"
         });
 
-        const textCardStyle = this.compStyle.styleCompCSS({
-            class: "textContainer",
+        const textCardStyle = this.design.create({
+            valueID: "textContainer",
             direction: "column", 
             width: "100%",
             maxWidth: 500, 
@@ -226,7 +226,7 @@ class CardComp extends Comp {
      * @brief A method that runs a build hook when the Component is rendered it
      *        provides the inner JavaScript logic for the Comp. 
      */
-    compHook() {
+    hook() {
 
         const cardButton         = this.shadowRoot.getElementById("button");
         cardButton.buttonVarient = 2;
