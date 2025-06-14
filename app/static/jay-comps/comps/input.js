@@ -77,7 +77,7 @@ class InputComp extends Comp {
 
     createCSS() {
 
-        const inputContainer = this.design.CSS({
+        const inputContainer = this.design.create({
             class: "inputContainer",
             display: "flex",
             flexDirection: "column",
@@ -89,7 +89,7 @@ class InputComp extends Comp {
             background: "--white"
         });
 
-        const input = this.design.CSS({
+        const input = this.design.create({
             class: "inputValue",
             display: "block",
             fontSize: 12,
@@ -100,13 +100,13 @@ class InputComp extends Comp {
             boxSizing: "border-box"
         });
 
-        const inputHover = this.design.CSS({
+        const inputHover = this.design.create({
             class: "inputValue",
             psuedoClass: "hover",
             outline: "solid 2px var(--black60)"
         });
 
-        const inputActive = this.design.CSS({
+        const inputActive = this.design.create({
             class: "inputValue",
             psuedoClass: "focus",
             outline: "solid 2px var(--black100)"

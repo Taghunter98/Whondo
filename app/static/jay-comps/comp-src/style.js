@@ -13,12 +13,6 @@ import { Animation } from "./animation.js";
 
 export class Style {
 
-    constructor() {
-
-        this.animate = new Animation();
-    
-    }
-
     /**
      * @brief A method that provides standard CSS to remove all margin/padding. 
      * 
@@ -31,6 +25,8 @@ export class Style {
      * @returns {literal} CSS default values with no margin/padding.
      */
     defaultComp() {
+
+        const animate = new Animation();
 
         return  /* css */ `
         * {
@@ -84,16 +80,16 @@ export class Style {
             line-height: 16pt;
         }
 
-        ${this.animate.pulse()}
-        ${this.animate.scale()}
-        ${this.animate.slideUp(20)}
-        ${this.animate.slideDown(-20)}
-        ${this.animate.fadeIn()}
-        ${this.animate.fadeOut()}
-        ${this.animate.fadeLeft(-20)}
-        ${this.animate.fadeRight(20)}
-        ${this.animate.fadeOutLeft(-20)}
-        ${this.animate.fadeOutRight(20)}
+        ${animate.pulse()}
+        ${animate.scale()}
+        ${animate.slideUp(20)}
+        ${animate.slideDown(-20)}
+        ${animate.fadeIn()}
+        ${animate.fadeOut()}
+        ${animate.fadeLeft(-20)}
+        ${animate.fadeRight(20)}
+        ${animate.fadeOutLeft(-20)}
+        ${animate.fadeOutRight(20)}
         `;
     
     }
@@ -157,10 +153,11 @@ export class Style {
     }
 
     /**
-     * @brief A method to generate `CSS` for containers.
+     * @abstract
+     * A method to generate `CSS` from a JavaScript `Object`.
      * 
-     * To use, write the JavaScript `Object` key and value exactly like typical `CSS`
-     * values, except with some additonal conditions:
+     * Use `Object` keys and values exactly like typical `CSS`, except with
+     * some additonal conditions:
      * 
      * - A CSS style is defined by calling the Comp's compStyle variable
      * - CSS value names are written in `camel case`
@@ -170,7 +167,7 @@ export class Style {
      *   variables for simplicity.
      *  
      * @example
-     *  const cssConfig = this.compStyle.CSS {
+     *  const cssConfig = this.design.create {
      *      valueID: "container",
      *      psuedoClass: "hover",
      *      display: "flex",
@@ -188,9 +185,8 @@ export class Style {
      *      fontWeight: 400,
      *      opacity: 1
      *  };
-     *  const cssString = CSS(cssConfig);
      * 
-     *  // Compiles CSS that looks similar to:
+     *  // Compiles JS Object -> CSS String
      *  `.container:hover {
      *      display: flex;
      *      flex-direction: column;
@@ -228,7 +224,7 @@ export class Style {
      * 
      * @returns {string} A CSS string to be injected into the component.
      */
-    CSS(css) {
+    create(css) {
 
         let cssSelector = (css.psuedoClass) ? `${css.class}:${css.psuedoClass}` : css.class;
 

@@ -20,7 +20,7 @@ class CardComp extends Comp {
         this.cardTitle_    = "Card header";
         this.cardText_     = "Card text goes here.";
         this.buttonText_   = "Card Action";
-        this.buttonAction_ = this.debugComp;
+        this.buttonAction_ = this.debug;
         this.cardImage_    = "";
 
         this.name_ = "Card";
@@ -177,7 +177,7 @@ class CardComp extends Comp {
      */
     createCSS() {
         
-        const cardStyle = this.design.CSS({
+        const cardStyle = this.design.create({
             valueID: "cardContainer",
             display: "flex",
             flexDirection: "column",
@@ -192,7 +192,7 @@ class CardComp extends Comp {
             background: "white"
         });
 
-        const textCardStyle = this.design.CSS({
+        const textCardStyle = this.design.create({
             valueID: "textContainer",
             direction: "column", 
             width: "100%",
@@ -226,7 +226,7 @@ class CardComp extends Comp {
      * @brief A method that runs a build hook when the Component is rendered it
      *        provides the inner JavaScript logic for the Comp. 
      */
-    compHook() {
+    hook() {
 
         const cardButton         = this.shadowRoot.getElementById("button");
         cardButton.buttonVarient = 2;

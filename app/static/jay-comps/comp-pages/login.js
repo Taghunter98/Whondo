@@ -37,9 +37,9 @@ class LoginPageComp extends Comp {
 
     createCSS() {
 
-        const animation = this.design.animate.prop("slideUp", .5);
+        const animation = this.animate.prop("slideUp", .5);
 
-        const background = this.design.CSS({
+        const background = this.design.create({
             class: "background",
             display: "flex",
             flexDirection: "column",
@@ -51,13 +51,13 @@ class LoginPageComp extends Comp {
             background: "black10",
         });
 
-        const backgroundMobile = this.design.CSS({
+        const backgroundMobile = this.design.create({
             class: "background",
             padding: 20,
             width: "auto"
         });
 
-        const container = this.design.CSS({
+        const container = this.design.create({
             class: "container",
             display: "flex",
             flexDirection: "column",
@@ -99,7 +99,7 @@ class LoginPageComp extends Comp {
     
     }
 
-    compHook() {
+    hook() {
 
         const compButton = this.shadowRoot.getElementById("submit");
         const result     = this.shadowRoot.getElementById("result");

@@ -84,7 +84,9 @@ class ButtonComp extends Comp {
 
         let button, buttonHover, buttonActive;
 
-        const primary = this.design.CSS({
+        const scale = this.animate.prop("scale", .5);
+
+        const primary = this.design.create({
             class: "button",
             colour: "white",
             background: "black100",
@@ -95,19 +97,20 @@ class ButtonComp extends Comp {
             transition: "background 0.1s ease-in-out"
         });
 
-        const primaryHover = this.design.CSS({
+        const primaryHover = this.design.create({
             class: "button",
             psuedoClass: "hover",
-            background: "black80"
+            background: "black80",
+            animate: scale
         });
 
-        const primaryActive = this.design.CSS({
+        const primaryActive = this.design.create({
             class: "button",
             psuedoClass: "active",
             background: "black60"
         });
 
-        const secondary = this.design.CSS({
+        const secondary = this.design.create({
             class: "button",
             colour: "black100",
             background: "black10",
@@ -117,13 +120,13 @@ class ButtonComp extends Comp {
             transition: "background 0.1s ease-in-out"
         });
 
-        const secondaryHover = this.design.CSS({
+        const secondaryHover = this.design.create({
             class: "button",
             psuedoClass: "hover",
             background: "black20"
         });
 
-        const secondaryActive = this.design.CSS({
+        const secondaryActive = this.design.create({
             class: "button",
             psuedoClass: "active",
             background: "black40"
