@@ -30,6 +30,7 @@ class RegisterPageComp extends Comp {
                 <comp-input id="age"></comp-input>
                 <comp-input id="occupation"></comp-input>
                 <comp-input id="bio"></comp-input>
+                <comp-input id= "file"></comp-input>
                 <comp-button id="submit"></comp-button>
 
             </div>
@@ -115,6 +116,29 @@ class RegisterPageComp extends Comp {
         const age        = this.shadowRoot.getElementById("age");
         const occupation = this.shadowRoot.getElementById("occupation");
         const bio        = this.shadowRoot.getElementById("bio");
+        const file       = this.shadowRoot.getElementById("file");
+        
+        compButton.buttonText  = "Register";
+        email.inputLabel       = "Email";
+        email.inputPrompt      = "Enter email";
+        email.inputType        = "email";
+        password.inputLabel    = "Password";
+        password.inputPrompt   = "password";
+        password.inputType     = "password";
+        name.inputLabel        = "Name";
+        name.inputPrompt       = "Enter your name";
+        surname.inputLabel     = "Surname";
+        surname.inputPrompt    = "Enter you surname";
+        age.inputLabe          = "Age";
+        age.inputPrompt        = "Enter you age";
+        occupation.inputLabel  = "Occupation";
+        occupation.inputPrompt = "eg. student ";
+        bio.inputLabel         = "Bio";
+        bio.inputPrompt        = "Tell us more about you!";
+        file.inputLabe         = "Picture";
+        file.inputType         = "file";
+        
+
     
     }
 
