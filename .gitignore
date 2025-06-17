@@ -1,6 +1,14 @@
 # Whondo related stuff
 wserv/
 
+# vscode stuff
+.vscode/
+
+# node stuff
+node_modules/
+package.json
+package-lock.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -13,7 +21,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/

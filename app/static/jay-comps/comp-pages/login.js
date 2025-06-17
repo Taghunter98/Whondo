@@ -1,4 +1,4 @@
-import { Comp } from '../comp-src/comp.js';
+import { Comp } from '../comp-src/dist/comp.js';
 
 class LoginPageComp extends Comp {
 
@@ -37,7 +37,7 @@ class LoginPageComp extends Comp {
 
     createCSS() {
 
-        const animation = this.animate.prop("slideUp", .5);
+        const animation = this.effect.prop("slideUp", .5);
 
         const background = this.design.create({
             class: "background",

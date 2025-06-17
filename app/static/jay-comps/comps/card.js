@@ -9,7 +9,7 @@
  * Description: Class that creates a reusable Card Comp.
  */
 
-import { Comp }  from '../comp-src/comp.js';
+import { Comp }  from '../comp-src/dist/comp.js';
 
 class CardComp extends Comp {
 
@@ -37,7 +37,7 @@ class CardComp extends Comp {
      * @param {string} newCardTitle
      */
     set cardTitle(newCardTitle) {
-
+       
         this.cardTitle_ = newCardTitle;
         this.update(this.createHTML(), this.css_);
     
