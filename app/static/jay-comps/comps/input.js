@@ -1,4 +1,4 @@
-import { Comp } from '../comp-src/dist/comp.js';
+import { Comp } from "jay-comp";
 
 class InputComp extends Comp {
 
