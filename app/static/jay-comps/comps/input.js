@@ -59,7 +59,7 @@ class InputComp extends Comp {
 
     get inputValue() {
 
-        return this.shadowRoot.getElementById("input").value;
+        return this.shadowRoot.querySelector("input").value;
 
     }
 

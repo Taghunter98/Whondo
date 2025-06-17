@@ -84,8 +84,6 @@ class ButtonComp extends Comp {
 
         let button, buttonHover, buttonActive;
 
-        const scale = this.effect.prop("scale", .5);
-
         const primary = this.design.create({
             class: "button",
             colour: "white",
@@ -101,7 +99,6 @@ class ButtonComp extends Comp {
             class: "button",
             psuedoClass: "hover",
             background: "black80",
-            animate: scale
         });
 
         const primaryActive = this.design.create({
