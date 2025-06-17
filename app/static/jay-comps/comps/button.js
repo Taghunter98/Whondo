@@ -9,7 +9,7 @@
  * Description: Class that creates a reusable Button Comp.
  */
 
-import { Comp }  from '../comp-src/dist/comp.js';
+import { Comp } from "jay-comp";
 
 class ButtonComp extends Comp {
 
