@@ -9,7 +9,7 @@
  * Description: Class that creates a reusable Button Comp.
  */
 
-import { Comp }  from '../comp-src/comp.js';
+import { Comp }  from '../comp-src/dist/comp.js';
 
 class ButtonComp extends Comp {
 
@@ -84,7 +84,7 @@ class ButtonComp extends Comp {
 
         let button, buttonHover, buttonActive;
 
-        const scale = this.animate.prop("scale", .5);
+        const scale = this.effect.prop("scale", .5);
 
         const primary = this.design.create({
             class: "button",

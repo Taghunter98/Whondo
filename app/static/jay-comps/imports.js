@@ -1,6 +1,6 @@
 
 // Comp src file
-import './comp-src/comp.js';
+import './comp-src/dist/comp.js';
 
 // Comps
 import './comps/button.js';

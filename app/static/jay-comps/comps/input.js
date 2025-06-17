@@ -1,4 +1,4 @@
-import { Comp } from "../comp-src/comp.js";
+import { Comp } from '../comp-src/dist/comp.js';
 
 class InputComp extends Comp {
 
