@@ -37,7 +37,7 @@ class CardComp extends Comp {
      * @param {string} newCardTitle
      */
     set cardTitle(newCardTitle) {
-
+       
         this.cardTitle_ = newCardTitle;
         this.update(this.createHTML(), this.css_);
     
