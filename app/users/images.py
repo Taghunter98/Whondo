@@ -9,15 +9,25 @@ Version:     1.0
 Description: Provides functions for image validation and storage.
 """
 
-from flask import Blueprint, send_from_directory, current_app
+from flask import Blueprint, send_from_directory, request, abort, current_app
 from datetime import datetime
 import os
 
 image_bp = Blueprint("image_bp", __name__)
 
-@image_bp.route("/uploads/<path>")
-def download_file(path):
-    return send_from_directory(current_app.config["UPLOAD_FOLDER"], path, as_attachment=True)
+@image_bp.route("/uploads")
+def serve_upload():
+    path = request.args.get('path') 
+    if not path:
+        abort(400, description="Missing 'path' query parameter.")
+    
+    full_path = os.path.join(current_app.config["UPLOAD_FOLDER"], path)
+
+    if not os.path.isfile(full_path):
+        abort(404, description="File not found.")
+    
+    directory, filename = os.path.split(full_path)
+    return send_from_directory(directory, filename)
 
 def validate_extention(filename: str) -> bool:
     """
