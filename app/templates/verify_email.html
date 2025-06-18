@@ -1,51 +1,40 @@
-<!-- templates/verify_email.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Use a minimal style block as a fallback -->
     <style>
-      /* Inline CSS styles go here */
-      @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
-      body { 
-        font-family: 'Geist', sans-serif;
-        background: #f4f4f4;
-      }
-      .button {
-        background-color: #242424;
-        padding: 10px 20px;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 8px;
-      }
-      .background {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
-      }
-      .container {
-        display: flex;
-        flex-direction: column;
-        max-width: 500px;
-        padding: 20px;
-        border-radius: 16px;
-        border: solid 2px #d3d3d3;
-        background: white;
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
       }
     </style>
   </head>
-  <body>
-    <div class="background">
-        <div class="container">
-            <h2>Whondo</h2>
-            <br>
-            <p>Hi {{ name }},</p>
-            <p>Thank you for registering with Whondo!</p>
-            <p>Please verify your account by clicking the button below:</p>
-            <p><a class="button" href="{{ verify_link }}">Verify Your Account</a></p>
-            <p>Best regards,<br>The Whondo Team</p>
-        </div>
-    </div>
+  <body style="margin: 0; padding: 0; background:#f4f4f4;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="background:#f4f4f4;">
+      <tr>
+        <td align="center">
+          <!-- Main container -->
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width:500px; border:2px solid #d3d3d3; border-radius:16px; background:#ffffff; padding:20px; font-family:'Geist', sans-serif;">
+            <tr>
+              <td align="center" style="font-size:24px; font-weight:bold;">Whondo</td>
+            </tr>
+            <tr>
+              <td style="padding-top: 10px; padding-bottom: 10px;">
+                <p style="margin: 0 0 16px 0; font-size:16px;">Hi {{ name }},</p>
+                <p style="margin: 0 0 16px 0; font-size:16px;">Thank you for registering with Whondo!</p>
+                <p style="margin: 0 0 16px 0; font-size:16px;">Please verify your account by clicking the button below:</p>
+                <p style="margin: 0 0 16px 0;">
+                  <a href="{{ verify_link }}" style="background-color:#242424; padding:10px 20px; color:#ffffff; text-decoration:none; border-radius:8px; font-size:16px; display:inline-block;">Verify Your Account</a>
+                </p>
+                <p style="margin: 0; font-size:16px;">Best regards,<br>The Whondo Team</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
