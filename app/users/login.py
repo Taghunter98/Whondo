@@ -12,7 +12,7 @@ Description: Serves a Blueprint API for logging in and verifying users.
 from flask import Blueprint, request, session, jsonify, current_app, render_template
 
 from ..utilities.authid import authenticate
-from app.database.db_connect import db_connect, MySQLConnection
+from app.database.db_connect import connect
 from app.security.hashing import check_password
 
 login_bp = Blueprint("login_bp", __name__)
@@ -55,8 +55,8 @@ def login():
         if user_id is None:
             return jsonify({"error": "User email does not match database records"}), 401
 
-        connection: MySQLConnection = db_connect()
-        cursor: MySQLConnection = connection.cursor()
+        connection: object = connect()
+        cursor: object = connection.cursor()
 
         query: str = f"""
             SELECT u.uID, u.password
