@@ -39,6 +39,13 @@ def login():
     """    
 
     if request.method == 'POST':
+
+        if (request.cookies.get('uID')):
+            return jsonify({
+                    "message": f"{email} logged in with cookie",
+                    "status": True
+            })
+
         data: list    = request.get_json()
         email: str    = data.get('email')
         password: str = data.get('password')
