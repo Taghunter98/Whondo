@@ -1,9 +1,8 @@
 import unittest
-import os
 import requests
 
-class TestLoginAPI(unittest.TestCase):
 
+class TestLoginAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """
@@ -12,24 +11,26 @@ class TestLoginAPI(unittest.TestCase):
         Returns:
             object: Request object
         """
-        
-        API_URL:str = "https://whondo.com/login"
-        API_DATA = {
-            "email": "test@test.com",
-            "password": "password123"
-        }
 
-        return requests.post(API_URL, json = API_DATA,)
-    
+        API_URL: str = "https://whondo.com/login"
+        API_DATA = {"email": "test@test.com", "password": "password123"}
+
+        return requests.post(
+            API_URL,
+            json=API_DATA,
+        )
+
     def testResponse(self):
         """
         Test method tests if request is a valid object and code 200 OK.
         """
 
         data = self.setUpClass()
-      
+
         self.assertIsNotNone(data, "Request is not returning valid object")
-        self.assertEqual(data.status_code, 200, f"Request is returing code: {data.status_code}")
+        self.assertEqual(
+            data.status_code, 200, f"Request is returing code: {data.status_code}"
+        )
 
     def testStatus(self):
         """
@@ -38,7 +39,11 @@ class TestLoginAPI(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.json()['status'], True, f"Request is returning status: {data.json()['status']}")
+        self.assertEqual(
+            data.json()["status"],
+            True,
+            f"Request is returning status: {data.json()['status']}",
+        )
 
     def testMessage(self):
         """
@@ -47,10 +52,12 @@ class TestLoginAPI(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.json()['message'], "User: test@test.com logged in successfully")
+        self.assertEqual(
+            data.json()["message"], "User: test@test.com logged in successfully"
+        )
+
 
 class TestLoginAPIFail(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         """
@@ -59,15 +66,15 @@ class TestLoginAPIFail(unittest.TestCase):
         Returns:
             object: Request object
         """
-        
-        API_URL:str = "https://whondo.com/login"
-        API_DATA = {
-            "email": "wrong@wrong.com",
-            "password": "wrongpassword"
-        }
 
-        return requests.post(API_URL, json = API_DATA,)
-    
+        API_URL: str = "https://whondo.com/login"
+        API_DATA = {"email": "wrong@wrong.com", "password": "wrongpassword"}
+
+        return requests.post(
+            API_URL,
+            json=API_DATA,
+        )
+
     def testResponse(self):
         """
         Test method tests if request is a valid object and code 401 UNAUTHORISED.
@@ -76,7 +83,9 @@ class TestLoginAPIFail(unittest.TestCase):
         data = self.setUpClass()
 
         self.assertIsNotNone(data, "Request is not returning valid object")
-        self.assertEqual(data.status_code, 401, f"Request is returing code: {data.status_code}")
+        self.assertEqual(
+            data.status_code, 401, f"Request is returing code: {data.status_code}"
+        )
 
     def testErrorMessage(self):
         """
@@ -85,10 +94,14 @@ class TestLoginAPIFail(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.json()["error"], "User email does not match database records", f"Request is returing: {data.json()['error']}")
+        self.assertEqual(
+            data.json()["error"],
+            "User email does not match database records",
+            f"Request is returing: {data.json()['error']}",
+        )
+
 
 class TestInvalidData(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         """
@@ -97,15 +110,15 @@ class TestInvalidData(unittest.TestCase):
         Returns:
             object: Request object
         """
-        
-        API_URL:str = "https://whondo.com/login"
-        API_DATA = {
-            "email": "",
-            "password": ""
-        }
 
-        return requests.post(API_URL, json = API_DATA,)
-    
+        API_URL: str = "https://whondo.com/login"
+        API_DATA = {"email": "", "password": ""}
+
+        return requests.post(
+            API_URL,
+            json=API_DATA,
+        )
+
     def testResponse(self):
         """
         Test method tests if request is a valid object and code 400 BAD REQUEST.
@@ -113,7 +126,9 @@ class TestInvalidData(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.status_code, 400, f"Request is returing code: {data.status_code}")
+        self.assertEqual(
+            data.status_code, 400, f"Request is returing code: {data.status_code}"
+        )
 
     def testErrorMessage(self):
         """
@@ -122,10 +137,14 @@ class TestInvalidData(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.json()["error"], "User email or password not provided", f"Request is returing: {data.json()['error']}")
+        self.assertEqual(
+            data.json()["error"],
+            "User email or password not provided",
+            f"Request is returing: {data.json()['error']}",
+        )
+
 
 class TestPasswordFail(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         """
@@ -134,15 +153,15 @@ class TestPasswordFail(unittest.TestCase):
         Returns:
             object: Request object
         """
-        
-        API_URL:str = "https://whondo.com/login"
-        API_DATA = {
-            "email": "test@test.com",
-            "password": "thisisnotapassword"
-        }
 
-        return requests.post(API_URL, json = API_DATA,)
-    
+        API_URL: str = "https://whondo.com/login"
+        API_DATA = {"email": "test@test.com", "password": "thisisnotapassword"}
+
+        return requests.post(
+            API_URL,
+            json=API_DATA,
+        )
+
     def testResponse(self):
         """
         Test method tests if request is a valid object and code 401 UNAUTHORISED.
@@ -151,7 +170,9 @@ class TestPasswordFail(unittest.TestCase):
         data = self.setUpClass()
 
         self.assertIsNotNone(data, "Request is not returning valid object")
-        self.assertEqual(data.status_code, 401, f"Request is returing code: {data.status_code}")
+        self.assertEqual(
+            data.status_code, 401, f"Request is returing code: {data.status_code}"
+        )
 
     def testStatus(self):
         """
@@ -160,7 +181,11 @@ class TestPasswordFail(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.json()['status'], False, f"Request is returning status: {data.json()['status']}")
+        self.assertEqual(
+            data.json()["status"],
+            False,
+            f"Request is returning status: {data.json()['status']}",
+        )
 
     def testErrorMessage(self):
         """
@@ -169,4 +194,8 @@ class TestPasswordFail(unittest.TestCase):
 
         data = self.setUpClass()
 
-        self.assertEqual(data.json()["error"], "Incorrect password", f"Request is returing: {data.json()['error']}")
+        self.assertEqual(
+            data.json()["error"],
+            "Incorrect password",
+            f"Request is returing: {data.json()['error']}",
+        )

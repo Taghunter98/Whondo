@@ -6,12 +6,13 @@ Author:      Josh Bassett
 Date:        06/06/2025
 Version:     1.0
 
-Description: Provides functions for image validation and storage. 
+Description: Provides functions for image validation and storage.
 """
 
-from flask    import request, current_app
+from flask import current_app
 from datetime import datetime
 import os
+
 
 def validate_extention(filename: str) -> bool:
     """
@@ -24,9 +25,10 @@ def validate_extention(filename: str) -> bool:
         bool: File validation
     """
 
-    ALLOWED_EXTENSIONS: list = {'png', 'jpg', 'jpeg', 'gif'}
+    ALLOWED_EXTENSIONS: list = {"png", "jpg", "jpeg", "gif"}
 
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 def upload_file(file: object, email: str) -> str:
     """
@@ -40,25 +42,26 @@ def upload_file(file: object, email: str) -> str:
     Returns:
         str: File path
     """
-    
-    if file.filename == '':
+
+    if file.filename == "":
         current_app.logger.error("File is missing")
         return None
-    
+
     if file and validate_extention(file.filename):
         try:
             date: str = str(datetime.now())[:10]
-            path: str = os.path.join(f"{current_app.config['UPLOAD_FOLDER']}/Profile", email)
-            
+            path: str = os.path.join(
+                f"{current_app.config['UPLOAD_FOLDER']}/Profile", email
+            )
+
             if not os.path.exists(path):
                 os.mkdir(path)
 
-            file.save(
-                os.path.join(path, f"{date}_{email}_{file.filename}"))
+            file.save(os.path.join(path, f"{date}_{email}_{file.filename}"))
 
             current_app.logger.info("File stored successfully")
             return f"{path}/{date}_{email}_{file.filename}"
-        
-        except Exception as err:
+
+        except Exception:
             current_app.logger.error("Can't store file")
             return None

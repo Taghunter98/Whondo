@@ -6,22 +6,29 @@ Author:      Josh Bassett
 Date:        05/06/2025
 Version:     1.0
 
-Description: Serves a Blueprint API for logging in and verifying users. 
+Description: Serves a Blueprint API for logging in and verifying users.
 """
 
-from flask import Blueprint, request, session, jsonify, current_app, render_template, make_response
+from flask import Blueprint, request, session, jsonify, current_app, render_template
 
-from ..utilities.authid      import authenticate
+from ..utilities.authid import authenticate
 from app.database.db_connect import connect
-from app.security.hashing    import check_password
+from app.security.hashing import check_password
+
+type Request = list
+type Response = any
+type Connection = object
 
 login_bp = Blueprint("login_bp", __name__)
 
-@login_bp.route('/login', methods = ['POST', 'GET'])
-def login():
+
+@login_bp.route("/login", methods=["POST", "GET"])
+def login() -> Response:
     """
     The REST API is responsibe for logging in the user from an external POST
     request with the user's email and plaintext password.
+
+    If the user has a uID cookie, the user will be automatically logged in.
 
     Data integrity is verified and the user ID is authenticated based
     on the provided email.
@@ -33,27 +40,28 @@ def login():
     Session (uID) value is set to the user ID and valid status is returned. Session
     (email) value is set to the user's email address.
 
+    Cookie (uID) is created and stored for automatic login.
+
     Returns:
         json: Response of successs or appropriate error message
         html: Template render of login.html
-    """    
+    """
 
-    if request.method == 'POST':
+    if request.method == "POST":
+        data: Request = request.get_json()
+        email: str = data.get("email")
+        password: str = data.get("password")
 
-        data: list    = request.get_json()
-        email: str    = data.get('email')
-        password: str = data.get('password')
+        if not email or not password:
+            return jsonify({"error": "User email or password not provided"}), 400
 
-        if (not email or not password):
-            return jsonify({"error" : "User email or password not provided"}), 400
-        
         user_id: int = authenticate(email)
 
-        if (user_id is None):
-            return jsonify({"error" : "User email does not match database records"}), 401
-        
-        connection: object = connect()
-        cursor: object     = connection.cursor()
+        if user_id is None:
+            return jsonify({"error": "User email does not match database records"}), 401
+
+        connection: Connection = connect()
+        cursor: Connection = connection.cursor()
 
         query: str = f"""
             SELECT u.uID, u.password
@@ -67,37 +75,35 @@ def login():
         cursor.close()
         connection.close()
 
-        if (result is not None):
+        if result is not None:
             hash_string: str = result[1]
-            valid: bool      = check_password(password, hash_string)
+            valid: bool = check_password(password, hash_string)
 
-            if (valid is True):
-                session['uID']   = user_id
-                session['email'] = email
+            if valid is True:
+                session["uID"] = user_id
+                session["email"] = email
 
-                current_app.logger.info(f"User authenticated, starting new Session")
+                current_app.logger.info("User authenticated, starting new Session")
 
-                response = jsonify({
-                    "message": f"{email} logged in successfully",
-                    "status": True
-                })
-                
-                response.set_cookie('uID', str(user_id))
+                response = jsonify(
+                    {"message": f"{email} logged in successfully", "status": True}
+                )
+
+                response.set_cookie("uID", str(user_id))
                 response.status_code = 200
-                
+
                 return response
-            
+
             else:
-                current_app.logger.error(f"User: {email} access denied, incorrect password")
-                return jsonify({
-                    "error"  : "Incorrect password",
-                    "status" : False
-                }), 401
+                current_app.logger.error(
+                    f"User: {email} access denied, incorrect password"
+                )
+                return jsonify({"error": "Incorrect password", "status": False}), 401
         else:
             current_app.logger.error(f"User: {email} not found")
-            return jsonify({"error":"User not found"}), 404
+            return jsonify({"error": "User not found"}), 404
     else:
-        if (request.cookies.get('uID')):
+        if request.cookies.get("uID"):
             return render_template("index.html")
-        
+
         return render_template("login.html")

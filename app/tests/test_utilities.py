@@ -1,13 +1,15 @@
 import unittest
-import requests
 import os
 
-from app.utilities.authid      import authenticate
+from app.utilities.authid import authenticate
 from app.utilities.check_email import check_email_exits
 
-@unittest.skipIf(os.environ.get("CI") == "true", "Skipping test in CI pipeline: This test needs DB access")
-class TestAuthID(unittest.TestCase):
 
+@unittest.skipIf(
+    os.environ.get("CI") == "true",
+    "Skipping test in CI pipeline: This test needs DB access",
+)
+class TestAuthID(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """
@@ -17,8 +19,8 @@ class TestAuthID(unittest.TestCase):
             int: User ID (uID)
         """
 
-        user:str = "test@test.com"
-        result:int = authenticate(user)
+        user: str = "test@test.com"
+        result: int = authenticate(user)
         return result
 
     def testNotNone(self):
@@ -29,7 +31,7 @@ class TestAuthID(unittest.TestCase):
 
         result = self.setUpClass()
         self.assertIsNotNone(result, "Function is returning None for valid uID")
-    
+
     def testCorrectAuth(self):
         """
         Test method tests if authenticate returns a valid result.
@@ -47,9 +49,11 @@ class TestAuthID(unittest.TestCase):
         self.assertTrue(isinstance(result, int), "User ID is not a valid integer")
 
 
-@unittest.skipIf(os.environ.get("CI") == "true", "Skipping test in CI pipeline: This test needs DB access")
+@unittest.skipIf(
+    os.environ.get("CI") == "true",
+    "Skipping test in CI pipeline: This test needs DB access",
+)
 class TestEmailExists(unittest.TestCase):
-
     def testEmailExits(self):
         """
         Test methods tests if email exists in database.
