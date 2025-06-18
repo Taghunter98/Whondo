@@ -18,7 +18,7 @@ from app.security.hashing import check_password
 login_bp = Blueprint("login_bp", __name__)
 
 @login_bp.route("/login", methods=["POST", "GET"])
-def login() -> (Response | str):
+def login():
     """
     The REST API is responsibe for logging in the user from an external POST
     request with the user's email and plaintext password.
@@ -80,7 +80,7 @@ def login() -> (Response | str):
 
                 current_app.logger.info("User authenticated, starting new Session")
 
-                response: Response = jsonify(
+                response: object = jsonify(
                     {"message": f"{email} logged in successfully", "status": True}
                 )
 
