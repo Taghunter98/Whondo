@@ -17,12 +17,11 @@ from .images                   import upload_file
 from ..utilities.authid        import authenticate
 from app.utilities.mailgun     import send_email
 from app.utilities.check_email import check_email_exits
-import requests
 
 register_bp: str = Blueprint("register_bp", __name__)
 
 @register_bp.route('/register', methods = ['GET', 'POST'])
-def register():
+def register() -> any:
     """
     The REST API is responsible for creating a new user in the MySQL databse.
 

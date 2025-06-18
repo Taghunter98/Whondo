@@ -9,7 +9,7 @@ Version:     1.0
 Description: Serves a Blueprint API for logging in and verifying users. 
 """
 
-from flask import Blueprint, request, session, jsonify, current_app, render_template
+from flask import Blueprint, request, session, jsonify, current_app, render_template, make_response
 
 from ..utilities.authid      import authenticate
 from app.database.db_connect import connect
@@ -75,11 +75,10 @@ def login():
                 session['email'] = email
 
                 current_app.logger.info(f"User authenticated, starting new Session")
+
+                response = make_response(render_template*('index.html'), 200)
+                response.set_cookie('uID', user_id)
                 
-                return jsonify({
-                    "message" : f"User: {email} logged in successfully",
-                    "status"  : True
-                }), 200
             else:
                 current_app.logger.error(f"User: {email} access denied, incorrect password")
                 return jsonify({
