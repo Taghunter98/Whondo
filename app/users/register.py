@@ -9,7 +9,7 @@ Version:     1.0
 Description: Serves a Blueprint API for registering a new user.
 """
 
-from flask import Blueprint, request, jsonify, current_app, render_template, session
+from flask import Blueprint, request, jsonify, current_app, render_template, session, Response
 
 from app.database.db_connect import connect
 from app.security.hashing import hash_pasword
@@ -21,7 +21,7 @@ from app.utilities.check_email import check_email_exits
 register_bp: str = Blueprint("register_bp", __name__)
 
 @register_bp.route("/register", methods=["GET", "POST"])
-def register():
+def register() -> (Response | str):
     """
     The REST API is responsible for creating a new user in the MySQL databse.
 

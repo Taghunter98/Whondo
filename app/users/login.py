@@ -9,7 +9,7 @@ Version:     1.0
 Description: Serves a Blueprint API for logging in and verifying users.
 """
 
-from flask import Blueprint, request, session, jsonify, current_app, render_template
+from flask import Blueprint, request, session, jsonify, current_app, render_template, Response
 
 from ..utilities.authid import authenticate
 from app.database.db_connect import connect
@@ -18,7 +18,7 @@ from app.security.hashing import check_password
 login_bp = Blueprint("login_bp", __name__)
 
 @login_bp.route("/login", methods=["POST", "GET"])
-def login():
+def login() -> (Response | str):
     """
     The REST API is responsibe for logging in the user from an external POST
     request with the user's email and plaintext password.
@@ -80,7 +80,7 @@ def login():
 
                 current_app.logger.info("User authenticated, starting new Session")
 
-                response = jsonify(
+                response: Response = jsonify(
                     {"message": f"{email} logged in successfully", "status": True}
                 )
 
