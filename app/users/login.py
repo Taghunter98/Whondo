@@ -40,12 +40,6 @@ def login():
 
     if request.method == 'POST':
 
-        if (request.cookies.get('uID')):
-            return jsonify({
-                    "message": f"{email} logged in with cookie",
-                    "status": True
-            })
-
         data: list    = request.get_json()
         email: str    = data.get('email')
         password: str = data.get('password')
@@ -103,4 +97,7 @@ def login():
             current_app.logger.error(f"User: {email} not found")
             return jsonify({"error":"User not found"}), 404
     else:
+        if (request.cookies.get('uID')):
+            return render_template("index.html")
+        
         return render_template("login.html")
