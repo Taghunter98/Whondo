@@ -28,7 +28,7 @@ def verify():
 
     if user_id:
         connection: object = connect()
-        cursor: object = connection.cursor
+        cursor: object = connection.cursor()
 
         query: str = "UPDATE Users SET verified = true WHERE uID = %s"
 
