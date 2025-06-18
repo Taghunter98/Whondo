@@ -81,7 +81,7 @@ def login():
                     "status": True
                 })
                 
-                response.set_cookie('uID', user_id)
+                response.set_cookie('uID', str(user_id))
                 response.status_code = 200
                 
                 return response
