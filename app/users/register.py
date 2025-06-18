@@ -21,7 +21,7 @@ from app.utilities.check_email import check_email_exits
 register_bp: str = Blueprint("register_bp", __name__)
 
 @register_bp.route("/register", methods=["GET", "POST"])
-def register() -> any:
+def register():
     """
     The REST API is responsible for creating a new user in the MySQL databse.
 
