@@ -53,7 +53,7 @@ class TestLoginAPI(unittest.TestCase):
         data = self.setUpClass()
 
         self.assertEqual(
-            data.json()["message"], "User: test@test.com logged in successfully"
+            data.json()["message"], "test@test.com logged in successfully"
         )
 
 
