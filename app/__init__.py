@@ -126,11 +126,13 @@ def create_app() -> Flask:
     
     Session(app)
     
-    from .users.login    import login_bp
+    from .users.login import login_bp
     from .users.register import register_bp
+    from .users.image import image_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(register_bp)
+    app.register_blueprint(image_bp)
 
     @app.before_request
     def log_request():
