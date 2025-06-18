@@ -11,8 +11,8 @@ Description: Serves a Blueprint API for registering a new user.
 
 from flask import Blueprint, request, jsonify, current_app, render_template, session
 
-from app.database.db_connect import db_connect, MySQLConnection
-from app.security.hashing import hash_pasword, Hash
+from app.database.db_connect import connect, Connection
+from app.security.hashing import hash_pasword
 from .images import upload_file
 from ..utilities.authid import authenticate
 from app.utilities.mailgun import send_email
@@ -41,8 +41,8 @@ def register() -> (Response | str):
     Verification email is sent to new user, with a link to /register/verify.
 
     Returns:
-        Response: Response of successs or appropriate error message
-        string: Template render for account creation success
+        json: Response of successs or appropriate error message
+        html: Template render for account creation success
     """
 
     if request.method == "POST":
@@ -66,10 +66,10 @@ def register() -> (Response | str):
         if image_path is None:
             return jsonify({"error": "Image failed to upload"}), 409
 
-        hashed_password: Hash = hash_pasword(password)
+        hashed_password: str = hash_pasword(password)
 
-        connection: MySQLConnection = db_connect()
-        cursor: MySQLConnection = connection.cursor()
+        connection: object = connect()
+        cursor: object = connection.cursor()
 
         query: str = """
             INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture)
