@@ -9,15 +9,14 @@ Version:     1.0
 Description: Serves a Blueprint API for logging in and verifying users.
 """
 
-from flask import Blueprint, request, session, jsonify, current_app, render_template
+from flask import Blueprint, request, session, jsonify, current_app, render_template, Request, Response
 
 from ..utilities.authid import authenticate
-from app.database.db_connect import connect, Connection
-from app.security.hashing import check_password, Hash
+from app.database.db_connect import db_connect, MySQLConnection
+from app.security.hashing import check_password
 
 login_bp = Blueprint("login_bp", __name__)
 
-type Response = any
 
 @login_bp.route("/login", methods=["POST", "GET"])
 def login() -> (Response | str):
@@ -40,12 +39,12 @@ def login() -> (Response | str):
     Cookie (uID) is created and stored for automatic login.
 
     Returns:
-        Response: Response of successs or appropriate error message
-        string: Template render of login.html
+        json: Response of successs or appropriate error message
+        html: Template render of login.html
     """
 
     if request.method == "POST":
-        data: str = request.get_json()
+        data: Request = request.get_json()
         email: str = data.get("email")
         password: str = data.get("password")
 
@@ -57,8 +56,8 @@ def login() -> (Response | str):
         if user_id is None:
             return jsonify({"error": "User email does not match database records"}), 401
 
-        connection: Connection = connect()
-        cursor: Connection = connection.cursor()
+        connection: MySQLConnection = db_connect()
+        cursor: MySQLConnection = connection.cursor()
 
         query: str = f"""
             SELECT u.uID, u.password
@@ -73,7 +72,7 @@ def login() -> (Response | str):
         connection.close()
 
         if result is not None:
-            hash_string: Hash = result[1]
+            hash_string: str = result[1]
             valid: bool = check_password(password, hash_string)
 
             if valid is True:
