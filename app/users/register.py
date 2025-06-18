@@ -11,7 +11,7 @@ Description: Serves a Blueprint API for registering a new user.
 
 from flask import Blueprint, request, jsonify, current_app, render_template, session
 
-from app.database.db_connect import db_connect, MySQLConnection
+from app.database.db_connect import connect
 from app.security.hashing import hash_pasword
 from .images import upload_file
 from ..utilities.authid import authenticate
@@ -66,8 +66,8 @@ def register():
 
         hashed_password: str = hash_pasword(password)
 
-        connection: MySQLConnection = db_connect()
-        cursor: MySQLConnection = connection.cursor()
+        connection: object = connect()
+        cursor: object = connection.cursor()
 
         query: str = """
             INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture)

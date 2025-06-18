@@ -11,10 +11,11 @@ Description: Provides a connection to the Whondo MySQL database.
 
 from flask import current_app
 from dotenv import load_dotenv
-from mysql.connector import connect, Error, MySQLConnection
+import mysql.connector
 import os
 
-def db_connect() -> object:
+
+def connect() -> object:
     """
     The function aattempts a connection to the MySQL database.
 
@@ -30,10 +31,10 @@ def db_connect() -> object:
         DB_HOST: str = os.getenv("DB_HOST")
         DATABASE: str = os.getenv("DATABASE")
 
-        connect: MySQLConnection = connect(
+        connect: object = mysql.connector.connect(
             user=DB_USER, password=DB_PASS, host=DB_HOST, database=DATABASE
         )
 
         return connect
-    except Error as err:
+    except mysql.connector.Error as err:
         current_app.logger.error(err)
