@@ -76,11 +76,13 @@ def login():
 
                 current_app.logger.info(f"User authenticated, starting new Session")
 
-                response = make_response(jsonify({
-                    "message" : f"{email} logged in successfully",
-                    "status"  : True
-                }), 200)
+                response = jsonify({
+                    "message": f"{email} logged in successfully",
+                    "status": True
+                })
+                
                 response.set_cookie('uID', user_id)
+                response.status_code = 200
                 
                 return response
             
