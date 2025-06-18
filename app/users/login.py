@@ -9,13 +9,22 @@ Version:     1.0
 Description: Serves a Blueprint API for logging in and verifying users.
 """
 
-from flask import Blueprint, request, session, jsonify, current_app, render_template, Response
+from flask import (
+    Blueprint,
+    request,
+    session,
+    jsonify,
+    current_app,
+    render_template,
+    Response,
+)
 
 from ..utilities.authid import authenticate
 from app.database.db_connect import connect
 from app.security.hashing import check_password
 
 login_bp = Blueprint("login_bp", __name__)
+
 
 @login_bp.route("/login", methods=["POST", "GET"])
 def login():
@@ -38,8 +47,7 @@ def login():
     Cookie (uID) is created and stored for automatic login.
 
     Returns:
-        json: Response of successs or appropriate error message
-        html: Template render of login.html
+        Response: Response of successs or appropriate error message
     """
 
     if request.method == "POST":

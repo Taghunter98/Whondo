@@ -9,7 +9,7 @@ Version:     1.0
 Description: Serves a Blueprint API for registering a new user.
 """
 
-from flask import Blueprint, request, jsonify, current_app, render_template, session, Response
+from flask import Blueprint, request, jsonify, current_app, render_template, session
 
 from app.database.db_connect import connect
 from app.security.hashing import hash_pasword
@@ -19,6 +19,7 @@ from app.utilities.mailgun import send_email
 from app.utilities.check_email import check_email_exits
 
 register_bp: str = Blueprint("register_bp", __name__)
+
 
 @register_bp.route("/register", methods=["GET", "POST"])
 def register():
@@ -39,8 +40,7 @@ def register():
     Verification email is sent to new user, with a link to /register/verify.
 
     Returns:
-        json: Response of successs or appropriate error message
-        html: Template render for account creation success
+        Response: Response of successs or appropriate error message
     """
 
     if request.method == "POST":

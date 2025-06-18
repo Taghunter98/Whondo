@@ -9,9 +9,40 @@ Version:     1.0
 Description: Provides functions for image validation and storage.
 """
 
-from flask import current_app
+from flask import Blueprint, send_from_directory, request, abort, current_app
 from datetime import datetime
 import os
+
+image_bp = Blueprint("image_bp", __name__)
+
+
+@image_bp.route("/uploads")
+def serve_upload():
+    """
+    The REST API serves imgages from the EC2 Uploads directory.
+
+    Path is checked from the argument (path) value.
+
+    Image path is accessed, if successful the image will be served to the browser,
+    else an appropriate error will be returned.
+
+    Returns:
+        Response: Served image or appropriate error message
+    """
+
+    path: str = request.args.get("path")
+
+    if not path:
+        abort(400, description="Missing 'path' query parameter.")
+
+    full_path: str = os.path.join(current_app.config["UPLOAD_FOLDER"], path)
+
+    if not os.path.isfile(full_path):
+        abort(404, description="File not found.")
+
+    directory, filename = os.path.split(full_path)
+
+    return send_from_directory(directory, filename)
 
 
 def validate_extention(filename: str) -> bool:
@@ -60,7 +91,7 @@ def upload_file(file: object, email: str) -> str:
             file.save(os.path.join(path, f"{date}_{email}_{file.filename}"))
 
             current_app.logger.info("File stored successfully")
-            return f"{path}/{date}_{email}_{file.filename}"
+            return f"Profile/{email}/{date}_{email}_{file.filename}"
 
         except Exception:
             current_app.logger.error("Can't store file")
