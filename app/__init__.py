@@ -19,6 +19,7 @@ from dotenv import load_dotenv
 import logging
 import os
 
+
 def create_app() -> Flask:
     """
     A function that configures logging, creates the Flask config and builds
@@ -37,7 +38,7 @@ def create_app() -> Flask:
     class which is taken from Flask's documentation. The handlers are setup to
     define where the logs are written, wsgi sends logs to Flask/Werkzeug output
     the INFO logs are output to 'app.log' in the root directory. Root logger
-    sets up global logging for the Flask app, all log messages are sent to 
+    sets up global logging for the Flask app, all log messages are sent to
 
     Log file formatter to handle HTTP requests is setup with RequestFormatter class.
 
@@ -61,71 +62,72 @@ def create_app() -> Flask:
     The root directory '/' is served .
     """
 
-    app: Flask  = Flask(__name__, instance_relative_config=True, template_folder = 'templates')
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_for = 1)
+    app: Flask = Flask(
+        __name__, instance_relative_config=True, template_folder="templates"
+    )
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1)
     CORS(app, resources={r"/*": {"origins": "*"}})
 
-    log_file_path:str = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app.log')
+    log_file_path: str = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "app.log"
+    )
 
-    dictConfig({
-        'version': 1,
-        'formatters': {
-            'default': {
-                'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    dictConfig(
+        {
+            "version": 1,
+            "formatters": {
+                "default": {
+                    "format": "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+                },
+                "request": {
+                    "()": RequestFormatter,
+                    "format": "[%(asctime)s] %(remote_addr)s requested %(url)s\n%(levelname)s in %(module)s: %(message)s",
+                },
             },
-            'request': {
-                '()': RequestFormatter,
-                'format': '[%(asctime)s] %(remote_addr)s requested %(url)s\n%(levelname)s in %(module)s: %(message)s',
-            }
-        },
-        'handlers': {
-            'wsgi': {
-                'class': 'logging.StreamHandler',
-                'stream': 'ext://flask.logging.wsgi_errors_stream',
-                'formatter': 'default'
+            "handlers": {
+                "wsgi": {
+                    "class": "logging.StreamHandler",
+                    "stream": "ext://flask.logging.wsgi_errors_stream",
+                    "formatter": "default",
+                },
+                "file": {
+                    "class": "logging.FileHandler",
+                    "filename": log_file_path,
+                    "formatter": "request",
+                    "level": "INFO",
+                },
             },
-            'file': {
-                'class': 'logging.FileHandler',
-                'filename': log_file_path,
-                'formatter': 'request',
-                'level': 'INFO'
-            },
-        },
-        'root': {
-            'level': 'INFO',
-            'handlers': ['wsgi', 'file']
+            "root": {"level": "INFO", "handlers": ["wsgi", "file"]},
         }
-    })
+    )
 
     formatter: RequestFormatter = RequestFormatter(
-        '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
-        '%(levelname)s in %(module)s: %(message)s'
+        "[%(asctime)s] %(remote_addr)s requested %(url)s\n"
+        "%(levelname)s in %(module)s: %(message)s"
     )
 
     default_handler.setFormatter(formatter)
 
     load_dotenv()
 
-    SECRET_KEY: str    = os.getenv('SECRET_KEY')
-    UPLOAD_FOLDER: str = '/home/ec2-user/Uploads'
+    SECRET_KEY: str = os.getenv("SECRET_KEY")
+    UPLOAD_FOLDER: str = "/home/ec2-user/Uploads"
 
-    if (not SECRET_KEY):
+    if not SECRET_KEY:
         logging.error("No SECRET_KEY variable found")
         return None
-    
-    app.config.from_mapping(
-        SECRET_KEY = os.getenv('SECRET_KEY')
-    )
-    app.config["SESSION_PERMANENT"]       = False 
-    app.config["SESSION_TYPE"]            = "filesystem"
-    app.config["SESSION_COOKIE_SECURE"]   = True
+
+    app.config.from_mapping(SECRET_KEY=os.getenv("SECRET_KEY"))
+    app.config["SESSION_PERMANENT"] = False
+    app.config["SESSION_TYPE"] = "filesystem"
+    app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_COOKIE_HTTPONLY"] = True
-    app.config["UPLOAD_FOLDER"]           = UPLOAD_FOLDER
-    app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
+    app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+    app.config["MAX_CONTENT_LENGTH"] = 16 * 1000 * 1000
     # app.config["SESSION_COOKIE_SAMESITE"] = True
-    
+
     Session(app)
-    
+
     from .users.login import login_bp
     from .users.register import register_bp
     from .users.images import image_bp
@@ -136,28 +138,31 @@ def create_app() -> Flask:
 
     @app.before_request
     def log_request():
+        app.logger.info(
+            f"Request: {request.method} {request.path} from {get_client_ip()}"
+        )
 
-        app.logger.info(f"Request: {request.method} {request.path} from {get_client_ip()}")
-    
     @app.after_request
     def log_response(response):
-
-        app.logger.info(f"Response: {response.status} for {request.method} {request.path}")
+        app.logger.info(
+            f"Response: {response.status} for {request.method} {request.path}"
+        )
         return response
 
-    @app.route('/')
+    @app.route("/")
     def hello():
-        if (session.get("uID")):
-            session_id = session.get('uID')
+        if session.get("uID"):
+            session_id = session.get("uID")
             return f"Hello, World!\nUser logged in id: {session_id}"
         else:
             return "Hello World!"
-        
+
     return app
 
+
 def get_client_ip() -> str:
-    
-    return request.headers.get('CF-Connecting-IP', request.remote_addr)
+    return request.headers.get("CF-Connecting-IP", request.remote_addr)
+
 
 class RequestFormatter(logging.Formatter):
     """
@@ -175,15 +180,15 @@ class RequestFormatter(logging.Formatter):
             record (object): Request object
 
         Returns:
-            formatter object: Logger entry   
+            formatter object: Logger entry
         """
 
         if has_request_context():
-            ip: str            = request.headers.get('CF-Connecting-IP', request.remote_addr)
-            record.url         = request.url
+            ip: str = request.headers.get("CF-Connecting-IP", request.remote_addr)
+            record.url = request.url
             record.remote_addr = ip
         else:
-            record.url         = None
+            record.url = None
             record.remote_addr = None
 
         return super().format(record)

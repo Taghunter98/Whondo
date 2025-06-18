@@ -20,6 +20,7 @@ from app.utilities.check_email import check_email_exits
 
 register_bp: str = Blueprint("register_bp", __name__)
 
+
 @register_bp.route("/register", methods=["GET", "POST"])
 def register():
     """
@@ -39,8 +40,7 @@ def register():
     Verification email is sent to new user, with a link to /register/verify.
 
     Returns:
-        json: Response of successs or appropriate error message
-        html: Template render for account creation success
+        Response: Response of successs or appropriate error message
     """
 
     if request.method == "POST":

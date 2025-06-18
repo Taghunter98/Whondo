@@ -15,19 +15,35 @@ import os
 
 image_bp = Blueprint("image_bp", __name__)
 
+
 @image_bp.route("/uploads")
 def serve_upload():
-    path = request.args.get('path') 
+    """
+    The REST API serves imgages from the EC2 Uploads directory.
+
+    Path is checked from the argument (path) value.
+
+    Image path is accessed, if successful the image will be served to the browser,
+    else an appropriate error will be returned.
+
+    Returns:
+        Response: Served image or appropriate error message
+    """
+
+    path: str = request.args.get("path")
+
     if not path:
         abort(400, description="Missing 'path' query parameter.")
-    
-    full_path = os.path.join(current_app.config["UPLOAD_FOLDER"], path)
+
+    full_path: str = os.path.join(current_app.config["UPLOAD_FOLDER"], path)
 
     if not os.path.isfile(full_path):
         abort(404, description="File not found.")
-    
+
     directory, filename = os.path.split(full_path)
+
     return send_from_directory(directory, filename)
+
 
 def validate_extention(filename: str) -> bool:
     """
