@@ -76,7 +76,7 @@ def login():
 
                 current_app.logger.info(f"User authenticated, starting new Session")
 
-                response = make_response(render_template("index.html"))
+                response = make_response(render_template("index.html"), jsonify({"message": f"{email} logged in successfully", "status": True}), 200)
                 response.set_cookie('email', email)
 
                 return response
