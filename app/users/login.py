@@ -17,7 +17,6 @@ from app.security.hashing import check_password
 
 login_bp = Blueprint("login_bp", __name__)
 
-
 @login_bp.route("/login", methods=["POST", "GET"])
 def login() -> (Response | str):
     """
