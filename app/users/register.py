@@ -9,7 +9,7 @@ Version:     1.0
 Description: Serves a Blueprint API for registering a new user.
 """
 
-from flask import Blueprint, request, jsonify, current_app, render_template, session, Response
+from flask import Blueprint, request, jsonify, current_app, render_template, session
 
 from app.database.db_connect import connect
 from app.security.hashing import hash_pasword

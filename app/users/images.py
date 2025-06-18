@@ -9,10 +9,15 @@ Version:     1.0
 Description: Provides functions for image validation and storage.
 """
 
-from flask import current_app
+from flask import Blueprint, send_from_directory, current_app
 from datetime import datetime
 import os
 
+image_bp = Blueprint("image_bp", __name__)
+
+@image_bp.route("/uploads/<path>")
+def download_file(path):
+    return send_from_directory(current_app.config["UPLOAD_FOLDER"], path, as_attachment=True)
 
 def validate_extention(filename: str) -> bool:
     """
@@ -60,7 +65,7 @@ def upload_file(file: object, email: str) -> str:
             file.save(os.path.join(path, f"{date}_{email}_{file.filename}"))
 
             current_app.logger.info("File stored successfully")
-            return f"{path}/{date}_{email}_{file.filename}"
+            return f"Profile/{email}/{date}_{email}_{file.filename}"
 
         except Exception:
             current_app.logger.error("Can't store file")

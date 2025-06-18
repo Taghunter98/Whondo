@@ -128,7 +128,7 @@ def create_app() -> Flask:
     
     from .users.login import login_bp
     from .users.register import register_bp
-    from .users.image import image_bp
+    from .users.images import image_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(register_bp)
