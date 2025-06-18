@@ -17,7 +17,6 @@ from app.security.hashing import check_password, Hash
 
 login_bp = Blueprint("login_bp", __name__)
 
-type Request = list[object]
 type Response = any
 
 @login_bp.route("/login", methods=["POST", "GET"])
@@ -46,7 +45,7 @@ def login() -> (Response | str):
     """
 
     if request.method == "POST":
-        data: Request = request.get_json()
+        data: str = request.get_json()
         email: str = data.get("email")
         password: str = data.get("password")
 
