@@ -26,10 +26,19 @@ class TestImageUpload(unittest.TestCase):
 class TestImageNotFound(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        """
+        Test method sets up test by calling the API with an invalid path.
+
+        Returns:
+            object: Response object
+        """
         
         return requests.get("https://www.whondo.com/uploads?path=Profile")
     
     def testResponse(self):
+        """
+        Test method tests if request is a valid object and code 404 NOT FOUND.
+        """
 
         data = self.setUpClass()
 
@@ -39,10 +48,19 @@ class TestImageNotFound(unittest.TestCase):
 class TestImageFail(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        """
+        Test method sets up test by calling the API with no path value.
+
+        Returns:
+            object: Response object
+        """
         
         return requests.get("https://www.whondo.com/uploads?path=")
     
     def testResponse(self):
+        """
+        Test method tests if request is valid object and code 400 BAD REQUEST.
+        """
 
         data = self.setUpClass()
 
