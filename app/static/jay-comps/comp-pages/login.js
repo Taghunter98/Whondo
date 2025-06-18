@@ -95,7 +95,7 @@ class LoginPageComp extends Comp {
 
         let data = await this.api.request("/login", "POST", json);
         
-        (data.status) ? result.innerHTML = "Login success" : result.innerHTML = data.error;
+        if (data.error) result.innerHTML = data.error;
     
     }
 
