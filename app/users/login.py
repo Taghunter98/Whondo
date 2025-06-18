@@ -76,9 +76,13 @@ def login():
 
                 current_app.logger.info(f"User authenticated, starting new Session")
 
-                response = make_response(render_template("index.html"), 200)
+                response = make_response(render_template("index.html"))
                 response.set_cookie('uID', user_id)
                 
+                return jsonify({
+                    "message" : f"{email} logged in successfully",
+                    "status"  : True
+                }), 200
             else:
                 current_app.logger.error(f"User: {email} access denied, incorrect password")
                 return jsonify({
