@@ -19,9 +19,6 @@ from dotenv import load_dotenv
 import logging
 import os
 
-type Request = list
-type Response = any
-
 def create_app() -> Flask:
     """
     A function that configures logging, creates the Flask config and builds
