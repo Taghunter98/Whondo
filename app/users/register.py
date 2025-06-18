@@ -91,11 +91,20 @@ def register():
 
         link: str = f"https://whondo.com/verify?email={email}"
         sender: str = "noreply@whondo.com"
-        subject: str = "Verify Your Whondo Account"
-        body: str = f"Hi {name}!\n\nPlease follow this link to verify your new account.\n\n{link}\n\nThanks,\nThe Whondo team"
+        subject: str = "Please Verify Your Whondo Account"
+        body: str = (
+            f"Hi {name},\n\n"
+            "Thank you for registering with Whondo! To complete your registration, "
+            f"please verify your email address by clicking the link below:\n\n"
+            f"{link}\n\n"
+            "If you did not register for a Whondo account, please ignore this email.\n\n"
+            "Best regards,\n"
+            "The Whondo Team\n"
+            "https://whondo.com"
+        )
 
         send_email(sender, name, email, subject, body)
-
+        
         return render_template("created.html", name=name, surname=surname, email=email)
 
     else:
