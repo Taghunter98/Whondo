@@ -95,7 +95,7 @@ def register():
     
         html_template = render_template("verify_email.html", name=name, verify_link=verify_link)
         
-        send_email(sender, name, email, subject, html_template)
+        send_email(sender, name, email, subject, None, html_template)
 
         return render_template("created.html", name=name, surname=surname, email=email)
 
