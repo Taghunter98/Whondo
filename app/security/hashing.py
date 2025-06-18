@@ -11,9 +11,11 @@ Description: Provides functions for pasword hashing and matching.
 
 from bcrypt import gensalt, hashpw, checkpw
 
-def hash_pasword(input:str) -> bytes:
+type Hash = str
+
+def hash_pasword(input: str) -> Hash:
     """
-    A function to hash passwords to store in the database using 
+    A function to hash passwords to store in the database using
     bcrypt. The function first encodes the plaintext into a bytes
     object, generates a salt for security, then hashes the password.
 
@@ -24,13 +26,14 @@ def hash_pasword(input:str) -> bytes:
         str: Hashed password value
     """
 
-    encoded_input:bytes = input.encode("utf-8")
-    salt:bytes  = gensalt()
-    hash:bytes  = hashpw(encoded_input, salt)
-    
+    encoded_input: bytes = input.encode("utf-8")
+    salt: bytes = gensalt()
+    hash: bytes = hashpw(encoded_input, salt)
+
     return hash.decode("utf-8")
 
-def check_password(input:str, comparable:str) -> bool:
+
+def check_password(input: Hash, comparable: str) -> bool:
     """
     A function to check a plaintext password against the hashed version
     in the database. Function first encodes the plaintext into a bytes
@@ -45,7 +48,7 @@ def check_password(input:str, comparable:str) -> bool:
         bool: Boolean value for match
     """
 
-    user_input:bytes = input.encode("utf-8")
-    is_valid:bool  = checkpw(user_input, comparable.encode("utf-8"))
-    
+    user_input: bytes = input.encode("utf-8")
+    is_valid: bool = checkpw(user_input, comparable.encode("utf-8"))
+
     return is_valid

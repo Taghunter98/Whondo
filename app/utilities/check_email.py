@@ -11,6 +11,7 @@ Description: Checks email against database records.
 
 from app.database.db_connect import connect
 
+
 def check_email_exits(email: str) -> bool:
     """
     The function checks if an email exists in the database.
@@ -20,10 +21,10 @@ def check_email_exits(email: str) -> bool:
 
     Returns:
         bool: If email exists
-    """    
+    """
 
     connection: object = connect()
-    cursor: object     = connection.cursor()
+    cursor: object = connection.cursor()
 
     query: str = """
         SELECT COUNT(*) 
@@ -37,4 +38,4 @@ def check_email_exits(email: str) -> bool:
     cursor.close()
     connection.close()
 
-    return True if (1 in count) else  False
+    return True if (1 in count) else False
