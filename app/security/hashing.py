@@ -11,9 +11,7 @@ Description: Provides functions for pasword hashing and matching.
 
 from bcrypt import gensalt, hashpw, checkpw
 
-type Hash = str
-
-def hash_pasword(input: str) -> Hash:
+def hash_pasword(input: str) -> str:
     """
     A function to hash passwords to store in the database using
     bcrypt. The function first encodes the plaintext into a bytes
@@ -33,7 +31,7 @@ def hash_pasword(input: str) -> Hash:
     return hash.decode("utf-8")
 
 
-def check_password(input: Hash, comparable: str) -> bool:
+def check_password(input: str, comparable: str) -> bool:
     """
     A function to check a plaintext password against the hashed version
     in the database. Function first encodes the plaintext into a bytes

@@ -9,21 +9,19 @@ Version:     1.0
 Description: Serves a Blueprint API for registering a new user.
 """
 
-from flask import Blueprint, request, jsonify, current_app, render_template, session
+from flask import Blueprint, request, jsonify, current_app, render_template, session, Response
 
-from app.database.db_connect import connect, Connection
-from app.security.hashing import hash_pasword, Hash
+from app.database.db_connect import connect
+from app.security.hashing import hash_pasword
 from .images import upload_file
 from ..utilities.authid import authenticate
 from app.utilities.mailgun import send_email
 from app.utilities.check_email import check_email_exits
 
-type Response = any
-
 register_bp: str = Blueprint("register_bp", __name__)
 
 @register_bp.route("/register", methods=["GET", "POST"])
-def register() -> (Response | str):
+def register():
     """
     The REST API is responsible for creating a new user in the MySQL databse.
 
@@ -41,8 +39,8 @@ def register() -> (Response | str):
     Verification email is sent to new user, with a link to /register/verify.
 
     Returns:
-        Response: Response of successs or appropriate error message
-        string: Template render for account creation success
+        json: Response of successs or appropriate error message
+        html: Template render for account creation success
     """
 
     if request.method == "POST":
@@ -66,10 +64,10 @@ def register() -> (Response | str):
         if image_path is None:
             return jsonify({"error": "Image failed to upload"}), 409
 
-        hashed_password: Hash = hash_pasword(password)
+        hashed_password: str = hash_pasword(password)
 
-        connection: Connection = connect()
-        cursor: Connection = connection.cursor()
+        connection: object = connect()
+        cursor: object = connection.cursor()
 
         query: str = """
             INSERT INTO Users (email, password, name, surname, age, occupation, bio, profilePicture)
