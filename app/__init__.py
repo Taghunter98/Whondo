@@ -9,13 +9,13 @@ Version:     1.0
 Description: Creates a Flask app instance and sets up logging.
 """
 
-from flask                         import Flask, session, has_request_context, request
-from flask_cors                    import CORS
-from flask_session                 import Session
-from flask.logging                 import default_handler
+from flask import Flask, session, has_request_context, request
+from flask_cors import CORS
+from flask_session import Session
+from flask.logging import default_handler
 from werkzeug.middleware.proxy_fix import ProxyFix
-from logging.config                import dictConfig
-from dotenv                        import load_dotenv
+from logging.config import dictConfig
+from dotenv import load_dotenv
 import logging
 import os
 
