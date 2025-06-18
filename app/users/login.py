@@ -77,7 +77,7 @@ def login():
                 current_app.logger.info(f"User authenticated, starting new Session")
 
                 response = make_response(render_template("index.html"))
-                response.set_cookie('uID', user_id)
+                response.set_cookie('email', email)
 
                 return response
                 
