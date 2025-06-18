@@ -11,7 +11,7 @@ class TestImageUpload(unittest.TestCase):
             object: Request object
         """
         
-        return requests.get("https://www.whondo.com/uploads?path=Profile/TEST/wilson.jpg")
+        return requests.get("https://www.whondo.com/uploads?path=TEST/wilson.jpg")
     
     def testResponse(self):
         """
