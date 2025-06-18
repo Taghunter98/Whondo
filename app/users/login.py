@@ -78,6 +78,8 @@ def login():
 
                 response = make_response(render_template("index.html"))
                 response.set_cookie('uID', user_id)
+
+                return response
                 
                 # return jsonify({
                 #     "message" : f"{email} logged in successfully",
