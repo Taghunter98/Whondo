@@ -9,7 +9,7 @@ Version:     1.0
 Description: Creates a Flask app instance and sets up logging.
 """
 
-from flask import Flask, session, redirect, has_request_context, request
+from flask import Flask, session, has_request_context, request
 from flask_cors import CORS
 from flask_session import Session
 from flask.logging import default_handler
@@ -19,6 +19,8 @@ from dotenv import load_dotenv
 import logging
 import os
 
+type Request = list
+type Response = any
 
 def create_app() -> Flask:
     """

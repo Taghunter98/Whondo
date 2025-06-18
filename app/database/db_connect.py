@@ -14,8 +14,9 @@ from dotenv import load_dotenv
 import mysql.connector
 import os
 
+type Connection = object
 
-def connect() -> object:
+def connect() -> Connection:
     """
     The function aattempts a connection to the MySQL database.
 
@@ -31,7 +32,7 @@ def connect() -> object:
         DB_HOST: str = os.getenv("DB_HOST")
         DATABASE: str = os.getenv("DATABASE")
 
-        connect: object = mysql.connector.connect(
+        connect: Connection = mysql.connector.connect(
             user=DB_USER, password=DB_PASS, host=DB_HOST, database=DATABASE
         )
 
