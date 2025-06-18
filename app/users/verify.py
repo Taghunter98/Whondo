@@ -19,7 +19,7 @@ verify_bp = Blueprint("verify_bp", __name__)
 @verify_bp.route("/verify")
 def verify():
 
-    email: str = request.args.get['email']
+    email: str = request.args.get('email')
 
     if not email:
         abort(400, "Missing 'email' query parameter")
