@@ -89,7 +89,7 @@ def register():
         session["uID"] = user_id
         session["email"] = email
 
-        link: str = f"https://whondo.com/login/verify?email={email}"
+        link: str = f"https://whondo.com/verify?email={email}"
         sender: str = "noreply@whondo.com"
         subject: str = "Verify Your Whondo Account"
         body: str = f"Hi {name}!\n\nPlease follow this link to verify your new account.\n\n{link}\n\nThanks,\nThe Whondo team"
