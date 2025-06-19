@@ -89,12 +89,13 @@ def register():
         session["uID"] = user_id
         session["email"] = email
 
-        link: str = "https://whondo.com/login/verify"
-        sender: str = "noreply@whondo.com"
-        subject: str = "Activate Your Whondo Account"
-        body: str = f"Hi {name}!\nPlease follow this link to activate your new account.\n\n{link}"
-
-        send_email(sender, name, email, subject, body)
+        verify_link = f"https://whondo.com/verify?email={email}"
+        sender = "noreply@whondo.com"
+        subject = "Verify Your Whondo Account"
+    
+        html_template = render_template("verify_email.html", name=name, verify_link=verify_link)
+        
+        send_email(sender, name, email, subject, None, html_template)
 
         return render_template("created.html", name=name, surname=surname, email=email)
 
