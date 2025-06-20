@@ -163,6 +163,7 @@ class RegisterPageComp extends Comp {
         const file       = this.shadowRoot.getElementById("file");
         const result     = this.shadowRoot.getElementById('result');
 
+        
         compButton.buttonText  = "Register";
         email.inputLabel       = "Email";
         email.inputPrompt      = "Enter email";
