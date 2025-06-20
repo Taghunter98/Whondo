@@ -92,7 +92,7 @@ class ButtonComp extends Comp {
             border: "border",
             borderRadius: 8,
             cursor: "pointer",
-            transition: "background 0.1s ease-in-out"
+            transition: "background 0.1s ease-in-out",
         });
 
         const primaryHover = this.design.create({
