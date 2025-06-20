@@ -115,7 +115,7 @@ class RegisterPageComp extends Comp {
             class: "wrapper",
             display: "flex",
             flexDirection: "column",
-            width: "100%",
+            width: "auto",
             alignItems: "centre",
             maxWidth: 500,
             padding: 20,
@@ -131,7 +131,7 @@ class RegisterPageComp extends Comp {
             justifyContent: "space-between"
         });
 
-
+    
         return /* css */ `
         ${background}
         ${container}
@@ -139,8 +139,7 @@ class RegisterPageComp extends Comp {
         ${row}
         ${container2}
         
-        
-
+    
         @media (max-width: 600px){
             ${backgroundMobile}
         }
