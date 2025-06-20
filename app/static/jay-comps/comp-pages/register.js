@@ -24,20 +24,20 @@ class RegisterPageComp extends Comp {
                 <h3>${this.title_}</h3>
                 <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
                     <div class="row">
-                        <comp-input id="email"></comp-input>
-                        <comp-input id="password"></comp-input>
+                        <comp-input id="email" name="email"></comp-input>
+                        <comp-input id="password" name="password"></comp-input>
                     </div>
                     <div class="row">
-                        <comp-input id="name"></comp-input>
-                        <comp-input id="surname"></comp-input>
+                        <comp-input id="name" name="name"></comp-input>
+                        <comp-input id="surname" name="surname"></comp-input>
                     </div>
                     <div class="row">
-                        <comp-input id="age"></comp-input>
-                        <comp-input id="occupation"></comp-input>
+                        <comp-input id="age" name="age"></comp-input>
+                        <comp-input id="occupation" name="occupation"></comp-input>
                     </div>
                     <div class="row">
-                        <comp-input id="bio"></comp-input>
-                        <comp-input id="file" class="file"></comp-input>
+                        <comp-input id="bio" name="bio"></comp-input>
+                        <comp-input id="file" class="file" name="file"></comp-input>
                     </div>
                     <div class="wrapper">
                         <comp-button id="submit" class="submit-btn"></comp-button>
