@@ -22,27 +22,27 @@ class RegisterPageComp extends Comp {
         <div class="background">
             <div class="container">
                 <h3>${this.title_}</h3>
-
-                <div class="row">
-                    <comp-input id="email"></comp-input>
-                    <comp-input id="password"></comp-input>
-                </div>
-                <div class="row">
-                    <comp-input id="name"></comp-input>
-                    <comp-input id="surname"></comp-input>
-                </div>
-                <div class="row">
-                    <comp-input id="age"></comp-input>
-                    <comp-input id="occupation"></comp-input>
-                </div>
-                <div class="row">
-                    <comp-input id="bio"></comp-input>
-                    <comp-input id="file" class="file"></comp-input>
-                </div>
-                <div class="wrapper">
-                    <comp-button id="submit" class="submit-btn"></comp-button>
-                </div>
-
+                <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
+                    <div class="row">
+                        <comp-input id="email"></comp-input>
+                        <comp-input id="password"></comp-input>
+                    </div>
+                    <div class="row">
+                        <comp-input id="name"></comp-input>
+                        <comp-input id="surname"></comp-input>
+                    </div>
+                    <div class="row">
+                        <comp-input id="age"></comp-input>
+                        <comp-input id="occupation"></comp-input>
+                    </div>
+                    <div class="row">
+                        <comp-input id="bio"></comp-input>
+                        <comp-input id="file" class="file"></comp-input>
+                    </div>
+                    <div class="wrapper">
+                        <comp-button id="submit" class="submit-btn"></comp-button>
+                    </div> 
+                </form>
             </div>
             <div class="container2">
                 <a href=#>
@@ -117,7 +117,6 @@ class RegisterPageComp extends Comp {
             flexDirection: "column",
             width: "auto",
             alignItems: "centre",
-            maxWidth: 500,
             padding: 20,
             justifyContent: "centre",
         });
@@ -131,11 +130,20 @@ class RegisterPageComp extends Comp {
             justifyContent: "space-between"
         });
 
+        const regis = this.design.create({
+            class: "reg",
+            display: "flex",
+            flexDirection: "column",
+            width: "auto",
+            alignItems: "centre"
+        });
+
     
         return /* css */ `
         ${background}
         ${container}
         ${wrapper}
+        ${regis}
         ${row}
         ${container2}
         
