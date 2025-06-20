@@ -125,7 +125,7 @@ class RegisterPageComp extends Comp {
             class: "row",
             display: "flex",
             flexDirection: "row",
-            gap: 10,
+            gap: 15,
             width: "100%",
             justifyContent: "space-between"
         });
@@ -135,7 +135,8 @@ class RegisterPageComp extends Comp {
             display: "flex",
             flexDirection: "column",
             width: "auto",
-            alignItems: "centre"
+            alignItems: "centre",
+            gap: 15
         });
 
     
