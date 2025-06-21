@@ -6,7 +6,7 @@ class InputComp extends Comp {
 
         super();
         
-        this.inputLabel_  = "Label";
+        this.inputLabel_  = "";
         this.inputType_   = "text";
         this.inputPrompt_ = "Enter text";
 
@@ -59,17 +59,30 @@ class InputComp extends Comp {
 
     get inputValue() {
 
-        return this.shadowRoot.querySelector("input").value;
+        return this.shadowRoot.querySelector(".inputValue").value;
 
     }
 
 
     createHTML() {
+        
+        let inputField;
+
+        if(this.inputType_ === "textarea"){
+
+            inputField = `<textarea class="inputValue" placeholder="${this.inputPrompt_}" row="6"></textarea>`;
+        
+      
+        } else {
+
+            inputField = `<input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">`;
+        
+        }
 
         return /* html */ `
         <div class="inputContainer">
             <label>${this.inputLabel_}</label>
-            <input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">
+            ${inputField}
         </div>
         `;
     

@@ -76,7 +76,7 @@ class ButtonComp extends Comp {
     
     createHTML() {
 
-        return /* html */ `<button id="button" class="button">${this.buttonText_}</button>`;
+        return /* html */ `<button id="button" class="button" part="button">${this.buttonText_}</button>`;
     
     }
 
@@ -129,6 +129,19 @@ class ButtonComp extends Comp {
             background: "black40"
         });
 
+        const longButton = this.design.create({
+            class: "button",
+            width: "100%",
+            padding: "14px 24px",
+            textAlign: "centre",
+            colour: "white",
+            background: "black100",
+            border: "border",
+            borderRadius: "999px",
+            cursor: "pointer",
+            transition: "background 0.1s ease-in-out",
+        });
+
         let tertiary;
         
         if (this.buttonVarient_ == 1) {
@@ -145,7 +158,20 @@ class ButtonComp extends Comp {
             buttonActive = secondaryActive;
         
         }
-        else if (this.buttonVarient_ == 3) button = tertiary;
+
+        else if (this.buttonVarient_ == 3) {
+
+            button = tertiary;
+        
+        }
+
+        else if (this.buttonVarient_ == 4) {
+
+            button       = longButton;
+            buttonHover  = primaryHover;
+            buttonActive = primaryActive;
+        
+        }
 
         return `
         ${button}

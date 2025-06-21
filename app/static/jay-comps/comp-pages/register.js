@@ -21,33 +21,34 @@ class RegisterPageComp extends Comp {
         return /* html */ `
         <div class="background">
             <div class="container">
-                <h3>${this.title_}</h3>
+                <h3 class="head">${this.title_}</h3>
                 <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
-                    <div class="row">
-                        <comp-input id="email" name="email"></comp-input>
-                        <comp-input id="password" name="password"></comp-input>
-                    </div>
                     <div class="row">
                         <comp-input id="name" name="name"></comp-input>
                         <comp-input id="surname" name="surname"></comp-input>
                     </div>
+                
+                    <comp-input id="email" name="email"></comp-input>
+                    <comp-input id="password" name="password"></comp-input>
+                    
                     <div class="row">
                         <comp-input id="age" name="age"></comp-input>
                         <comp-input id="occupation" name="occupation"></comp-input>
                     </div>
-                    <div class="row">
-                        <comp-input id="bio" name="bio"></comp-input>
-                        <comp-input id="file" class="file" name="file"></comp-input>
-                    </div>
+                   
+                    <comp-input id="bio" name="bio"></comp-input>
+                    <comp-input id="file" class="file" name="file"></comp-input>
+                    
                     <div class="wrapper">
                         <comp-button id="submit" class="submit-btn"></comp-button>
                     </div> 
+
+                    <div class="container2">
+                        
+                        <p>Have an account?<a href="#"> Login</a></p>
+                    
+                    </div>
                 </form>
-            </div>
-            <div class="container2">
-                <a href=#>
-                    <p>Have an account?</p>
-                </a>
             </div>
             <p id="result"></p>
         </div>
@@ -101,7 +102,6 @@ class RegisterPageComp extends Comp {
             flexDirection: "column",
             width: "auto",
             maxWidth: 500,
-            padding: 20,
             alignItems: "centre",
             border: true,
             borderRadius: 16,
@@ -115,9 +115,9 @@ class RegisterPageComp extends Comp {
             class: "wrapper",
             display: "flex",
             flexDirection: "column",
-            width: "auto",
+            width: "100%",
             alignItems: "centre",
-            padding: 20,
+            padding: 15,
             justifyContent: "centre",
         });
 
@@ -139,16 +139,22 @@ class RegisterPageComp extends Comp {
             gap: 15
         });
 
-    
+        const header = this.design.create({
+            class: "head",
+            alignSelf: "flex-start"
+        });
+
+
         return /* css */ `
         ${background}
+        ${header}
         ${container}
         ${wrapper}
         ${regis}
         ${row}
         ${container2}
         
-    
+
         @media (max-width: 600px){
             ${backgroundMobile}
         }
@@ -170,25 +176,27 @@ class RegisterPageComp extends Comp {
         const result     = this.shadowRoot.getElementById('result');
 
         
-        compButton.buttonText  = "Register";
-        email.inputLabel       = "Email";
-        email.inputPrompt      = "Enter email";
-        email.inputType        = "email";
-        password.inputLabel    = "Password";
-        password.inputPrompt   = "password";
-        password.inputType     = "password";
-        name.inputLabel        = "Name";
-        name.inputPrompt       = "Enter your name";
-        surname.inputLabel     = "Surname";
-        surname.inputPrompt    = "Enter you surname";
-        age.inputLabe          = "Age";
-        age.inputPrompt        = "Enter you age";
-        occupation.inputLabel  = "Occupation";
-        occupation.inputPrompt = "eg. student ";
-        bio.inputLabel         = "Bio";
-        bio.inputPrompt        = "Tell us more about you!";
-        file.inputLabe         = "Picture";
-        file.inputType         = "file";
+        compButton.buttonText    = "Register";
+        compButton.buttonVarient = 4;
+        email.inputLabel         = "Email";
+        email.inputPrompt        = "Enter email";
+        email.inputType          = "email";
+        password.inputLabel      = "Password";
+        password.inputPrompt     = "password";
+        password.inputType       = "password";
+        name.inputLabel          = "Name";
+        name.inputPrompt         = "Enter your name";
+        surname.inputLabel       = "Surname";
+        surname.inputPrompt      = "Enter you surname";
+        age.inputLabel           = "Age";
+        age.inputPrompt          = "Enter you age";
+        occupation.inputLabel    = "Occupation";
+        occupation.inputPrompt   = "eg. student ";
+        bio.inputLabel           = "Bio";
+        bio.inputPrompt          = "Tell us more about you!";
+        bio.inputType            = "textarea";
+        file.inputType           = "file";
+        file.inputLabel          = "Upload your photo";
         
 
         compButton.addEventListener("click", () => {
