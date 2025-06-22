@@ -70,7 +70,7 @@ class InputComp extends Comp {
 
         if(this.inputType_ === "textarea"){
 
-            inputField = `<textarea class="inputValue" placeholder="${this.inputPrompt_}" row="6"></textarea>`;
+            inputField = `<textarea class="inputValue areaInput" placeholder="${this.inputPrompt_}" row="6"></textarea>`;
         
     
         } else if (this.inputType_ === "file"){
@@ -149,6 +149,12 @@ class InputComp extends Comp {
 
 
         return /* css */ `
+
+        .areaInput{
+            resize: none;
+            height: 100px;
+            width: 100px;
+        }
         
         ${inputContainer}
         
