@@ -70,7 +70,7 @@ class InputComp extends Comp {
 
         if(this.inputType_ === "textarea"){
 
-            inputField = `<textarea class="inputValue areaInput" placeholder="${this.inputPrompt_}" row="6"></textarea>`;
+            inputField = `<textarea class="inputValue areaInput" placeholder="${this.inputPrompt_}" row="6" accept=".jpg, .png, .jpeg"></textarea>`;
         
     
         } else if (this.inputType_ === "file"){
@@ -135,26 +135,29 @@ class InputComp extends Comp {
 
             class: "fileInput",
             padding: '40px',
-            border: '2px dashed #ccc',
+            border: '2px',
             borderRadius: "12px",
             textAlign: "centre",
             fontSize: "1rem",
             fontWeight: 500,
-            colour: "#777",
+            colour: "black60",
             display: "block",
             width: "100%",
             cursor: "pointer",
-            background: "white"
+            background: "white",
+            borderStyle:"dotted",
         });
 
+        const areaInput = this.design.create({
+
+            class: "areaInput",
+            resize: "none",
+            height: "80px",
+            width: "100%",
+
+        });
 
         return /* css */ `
-
-        .areaInput{
-            resize: none;
-            height: 100px;
-            width: 100px;
-        }
         
         ${inputContainer}
         
@@ -162,6 +165,7 @@ class InputComp extends Comp {
         ${inputHover}
         ${inputActive}
         ${fileStyle}
+        ${areaInput}
         `;
     
     }
