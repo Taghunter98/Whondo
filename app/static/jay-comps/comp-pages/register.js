@@ -45,7 +45,7 @@ class RegisterPageComp extends Comp {
 
                     <div class="container2">
                         
-                        <p>Have an account?<a href="#"> Login</a></p>
+                        <p>Have an account?<a href="#" class="link"> Login</a></p>
                     
                     </div>
                 </form>
@@ -144,6 +144,14 @@ class RegisterPageComp extends Comp {
             alignSelf: "flex-start"
         });
 
+        const link = this.design.create({
+
+            class: "link",
+            colour: "black",
+            fontWeight: "bold", 
+            textDecoration: "none",
+        });
+
 
         return /* css */ `
         ${background}
@@ -153,6 +161,7 @@ class RegisterPageComp extends Comp {
         ${regis}
         ${row}
         ${container2}
+        ${link}
         
 
         @media (max-width: 600px){
