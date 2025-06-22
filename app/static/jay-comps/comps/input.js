@@ -72,8 +72,14 @@ class InputComp extends Comp {
 
             inputField = `<textarea class="inputValue" placeholder="${this.inputPrompt_}" row="6"></textarea>`;
         
-      
-        } else {
+    
+        } else if (this.inputType_ === "file"){
+
+            inputField = `<input class="inputValue fileInput" type="file" placeholder="${this.inputPrompt_}"></input>`;
+        
+        }
+        
+        else {
 
             inputField = `<input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">`;
         
@@ -125,6 +131,23 @@ class InputComp extends Comp {
             outline: "solid 2px var(--black100)"
         });
 
+        const fileStyle = this.design.create({
+
+            class: "fileInput",
+            padding: '40px',
+            border: '2px dashed #ccc',
+            borderRadius: "12px",
+            textAlign: "centre",
+            fontSize: "1rem",
+            fontWeight: 500,
+            colour: "#777",
+            display: "block",
+            width: "100%",
+            cursor: "pointer",
+            background: "white"
+        });
+
+
         return /* css */ `
         
         ${inputContainer}
@@ -132,6 +155,7 @@ class InputComp extends Comp {
         ${input}
         ${inputHover}
         ${inputActive}
+        ${fileStyle}
         `;
     
     }
