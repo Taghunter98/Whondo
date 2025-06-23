@@ -16,7 +16,7 @@ from flask import (
     jsonify,
     current_app,
     render_template,
-    redirect
+    redirect,
 )
 
 from ..utilities.authid import authenticate
@@ -25,6 +25,7 @@ from app.security.hashing import check_password
 
 login_bp = Blueprint("login_bp", __name__)
 logout_bp = Blueprint("logout_bp", __name__)
+
 
 @login_bp.route("/login", methods=["POST", "GET"])
 def login():
@@ -111,7 +112,8 @@ def login():
 
         return render_template("login.html")
 
-@logout_bp.route("/logout",  methods=["GET"])
+
+@logout_bp.route("/logout", methods=["GET"])
 def logout():
     """
     The REST API is responsible for logging out a user by setting the (uID) and (email) session
