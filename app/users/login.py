@@ -113,5 +113,9 @@ def login():
 
 @logout_bp.route("/logout",  methods=["GET"])
 def logout():
-    if request.method == "GET" and session['uID']:
-        session['uID'] == None
+    if not session['uID']:
+        current_app.redirect("/")
+        
+    current_app.logger.info(f"User id: {session['uID']} logged out.")
+    session['uID'] == None
+    current_app.redirect("/")
