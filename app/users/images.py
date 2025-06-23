@@ -102,7 +102,7 @@ def upload_file(file: object, email: str) -> str:
             return None
 
 
-@image_purge_bp.route("/images/purge<key>")
+@image_purge_bp.route("/images/purge")
 def purge():
     key: str = request.args.get("key")
 
