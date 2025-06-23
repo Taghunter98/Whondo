@@ -113,6 +113,13 @@ def login():
 
 @logout_bp.route("/logout",  methods=["GET"])
 def logout():
+    """
+    The REST API is responsible for logging out a user by setting the (uID) and (email) session
+    values to None.
+
+    Returns:
+        Response: Flask redirect to homepage
+    """
     if not session["uID"]:
         return redirect("/")
 
