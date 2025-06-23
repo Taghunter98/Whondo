@@ -129,6 +129,19 @@ class ButtonComp extends Comp {
             background: "black40"
         });
 
+        const longButton = this.design.create({
+            class: "button",
+            width: "100%",
+            padding: "9px 16px",
+            textAlign: "centre",
+            colour: "white",
+            background: "black100",
+            border: "border",
+            borderRadius: 8,
+            cursor: "pointer",
+            transition: "background 0.1s ease-in-out",
+        });
+
         let tertiary;
         
         if (this.buttonVarient_ == 1) {
@@ -145,7 +158,20 @@ class ButtonComp extends Comp {
             buttonActive = secondaryActive;
         
         }
-        else if (this.buttonVarient_ == 3) button = tertiary;
+        else if (this.buttonVarient_ == 3) {
+ 
+            button = tertiary;
+
+        }
+        else if (this.buttonVarient_ == 4){
+
+            button       = longButton;
+            buttonHover  = primaryHover;
+            buttonActive = primaryActive;
+            ;        
+
+        }
+        
 
         return `
         ${button}
