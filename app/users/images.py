@@ -12,9 +12,9 @@ Description: Provides functions for image validation and storage.
 from flask import Blueprint, send_from_directory, request, abort, current_app, jsonify
 from datetime import datetime
 import os
-from dotenv import load_dotenv
 
 from app.database.db_connect import connect
+from app.utilities.key_gen import auth_key
 
 image_bp = Blueprint("image_bp", __name__)
 image_purge_bp = Blueprint("image_purge_bp", __name__)
@@ -104,11 +104,9 @@ def upload_file(file: object, email: str) -> str:
 
 @image_purge_bp.route("/images/purge<key>")
 def purge():
-    load_dotenv()
-    API_KEY = os.getenv("API_KEY")
     key: str = request.args.get("key")
 
-    if key != API_KEY:
+    if auth_key(key) is False:
         current_app.logger.warning("Unauthorised API request")
         return jsonify({"error": "Unauthorised request, this will be reported"})
 
