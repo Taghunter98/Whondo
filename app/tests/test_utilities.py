@@ -80,7 +80,7 @@ class TestGenKey(unittest.TestCase):
         self.assertIsNotNone(self.key)
 
     def testKeyType(self):
-        self.assertIs(self.key, str)
+        self.assertIs(type(self.key), str)
     
     def testKeyLen(self):
-        self.assertEqual(len(self.key), 30)
+        self.assertEqual(len(self.key), 40)
