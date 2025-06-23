@@ -72,11 +72,15 @@ class TestEmailExists(unittest.TestCase):
         self.assertFalse(result, f"Function is returning: {result}")
 
 class TestGenKey(unittest.TestCase):
+    def __init__(self, methodName = "runTest"):
+        super().__init__(methodName)
+        self.key: str = gen_key()
+
     def testNotNone(self):
-        self.assertIsNone(gen_key())
+        self.assertIsNotNone(self.key)
 
     def testKeyType(self):
-        self.assertIs(gen_key(), str)
+        self.assertIs(self.key, str)
     
     def testKeyLen(self):
-        self.assertEqual(gen_key().len(), 30)
+        self.assertEqual(len(self.key), 30)
