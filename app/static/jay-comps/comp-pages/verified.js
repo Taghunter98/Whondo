@@ -18,7 +18,7 @@ class Verified extends Comp {
 
         return /* html */`
         <div class="background">
-            <!-- replace with google icons -->
+            
             <div class="container">
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="64px" viewBox="0 -960 960 960" width="64px" fill="currentColor"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
                 <h3 class="head">Verified!</h3>
@@ -31,8 +31,9 @@ class Verified extends Comp {
     }
 
     createCSS() {
-
-        const animation = this.effect.prop("slideUp", .5);
+        
+        const effect = this.effect.slideUp(20);
+        const prop   = this.effect.prop("slideUp", .5);
 
         const background = this.design.create({
             class: "background",
@@ -40,7 +41,6 @@ class Verified extends Comp {
             height: "100vh",
             flexDirection: "column",
             width: "100%",
-            padding: "50px 0px",
             alignItems: "centre",
             border: false,
             gap: 0,
@@ -67,7 +67,7 @@ class Verified extends Comp {
             gap: 10,
             background: "white",
             textAlign: "start",
-            animation: animation,
+            animation: prop,
             marginTop: 0,
         });
 
@@ -85,7 +85,7 @@ class Verified extends Comp {
 
         
         return /* css */`
-        
+        ${effect}
         ${background}
         ${container}
         ${icon}
