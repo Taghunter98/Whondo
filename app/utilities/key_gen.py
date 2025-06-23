@@ -33,7 +33,7 @@ def auth_key(key: str) -> bool:
 
     Returns:
         bool: Key validation
-    """    
+    """
     connection: object = connect()
     cursor: object = connection.cursor()
 
