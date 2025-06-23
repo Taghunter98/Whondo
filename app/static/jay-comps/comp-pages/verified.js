@@ -22,7 +22,7 @@ class Verified extends Comp {
             <i id="" class="fa-solid fa-circle-check"></i>
 
             <div class="container">
-                <h3 class="head">Welcome to Whondo!</h3>
+                <h3 class="head">Verified!</h3>
                 <p class="describe">Welcome {{ email }}!<br>Your account has now been verified.</p>
                 <comp-button></comp-button>
             </div>
@@ -40,12 +40,13 @@ class Verified extends Comp {
             display: "flex",
             height: "100vh",
             flexDirection: "column",
-            width: "100%",
+            width: "auto",
             padding: "50px 0px",
             alignItems: "centre",
             border: false,
             gap: 0,
             background: "black10",
+            justifyContent: "centre",
         });
 
         const backgroundMobile = this.design.create({
@@ -61,17 +62,29 @@ class Verified extends Comp {
             width: "auto",
             maxWidth: 500,
             padding: 20,
-            alignItems: "start",
+            alignItems: "centre",
             border: "border",
             borderRadius: 16,
-            gap: 15,
+            gap: 10,
             background: "white",
-            animation: animation
+            textAlign: "centre",
+            animation: animation,
+            marginTop: 0,
+        });
+
+        const head = this.design.create({
+            class: "head",
+            fontSize: 24,
+            alignSelf: "centre",
+            paddingBottom: 0,
+            lineHeight: 30,
         });
 
         return /* css */`
         ${background}
         ${container}
+        ${head}
+
         @media (max-width: 600px) {
             ${backgroundMobile}
         }
