@@ -4,77 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whondo Verified Page</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
-    <style> 
-    @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
-    
-    body{
-        font-family: "Geist",sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .background {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        box-sizing: border-box;
-        max-width: 500px;
-        padding: 40px;
-        border: 1px solid #ddd;
-        border-radius: 15px;
-        align-items: center;
-        gap: 10px;
-        background: white;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .head {
-        text-align: center;
-        font-size: 24px;
-    }
-
-    .describe {
-        font-size: 16px;
-        text-align: center;
-    }
-
-    i {
-        margin-top: 10px;
-        font-size: 64px;
-        align-self: center;
-    }
-
-    @media only screen and (max-width: 600px){
-        .background{
-            padding: 30px;
-            width: auto;
-        }
-    }
-
-    </style>
+   <link rel="stylesheet" href="../static/globalstyle.css">
 </head>
 <body>
-    <div class="background">
-        <i class="fa-solid fa-circle-check" style="color: #74C0FC;"></i>
+    <comp-verified></comp-verified>
 
-        <div class="containter">
-            <h3 class="head">Welcome to Whondo!</h3>
-            <p class="describe">Howdy {{ email }} </p>
-            <p class="describe">You have successfully verified account</p>
-            <p class="describe">Thank you for choosing Whondo!</p>
-        </div>
-    </div>
+    <script type="module" src="../static/bundle.js"></script>
 </body>
 </html>

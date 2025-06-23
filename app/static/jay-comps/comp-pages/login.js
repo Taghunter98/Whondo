@@ -1,6 +1,6 @@
 import { Comp } from "jay-comp";
 
-class LoginPageComp extends Comp {
+class LoginPage extends Comp {
 
     constructor() {
 
@@ -125,4 +125,4 @@ class LoginPageComp extends Comp {
   
 }
 
-customElements.define("test-card-housing", LoginPageComp);
+customElements.define("test-card-housing", LoginPage);
