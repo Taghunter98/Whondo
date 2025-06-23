@@ -3,8 +3,15 @@ from flask import current_app
 from requests import post
 from dotenv import load_dotenv
 
-def send_email(sender: str, receiver_name: str, receiver: str,
-               subject: str, text_message: str, html_message: str) -> str:
+
+def send_email(
+    sender: str,
+    receiver_name: str,
+    receiver: str,
+    subject: str,
+    text_message: str,
+    html_message: str,
+) -> str:
     """
     Sends an email using Mailgun with both plain text and HTML content.
 
@@ -36,5 +43,5 @@ def send_email(sender: str, receiver_name: str, receiver: str,
             "subject": subject,
             "text": text_message,
             "html": html_message,
-        }
+        },
     )
