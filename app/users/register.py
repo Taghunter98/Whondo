@@ -92,9 +92,11 @@ def register():
         verify_link = f"https://whondo.com/verify?email={email}"
         sender = "noreply@whondo.com"
         subject = "Verify Your Whondo Account"
-    
-        html_template = render_template("verify_email.html", name=name, verify_link=verify_link)
-        
+
+        html_template = render_template(
+            "verify_email.html", name=name, verify_link=verify_link
+        )
+
         send_email(sender, name, email, subject, None, html_template)
 
         return render_template("created.html", name=name, surname=surname, email=email)

@@ -24,7 +24,7 @@ from app.database.db_connect import connect
 from app.security.hashing import check_password
 
 login_bp = Blueprint("login_bp", __name__)
-
+logout_bp = Blueprint("logout_bp", __name__)
 
 @login_bp.route("/login", methods=["POST", "GET"])
 def login():
@@ -110,3 +110,8 @@ def login():
             return render_template("index.html")
 
         return render_template("login.html")
+
+@logout_bp.route("/logout",  methods=["GET"])
+def logout():
+    if request.method == "GET" and session['uID']:
+        session['uID'] == None

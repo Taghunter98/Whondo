@@ -16,10 +16,10 @@ from app.utilities.authid import authenticate
 
 verify_bp = Blueprint("verify_bp", __name__)
 
+
 @verify_bp.route("/verify")
 def verify():
-
-    email: str = request.args.get('email')
+    email: str = request.args.get("email")
 
     if not email:
         abort(400, "Missing 'email' query parameter")
@@ -36,7 +36,7 @@ def verify():
         connection.commit()
         cursor.close()
         connection.close()
-        
+
         return render_template("verified.html", email=email)
     else:
         abort(404, "uID not found")
