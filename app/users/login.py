@@ -16,7 +16,7 @@ from flask import (
     jsonify,
     current_app,
     render_template,
-    Response,
+    redirect
 )
 
 from ..utilities.authid import authenticate
@@ -114,8 +114,8 @@ def login():
 @logout_bp.route("/logout",  methods=["GET"])
 def logout():
     if not session['uID']:
-        current_app.redirect("/")
-        
+        return redirect("/")
+
     current_app.logger.info(f"User id: {session['uID']} logged out.")
     session['uID'] == None
-    current_app.redirect("/")
+    return redirect("/")
