@@ -15,6 +15,7 @@ import os
 
 from app.database.db_connect import connect
 from app.utilities.key_gen import auth_key
+from app.security.hashing import check_password
 
 image_bp = Blueprint("image_bp", __name__)
 image_purge_bp = Blueprint("image_purge_bp", __name__)

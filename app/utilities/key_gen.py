@@ -6,23 +6,44 @@ Author:      Josh Bassett
 Date:        23/06/2025
 Version:     1.0
 
-Description: Provides function for creating API keys.
+Description: Provides function and API for creating API keys.
 """
 
+from flask import Blueprint, request, jsonify, current_app
 import secrets
 
 from app.database.db_connect import connect
+from app.security.hashing import hash_function, check_password
+from app.utilities.authid import authenticate
 
+gen_key_bp = Blueprint("gen_key_bp", __name__)
 
-def gen_key() -> str:
-    """
-    Function generates url safe API keys of 30 char length.
+@gen_key_bp.route("/auth/keygen", methods=["GET"])
+def gen_key():
+    email: str = request.args.get("uID")
+    uID: int = authenticate(email)
+    if uID:
+        key: str = secrets.token_urlsafe(30)
+        hashed: str = hash_function(key)
 
-    Returns:
-        str: API key
-    """
-    return secrets.token_urlsafe(30)
+        connection: object = connect()
+        cursor: object = connection.cursor()
 
+        query: str = """
+            INSERT INTO APIKeys (uID, apoKey)
+            VALUES (%s, %s)
+        """
+
+        cursor.execute(query, uID, hashed)
+        cursor.commit()
+
+        cursor.close()
+        connection.close()
+
+        return jsonify({"key" : key}), 201
+    else:
+        current_app.logger.warning("Unauthorised key generation attempt")
+        return jsonify({"error": "Unauthrorised key generation, this will be reported"}), 401
 
 def auth_key(key: str) -> bool:
     """
@@ -38,15 +59,15 @@ def auth_key(key: str) -> bool:
     cursor: object = connection.cursor()
 
     query: str = """
-        SELECT COUNT(*) 
+        SELECT apiKey
         FROM APIKeys 
-        WHERE apiKey = %s;
+        WHERE uID = %s;
     """
 
-    cursor.execute(query, (key,))
-    count: int = cursor.fetchone()
+    cursor.execute(query, key)
+    hash_key: str = cursor.fetchone()
 
     cursor.close()
     connection.close()
 
-    return True if (1 in count) else False
+    return True if (check_password(key, hash_key)) else False

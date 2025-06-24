@@ -132,6 +132,7 @@ def create_app() -> Flask:
     from .users.register import register_bp
     from .users.images import image_bp, image_purge_bp
     from .users.verify import verify_bp
+    from .utilities.key_gen import gen_key_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
@@ -139,6 +140,7 @@ def create_app() -> Flask:
     app.register_blueprint(image_bp)
     app.register_blueprint(image_purge_bp)
     app.register_blueprint(verify_bp)
+    app.register_blueprint(gen_key_bp)
 
     @app.before_request
     def log_request():
