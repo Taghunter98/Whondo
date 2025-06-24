@@ -45,7 +45,7 @@ def gen_key():
         current_app.logger.warning("Unauthorised key generation attempt")
         return jsonify({"error": "Unauthrorised key generation, this will be reported"}), 401
 
-def auth_key(key: str) -> bool:
+def auth_key(key: str, uID: str) -> bool:
     """
     The function queries the database and checks if API key is valid.
 
@@ -57,8 +57,6 @@ def auth_key(key: str) -> bool:
     """
     connection: object = connect()
     cursor: object = connection.cursor()
-
-    uID = session.get('uID')
 
     query: str = f"""
         SELECT apiKey
@@ -73,4 +71,5 @@ def auth_key(key: str) -> bool:
     cursor.close()
     connection.close()
 
-    return True if (check_password(key, result[0])) else False
+    return check_password(key, result[0])
+   
