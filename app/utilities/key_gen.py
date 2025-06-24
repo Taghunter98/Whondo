@@ -60,13 +60,13 @@ def auth_key(key: str) -> bool:
 
     uID = session.get('uID')
 
-    query: str = """
+    query: str = f"""
         SELECT apiKey
         FROM APIKeys 
-        WHERE uID = %s;
+        WHERE uID = '{uID}';
     """
 
-    cursor.execute(query, uID,)
+    cursor.execute(query)
     hash_key: str = cursor.fetchone()
 
     cursor.close()
