@@ -58,7 +58,7 @@ def auth_key(key: str) -> bool:
     connection: object = connect()
     cursor: object = connection.cursor()
 
-    uID = session['uID']
+    uID = session.get('uID')
 
     query: str = f"""
         SELECT apiKey
