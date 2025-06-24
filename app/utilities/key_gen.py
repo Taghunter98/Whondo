@@ -67,9 +67,9 @@ def auth_key(key: str) -> bool:
     """
 
     cursor.execute(query)
-    hash_key: str = cursor.fetchone()
+    result = cursor.fetchone()
 
     cursor.close()
     connection.close()
 
-    return True if (check_password(key, hash_key)) else False
+    return True if (check_password(key, result[0])) else False
