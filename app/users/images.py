@@ -105,11 +105,18 @@ def upload_file(file: object, email: str) -> str:
 
 @image_purge_bp.route("/images/purge")
 def purge():
+    """
+    The API returns a list of all emails for purging images for deactivated accounts.
+
+    API key is validated and unauthorised attempts are reported and logged.
+
+    Returns:
+        Response: Email list or appropriate error message
+    """
     key: str = request.args.get("key")
     uID: str = request.args.get("uID")
 
     if auth_key(key, uID) is False:
-        
         current_app.logger.warning("Unauthorised API request")
         return jsonify({"error": "Unauthorised request, this will be reported"})
 

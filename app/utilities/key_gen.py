@@ -18,6 +18,7 @@ from app.utilities.authid import authenticate
 
 gen_key_bp = Blueprint("gen_key_bp", __name__)
 
+
 @gen_key_bp.route("/auth/keygen", methods=["GET"])
 def gen_key():
     email: str = request.args.get("email")
@@ -40,10 +41,13 @@ def gen_key():
         cursor.close()
         connection.close()
 
-        return jsonify({"key" : key}), 201
+        return jsonify({"key": key}), 201
     else:
         current_app.logger.warning("Unauthorised key generation attempt")
-        return jsonify({"error": "Unauthrorised key generation, this will be reported"}), 401
+        return jsonify(
+            {"error": "Unauthrorised key generation, this will be reported"}
+        ), 401
+
 
 def auth_key(key: str, uID: str) -> bool:
     """
@@ -72,4 +76,3 @@ def auth_key(key: str, uID: str) -> bool:
     connection.close()
 
     return check_password(key, result[0])
-   
