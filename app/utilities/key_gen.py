@@ -63,11 +63,12 @@ def auth_key(key: str) -> bool:
     query: str = f"""
         SELECT apiKey
         FROM APIKeys 
-        WHERE uID = '{uID}';
+        WHERE uID = "{uID}";
     """
 
     cursor.execute(query)
     result = cursor.fetchone()
+    print(result)
 
     cursor.close()
     connection.close()
