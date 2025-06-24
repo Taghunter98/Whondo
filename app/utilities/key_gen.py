@@ -30,7 +30,7 @@ def gen_key():
         cursor: object = connection.cursor()
 
         query: str = """
-            INSERT INTO APIKeys (uID, apoKey)
+            INSERT INTO APIKeys (uID, apiKey)
             VALUES (%s, %s)
         """
 
