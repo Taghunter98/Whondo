@@ -20,7 +20,7 @@ gen_key_bp = Blueprint("gen_key_bp", __name__)
 
 @gen_key_bp.route("/auth/keygen", methods=["GET"])
 def gen_key():
-    email: str = request.args.get("uID")
+    email: str = request.args.get("email")
     uID: int = authenticate(email)
     if uID:
         key: str = secrets.token_urlsafe(30)
@@ -34,7 +34,7 @@ def gen_key():
             VALUES (%s, %s)
         """
 
-        cursor.execute(query, uID, hashed)
+        cursor.execute(query, (uID, hashed))
         cursor.commit()
 
         cursor.close()
