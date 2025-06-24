@@ -35,7 +35,7 @@ def gen_key():
         """
 
         cursor.execute(query, (uID, hashed))
-        cursor.commit()
+        connection.commit()
 
         cursor.close()
         connection.close()
