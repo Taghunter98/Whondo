@@ -9,7 +9,7 @@ Version:     1.0
 Description: Provides function and API for creating API keys.
 """
 
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, session
 import secrets
 
 from app.database.db_connect import connect
@@ -58,13 +58,15 @@ def auth_key(key: str) -> bool:
     connection: object = connect()
     cursor: object = connection.cursor()
 
-    query: str = """
+    uID = session['uID']
+
+    query: str = f"""
         SELECT apiKey
         FROM APIKeys 
-        WHERE uID = %s;
+        WHERE uID = {uID};
     """
 
-    cursor.execute(query, key,)
+    cursor.execute(query)
     hash_key: str = cursor.fetchone()
 
     cursor.close()
