@@ -19,16 +19,34 @@ class VerifyPage extends Comp {
     createHTML() {
 
         return /* html */`
+        <div class="background">
             <dialog-box id="describe"></dialog-box>
+        </div>
         `;
     
     }
 
     createCSS() {
 
+        const effect = this.effect.slideUp(20);
+        const prop   = this.effect.prop("slideUp", .5);
+
+        const background = this.design.create({
+            class: "background",
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            height: "100vh",
+            justifyContent: "centre",
+            alignItems: "centre",
+            animation: prop,
+            overFlow: "hidden",
+        });
+
         return /* css */ `
-
-
+       ${effect}
+       ${background}
+        
         `;
     
     }
