@@ -64,7 +64,7 @@ def auth_key(key: str) -> bool:
         WHERE uID = %s;
     """
 
-    cursor.execute(query, key)
+    cursor.execute(query, key,)
     hash_key: str = cursor.fetchone()
 
     cursor.close()
