@@ -9,3 +9,4 @@ import './comps/input.js';
 
 // Pages
 import './comp-pages/login.js';
+import './comp-pages/verify.js';
