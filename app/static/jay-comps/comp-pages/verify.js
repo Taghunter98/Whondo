@@ -20,7 +20,9 @@ class VerifyPage extends Comp {
 
         return /* html */`
         <div class="background">
-            <dialog-box id="describe"></dialog-box>
+            <div class="container">
+                <dialog-box id="describe"></dialog-box>
+            </div>
         </div>
         `;
     
@@ -39,13 +41,21 @@ class VerifyPage extends Comp {
             height: "100vh",
             justifyContent: "centre",
             alignItems: "centre",
-            animation: prop,
-            overFlow: "hidden",
+            background: "black10",
+            overflow: "hidden",
+        });
+
+        const container = this.design.create({
+            class: "container",
+            background: "white",
+            animation: prop, 
+            width: "auto",        
         });
 
         return /* css */ `
        ${effect}
        ${background}
+       ${container}
         
         `;
     
