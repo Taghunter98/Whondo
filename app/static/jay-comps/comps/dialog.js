@@ -28,7 +28,7 @@ class DialogComp extends Comp {
 
     set paragraph(value){
 
-        this.paragraph1_ = value;
+        this.paragraph_ = value;
         this.update(this.createHTML(), this.css_);
     
     }
@@ -42,7 +42,7 @@ class DialogComp extends Comp {
 
     get paragraph() {
 
-        return this.paragraph1_;
+        return this.paragraph_;
     
     }
 
@@ -69,7 +69,7 @@ class DialogComp extends Comp {
                     <!--svg logo go here-->
                     <svg class="icon" ${this.svgIcon_}></svg>
                     <h3 class="head">${this.title_}</h3>
-                    <p class="dialog">${this.paragraph1_}</p>
+                    <p class="dialog">${this.paragraph_}</p>
 
                 </div>
 
