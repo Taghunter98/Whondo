@@ -125,4 +125,4 @@ class LoginPageComp extends Comp {
   
 }
 
-customElements.define("test-card-housing", LoginPageComp);
+customElements.define("comp-login", LoginPageComp);

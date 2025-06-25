@@ -74,4 +74,4 @@ class VerifyPage extends Comp {
 
 }
 
-customElements.define('verify-page', VerifyPage);
+customElements.define('comp-verify', VerifyPage);
