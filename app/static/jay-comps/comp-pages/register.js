@@ -207,6 +207,7 @@ class RegisterPageComp extends Comp {
         bio.inputType            = "textarea";
         file.inputType           = "file";
         file.inputLabel          = "Upload your photo";
+        file.inputPrompt         = "Select a file";
         
 
         compButton.addEventListener("click", () => {
@@ -214,6 +215,8 @@ class RegisterPageComp extends Comp {
             result.innerText = "thanks!";
         
         });
+
+        
         
     
     }

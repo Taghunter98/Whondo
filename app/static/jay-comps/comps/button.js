@@ -137,7 +137,7 @@ class ButtonComp extends Comp {
             colour: "white",
             background: "black100",
             border: "border",
-            borderRadius: "999px",
+            borderRadius: 8,
             cursor: "pointer",
             transition: "background 0.1s ease-in-out",
         });

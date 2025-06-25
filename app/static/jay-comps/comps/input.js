@@ -76,7 +76,14 @@ class InputComp extends Comp {
         } else if (this.inputType_ === "file"){
 
             inputField = `
-            <input class="inputValue fileInput" type="file" placeholder="${this.inputPrompt_}" accept=".jpg, .png, .jpeg"></input>`;
+            <label class="fileWrapper">
+                <div class="fileBox">
+                    <span class="plusIcon">+</span>
+                    <span class="filePrompt">${this.inputPrompt_}</span>
+                </div>
+                <input class="inputValue fileInput" type="file" accept=".jpg, .png, .jpeg" hidden >
+            </label>
+            `;
         
         }
         
@@ -133,20 +140,8 @@ class InputComp extends Comp {
         });
 
         const fileStyle = this.design.create({
-
             class: "fileInput",
-            padding: '40px',
-            border: '2px',
-            borderRadius: "12px",
-            textAlign: "centre",
-            fontSize: "1rem",
-            fontWeight: 500,
-            colour: "black60",
-            display: "block",
-            width: "100%",
-            cursor: "pointer",
-            background: "white",
-            borderStyle:"dotted",
+            display: "none",
         });
 
         const areaInput = this.design.create({
@@ -158,6 +153,54 @@ class InputComp extends Comp {
 
         });
 
+        const fileWrapper = this.design.create({
+            class: "fileWrapper",
+            width: "100%",
+            cursor: "pointer",
+        });
+
+        const fileBox = this.design.create({
+            class: "fileBox",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "centre",
+            alignItems: "centre",
+            padding: 40,
+            border: "2px",
+            borderRadius: "12px",
+            borderStyle: "dotted",
+            background: "white",
+            gap: 8,
+            colour: "black60",
+            textAlign: "centre",
+        });
+
+        const plusIcon = this.design.create({
+            class: "plusIcon",
+            fontSize: "2rem",
+            fontWeight: "bold",
+            colour: "black80",
+        });
+
+        const filePrompt = this.design.create({
+            class: "filePrompt",
+            fontSize: "0.9rem",
+            colour: "black60",
+
+        });
+        
+        const fileHover = this.design.create({
+            class: "fileBox",
+            psuedoClass: "hover",
+            outline: "solid 2px var(--black60)"
+        });
+
+        const fileActive = this.design.create({
+            class: "fileBox",
+            psuedoClass: "focus",
+            outline: "solid 2px var(--black100)"
+        });
+
         return /* css */ `
         
         ${inputContainer}
@@ -165,9 +208,42 @@ class InputComp extends Comp {
         ${input}
         ${inputHover}
         ${inputActive}
+        ${fileWrapper}
+        ${fileBox}
+        ${plusIcon}
+        ${filePrompt}
         ${fileStyle}
+        ${fileHover}
+        ${fileActive}
         ${areaInput}
+
         `;
+    
+    }
+
+    hook() {
+
+        const fileInput  = this.shadowRoot.querySelector(".fileInput");
+        const filePrompt = this.shadowRoot.querySelector(".filePrompt");
+
+        if(fileInput && filePrompt){
+
+            fileInput.addEventListener("change", () => {
+
+                const file = fileInput.files[0];
+                if(file){
+
+                    filePrompt.textContent = file.name;
+                
+                }else {
+
+                    filePrompt.textContent = this.inputPrompt_;
+                
+                }
+            
+            });
+        
+        }
     
     }
 
