@@ -9,6 +9,9 @@
 <body>
     <comp-verified></comp-verified>
 
-    <script type="module" src="../static/bundle.js"></script>
+   <script
+        src="{{ url_for('static', filename='bundle.js') }}"
+        type="module"
+    ></script>
 </body>
 </html>
