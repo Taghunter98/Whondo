@@ -35,14 +35,15 @@ def create_property(values: dict) -> bool:
     try:
         connection: object = connect()
         cursor: object = connection.cursor()
+
         cursor.execute(query, params)
         connection.commit()
 
-        inserted: bool = cursor.rowcount == 1
+        inserted: bool = cursor.rowcount() == 1
 
         cursor.close()
         connection.close()
-        
+
         return inserted
 
     except Exception as err:
@@ -61,7 +62,6 @@ def delete_property(lID: int) -> bool:
         cursor: object = connection.cursor()
 
         cursor.execute(query)
-
         connection.commit()
 
         deleted: bool = cursor.rowcount() == 1
