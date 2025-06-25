@@ -3,6 +3,7 @@ import os
 
 from app.utilities.authid import authenticate
 from app.utilities.check_email import check_email_exits
+from app.utilities.key_gen import gen_key
 
 
 @unittest.skipIf(
@@ -69,3 +70,28 @@ class TestEmailExists(unittest.TestCase):
 
         result: bool = check_email_exits("notinthedb@test.com")
         self.assertFalse(result, f"Function is returning: {result}")
+
+
+class TestGenKey(unittest.TestCase):
+    def __init__(self, methodName="runTest"):
+        super().__init__(methodName)
+        self.key: str = gen_key()
+
+    def testNotNone(self):
+        """
+        Test method tests that the key is not None.
+        """
+
+        self.assertIsNotNone(self.key)
+
+    def testKeyType(self):
+        """
+        Test method tests if the key is a string.
+        """
+        self.assertIs(type(self.key), str)
+
+    def testKeyLen(self):
+        """
+        Test method tests if the key is the correct char length.
+        """
+        self.assertEqual(len(self.key), 40)

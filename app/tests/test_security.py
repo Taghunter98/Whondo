@@ -1,6 +1,6 @@
 import unittest
 
-from app.security.hashing import hash_pasword, check_password
+from app.security.hashing import hash_function, check_password
 
 
 class TestSecurityHashing(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestSecurityHashing(unittest.TestCase):
         """
 
         input: str = "password123"
-        hash: bytes = hash_pasword(input)
+        hash: bytes = hash_function(input)
         return hash
 
     def testPasswordMatch(self):
