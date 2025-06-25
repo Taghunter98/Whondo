@@ -10,4 +10,4 @@ import './comps/dialog.js';
 
 // Pages
 import './comp-pages/login.js';
-import './comp-pages/verify.js';
+import './comp-pages/create.js';

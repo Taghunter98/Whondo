@@ -1,6 +1,6 @@
 import { Comp } from "jay-comp";
 
-class VerifyPage extends Comp {
+class CreatePage extends Comp {
     
     constructor() {
 
@@ -74,4 +74,4 @@ class VerifyPage extends Comp {
 
 }
 
-customElements.define('comp-verify', VerifyPage);
+customElements.define('comp-create', VerifyPage);

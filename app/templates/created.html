@@ -6,6 +6,12 @@
     <title>Created</title>
 </head>
 <body>
-    <h3>Hi {{ name }} {{ surname }} we have sent an email to {{ email }} with a link to verify your new account.</h3>
+    <comp-verify></comp-verify>
+
+    <!-- Import Comps -->
+    <script
+        src="{{ url_for('static', filename='bundle.js') }}"
+        type="module"
+    ></script>
 </body>
 </html>
