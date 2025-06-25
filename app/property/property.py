@@ -29,22 +29,24 @@ def create_property(values: dict) -> bool:
         values["town"],
         values["county"],
         values["postcode"],
-        values["lID"]
+        values["lID"],
     )
 
-    connection: object = connect()
-    cursor: object = connection.cursor()
+    try:
+        connection: object = connect()
+        cursor: object = connection.cursor()
+        cursor.execute(query, params)
+        connection.commit()
 
-    cursor.execute(query, params)
+        inserted: bool = cursor.rowcount == 1
 
-    connection.commit()
+        cursor.close()
+        connection.close()
+        return inserted
 
-    inserted: bool = cursor.rowcount() == 1
-
-    cursor.close()
-    connection.close()
-
-    return inserted
+    except Exception as err:
+        print(f"Insert failed: {err}")
+        return False
 
 
 def delete_property(lID: int) -> bool:
@@ -53,16 +55,20 @@ def delete_property(lID: int) -> bool:
     WHERE lID = "{lID}"
     """
 
-    connection: object = connect()
-    cursor: object = connection.cursor()
+    try:
+        connection: object = connect()
+        cursor: object = connection.cursor()
 
-    cursor.execute(query)
+        cursor.execute(query)
 
-    connection.commit()
+        connection.commit()
 
-    deleted: bool = cursor.rowcount() == 1
+        deleted: bool = cursor.rowcount() == 1
 
-    cursor.close()
-    connection.close()
+        cursor.close()
+        connection.close()
 
-    return deleted
+        return deleted
+    except Exception as err:
+        print(f"Insert failed: {err}")
+        return False

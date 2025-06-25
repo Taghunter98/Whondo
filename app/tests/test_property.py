@@ -14,7 +14,7 @@ class TestProperty(unittest.TestCase):
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 2AA",
-            "lID": "100"
+            "lID": "100",
         }
 
         self.assertTrue(create_property(data), "Property was not created")
