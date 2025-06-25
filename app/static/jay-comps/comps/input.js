@@ -78,7 +78,9 @@ class InputComp extends Comp {
             inputField = `
             <label class="fileWrapper">
                 <div class="fileBox">
-                    <span class="plusIcon">+</span>
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                    </span>
                     <span class="filePrompt">${this.inputPrompt_}</span>
                 </div>
                 <input class="inputValue fileInput" type="file" accept=".jpg, .png, .jpeg" hidden >
@@ -175,8 +177,8 @@ class InputComp extends Comp {
             textAlign: "centre",
         });
 
-        const plusIcon = this.design.create({
-            class: "plusIcon",
+        const icon = this.design.create({
+            class: "icon",
             fontSize: "2rem",
             fontWeight: "bold",
             colour: "black80",
@@ -210,7 +212,7 @@ class InputComp extends Comp {
         ${inputActive}
         ${fileWrapper}
         ${fileBox}
-        ${plusIcon}
+        ${icon}
         ${filePrompt}
         ${fileStyle}
         ${fileHover}
@@ -225,6 +227,7 @@ class InputComp extends Comp {
 
         const fileInput  = this.shadowRoot.querySelector(".fileInput");
         const filePrompt = this.shadowRoot.querySelector(".filePrompt");
+        const icon       = this.shadowRoot.querySelector(".icon");
 
         if(fileInput && filePrompt){
 
@@ -234,10 +237,12 @@ class InputComp extends Comp {
                 if(file){
 
                     filePrompt.textContent = file.name;
+                    icon.innerHTML         = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>`;
                 
                 }else {
 
                     filePrompt.textContent = this.inputPrompt_;
+                    
                 
                 }
             

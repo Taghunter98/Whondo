@@ -65,13 +65,13 @@ class RegisterPageComp extends Comp {
             class: "background",
             display: "flex",
             flexDirection: "column",
-            width: "auto",
-            padding: "50px 0px",
+            width: "100%",
+            height: "100vh",
             alignItems: "centre",
             border: false,
             gap: 0,
             background: "black10",
-
+            justifyContent: "centre",
         });
         
         const backgroundMobile = this.design.create({
