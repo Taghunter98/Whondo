@@ -17,7 +17,7 @@ from app.database.db_connect import connect
 def create_property(values: dict) -> bool:
     query: str = """
     INSERT INTO Property (propType, bedrooms, bathrooms, name, street, town, county, postcode, lID)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     params: tuple = (
