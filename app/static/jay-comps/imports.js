@@ -6,6 +6,8 @@ import { Comp } from 'jay-comp';
 import './comps/button.js';
 import './comps/card.js';
 import './comps/input.js';
+import './comps/dialog.js';
 
 // Pages
 import './comp-pages/login.js';
+import './comp-pages/create.js';
