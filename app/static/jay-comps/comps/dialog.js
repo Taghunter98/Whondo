@@ -26,7 +26,7 @@ class DialogComp extends Comp {
     }
 
 
-    set paragraph1(value){
+    set paragraph(value){
 
         this.paragraph1_ = value;
         this.update(this.createHTML(), this.css_);
@@ -40,7 +40,7 @@ class DialogComp extends Comp {
     
     }
 
-    get paragraph1() {
+    get paragraph() {
 
         return this.paragraph1_;
     
