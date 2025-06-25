@@ -56,7 +56,7 @@ def delete_property(lID: int) -> bool:
     connection: object = connect()
     cursor: object = connection.cursor()
 
-    cursor.execute(query, str(lID))
+    cursor.execute(query, str(lID),)
 
     connection.commit()
 

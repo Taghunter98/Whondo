@@ -6,7 +6,7 @@ from app.property.property import create_property, delete_property
 class TestProperty(unittest.TestCase):
     def testCreation(self):
         data = {
-            "propertyType": "flat",
+            "propType": "flat",
             "bedrooms": 2,
             "bathrooms": 1,
             "name": "10",
