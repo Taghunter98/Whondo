@@ -9,11 +9,15 @@ Version:     1.0
 Description: Provides functions for image validation and storage.
 """
 
-from flask import Blueprint, send_from_directory, request, abort, current_app
+from flask import Blueprint, send_from_directory, request, abort, current_app, jsonify
 from datetime import datetime
 import os
 
+from app.database.db_connect import connect
+from app.utilities.key_gen import auth_key
+
 image_bp = Blueprint("image_bp", __name__)
+image_purge_bp = Blueprint("image_purge_bp", __name__)
 
 
 @image_bp.route("/uploads")
@@ -96,3 +100,28 @@ def upload_file(file: object, email: str) -> str:
         except Exception:
             current_app.logger.error("Can't store file")
             return None
+
+
+@image_purge_bp.route("/images/purge")
+def purge():
+    key: str = request.args.get("key")
+
+    if auth_key(key) is False:
+        current_app.logger.warning("Unauthorised API request")
+        return jsonify({"error": "Unauthorised request, this will be reported"})
+
+    connection: object = connect()
+    cursor: object = connection.cursor()
+
+    query: str = """
+        SELECT email from Users;
+    """
+
+    cursor.execute(query)
+
+    emails: object = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return jsonify({"emails": emails})
