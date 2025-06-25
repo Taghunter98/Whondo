@@ -17,7 +17,7 @@ from app.database.db_connect import connect
 def create_property(values: dict) -> bool:
     query: str = """
     INSERT INTO Property (propType, bedrooms, bathrooms, name, street, town, postcode, lID)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     params: tuple = (
@@ -47,15 +47,15 @@ def create_property(values: dict) -> bool:
 
 
 def delete_property(lID: int) -> bool:
-    query: str = """
+    query: str = f"""
     DELETE FROM Property
-    WHERE lID = %s
+    WHERE lID = "{lID}"
     """
 
     connection: object = connect()
     cursor: object = connection.cursor()
 
-    cursor.execute(query, str(lID),)
+    cursor.execute(query)
 
     connection.commit()
 
