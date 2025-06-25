@@ -16,7 +16,7 @@ class TestProperty(unittest.TestCase):
             "lID": 100
         }
 
-        self.assertTrue(create_property(data))
+        self.assertTrue(create_property(data), "Property was not created")
 
     def testDeletion(self):
-        self.assertFalse(delete_property(100))
+        self.assertFalse(delete_property(100), "Property was not deleted")
