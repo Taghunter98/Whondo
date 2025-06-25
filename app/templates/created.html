@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/globalstyle.css">
     <title>Created</title>
-  </head>
+</head>
 <body>
-    <comp-create></comp-create>
+    <p id="email" style="display: none;">{{ email }}</p>
+
+    <comp-create id="create"></comp-create>
 
     <!-- Import Comps -->
     <script
         src="{{ url_for('static', filename='bundle.js') }}"
         type="module"
     ></script>
+
+    <script>
+        document.getElementById("create").email = this.getElementById("email");
+    </script>
 </body>
 </html>
