@@ -52,16 +52,13 @@ def create_property(values: dict) -> bool:
 
 
 def delete_property(lID: int) -> bool:
-    query: str = f"""
-    DELETE FROM Property
-    WHERE lID = "{lID}"
-    """
+    query: str = "DELETE FROM Property WHERE lID = %s"
 
     try:
         connection: object = connect()
         cursor: object = connection.cursor()
 
-        cursor.execute(query)
+        cursor.execute(query, (lID,))
         connection.commit()
 
         deleted: bool = cursor.rowcount == 1
