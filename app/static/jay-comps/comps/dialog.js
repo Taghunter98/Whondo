@@ -139,6 +139,7 @@ class DialogComp extends Comp {
         const dialog = this.design.create({
             class: "dialog",
             fontSize: 16,
+            textAlign: "start",
         });
 
         const icon = this.design.create({
