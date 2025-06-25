@@ -39,7 +39,7 @@ def create_property(values: dict) -> bool:
         cursor.execute(query, params)
         connection.commit()
 
-        inserted: bool = cursor.rowcount() == 1
+        inserted: bool = cursor.rowcount == 1
 
         cursor.close()
         connection.close()
@@ -64,12 +64,12 @@ def delete_property(lID: int) -> bool:
         cursor.execute(query)
         connection.commit()
 
-        deleted: bool = cursor.rowcount() == 1
+        deleted: bool = cursor.rowcount == 1
 
         cursor.close()
         connection.close()
 
         return deleted
     except Exception as err:
-        print(f"Insert failed: {err}")
+        print(f"Deletion failed: {err}")
         return False
