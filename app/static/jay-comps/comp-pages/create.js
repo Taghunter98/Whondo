@@ -23,6 +23,12 @@ class CreatePage extends Comp {
     
     }
 
+    get email() {
+
+        return this.email_;
+    
+    }
+
     createHTML() {
 
         return /* html */`

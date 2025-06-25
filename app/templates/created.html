@@ -7,8 +7,6 @@
     <title>Created</title>
 </head>
 <body>
-    <p id="email" style="display: none;">{{ email }}</p>
-
     <comp-create id="create"></comp-create>
 
     <!-- Import Comps -->
@@ -16,9 +14,5 @@
         src="{{ url_for('static', filename='bundle.js') }}"
         type="module"
     ></script>
-
-    <script>
-        document.getElementById("create").email = document.getElementById("email");
-    </script>
 </body>
 </html>
