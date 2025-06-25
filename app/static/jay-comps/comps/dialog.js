@@ -6,10 +6,9 @@ class DialogComp extends Comp {
 
         super();
         
-        this.title_      = "Hello World";
-        this.paragraph1_ = "this is a paragraph";
-        this.paragraph2_ = "this is another paragraph";
-        this.svgIcon_    = "";
+        this.title_     = "Hello World";
+        this.paragraph_ = "This is a paragraph";
+        this.svgIcon_   = "";
 
         this.name_ = "Dialog";
         this.html_ = this.createHTML();
@@ -34,13 +33,6 @@ class DialogComp extends Comp {
     
     }
 
-    set paragraph2(value){
-
-        this.paragraph2_ = value;
-        this.update(this.createHTML(), this.css_);
-    
-    }
-
     set svgIcon(value){
 
         this.svgIcon_ = value;
@@ -51,12 +43,6 @@ class DialogComp extends Comp {
     get paragraph1() {
 
         return this.paragraph1_;
-    
-    }
-
-    get paragraph2() {
-
-        return this.paragraph2_;
     
     }
 
@@ -83,7 +69,7 @@ class DialogComp extends Comp {
                     <!--svg logo go here-->
                     <svg class="icon" ${this.svgIcon_}></svg>
                     <h3 class="head">${this.title_}</h3>
-                    <p class="dialog">${this.paragraph1_}<br>${this.paragraph2_}</p>
+                    <p class="dialog">${this.paragraph1_}</p>
 
                 </div>
 
@@ -144,7 +130,7 @@ class DialogComp extends Comp {
 
         const icon = this.design.create({
             class: "icon",
-            colour: "green60",
+            colour: "black80",
         });
 
         return /* css */ `
