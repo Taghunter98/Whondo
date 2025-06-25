@@ -16,7 +16,7 @@ from app.database.db_connect import connect
 
 def create_property(values: dict) -> bool:
     query: str = """
-    INSERT INTO Property (propType, bedrooms, bathrooms, name, street, town, postcode, lID)
+    INSERT INTO Property (propType, bedrooms, bathrooms, name, street, town, county, postcode, lID)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     """
 
@@ -27,6 +27,7 @@ def create_property(values: dict) -> bool:
         values["name"],
         values["street"],
         values["town"],
+        values["county"],
         values["postcode"],
         values["lID"]
     )

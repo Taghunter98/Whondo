@@ -12,6 +12,7 @@ class TestProperty(unittest.TestCase):
             "name": "10",
             "street": "Downing Street",
             "town": "London",
+            "county": "City of London",
             "postcode": "SW1A 2AA",
             "lID": "100"
         }
