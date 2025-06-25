@@ -42,6 +42,7 @@ def create_property(values: dict) -> bool:
 
         cursor.close()
         connection.close()
+        
         return inserted
 
     except Exception as err:
