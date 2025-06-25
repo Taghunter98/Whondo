@@ -199,6 +199,7 @@ class RegisterPageComp extends Comp {
         surname.inputPrompt      = "Enter you surname";
         age.inputLabel           = "Age";
         age.inputPrompt          = "Enter you age";
+        age.inputType            = "number";
         occupation.inputLabel    = "Occupation";
         occupation.inputPrompt   = "eg. student ";
         bio.inputLabel           = "Bio";

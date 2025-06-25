@@ -70,12 +70,13 @@ class InputComp extends Comp {
 
         if(this.inputType_ === "textarea"){
 
-            inputField = `<textarea class="inputValue areaInput" placeholder="${this.inputPrompt_}" row="6" accept=".jpg, .png, .jpeg"></textarea>`;
+            inputField = `<textarea class="inputValue areaInput" placeholder="${this.inputPrompt_}" row="6"></textarea>`;
         
     
         } else if (this.inputType_ === "file"){
 
-            inputField = `<input class="inputValue fileInput" type="file" placeholder="${this.inputPrompt_}"></input>`;
+            inputField = `
+            <input class="inputValue fileInput" type="file" placeholder="${this.inputPrompt_}" accept=".jpg, .png, .jpeg"></input>`;
         
         }
         
