@@ -6,8 +6,6 @@ class CreatePage extends Comp {
 
         super();
 
-
-
         this.name_ = "Verify Page";
         this.html_ = this.createHTML();
         this.css_  = this.createCSS();
@@ -74,4 +72,4 @@ class CreatePage extends Comp {
 
 }
 
-customElements.define('comp-create', VerifyPage);
+customElements.define('comp-create', CreatePage);
