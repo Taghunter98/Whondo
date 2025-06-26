@@ -70,3 +70,40 @@ def delete_property(lID: int) -> bool:
     except Exception as err:
         print(f"Deletion failed: {err}")
         return False
+
+def update_property(values: dict):
+    query: str = """
+    UPDATE Property
+    SET propType = %s, bedrooms = %s, bathrooms = %s, name = %s, street = %s, town = %s, county = %s, postcode = %s
+    WHERE lID = %s;
+    """
+
+    params: tuple = (
+        values["propType"],
+        values["bedrooms"],
+        values["bathrooms"],
+        values["name"],
+        values["street"],
+        values["town"],
+        values["county"],
+        values["postcode"],
+        values["lID"],
+    )
+
+    try:
+        connection: object = connect()
+        cursor: object = connection.cursor()
+
+        cursor.execute(query, params)
+        connection.commit()
+
+        inserted: bool = cursor.rowcount == 1
+
+        cursor.close()
+        connection.close()
+
+        return inserted
+
+    except Exception as err:
+        print(f"Update failed: {err}")
+        return False
