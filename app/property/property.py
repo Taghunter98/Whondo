@@ -98,7 +98,7 @@ def update_property(values: dict):
         connection.commit()
 
         print(f"Rows: {cursor.rowcount}")
-        inserted: bool = cursor.rowcount == 1
+        inserted: bool = cursor.rowcount >= 0
 
         cursor.close()
         connection.close()

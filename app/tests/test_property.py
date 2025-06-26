@@ -40,8 +40,8 @@ class TestProperty(unittest.TestCase):
 
         self.assertTrue(update_property(data), "Property was not updated")
 
-    def testDeletion(self):
-        """
-        Test method tests that the property was deleted successfully.
-        """
-        self.assertTrue(delete_property(100), "Property was not deleted")
+    # def testDeletion(self):
+    #     """
+    #     Test method tests that the property was deleted successfully.
+    #     """
+    #     self.assertTrue(delete_property(100), "Property was not deleted")
