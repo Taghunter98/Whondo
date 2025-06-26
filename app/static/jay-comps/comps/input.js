@@ -6,9 +6,10 @@ class InputComp extends Comp {
 
         super();
         
-        this.inputLabel_  = "";
-        this.inputType_   = "text";
-        this.inputPrompt_ = "Enter text";
+        this.inputLabel_    = "";
+        this.inputType_     = "text";
+        this.inputPrompt_   = "Enter text";
+        this.enableEntropy_ = false;
 
         this.name_ = "Input";
         this.html_ = this.createHTML();
@@ -39,6 +40,13 @@ class InputComp extends Comp {
     
     }
 
+    set enableEntropy(val){
+
+        this.enableEntropy_ = val;
+        this.update(this.createHTML(), this.css_);
+    
+    }
+
     get inputLabel() {
 
         return this.inputLabel_;
@@ -61,6 +69,12 @@ class InputComp extends Comp {
 
         return this.shadowRoot.querySelector(".inputValue").value;
 
+    }
+
+    get enableEntropy(){
+
+        return this.enableEntropy_;
+    
     }
 
 
@@ -93,7 +107,7 @@ class InputComp extends Comp {
 
             inputField = `<input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">`;
 
-            if (this.inputType_ === "password"){
+            if (this.inputType_ === "password" && this.enableEntropy_){
 
                 inputField += `<div class="hint" style="display: none">Hint: Use a mix of letters, numbers, and symbols</div>`;
             
@@ -290,7 +304,7 @@ class InputComp extends Comp {
         }
 
 
-        if(this.inputType_ === "password"){
+        if(this.inputType_ === "password" && this.enableEntropy_){
 
             const inputEn = this.shadowRoot.querySelector(".inputValue");
 

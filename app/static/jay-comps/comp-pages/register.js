@@ -15,6 +15,7 @@ class RegisterPageComp extends Comp {
         this.render();
     
     }
+    
 
     createHTML() {
 
@@ -193,6 +194,7 @@ class RegisterPageComp extends Comp {
         password.inputLabel      = "Password";
         password.inputPrompt     = "password";
         password.inputType       = "password";
+        password.enableEntropy   = true;
         name.inputLabel          = "Name";
         name.inputPrompt         = "Enter your name";
         surname.inputLabel       = "Surname";
@@ -217,7 +219,7 @@ class RegisterPageComp extends Comp {
         });
 
         
-        
+
     
     }
 
