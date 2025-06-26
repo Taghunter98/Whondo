@@ -38,7 +38,7 @@ class TestProperty(unittest.TestCase):
             "lID": "100",
         }
 
-        self.assertTrue(update_property(data), "Property was not created")
+        self.assertTrue(update_property(data), "Property was not updated")
 
     def testDeletion(self):
         """
