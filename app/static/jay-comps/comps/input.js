@@ -249,7 +249,56 @@ class InputComp extends Comp {
             });
         
         }
-    
+
+
+        if(this.inputType_ === "password"){
+
+            const inputEn = this.shadowRoot.querySelector(".inputValue");
+
+            inputEn.addEventListener("input", () => {
+
+                const password = inputEn.value;
+                const entropy  = this.calculateEntropy(password);
+
+                inputEn.classList.remove("strength-red", "strength-yellow", "strength-green");
+
+                if(entropy => 78){
+                    
+                    inputEn.classList.add("strength-green");
+                
+                } else if (entropy => 60) {
+
+                    inputEn.classList.add("strength-yellow");
+                
+                } else {
+
+                    inputEn.classList.add("strength-red");
+                
+                }
+
+                if (entropy < 78 ) {
+
+                    inputEn.setAttribute("title", "Hint: Use a mix of letters, numbers, and symbols");
+                
+                } else {
+
+                    inputEn.removeAttribute("title");
+                
+                }
+            
+            });
+        
+        }
+
+    }
+
+    calculateEntropy(password){
+
+        let poolSize = 0;
+        if (/[a-z]/.test(password)) poolSize += 26;
+        if (/[A-Z]/.test(password)) poolSize += 26;
+        if (/[0-9]/.test(password)) poolSize += 10;
+        
     }
 
 }
