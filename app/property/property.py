@@ -9,7 +9,7 @@ Version:     1.0
 Description: Serves a Blueprint API for logging in and verifying users.
 """
 
-from flask import current_app, jsonify
+from flask import current_app
 
 from app.database.db_connect import connect
 
@@ -56,7 +56,7 @@ def create_property(values: dict) -> bool:
         return inserted
 
     except Exception as err:
-        print(f"Insert failed: {err}")
+        current_app.logger.error(f"Insert failed: {err}")
         return False
 
 
@@ -86,7 +86,7 @@ def delete_property(lID: int) -> bool:
 
         return deleted
     except Exception as err:
-        print(f"Deletion failed: {err}")
+        current_app.logger.error(f"Deletion failed: {err}")
         return False
 
 
@@ -131,5 +131,5 @@ def update_property(values: dict) -> bool:
         return True
 
     except Exception as err:
-        print(f"Update failed: {err}")
+        current_app.logger.error(f"Update failed: {err}")
         return False
