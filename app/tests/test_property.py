@@ -10,14 +10,14 @@ class TestProperty(unittest.TestCase):
         """
         data = {
             "propType": "flat",
-            "bedrooms": "2",
-            "bathrooms": "1",
+            "bedrooms": 2,
+            "bathrooms": 1,
             "name": "10",
             "street": "Downing Street",
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 2AA",
-            "lID": "100",
+            "lID": 100,
         }
 
         self.assertTrue(create_property(data), "Property was not created")
@@ -28,14 +28,14 @@ class TestProperty(unittest.TestCase):
         """
         data = {
             "propType": "house",
-            "bedrooms": "240",
-            "bathrooms": "78",
+            "bedrooms": 240,
+            "bathrooms": 78,
             "name": "Buckingham Palace",
             "street": "The Mall",
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 1AA",
-            "lID": "100",
+            "lID": 100,
         }
 
         self.assertTrue(update_property(data), "Property was not updated")

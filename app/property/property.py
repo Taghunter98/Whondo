@@ -97,13 +97,10 @@ def update_property(values: dict):
         cursor.execute(query, params)
         connection.commit()
 
-        print(f"Rows: {cursor.rowcount}")
-        inserted: bool = cursor.rowcount >= 0
-
         cursor.close()
         connection.close()
 
-        return inserted
+        return True
 
     except Exception as err:
         print(f"Update failed: {err}")
