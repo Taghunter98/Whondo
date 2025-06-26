@@ -92,6 +92,12 @@ class InputComp extends Comp {
         else {
 
             inputField = `<input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">`;
+
+            if (this.inputType_ === "password"){
+
+                inputField += `<div class="hint" style="display: none">Hint: Use a mix of letters, numbers, and symbols</div>`;
+            
+            }
         
         }
 
@@ -203,6 +209,34 @@ class InputComp extends Comp {
             outline: "solid 2px var(--black100)"
         });
 
+        const strengthVeryWeak = this.design.create({
+            class: "strength-very-weak",
+            borderBottom: "2px solid DarkRed",
+        });
+
+        const strengthRed = this.design.create({
+            class: "strength-red",
+            borderBottom: "2px solid red",
+        });
+
+        const strengthYellow = this.design.create({
+            class: "strength-yellow",
+            borderBottom: "2px solid orange",
+        });
+
+        const strengthGreen = this.design.create({
+            class: "strength-green",
+            borderBottom: "2px solid green",
+        });
+
+        const hint = this.design.create({
+            class: "hint",
+            fontSize: "0.75rem",
+            colour: "baclk80",
+            paddingTop: 4,
+            paddingLeft: 2,
+        });
+
         return /* css */ `
         
         ${inputContainer}
@@ -210,6 +244,11 @@ class InputComp extends Comp {
         ${input}
         ${inputHover}
         ${inputActive}
+        ${hint}
+        ${strengthVeryWeak}
+        ${strengthRed}
+        ${strengthYellow}
+        ${strengthGreen}
         ${fileWrapper}
         ${fileBox}
         ${icon}
@@ -262,27 +301,33 @@ class InputComp extends Comp {
 
                 inputEn.classList.remove("strength-red", "strength-yellow", "strength-green");
 
-                if(entropy => 78){
+                if(entropy >= 78){
                     
                     inputEn.classList.add("strength-green");
                 
-                } else if (entropy => 60) {
+                } else if (entropy >= 60) {
 
                     inputEn.classList.add("strength-yellow");
                 
-                } else {
+                } else if (entropy > 20) {
 
                     inputEn.classList.add("strength-red");
                 
+                } else {
+
+                    inputEn.classList.add("strength-very-weak");
+                
                 }
+
+                const hintEn = this.shadowRoot.querySelector(".hint");
 
                 if (entropy < 78 ) {
 
-                    inputEn.setAttribute("title", "Hint: Use a mix of letters, numbers, and symbols");
+                    if (hintEn) hintEn.style.display = "block";
                 
                 } else {
 
-                    inputEn.removeAttribute("title");
+                    if (hintEn) hintEn.style.display = "none";
                 
                 }
             
@@ -298,7 +343,10 @@ class InputComp extends Comp {
         if (/[a-z]/.test(password)) poolSize += 26;
         if (/[A-Z]/.test(password)) poolSize += 26;
         if (/[0-9]/.test(password)) poolSize += 10;
-        
+        if (/[^A-Za-z0-9]/.test(password)) poolSize += 32; 
+
+        return password.length * Math.log2(poolSize || 1);;
+    
     }
 
 }
