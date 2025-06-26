@@ -83,7 +83,7 @@ class InputComp extends Comp {
                     </span>
                     <span class="filePrompt">${this.inputPrompt_}</span>
                 </div>
-                <input class="inputValue fileInput" type="file" accept=".jpg, .png, .jpeg" hidden >
+                <input class="inputValue fileInput" type="file" accept=".png" hidden >
             </label>
             `;
         
@@ -232,7 +232,7 @@ class InputComp extends Comp {
         const hint = this.design.create({
             class: "hint",
             fontSize: "0.75rem",
-            colour: "baclk80",
+            colour: "black",
             paddingTop: 4,
             paddingLeft: 2,
         });

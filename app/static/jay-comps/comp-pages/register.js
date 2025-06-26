@@ -207,7 +207,7 @@ class RegisterPageComp extends Comp {
         bio.inputType            = "textarea";
         file.inputType           = "file";
         file.inputLabel          = "Upload your photo";
-        file.inputPrompt         = "Select a file";
+        file.inputPrompt         = "Select a file only accept .png";
         
 
         compButton.addEventListener("click", () => {
