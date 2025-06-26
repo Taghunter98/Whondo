@@ -1,8 +1,12 @@
 import unittest
+import os
 
 from app.property.property import create_property, update_property, delete_property
 
-
+@unittest.skipIf(
+    os.environ.get("CI") == "true",
+    "Skipping test in CI pipeline: This test needs DB access",
+)
 class TestProperty(unittest.TestCase):
     def testCreation(self):
         """
@@ -40,8 +44,8 @@ class TestProperty(unittest.TestCase):
 
         self.assertTrue(update_property(data), "Property was not updated")
 
-    # def testDeletion(self):
-    #     """
-    #     Test method tests that the property was deleted successfully.
-    #     """
-    #     self.assertTrue(delete_property(100), "Property was not deleted")
+    def testDeletion(self):
+        """
+        Test method tests that the property was deleted successfully.
+        """
+        self.assertTrue(delete_property(100), "Property was not deleted")

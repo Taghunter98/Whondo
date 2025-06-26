@@ -15,6 +15,15 @@ from app.database.db_connect import connect
 
 
 def create_property(values: dict) -> bool:
+    """
+    The function inserts a new Property object into the database and returns the result.
+
+    Args:
+        values (dict): Dictionary of sql values.
+
+    Returns:
+        bool: Result
+    """
     query: str = """
     INSERT INTO Property (propType, bedrooms, bathrooms, name, street, town, county, postcode, lID)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -52,6 +61,15 @@ def create_property(values: dict) -> bool:
 
 
 def delete_property(lID: int) -> bool:
+    """
+    The function deletes a value from the databse and returns the result.
+
+    Args:
+        lID (int): The landlord ID for the property
+
+    Returns:
+        bool: Result
+    """
     query: str = "DELETE FROM Property WHERE lID = %s"
 
     try:
@@ -71,7 +89,17 @@ def delete_property(lID: int) -> bool:
         print(f"Deletion failed: {err}")
         return False
 
-def update_property(values: dict):
+
+def update_property(values: dict) -> bool:
+    """
+    The function updates the property and returns the result.
+
+    Args:
+        values (dict): Dictionary of sql values
+
+    Returns:
+        bool: Result
+    """
     query: str = """
     UPDATE Property
     SET propType = %s, bedrooms = %s, bathrooms = %s, name = %s, street = %s, town = %s, county = %s, postcode = %s
