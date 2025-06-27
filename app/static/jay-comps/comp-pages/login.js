@@ -20,6 +20,7 @@ class LoginPageComp extends Comp {
         <div class="background">
 
             <div class="itemContainer">
+
                 <div class="modal">
 
                     <div class="textContainer">
@@ -27,12 +28,15 @@ class LoginPageComp extends Comp {
                         <p class="text">Welcome back! Let's find you a new home.</p>
                     </div>
 
-                    <comp-input id="email" name="email"></comp-input>
-                    <comp-input id="password" name="password"></comp-input>
+                    <div class="inputs">
+                        <comp-input id="email" name="email"></comp-input>
+                        <comp-input id="password" name="password"></comp-input>
+                    </div>
 
-                    <comp-button id="submit">Refresh Card</comp-button>
-                
-                    <p class="link"><a>Forgot password?</a></p>
+                    <div class="footer">
+                        <comp-button id="submit">Refresh Card</comp-button>
+                        <p class="link"><a>Forgot password?</a></p>
+                    </div>
                     <p id="result"></p>
                 </div>
 
@@ -64,7 +68,7 @@ class LoginPageComp extends Comp {
             class: "backgroundImage",
             width: "100%",
             height: "100vh",
-            paddingLeft: 300
+            paddingLeft: 400
         });
 
         const image = this.design.create({
@@ -83,10 +87,19 @@ class LoginPageComp extends Comp {
             background: "white",
             position: "absolute",
             padding: 20,
-            gap: 20,
             borderRadius: 14,
-            marginLeft: 250,
-            marginTop: 250
+            marginLeft: 100,
+            marginTop: 100
+        });
+
+        const inputs = this.design.create({
+            class: "inputs",
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            gap: 10,
+            paddingTop: 20,
+            paddingBottom: 40
         });
 
         const link = this.design.create({
@@ -99,7 +112,7 @@ class LoginPageComp extends Comp {
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            gap: 10
+            gap: 5
         });
 
         const title = this.design.create({
@@ -112,6 +125,14 @@ class LoginPageComp extends Comp {
             colour: "black60"
         });
         
+        const footer = this.design.create({
+            class: "footer",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "centre",
+            width: "100%",
+            gap: 10
+        });
     
         return /* css */ `
         ${background}
@@ -122,11 +143,14 @@ class LoginPageComp extends Comp {
         ${image}
 
         ${modal}
+        ${inputs}
         ${link}
 
         ${textContainer}
         ${title}
         ${text}
+
+        ${footer}
         
         @media (max-width: 600px) {
            
