@@ -19,5 +19,7 @@
     --green40: #d2e7d2;
     --green20: #e8f3e9;
     
-    --border: solid 1px var(--black40);
+    --borderDefault: solid 2px var(--white);
+    --border: solid 2px var(--black40);
+    --borderBlack: solid 2px var(--black100);
 }

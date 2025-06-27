@@ -216,12 +216,12 @@ class LoginPageComp extends Comp {
         const email      = this.shadowRoot.getElementById("email");
         const pass       = this.shadowRoot.getElementById("password");
         
-        compButton.buttonText = "Login";
-        email.inputLabel      = "Email";
-        email.inputPrompt     = "Enter email";
-        pass.inputLabel       = "Password";
-        pass.inputType        = "password";
-        pass.inputPrompt      = "Enter password";
+        compButton.text = "Login";
+        email.label     = "Email";
+        email.prompt    = "Enter email";
+        pass.label      = "Password";
+        pass.type       = "password";
+        pass.prompt     = "Enter password";
 
         compButton.addEventListener("click", () => {
 

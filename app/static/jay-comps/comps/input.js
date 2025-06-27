@@ -6,9 +6,9 @@ class InputComp extends Comp {
 
         super();
         
-        this.inputLabel_  = "Label";
-        this.inputType_   = "text";
-        this.inputPrompt_ = "Enter text";
+        this.label_  = "Label";
+        this.type_   = "text";
+        this.prompt_ = "Enter text";
 
         this.name_ = "Input";
         this.html_ = this.createHTML();
@@ -18,46 +18,46 @@ class InputComp extends Comp {
     
     }
 
-    set inputLabel(newInputLabel) {
+    set label(newLabel) {
 
-        this.inputLabel_ = newInputLabel;
+        this.label_ = newLabel;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    set inputType(newInputType) {
+    set type(newType) {
 
-        this.inputType_ = newInputType;
+        this.type_ = newType;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    set inputPrompt(newInputPrompt) {
+    set prompt(newPrompt) {
 
-        this.inputPrompt_ = newInputPrompt;
+        this.prompt_ = newPrompt;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    get inputLabel() {
+    get label() {
 
-        return this.inputLabel_;
+        return this.label_;
     
     }
 
-    get inputType() {
+    get type() {
 
-        return this.inputType_;
+        return this.type_;
     
     }
 
-    get inputPrompt() {
+    get prompt() {
 
-        return this.inputPrompt_;
+        return this.prompt_;
     
     }
 
-    get inputValue() {
+    get value() {
 
         return this.shadowRoot.querySelector("input").value;
 
@@ -68,8 +68,8 @@ class InputComp extends Comp {
 
         return /* html */ `
         <div class="inputContainer">
-            <label style="color: var(--black80); font-size: 14px">${this.inputLabel_}</label>
-            <input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">
+            <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
+            <input class="inputValue" type="${this.type_}" placeholder="${this.prompt_}">
         </div>
         `;
     
