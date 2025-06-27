@@ -115,6 +115,7 @@ class ButtonComp extends Comp {
             class: "button",
             colour: "black100",
             background: "black10",
+            width: "100%",
             border: "border",
             padding: "12px 28px",
             borderRadius: 8,

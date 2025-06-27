@@ -36,7 +36,7 @@ class CreatePage extends Comp {
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            height: "100vh",
+            height: "2000px",
             justifyContent: "centre",
             alignItems: "centre",
             background: "black10",

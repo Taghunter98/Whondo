@@ -29,6 +29,7 @@ class Navbar extends Comp {
                 <comp-button id="login"></comp-button>
             </div>
         </div>
+        
         `;
     
     }
@@ -38,14 +39,12 @@ class Navbar extends Comp {
         const container = this.design.create({
             class: "container",
             top: "0",
-            position: "sticky",
-            zIndex: "1000",
+            position: "fixed",
             display: "flex",
-            width: "auto",
+            width: "100%",
             background: "white",
-            alignItems: "centre",
             padding: 20,
-            justifyContent: "space-between",
+            justifyContent: "space-between"
         });
 
         const logo = this.design.create({
@@ -91,6 +90,7 @@ class Navbar extends Comp {
         const buttons = this.design.create({
             class: "buttons",
             display: "flex",
+            width: "auto",
             gap: 20
         });
 
