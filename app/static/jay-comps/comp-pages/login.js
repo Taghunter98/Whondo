@@ -104,9 +104,19 @@ class LoginPageComp extends Comp {
             paddingBottom: 40
         });
 
+        // Link
+
         const link = this.design.create({
             class: "link",
-            textDecoration: "underline"
+            colour: "black80",
+            textDecoration: "underline",
+            cursor: "pointer"
+        });
+
+        const linkHover = this.design.create({
+            class: "link",
+            pseudoClass: "hover",
+            colour: "black100"
         });
 
         const textContainer = this.design.create({
@@ -168,6 +178,7 @@ class LoginPageComp extends Comp {
         ${modal}
         ${inputs}
         ${link}
+        ${linkHover}
 
         ${textContainer}
         ${title}

@@ -102,13 +102,13 @@ class InputComp extends Comp {
 
         const inputHover = this.design.create({
             class: "inputValue",
-            psuedoClass: "hover",
+            pseudoClass: "hover",
             outline: "solid 2px var(--black60)"
         });
 
         const inputActive = this.design.create({
             class: "inputValue",
-            psuedoClass: "focus",
+            pseudoClass: "focus",
             outline: "solid 2px var(--black100)"
         });
 
