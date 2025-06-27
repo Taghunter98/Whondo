@@ -68,7 +68,7 @@ class InputComp extends Comp {
 
         return /* html */ `
         <div class="inputContainer">
-            <label>${this.inputLabel_}</label>
+            <label style="color: var(--black80); font-size: 14px">${this.inputLabel_}</label>
             <input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">
         </div>
         `;
@@ -92,7 +92,7 @@ class InputComp extends Comp {
         const input = this.design.create({
             class: "inputValue",
             display: "block",
-            fontSize: 12,
+            fontSize: 16,
             width: "100%",
             padding: "8px 12px",
             border: "border",

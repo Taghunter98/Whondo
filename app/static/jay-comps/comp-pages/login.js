@@ -5,8 +5,6 @@ class LoginPageComp extends Comp {
     constructor() {
 
         super();
-        
-        this.title_ = "Login to Whondo";
 
         this.name_ = "Login Page";
         this.html_ = this.createHTML();
@@ -20,14 +18,27 @@ class LoginPageComp extends Comp {
     
         return /* html */ `
         <div class="background">
-            <div class="container">
-                <h3>${this.title_}</h3>
 
-                <comp-input id="email" name="email"></comp-input>
-                <comp-input id="password" name="password"></comp-input>
+            <div class="itemContainer">
+                <div class="modal">
 
-                <comp-button id="submit">Refresh Card</comp-button>
-                <p id="result"></p>
+                    <div class="textContainer">
+                        <h3 class="title">Login</h3>
+                        <p class="text">Welcome back! Let's find you a new home.</p>
+                    </div>
+
+                    <comp-input id="email" name="email"></comp-input>
+                    <comp-input id="password" name="password"></comp-input>
+
+                    <comp-button id="submit">Refresh Card</comp-button>
+                
+                    <p class="link"><a>Forgot password?</a></p>
+                    <p id="result"></p>
+                </div>
+
+            <div class="backgroundImage">
+                <img class="image" src="https://images.pexels.com/photos/4781426/pexels-photo-4781426.jpeg">
+            </div>
             </div>
             
         </div>
@@ -37,49 +48,88 @@ class LoginPageComp extends Comp {
 
     createCSS() {
 
-        const animation = this.effect.prop("slideUp", .5);
-
         const background = this.design.create({
             class: "background",
+            width: "100%",
+            background: "black100",
+            height: "100vh",
+        });
+
+        const itemContainer = this.design.create({
+            class: "itemContainer",
+            display: "flex",
+        });
+
+        const imageBackground = this.design.create({
+            class: "backgroundImage",
+            width: "100%",
+            height: "100vh",
+            paddingLeft: 300
+        });
+
+        const image = this.design.create({
+            class: "image",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover"
+        });
+
+        const modal = this.design.create({
+            class: "modal",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "centre",
+            width: 500,
+            background: "white",
+            position: "absolute",
+            padding: 20,
+            gap: 20,
+            borderRadius: 14,
+            marginLeft: 250,
+            marginTop: 250
+        });
+
+        const link = this.design.create({
+            class: "link",
+            textDecoration: "underline"
+        });
+
+        const textContainer = this.design.create({
+            class: "textContainer",
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            padding: "50px 0px",
-            alignItems: "centre",
-            border: false,
-            gap: 0,
-            background: "black10",
+            gap: 10
         });
 
-        const backgroundMobile = this.design.create({
-            class: "background",
-            padding: 20,
-            width: "auto"
+        const title = this.design.create({
+            class: "title",
+            fontWeight: "bold"
         });
 
-        const container = this.design.create({
-            class: "container",
-            display: "flex",
-            flexDirection: "column",
-            width: "auto",
-            maxWidth: 500,
-            padding: 20,
-            alignItems: "start",
-            border: "border",
-            borderRadius: 16,
-            gap: 15,
-            background: "white",
-            animation: animation
+        const text = this.design.create({
+            class: "text",
+            colour: "black60"
         });
+        
     
         return /* css */ `
-        
         ${background}
-        
-        ${container}
+
+        ${itemContainer}
+
+        ${imageBackground}
+        ${image}
+
+        ${modal}
+        ${link}
+
+        ${textContainer}
+        ${title}
+        ${text}
         
         @media (max-width: 600px) {
-            ${backgroundMobile}
+           
         }
         `;
     

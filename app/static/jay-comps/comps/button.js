@@ -87,10 +87,11 @@ class ButtonComp extends Comp {
         const primary = this.design.create({
             class: "button",
             colour: "white",
+            width: "100%",
             background: "black100",
-            padding: "9px 16px",
-            border: "border",
+            padding: "12px 28px",
             borderRadius: 8,
+            fontSize: 16,
             cursor: "pointer",
             transition: "background 0.1s ease-in-out"
         });
@@ -111,8 +112,10 @@ class ButtonComp extends Comp {
             class: "button",
             colour: "black100",
             background: "black10",
+            border: "var(--border)",
             padding: "9px 16px",
             borderRadius: 8,
+            fontSize: 16,
             cursor: "pointer",
             transition: "background 0.1s ease-in-out"
         });
@@ -128,8 +131,6 @@ class ButtonComp extends Comp {
             psuedoClass: "active",
             background: "black40"
         });
-
-        let tertiary;
         
         if (this.buttonVarient_ == 1) {
 
@@ -145,7 +146,6 @@ class ButtonComp extends Comp {
             buttonActive = secondaryActive;
         
         }
-        else if (this.buttonVarient_ == 3) button = tertiary;
 
         return `
         ${button}
