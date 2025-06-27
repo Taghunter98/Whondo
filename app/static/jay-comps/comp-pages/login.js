@@ -50,8 +50,9 @@ class LoginPageComp extends Comp {
     
     }
 
-    createCSS() {
+    createCSS() {   
 
+        // Background and image styling
         const background = this.design.create({
             class: "background",
             width: "100%",
@@ -77,7 +78,8 @@ class LoginPageComp extends Comp {
             height: "100%",
             objectFit: "cover"
         });
-
+        
+        // Login modal styling
         const modal = this.design.create({
             class: "modal",
             display: "flex",
@@ -133,6 +135,27 @@ class LoginPageComp extends Comp {
             width: "100%",
             gap: 10
         });
+
+        // Media query adjustments
+        const itemContainerMob = this.design.create({
+            class: "itemContainer",
+            flexDirection: "column",
+            alignItems: "centre"
+        });
+
+        const imageBackgroundMob = this.design.create({
+            class: "backgroundImage",
+            height: "40vh",
+            margin: 0,
+            padding: 0
+        });
+
+        const modalMob = this.design.create({
+            class: "modal",
+            width: "auto",
+            margin: 0,
+            marginTop: 200
+        });
     
         return /* css */ `
         ${background}
@@ -153,7 +176,9 @@ class LoginPageComp extends Comp {
         ${footer}
         
         @media (max-width: 600px) {
-           
+           ${itemContainerMob}
+           ${imageBackgroundMob}
+           ${modalMob}
         }
         `;
     
