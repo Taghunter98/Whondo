@@ -210,15 +210,48 @@ class RegisterPageComp extends Comp {
         file.inputType           = "file";
         file.inputLabel          = "Upload your photo";
         file.inputPrompt         = "Select a file only accept .png";
-        
+        name.required            = true;
+        surname.required         = true;
+        email.required           = true;
+        password.required        = true;
+        age.required             = true;
+        occupation.required      = true;
 
+        /**
+         * 
+         */
         compButton.addEventListener("click", () => {
 
-            result.innerText = "thanks!";
+            const inputs = [name, surname, email, password, age, occupation];
+            let valid    = true;
+            
+            for(const input of inputs){
+                
+                const inputField = input.shadowRoot.querySelector(".inputValue");
+                
+                //reset colour
+                inputField.classList.remove("strength-very-weak");
+                
+                if(input.required && input.isEmpty()){
+
+                    inputField.classList.add("strength-very-weak");
+                    
+                    valid = false;
+
+                }
+            
+            }
+
+            if (!valid){
+
+                result.innerText = "Please fill in all required fields.";
+                return;
+            
+            }
+
+            result.innerText = "welcome";
         
         });
-
-        
 
     
     }

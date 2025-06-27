@@ -97,13 +97,13 @@ class ButtonComp extends Comp {
 
         const primaryHover = this.design.create({
             class: "button",
-            psuedoClass: "hover",
+            pseudoClass: "hover",
             background: "black80",
         });
 
         const primaryActive = this.design.create({
             class: "button",
-            psuedoClass: "active",
+            pseudoClass: "active",
             background: "black60"
         });
 
@@ -119,13 +119,13 @@ class ButtonComp extends Comp {
 
         const secondaryHover = this.design.create({
             class: "button",
-            psuedoClass: "hover",
+            pseudoClass: "hover",
             background: "black20"
         });
 
         const secondaryActive = this.design.create({
             class: "button",
-            psuedoClass: "active",
+            pseudoClass: "active",
             background: "black40"
         });
 

@@ -10,6 +10,7 @@ class InputComp extends Comp {
         this.inputType_     = "text";
         this.inputPrompt_   = "Enter text";
         this.enableEntropy_ = false;
+        this.required_      = false;
 
         this.name_ = "Input";
         this.html_ = this.createHTML();
@@ -47,6 +48,13 @@ class InputComp extends Comp {
     
     }
 
+    set required(val){
+
+        this.required_ = val;
+        this.update(this.createHTML(), this.css_);
+    
+    }
+
     get inputLabel() {
 
         return this.inputLabel_;
@@ -74,6 +82,12 @@ class InputComp extends Comp {
     get enableEntropy(){
 
         return this.enableEntropy_;
+    
+    }
+
+    get required(){
+
+        return this.required_;
     
     }
 
@@ -151,13 +165,13 @@ class InputComp extends Comp {
 
         const inputHover = this.design.create({
             class: "inputValue",
-            psuedoClass: "hover",
+            pseudoClass: "hover",
             outline: "solid 2px var(--black60)"
         });
 
         const inputActive = this.design.create({
             class: "inputValue",
-            psuedoClass: "focus",
+            pseudoClass: "focus",
             outline: "solid 2px var(--black100)"
         });
 
@@ -213,13 +227,13 @@ class InputComp extends Comp {
         
         const fileHover = this.design.create({
             class: "fileBox",
-            psuedoClass: "hover",
+            pseudoClass: "hover",
             outline: "solid 2px var(--black60)"
         });
 
         const fileActive = this.design.create({
             class: "fileBox",
-            psuedoClass: "focus",
+            pseudoClass: "focus",
             outline: "solid 2px var(--black100)"
         });
 
@@ -307,44 +321,54 @@ class InputComp extends Comp {
         if(this.inputType_ === "password" && this.enableEntropy_){
 
             const inputEn = this.shadowRoot.querySelector(".inputValue");
-
+            const hintEl  = this.shadowRoot.querySelector(".hint");
             inputEn.addEventListener("input", () => {
 
                 const password = inputEn.value;
                 const entropy  = this.calculateEntropy(password);
 
-                inputEn.classList.remove("strength-red", "strength-yellow", "strength-green");
+                inputEn.classList.remove("strength-very-red","strength-red", "strength-yellow", "strength-green");
 
-                if(entropy >= 78){
+                if(entropy < 20){
                     
-                    inputEn.classList.add("strength-green");
-                
-                } else if (entropy >= 60) {
+                    inputEn.classList.add("strength-very-weak");
+                    if(hintEl) {
 
-                    inputEn.classList.add("strength-yellow");
+                        hintEl.style.display = "block";
+                    
+                    }
                 
-                } else if (entropy > 20) {
+                } else if (entropy < 60) {
 
                     inputEn.classList.add("strength-red");
+                    if(hintEl) {
+
+                        hintEl.style.display = "block";
+                        hintEl.textContent   = "Weak: Try adding symbols, numbers or uppercase letters.";
+                    
+                    }
+                
+                } else if (entropy < 78) {
+
+                    inputEn.classList.add("strength-yellow");
+                    if(hintEl) {
+
+                        hintEl.style.display = "block";
+                        hintEl.textContent   = "Almost strong: Consider mixing symbols and length.";
+                    
+                    }
                 
                 } else {
 
-                    inputEn.classList.add("strength-very-weak");
+                    inputEn.classList.add("strength-green");
+                    if (hintEl) {
+
+                        hintEl.style.display = "none";
+                    
+                    }
                 
                 }
 
-                const hintEn = this.shadowRoot.querySelector(".hint");
-
-                if (entropy < 78 ) {
-
-                    if (hintEn) hintEn.style.display = "block";
-                
-                } else {
-
-                    if (hintEn) hintEn.style.display = "none";
-                
-                }
-            
             });
         
         }
@@ -360,6 +384,13 @@ class InputComp extends Comp {
         if (/[^A-Za-z0-9]/.test(password)) poolSize += 32; 
 
         return password.length * Math.log2(poolSize || 1);;
+    
+    }
+
+    isEmpty(){
+
+        const val = this.inputValue?.trim();
+        return !val;
     
     }
 
