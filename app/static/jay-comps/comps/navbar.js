@@ -37,15 +37,15 @@ class Navbar extends Comp {
 
         const container = this.design.create({
             class: "container",
+            top: "0",
+            position: "sticky",
+            zIndex: "1000",
             display: "flex",
             width: "auto",
             background: "white",
             alignItems: "centre",
-            margin: 20,
+            padding: 20,
             justifyContent: "space-between",
-            top: "0",
-            position: "sticky",
-            zIndex: "1000"
         });
 
         const logo = this.design.create({
