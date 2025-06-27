@@ -43,6 +43,7 @@ class Navbar extends Comp {
             display: "flex",
             width: "100%",
             background: "white",
+            boxSizing: "border-box",
             padding: 20,
             justifyContent: "space-between"
         });
