@@ -69,7 +69,7 @@ class LoginPageComp extends Comp {
         const imageBackground = this.design.create({
             class: "backgroundImage",
             width: "100%",
-            height: "100vh",
+            height: 3000,
             paddingLeft: 400
         });
 

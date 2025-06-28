@@ -17,7 +17,7 @@ class Navbar extends Comp {
     createHTML() {
 
         return /* html */ `
-        <div class="container">
+        <div id="navbar" class="container">
             <a><h3 class="logo">Whondo</h3></a>
             <ul class="links">
                 <li class="link">About</li>
@@ -147,14 +147,30 @@ class Navbar extends Comp {
     
     }
 
-    hook() {
+    navbarScroll() {
 
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+
+            this.shadowRoot.getElementById("navbar").style.top = "0";
+        
+        } else {
+
+            this.shadowRoot.getElementById("navbar").style.top = "-50px";
+        
+        }
+    
+    }
+
+    hook() {
+        
         const register = this.shadowRoot.getElementById("register");
         const login    = this.shadowRoot.getElementById("login");
         
         register.text    = "Register";
         register.varient = 2;
         login.text       = "login";
+
+        window.onscroll = this.navbarScroll();
     
     }
 
