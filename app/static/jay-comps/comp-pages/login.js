@@ -89,6 +89,7 @@ class LoginPageComp extends Comp {
             width: 500,
             background: "white",
             position: "absolute",
+            zIndex: 800,
             padding: 20,
             borderRadius: 14,
             marginLeft: 100,

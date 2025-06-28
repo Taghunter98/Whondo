@@ -17,7 +17,7 @@ class Icon extends Comp {
 
     set path(newPath) {
 
-        this.path_ = `"{{ url_for('static/icons', filename='${newPath}') }}";`;
+        this.path_ = `"{{ url_for('static', filename='icons/${newPath}') }}";`;
         this.update(this.createHTML(), this.css_);
     
     }
