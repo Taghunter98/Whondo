@@ -172,6 +172,7 @@ class Navbar extends Comp {
             display: "flex",
             bottom: "-500px",
             position: "fixed",
+            zIndex: "1000",
             boxSizing: "border-box",
             flexDirection: "column",
             width: "100%",
