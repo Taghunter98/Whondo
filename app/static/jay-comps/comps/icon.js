@@ -31,7 +31,7 @@ class Icon extends Comp {
     createHTML() {
 
         return /* html */ `
-        <img class="icon" src="/icons/menu.svg/${this.path_}">
+        <img class="icon" src="/static/icons/menu.svg/${this.path_}">
         `;
     
     }
