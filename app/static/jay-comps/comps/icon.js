@@ -31,7 +31,7 @@ class Icon extends Comp {
     createHTML() {
 
         return /* html */ `
-        <img class="icon" src="{{ url_for('static', filename='icons/${this.path_}') }}">
+        <img class="icon" src="/static/icons/${this.path_}">
         `;
     
     }
