@@ -24,6 +24,7 @@ class Navbar extends Comp {
                 <li class="link">Landlord Portal</li>
                 <li class="link">GitHub</li>
             </ul>
+            <img class="menu" src="/app/static/icons/menu.png">
             <div class="buttons">
                 <comp-button id="register"></comp-button>
                 <comp-button id="login"></comp-button>
@@ -39,12 +40,14 @@ class Navbar extends Comp {
         const container = this.design.create({
             class: "container",
             top: "0",
+            zIndex: "1000",
             position: "fixed",
             display: "flex",
+            alignItems: "centre",
             width: "100%",
             background: "white",
             boxSizing: "border-box",
-            padding: 20,
+            padding: "10px 20px",
             justifyContent: "space-between"
         });
 
@@ -88,6 +91,11 @@ class Navbar extends Comp {
             background: "black20"
         });
 
+        const menu = this.design.create({
+            class: "menu",
+            display: "None",
+        });
+
         const buttons = this.design.create({
             class: "buttons",
             display: "flex",
@@ -95,14 +103,46 @@ class Navbar extends Comp {
             gap: 20
         });
 
+        // Media quuery adjustments
+        const logoMob = this.design.create({
+            class: "logo",
+            fontSize: 28
+        });
+
+        const linksMob = this.design.create({
+            class: "links",
+            display: "None"
+        });
+
+        const menuMob = this.design.create({
+            class: "menu",
+            display: "block"
+        });
+
+        const buttonsMob = this.design.create({
+            class: "buttons",
+            display: "None"
+        });
+
         return /* css */`
         ${container}
+
         ${logo}
+
         ${links}
         ${link}
         ${linkHover}
         ${linkActive}
+
+        ${menu}
         ${buttons}
+
+        @media (max-width: 600px) {
+            ${logoMob}
+            ${linksMob}
+            ${menuMob}
+            ${buttonsMob}
+        }
         `;
     
     }
