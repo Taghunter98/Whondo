@@ -6,7 +6,7 @@ class RegisterPageComp extends Comp {
 
         super();
 
-        this.title_ = "Register";
+        
 
         this.name_ = "Register page";
         this.html_ = this.createHTML();
@@ -21,9 +21,16 @@ class RegisterPageComp extends Comp {
 
         return /* html */ `
         <div class="background">
+
             <div class="container">
-                <h3 class="head">${this.title_}</h3>
-                <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
+
+            <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
+
+                <div class="modal">
+                    
+                    <!-- step 1-->
+                    <h3 class="title"></h3>
+                    <p class="text"></p>
                     <div class="row">
                         <comp-input id="name" name="name"></comp-input>
                         <comp-input id="surname" name="surname"></comp-input>
@@ -31,7 +38,19 @@ class RegisterPageComp extends Comp {
                 
                     <comp-input id="email" name="email"></comp-input>
                     <comp-input id="password" name="password"></comp-input>
-                    
+                    <comp-input id="confirm" name="confirm-password"></comp-input>
+
+                    <div class="footer">
+                        <div class="row">
+                            <comp-button class="back"></comp-button>
+                            <comp-button class="next"></comp-button>
+                            <p>Have an account?<a href="#" class="link"> Login</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal">
+
                     <div class="row">
                         <comp-input id="age" name="age"></comp-input>
                         <comp-input id="occupation" name="occupation"></comp-input>
@@ -40,17 +59,15 @@ class RegisterPageComp extends Comp {
                     <comp-input id="bio" name="bio"></comp-input>
                     <comp-input id="file" class="file" name="file"></comp-input>
                     
-                    <div class="wrapper">
-                        <comp-button id="submit" class="submit-btn"></comp-button>
-                    </div> 
-
-                    <div class="container2">
-                        
-                        <p>Have an account?<a href="#" class="link"> Login</a></p>
                     
+                    <div class="footer">
+                        <button-comp class="back"></button-comp>
+                        <button-comp id="submit"></button-comp>
+                        <p>Have an account?<a href="#" class="link"> Login</a></p>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
+
             <p id="result"></p>
         </div>
         `;
@@ -140,8 +157,8 @@ class RegisterPageComp extends Comp {
             gap: 15
         });
 
-        const header = this.design.create({
-            class: "head",
+        const title = this.design.create({
+            class: "title",
             alignSelf: "flex-start"
         });
 
@@ -156,7 +173,7 @@ class RegisterPageComp extends Comp {
 
         return /* css */ `
         ${background}
-        ${header}
+        ${title}
         ${container}
         ${wrapper}
         ${regis}
