@@ -17,6 +17,7 @@ class CreatePage extends Comp {
     createHTML() {
 
         return /* html */`
+        <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
                 <dialog-box id="describe"></dialog-box>
