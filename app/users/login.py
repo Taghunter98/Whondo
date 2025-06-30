@@ -55,7 +55,7 @@ def login():
         data: object = request.get_json()
         email: str = data.get("email")
         password: str = data.get("password")
-        consent: bool = data.get("consent")
+        consent: str = data.get("consent")
 
         if not email or not password:
             return jsonify({"error": "User email or password not provided"}), 400
@@ -95,7 +95,7 @@ def login():
                     {"message": f"{email} logged in successfully", "status": True}
                 )
 
-                if consent:
+                if consent == "true":
                     response.set_cookie("uID", str(user_id))
                     
                 response.status_code = 200
