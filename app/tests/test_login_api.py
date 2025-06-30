@@ -13,7 +13,7 @@ class TestLoginAPI(unittest.TestCase):
         """
 
         API_URL: str = "https://whondo.com/login"
-        API_DATA = {"email": "test@test.com", "password": "password123"}
+        API_DATA = {"email": "test@test.com", "password": "password123", "consent": "false"}
 
         return requests.post(
             API_URL,
@@ -66,7 +66,7 @@ class TestLoginAPIFail(unittest.TestCase):
         """
 
         API_URL: str = "https://whondo.com/login"
-        API_DATA = {"email": "wrong@wrong.com", "password": "wrongpassword"}
+        API_DATA = {"email": "wrong@wrong.com", "password": "wrongpassword", "consent": "false"}
 
         return requests.post(
             API_URL,
@@ -110,7 +110,7 @@ class TestInvalidData(unittest.TestCase):
         """
 
         API_URL: str = "https://whondo.com/login"
-        API_DATA = {"email": "", "password": ""}
+        API_DATA = {"email": "", "password": "", "consent": "false"}
 
         return requests.post(
             API_URL,
@@ -153,7 +153,7 @@ class TestPasswordFail(unittest.TestCase):
         """
 
         API_URL: str = "https://whondo.com/login"
-        API_DATA = {"email": "test@test.com", "password": "thisisnotapassword"}
+        API_DATA = {"email": "test@test.com", "password": "thisisnotapassword", "consent": "false"}
 
         return requests.post(
             API_URL,
