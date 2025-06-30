@@ -17,8 +17,8 @@ class ButtonComp extends Comp {
 
         super();                                                    
 
-        this.buttonText_    = "This is a button";
-        this.buttonVarient_ = 1;    
+        this.text_    = "This is a button";
+        this.varient_ = 1;    
         
         this.name_ = "Button";
         this.html_ = this.createHTML();
@@ -31,11 +31,11 @@ class ButtonComp extends Comp {
     /**
      * @brief A setter method that sets the Comp's button text.
      * 
-     * @param {string} newButtonText
+     * @param {string} newText
      */
-    set buttonText(newButtonText) {
+    set text(newText) {
 
-        this.buttonText_ = newButtonText;
+        this.text_ = newText;
         this.update(this.createHTML(), this.css_);
     
     }
@@ -43,11 +43,11 @@ class ButtonComp extends Comp {
     /**
      * @brief A setter method that sets the Comp's button varient (1, 2, 3).
      * 
-     * @param {string} newButtonVarient
+     * @param {string} newVarient
      */
-    set buttonVarient(newButtonVarient) {
+    set varient(newVarient) {
 
-        this.buttonVarient_ = newButtonVarient;
+        this.varient_ = newVarient;
         this.update(this.html_, this.createCSS());
     
     }
@@ -57,9 +57,9 @@ class ButtonComp extends Comp {
      * 
      * @returns {string} Comp's button text. 
      */
-    get buttonText() {
+    get text() {
 
-        return this.buttonText_;
+        return this.text_;
     
     }
 
@@ -68,15 +68,15 @@ class ButtonComp extends Comp {
      * 
      * @returns {number} Comp's button varient. 
      */
-    get buttonVarient() {
+    get varient() {
 
-        return this.buttonVarient_;
+        return this.varient_;
     
     }
     
     createHTML() {
 
-        return /* html */ `<button id="button" class="button">${this.buttonText_}</button>`;
+        return /* html */ `<button id="button" class="button">${this.text_}</button>`;
     
     }
 
@@ -90,6 +90,7 @@ class ButtonComp extends Comp {
             width: "100%",
             background: "black100",
             padding: "12px 28px",
+            border: "black100",
             borderRadius: 8,
             fontSize: 16,
             cursor: "pointer",
@@ -99,12 +100,14 @@ class ButtonComp extends Comp {
         const primaryHover = this.design.create({
             class: "button",
             pseudoClass: "hover",
+            border: "black",
             background: "black80",
         });
 
         const primaryActive = this.design.create({
             class: "button",
             pseudoClass: "active",
+            border: "black60",
             background: "black60"
         });
 
@@ -112,8 +115,9 @@ class ButtonComp extends Comp {
             class: "button",
             colour: "black100",
             background: "black10",
-            border: "var(--border)",
-            padding: "9px 16px",
+            width: "100%",
+            border: "border",
+            padding: "12px 28px",
             borderRadius: 8,
             fontSize: 16,
             cursor: "pointer",
@@ -122,24 +126,24 @@ class ButtonComp extends Comp {
 
         const secondaryHover = this.design.create({
             class: "button",
-            psuedoClass: "hover",
+            pseudoClass: "hover",
             background: "black20"
         });
 
         const secondaryActive = this.design.create({
             class: "button",
-            psuedoClass: "active",
+            pseudoClass: "active",
             background: "black40"
         });
         
-        if (this.buttonVarient_ == 1) {
+        if (this.varient_ == 1) {
 
             button       = primary;
             buttonHover  = primaryHover;
             buttonActive = primaryActive;
         
         }
-        else if (this.buttonVarient_ == 2) {
+        else if (this.varient_ == 2) {
 
             button       = secondary;
             buttonHover  = secondaryHover;

@@ -17,6 +17,7 @@ class CreatePage extends Comp {
     createHTML() {
 
         return /* html */`
+        <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
                 <dialog-box id="describe"></dialog-box>
@@ -36,7 +37,7 @@ class CreatePage extends Comp {
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            height: "100vh",
+            height: "2000px",
             justifyContent: "centre",
             alignItems: "centre",
             background: "black10",

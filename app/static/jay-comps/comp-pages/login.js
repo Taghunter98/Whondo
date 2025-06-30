@@ -17,6 +17,7 @@ class LoginPageComp extends Comp {
     createHTML() {
     
         return /* html */ `
+        
         <div class="background">
 
             <div class="itemContainer">
@@ -30,7 +31,8 @@ class LoginPageComp extends Comp {
 
                     <div class="inputs">
                         <comp-input id="email" name="email"></comp-input>
-                        <comp-input id="password" name="password"></comp-input>
+                        <comp-input id="password" 
+                        name="password"></comp-input>
                     </div>
 
                     <div class="footer">
@@ -88,6 +90,7 @@ class LoginPageComp extends Comp {
             width: 500,
             background: "white",
             position: "absolute",
+            zIndex: 800,
             padding: 20,
             borderRadius: 14,
             marginLeft: 100,
@@ -216,16 +219,17 @@ class LoginPageComp extends Comp {
         const email      = this.shadowRoot.getElementById("email");
         const pass       = this.shadowRoot.getElementById("password");
         
-        compButton.buttonText = "Login";
-        email.inputLabel      = "Email";
-        email.inputPrompt     = "Enter email";
-        pass.inputLabel       = "Password";
-        pass.inputType        = "password";
-        pass.inputPrompt      = "Enter password";
+        compButton.text = "Login";
+        email.label     = "Email";
+        email.prompt    = "Enter email";
+        pass.label      = "Password";
+        pass.type       = "password";
+        pass.prompt     = "Enter password";
 
         compButton.addEventListener("click", () => {
-
-            const jsonData = {email : email.inputValue, password : pass.inputValue};
+            
+            let cookie   = "true";
+            let jsonData = {email : email.value, password : pass.value, consent: cookie};
 
             this.login(result, jsonData);
         
