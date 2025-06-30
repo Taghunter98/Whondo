@@ -55,7 +55,7 @@ def login():
         data: object = request.get_json()
         email: str = data.get("email")
         password: str = data.get("password")
-        # consent: bool = data.get("consent")
+        consent: bool = data.get("consent")
 
         if not email or not password:
             return jsonify({"error": "User email or password not provided"}), 400
@@ -87,7 +87,7 @@ def login():
             if valid is True:
                 session["uID"] = user_id
                 session["email"] = email
-                # session["consent"] = consent
+                session["consent"] = consent
 
                 current_app.logger.info("User authenticated, starting new Session")
 
@@ -95,8 +95,8 @@ def login():
                     {"message": f"{email} logged in successfully", "status": True}
                 )
 
-                
-                response.set_cookie("uID", str(user_id))
+                if consent is True:
+                    response.set_cookie("uID", str(user_id))
                     
                 response.status_code = 200
 
