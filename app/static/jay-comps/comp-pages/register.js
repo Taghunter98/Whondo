@@ -172,6 +172,12 @@ class RegisterPageComp extends Comp {
 
     }
 
+    openWindow(){
+
+        window.location.assign("/login");
+    
+    }
+
     hook(){
 
         const compButton = this.shadowRoot.getElementById("submit");
@@ -252,6 +258,10 @@ class RegisterPageComp extends Comp {
             result.innerText = "welcome";
         
         });
+
+        const loginLink = this.shadowRoot.querySelector(".link");
+
+        loginLink.addEventListener("click", () => this.openWindow());
 
     
     }
