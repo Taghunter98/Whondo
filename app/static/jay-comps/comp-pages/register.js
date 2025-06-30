@@ -24,7 +24,7 @@ class RegisterPageComp extends Comp {
 
             <div class="container">
 
-            <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
+                <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
 
                 <div class="modal">
                     
@@ -35,11 +35,11 @@ class RegisterPageComp extends Comp {
                         <comp-input id="name" name="name"></comp-input>
                         <comp-input id="surname" name="surname"></comp-input>
                     </div>
-                
-                    <comp-input id="email" name="email"></comp-input>
-                    <comp-input id="password" name="password"></comp-input>
-                    <comp-input id="confirm" name="confirm-password"></comp-input>
-
+                    <div class="input">
+                        <comp-input id="email" name="email"></comp-input>
+                        <comp-input id="password" name="password"></comp-input>
+                        <comp-input id="confirm" name="confirm-password"></comp-input>
+                    </div>
                     <div class="footer">
                         <div class="row">
                             <comp-button class="back"></comp-button>
@@ -55,10 +55,11 @@ class RegisterPageComp extends Comp {
                         <comp-input id="age" name="age"></comp-input>
                         <comp-input id="occupation" name="occupation"></comp-input>
                     </div>
-                   
+                    
+                    <div class="input">
                     <comp-input id="bio" name="bio"></comp-input>
                     <comp-input id="file" class="file" name="file"></comp-input>
-                    
+                    </div>
                     
                     <div class="footer">
                         <button-comp class="back"></button-comp>
@@ -66,9 +67,11 @@ class RegisterPageComp extends Comp {
                         <p>Have an account?<a href="#" class="link"> Login</a></p>
                     </div>
                 </div>
-            </form>
-
-            <p id="result"></p>
+                </form>
+                <div id="backgroundImage">
+                    <img src="" alt="">
+                </div>
+            </div>
         </div>
         `;
     
