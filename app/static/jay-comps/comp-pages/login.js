@@ -227,8 +227,7 @@ class LoginPageComp extends Comp {
 
         compButton.addEventListener("click", () => {
             
-            let cookieConsent = "true";
-            const jsonData    = {email : email.value, password : pass.value, consent: cookieConsent};
+            let jsonData = {email : email.value, password : pass.value, consent: "true"};
 
             this.login(result, jsonData);
         
