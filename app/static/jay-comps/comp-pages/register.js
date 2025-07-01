@@ -29,8 +29,8 @@ class RegisterPageComp extends Comp {
                 <div class="modal">
                     
                     <!-- step 1-->
-                    <h3 class="title"></h3>
-                    <p class="text"></p>
+                    <h3 class="title">Personal Details</h3>
+                    <p class="text">Lets' find out a bit more about you!</p>
                     <div class="row">
                         <comp-input id="name" name="name"></comp-input>
                         <comp-input id="surname" name="surname"></comp-input>
