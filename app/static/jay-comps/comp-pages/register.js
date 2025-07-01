@@ -24,11 +24,12 @@ class RegisterPageComp extends Comp {
 
             <div class="container">
 
+
                 <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
 
-                <div class="modal" id="step1">
-                    
-                    <!-- step 1-->
+                    <div class="modal" id="step1">
+                        
+                        <!-- step 1-->
 
                         <div class="textContainer">
                             <p class="text">Step 1/2</p>
@@ -51,13 +52,12 @@ class RegisterPageComp extends Comp {
                                 <comp-button class="back" id="back"></comp-button>
                                 <comp-button class="next" id="next"></comp-button>
                             </div>
-                            <p>Have an account?<a href="#" class="link"> Login</a></p>
-                        </div>
+                                <p>Have an account?<a href="#" class="link"> Login</a></p>
                     </div>
                 </form>
-                <div id="backgroundImage">
-                    <img src="https://images.pexels.com/photos/4781426/pexels-photo-4781426.jpeg" alt="" class="image">
-                </div>
+            </div>
+            <div class="backgroundImage">
+                <img class="image" src="https://images.pexels.com/photos/4569340/pexels-photo-4569340.jpeg">
             </div>
         </div>
         `;
