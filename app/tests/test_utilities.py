@@ -3,6 +3,7 @@ import os
 
 from app.utilities.authid import authenticate
 from app.utilities.check_email import check_email_exits
+from app.utilities.key_gen import gen_key
 
 
 @unittest.skipIf(

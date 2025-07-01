@@ -16,7 +16,7 @@ from flask import (
     jsonify,
     current_app,
     render_template,
-    Response,
+    redirect,
 )
 
 from ..utilities.authid import authenticate
@@ -24,6 +24,7 @@ from app.database.db_connect import connect
 from app.security.hashing import check_password
 
 login_bp = Blueprint("login_bp", __name__)
+logout_bp = Blueprint("logout_bp", __name__)
 
 
 @login_bp.route("/login", methods=["POST", "GET"])
@@ -54,6 +55,7 @@ def login():
         data: object = request.get_json()
         email: str = data.get("email")
         password: str = data.get("password")
+        consent: str = data.get("consent")
 
         if not email or not password:
             return jsonify({"error": "User email or password not provided"}), 400
@@ -85,6 +87,7 @@ def login():
             if valid is True:
                 session["uID"] = user_id
                 session["email"] = email
+                session["consent"] = consent
 
                 current_app.logger.info("User authenticated, starting new Session")
 
@@ -92,7 +95,9 @@ def login():
                     {"message": f"{email} logged in successfully", "status": True}
                 )
 
-                response.set_cookie("uID", str(user_id))
+                if consent and consent == "true":
+                    response.set_cookie("uID", str(user_id))
+                    
                 response.status_code = 200
 
                 return response
@@ -102,6 +107,7 @@ def login():
                     f"User: {email} access denied, incorrect password"
                 )
                 return jsonify({"error": "Incorrect password", "status": False}), 401
+
         else:
             current_app.logger.error(f"User: {email} not found")
             return jsonify({"error": "User not found"}), 404
@@ -110,3 +116,21 @@ def login():
             return render_template("index.html")
 
         return render_template("login.html")
+
+
+@logout_bp.route("/logout", methods=["GET"])
+def logout():
+    """
+    The REST API is responsible for logging out a user by setting the (uID) and (email) session
+    values to None.
+
+    Returns:
+        Response: Flask redirect to homepage
+    """
+    if not session["uID"]:
+        return redirect("/")
+
+    current_app.logger.info(f"User id: {session['uID']} logged out.")
+    session["uID"] = None
+    session["email"] = None
+    return redirect("/")

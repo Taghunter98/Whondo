@@ -12,7 +12,7 @@ Description: Serves a Blueprint API for registering a new user.
 from flask import Blueprint, request, jsonify, current_app, render_template, session
 
 from app.database.db_connect import connect
-from app.security.hashing import hash_pasword
+from app.security.hashing import hash_function
 from .images import upload_file
 from ..utilities.authid import authenticate
 from app.utilities.mailgun import send_email
@@ -64,7 +64,7 @@ def register():
         if image_path is None:
             return jsonify({"error": "Image failed to upload"}), 409
 
-        hashed_password: str = hash_pasword(password)
+        hashed_password: str = hash_function(password)
 
         connection: object = connect()
         cursor: object = connection.cursor()
@@ -92,12 +92,14 @@ def register():
         verify_link = f"https://whondo.com/verify?email={email}"
         sender = "noreply@whondo.com"
         subject = "Verify Your Whondo Account"
-    
-        html_template = render_template("verify_email.html", name=name, verify_link=verify_link)
-        
+
+        html_template = render_template(
+            "verify_email.html", name=name, verify_link=verify_link
+        )
+
         send_email(sender, name, email, subject, None, html_template)
 
-        return render_template("created.html", name=name, surname=surname, email=email)
+        return render_template("created.html")
 
     else:
         return render_template("register.html")

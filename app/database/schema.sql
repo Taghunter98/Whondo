@@ -1,13 +1,8 @@
 -- Whondo Database Schema
--- Copyright c Whondo.com 2025
+-- Copyright (c) Josh Bassett, www.whondo.com 2025
 --
 -- Author:  Josh Bassett
 -- Updated: 02/06/2025
-
-DROP TABLE IF EXISTS Landlords;
-DROP TABLE IF EXISTS Tenants;
-DROP TABLE IF EXISTS Codes;
-DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users (
     uID INT UNIQUE NOT NULL AUTO_INCREMENT,    
@@ -50,3 +45,36 @@ CREATE TABLE Codes (
     PRIMARY KEY (uID, lifetime),
     FOREIGN KEY (uID) REFERENCES Users ON DELETE CASCADE 
 );
+
+CREATE TABLE Property (
+    pID INT UNIQUE NOT NULL AUTO_INCREMENT,
+    propType VARCHAR(255) NOT NULL,
+    bedrooms INT NOT NULL,
+    bathrooms INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    street VARCHAR(255) NOT NULL,
+    town VARCHAR(255) NOT NULL,
+    county VARCHAR(255) NOT NULL,
+    postcode CHAR(10),
+    lID INT UNIQUE NOT NULL,
+    PRIMARY KEY (pID),
+    FOREIGN KEY (lID) REFERENCES Landlords ON DELETE CASCADE
+);
+
+ALTER TABLE Property AUTO_INCREMENT=100;
+
+CREATE TABLE Keywords (
+    kID INT UNIQUE NOT NULL AUTO_INCREMENT
+);
+
+ALTER TABLE Keywords AUTO_INCREMENT=100;
+
+CREATE TABLE APIKeys (
+    aID INT UNIQUE NOT NULL AUTO_INCREMENT,
+    uID INT UNIQUE NOT NULL,
+    apiKey VARCHAR(255) NOT NULL,
+    PRIMARY KEY (aID),
+    FOREIGN KEY (uID) REFERENCES Users
+);
+
+ALTER TABLE APIKeys AUTO_INCREMENT=100;

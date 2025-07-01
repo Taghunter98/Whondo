@@ -5,8 +5,6 @@ class LoginPageComp extends Comp {
     constructor() {
 
         super();
-        
-        this.title_ = "Login to Whondo";
 
         this.name_ = "Login Page";
         this.html_ = this.createHTML();
@@ -19,15 +17,34 @@ class LoginPageComp extends Comp {
     createHTML() {
     
         return /* html */ `
+        
         <div class="background">
-            <div class="container">
-                <h3>${this.title_}</h3>
 
-                <comp-input id="email" name="email"></comp-input>
-                <comp-input id="password" name="password"></comp-input>
+            <div class="itemContainer">
 
-                <comp-button id="submit">Refresh Card</comp-button>
-                <p id="result"></p>
+                <div class="modal">
+
+                    <div class="textContainer">
+                        <h3 class="title">Login</h3>
+                        <p class="text">Welcome back! Let's find you a new home.</p>
+                    </div>
+
+                    <div class="inputs">
+                        <comp-input id="email" name="email"></comp-input>
+                        <comp-input id="password" 
+                        name="password"></comp-input>
+                    </div>
+
+                    <div class="footer">
+                        <comp-button id="submit">Refresh Card</comp-button>
+                        <p class="link"><a>Forgot password?</a></p>
+                    </div>
+                    <p id="result"></p>
+                </div>
+
+            <div class="backgroundImage">
+                <img class="image" src="https://images.pexels.com/photos/4781426/pexels-photo-4781426.jpeg">
+            </div>
             </div>
             
         </div>
@@ -35,51 +52,147 @@ class LoginPageComp extends Comp {
     
     }
 
-    createCSS() {
+    createCSS() {   
 
-        const animation = this.effect.prop("slideUp", .5);
-
+        // Background and image styling
         const background = this.design.create({
             class: "background",
+            width: "100%",
+            background: "black100",
+            height: "100vh",
+        });
+
+        const itemContainer = this.design.create({
+            class: "itemContainer",
+            display: "flex",
+        });
+
+        const imageBackground = this.design.create({
+            class: "backgroundImage",
+            width: "100%",
+            height: "100vh",
+            paddingLeft: 400
+        });
+
+        const image = this.design.create({
+            class: "image",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover"
+        });
+        
+        // Login modal styling
+        const modal = this.design.create({
+            class: "modal",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "centre",
+            width: 500,
+            background: "white",
+            position: "absolute",
+            zIndex: 800,
+            padding: 20,
+            borderRadius: 14,
+            marginLeft: 100,
+            marginTop: 100
+        });
+
+        const inputs = this.design.create({
+            class: "inputs",
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            padding: "50px 0px",
-            alignItems: "centre",
-            border: false,
-            gap: 0,
-            background: "black10",
+            gap: 10,
+            paddingTop: 20,
+            paddingBottom: 40
         });
 
-        const backgroundMobile = this.design.create({
-            class: "background",
-            padding: 20,
-            width: "auto"
+        // Link
+
+        const link = this.design.create({
+            class: "link",
+            colour: "black80",
+            textDecoration: "underline",
+            cursor: "pointer"
         });
 
-        const container = this.design.create({
-            class: "container",
+        const linkHover = this.design.create({
+            class: "link",
+            pseudoClass: "hover",
+            colour: "black100"
+        });
+
+        const textContainer = this.design.create({
+            class: "textContainer",
             display: "flex",
             flexDirection: "column",
+            width: "100%",
+            gap: 5
+        });
+
+        const title = this.design.create({
+            class: "title",
+            fontWeight: "bold"
+        });
+
+        const text = this.design.create({
+            class: "text",
+            colour: "black60"
+        });
+        
+        const footer = this.design.create({
+            class: "footer",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "centre",
+            width: "100%",
+            gap: 10
+        });
+
+        // Media query adjustments
+        const itemContainerMob = this.design.create({
+            class: "itemContainer",
+            flexDirection: "column",
+            alignItems: "centre"
+        });
+
+        const imageBackgroundMob = this.design.create({
+            class: "backgroundImage",
+            height: "40vh",
+            margin: 0,
+            padding: 0
+        });
+
+        const modalMob = this.design.create({
+            class: "modal",
             width: "auto",
-            maxWidth: 500,
-            padding: 20,
-            alignItems: "start",
-            border: "border",
-            borderRadius: 16,
-            gap: 15,
-            background: "white",
-            animation: animation
+            margin: 0,
+            marginTop: 200
         });
     
         return /* css */ `
-        
         ${background}
-        
-        ${container}
+
+        ${itemContainer}
+
+        ${imageBackground}
+        ${image}
+
+        ${modal}
+        ${inputs}
+        ${link}
+        ${linkHover}
+
+        ${textContainer}
+        ${title}
+        ${text}
+
+        ${footer}
         
         @media (max-width: 600px) {
-            ${backgroundMobile}
+           ${itemContainerMob}
+           ${imageBackgroundMob}
+           ${modalMob}
         }
         `;
     
@@ -106,16 +219,17 @@ class LoginPageComp extends Comp {
         const email      = this.shadowRoot.getElementById("email");
         const pass       = this.shadowRoot.getElementById("password");
         
-        compButton.buttonText = "Login";
-        email.inputLabel      = "Email";
-        email.inputPrompt     = "Enter email";
-        pass.inputLabel       = "Password";
-        pass.inputType        = "password";
-        pass.inputPrompt      = "Enter password";
+        compButton.text = "Login";
+        email.label     = "Email";
+        email.prompt    = "Enter email";
+        pass.label      = "Password";
+        pass.type       = "password";
+        pass.prompt     = "Enter password";
 
         compButton.addEventListener("click", () => {
-
-            const jsonData = {email : email.inputValue, password : pass.inputValue};
+            
+            let cookie   = "true";
+            let jsonData = {email : email.value, password : pass.value, consent: cookie};
 
             this.login(result, jsonData);
         
@@ -125,4 +239,4 @@ class LoginPageComp extends Comp {
   
 }
 
-customElements.define("test-card-housing", LoginPageComp);
+customElements.define("comp-login", LoginPageComp);
