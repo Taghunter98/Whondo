@@ -246,24 +246,24 @@ class RegisterPageComp extends Comp {
 
         
         
-        backButton.buttonText    = "Back";
-        nextButton.buttonText    = "Next";
-        backButton.buttonVarient = 2;
-        email.inputLabel         = "Email";
-        email.inputPrompt        = "Enter email";
-        email.inputType          = "email";
-        password.inputLabel      = "Password";
-        password.inputPrompt     = "password";
-        password.inputType       = "password";
-        password.enableEntropy   = true;
-        name.inputLabel          = "Name";
-        name.inputPrompt         = "Enter your name";
-        surname.inputLabel       = "Surname";
-        surname.inputPrompt      = "Enter you surname";
-        name.required            = true;
-        surname.required         = true;
-        email.required           = true;
-        password.required        = true;
+        backButton.text        = "Back";
+        nextButton.text        = "Next";
+        backButton.variant     = 2;
+        email.label            = "Email";
+        email.prompt           = "Enter email";
+        email.type             = "email";
+        password.label         = "Password";
+        password.prompt        = "password";
+        password.type          = "password";
+        password.enableEntropy = true;
+        name.label             = "Name";
+        name.prompt            = "Enter your name";
+        surname.label          = "Surname";
+        surname.prompt         = "Enter you surname";
+        name.required          = true;
+        surname.required       = true;
+        email.required         = true;
+        password.required      = true;
 
         /**
          * 

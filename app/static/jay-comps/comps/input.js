@@ -6,9 +6,11 @@ class InputComp extends Comp {
 
         super();
         
-        this.label_  = "Label";
-        this.type_   = "text";
-        this.prompt_ = "Enter text";
+        this.inputLabel_    = "";
+        this.inputType_     = "text";
+        this.inputPrompt_   = "Enter text";
+        this.enableEntropy_ = false;
+        this.required_      = false;
 
         this.name_ = "Input";
         this.html_ = this.createHTML();
@@ -18,58 +20,119 @@ class InputComp extends Comp {
     
     }
 
-    set label(newLabel) {
+    set inputLabel(newInputLabel) {
 
-        this.label_ = newLabel;
+        this.inputLabel_ = newInputLabel;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    set type(newType) {
+    set inputType(newInputType) {
 
-        this.type_ = newType;
+        this.inputType_ = newInputType;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    set prompt(newPrompt) {
+    set inputPrompt(newInputPrompt) {
 
-        this.prompt_ = newPrompt;
+        this.inputPrompt_ = newInputPrompt;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    get label() {
+    set enableEntropy(val){
 
-        return this.label_;
+        this.enableEntropy_ = val;
+        this.update(this.createHTML(), this.css_);
     
     }
 
-    get type() {
+    set required(val){
 
-        return this.type_;
+        this.required_ = val;
+        this.update(this.createHTML(), this.css_);
     
     }
 
-    get prompt() {
+    get inputLabel() {
 
-        return this.prompt_;
+        return this.inputLabel_;
     
     }
 
-    get value() {
+    get inputType() {
 
-        return this.shadowRoot.querySelector("input").value;
+        return this.inputType_;
+    
+    }
 
+    get inputPrompt() {
+
+        return this.inputPrompt_;
+    
+    }
+
+    get inputValue() {
+
+        return this.shadowRoot.querySelector(".inputValue").value;
+
+    }
+
+    get enableEntropy(){
+
+        return this.enableEntropy_;
+    
+    }
+
+    get required(){
+
+        return this.required_;
+    
     }
 
 
     createHTML() {
+        
+        let inputField;
+
+        if(this.inputType_ === "textarea"){
+
+            inputField = `<textarea class="inputValue areaInput" placeholder="${this.inputPrompt_}" row="6"></textarea>`;
+        
+    
+        } else if (this.inputType_ === "file"){
+
+            inputField = `
+            <label class="fileWrapper">
+                <div class="fileBox">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                    </span>
+                    <span class="filePrompt">${this.inputPrompt_}</span>
+                </div>
+                <input class="inputValue fileInput" type="file" accept=".png" hidden >
+            </label>
+            `;
+        
+        }
+        
+        else {
+
+            inputField = `<input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">`;
+
+            if (this.inputType_ === "password" && this.enableEntropy_){
+
+                inputField += `<div class="hint" style="display: none">Hint: Use a mix of letters, numbers, and symbols</div>`;
+            
+            }
+        
+        }
 
         return /* html */ `
         <div class="inputContainer">
-            <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
-            <input class="inputValue" type="${this.type_}" placeholder="${this.prompt_}">
+            <label>${this.inputLabel_}</label>
+            ${inputField}
         </div>
         `;
     
@@ -92,7 +155,7 @@ class InputComp extends Comp {
         const input = this.design.create({
             class: "inputValue",
             display: "block",
-            fontSize: 16,
+            fontSize: 12,
             width: "100%",
             padding: "8px 12px",
             border: "border",
@@ -112,6 +175,96 @@ class InputComp extends Comp {
             outline: "solid 2px var(--black100)"
         });
 
+        const fileStyle = this.design.create({
+            class: "fileInput",
+            display: "none",
+        });
+
+        const areaInput = this.design.create({
+
+            class: "areaInput",
+            resize: "none",
+            height: "80px",
+            width: "100%",
+
+        });
+
+        const fileWrapper = this.design.create({
+            class: "fileWrapper",
+            width: "100%",
+            cursor: "pointer",
+        });
+
+        const fileBox = this.design.create({
+            class: "fileBox",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "centre",
+            alignItems: "centre",
+            padding: 40,
+            border: "2px",
+            borderRadius: "12px",
+            borderStyle: "dotted",
+            background: "white",
+            gap: 8,
+            colour: "black60",
+            textAlign: "centre",
+        });
+
+        const icon = this.design.create({
+            class: "icon",
+            fontSize: "2rem",
+            fontWeight: "bold",
+            colour: "black80",
+        });
+
+        const filePrompt = this.design.create({
+            class: "filePrompt",
+            fontSize: "0.9rem",
+            colour: "black60",
+
+        });
+        
+        const fileHover = this.design.create({
+            class: "fileBox",
+            pseudoClass: "hover",
+            outline: "solid 2px var(--black60)"
+        });
+
+        const fileActive = this.design.create({
+            class: "fileBox",
+            pseudoClass: "focus",
+            outline: "solid 2px var(--black100)"
+        });
+
+        const strengthVeryWeak = this.design.create({
+            class: "strength-very-weak",
+            borderBottom: "2px solid DarkRed",
+        });
+
+        const strengthRed = this.design.create({
+            class: "strength-red",
+            borderBottom: "2px solid red",
+        });
+
+        const strengthYellow = this.design.create({
+            class: "strength-yellow",
+            borderBottom: "2px solid orange",
+        });
+
+        const strengthGreen = this.design.create({
+            class: "strength-green",
+            borderBottom: "2px solid green",
+        });
+
+        const hint = this.design.create({
+            class: "hint",
+            fontSize: "0.75rem",
+            colour: "black",
+            paddingTop: 4,
+            paddingLeft: 2,
+        });
+
         return /* css */ `
         
         ${inputContainer}
@@ -119,7 +272,125 @@ class InputComp extends Comp {
         ${input}
         ${inputHover}
         ${inputActive}
+        ${hint}
+        ${strengthVeryWeak}
+        ${strengthRed}
+        ${strengthYellow}
+        ${strengthGreen}
+        ${fileWrapper}
+        ${fileBox}
+        ${icon}
+        ${filePrompt}
+        ${fileStyle}
+        ${fileHover}
+        ${fileActive}
+        ${areaInput}
+
         `;
+    
+    }
+
+    hook() {
+
+        const fileInput  = this.shadowRoot.querySelector(".fileInput");
+        const filePrompt = this.shadowRoot.querySelector(".filePrompt");
+        const icon       = this.shadowRoot.querySelector(".icon");
+
+        if(fileInput && filePrompt){
+
+            fileInput.addEventListener("change", () => {
+
+                const file = fileInput.files[0];
+                if(file){
+
+                    filePrompt.textContent = file.name;
+                    icon.innerHTML         = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>`;
+                
+                }else {
+
+                    filePrompt.textContent = this.inputPrompt_;
+                    
+                
+                }
+            
+            });
+        
+        }
+
+
+        if(this.inputType_ === "password" && this.enableEntropy_){
+
+            const inputEn = this.shadowRoot.querySelector(".inputValue");
+            const hintEl  = this.shadowRoot.querySelector(".hint");
+            inputEn.addEventListener("input", () => {
+
+                const password = inputEn.value;
+                const entropy  = this.calculateEntropy(password);
+
+                inputEn.classList.remove("strength-very-red","strength-red", "strength-yellow", "strength-green");
+
+                if(entropy < 20){
+                    
+                    inputEn.classList.add("strength-very-weak");
+                    if(hintEl) {
+
+                        hintEl.style.display = "block";
+                    
+                    }
+                
+                } else if (entropy < 60) {
+
+                    inputEn.classList.add("strength-red");
+                    if(hintEl) {
+
+                        hintEl.style.display = "block";
+                        hintEl.textContent   = "Weak: Try adding symbols, numbers or uppercase letters.";
+                    
+                    }
+                
+                } else if (entropy < 78) {
+
+                    inputEn.classList.add("strength-yellow");
+                    if(hintEl) {
+
+                        hintEl.style.display = "block";
+                        hintEl.textContent   = "Almost strong: Consider mixing symbols and length.";
+                    
+                    }
+                
+                } else {
+
+                    inputEn.classList.add("strength-green");
+                    if (hintEl) {
+
+                        hintEl.style.display = "none";
+                    
+                    }
+                
+                }
+
+            });
+        
+        }
+
+    }
+
+    calculateEntropy(password){
+
+        let poolSize = 0;
+        if (/[a-z]/.test(password)) poolSize += 26;
+        if (/[A-Z]/.test(password)) poolSize += 26;
+        if (/[0-9]/.test(password)) poolSize += 10;
+        if (/[^A-Za-z0-9]/.test(password)) poolSize += 32; 
+
+        return password.length * Math.log2(poolSize || 1);;
+    
+    }
+
+    isEmpty(){
+
+        const val = this.inputValue?.trim();
+        return !val;
     
     }
 
