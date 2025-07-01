@@ -95,7 +95,7 @@ def login():
                     {"message": f"{email} logged in successfully", "status": True}
                 )
 
-                if consent == "true":
+                if consent and consent == "true":
                     response.set_cookie("uID", str(user_id))
                     
                 response.status_code = 200
@@ -106,6 +106,7 @@ def login():
                 current_app.logger.error(
                     f"User: {email} access denied, incorrect password"
                 )
+                return jsonify({"error": "Incorrect password", "status": False}), 401
 
         else:
             current_app.logger.error(f"User: {email} not found")
