@@ -57,7 +57,7 @@ def login():
         password: str = data.get("password")
         consent: str = data.get("consent")
 
-        if not email or not password:
+        if not email or not password or not consent:
             return jsonify({"error": "User email or password not provided"}), 400
 
         user_id: int = authenticate(email)
