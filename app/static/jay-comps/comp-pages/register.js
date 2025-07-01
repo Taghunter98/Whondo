@@ -49,8 +49,8 @@ class RegisterPageComp extends Comp {
                         </div>
                         <div class="footer">
                             <div class="row">
-                                <comp-button id="backBtn"></comp-button>
-                                <comp-button id="nextBtn"></comp-button>
+                                <comp-button class="back" id="backBtn"></comp-button>
+                                <comp-button class="next" id="nextBtn"></comp-button>
                             </div>
                                 <p>Have an account?<a href="#" class="link"> Login</a></p>
                     </div>
@@ -249,6 +249,7 @@ class RegisterPageComp extends Comp {
         backButton.text        = "Back";
         nextButton.text        = "Next";
         backButton.variant     = 2;
+        nextButton.variant     = 1;
         email.label            = "Email";
         email.prompt           = "Enter email";
         email.type             = "email";
