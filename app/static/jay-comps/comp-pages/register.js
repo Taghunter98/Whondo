@@ -49,8 +49,8 @@ class RegisterPageComp extends Comp {
                         </div>
                         <div class="footer">
                             <div class="row">
-                                <comp-button class="back" id="back"></comp-button>
-                                <comp-button class="next" id="next"></comp-button>
+                                <comp-button id="backBtn"></comp-button>
+                                <comp-button id="nextBtn"></comp-button>
                             </div>
                                 <p>Have an account?<a href="#" class="link"> Login</a></p>
                     </div>
@@ -236,14 +236,12 @@ class RegisterPageComp extends Comp {
 
     hook(){
 
-        const backButton = this.shadowRoot.querySelector(".back");
-        const nextButton = this.shadowRoot.querySelector(".next");
+        const backButton = this.shadowRoot.getElementById("backBtn");
+        const nextButton = this.shadowRoot.getElementById("nextBtn");
         const email      = this.shadowRoot.getElementById("email");
         const password   = this.shadowRoot.getElementById("password");
         const name       = this.shadowRoot.getElementById("name");
         const surname    = this.shadowRoot.getElementById("surname");
-        const bio        = this.shadowRoot.getElementById("bio");
-        const file       = this.shadowRoot.getElementById("file");
         const result     = this.shadowRoot.getElementById('result');
 
         
@@ -262,12 +260,6 @@ class RegisterPageComp extends Comp {
         name.inputPrompt         = "Enter your name";
         surname.inputLabel       = "Surname";
         surname.inputPrompt      = "Enter you surname";
-        bio.inputLabel           = "Bio";
-        bio.inputPrompt          = "Tell us more about you!";
-        bio.inputType            = "textarea";
-        file.inputType           = "file";
-        file.inputLabel          = "Upload your photo";
-        file.inputPrompt         = "Select a file only accept .png";
         name.required            = true;
         surname.required         = true;
         email.required           = true;
