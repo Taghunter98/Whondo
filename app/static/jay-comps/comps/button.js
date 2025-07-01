@@ -88,22 +88,26 @@ class ButtonComp extends Comp {
             class: "button",
             colour: "white",
             background: "black100",
-            padding: "9px 16px",
-            border: "border",
+            padding: "12px 28px",
+            border: "black100",
             borderRadius: 8,
             cursor: "pointer",
+            width: "100%",
+            fontSize: 16,
             transition: "background 0.1s ease-in-out",
         });
 
         const primaryHover = this.design.create({
             class: "button",
             pseudoClass: "hover",
+            border: "black",
             background: "black80",
         });
 
         const primaryActive = this.design.create({
             class: "button",
             pseudoClass: "active",
+            border: "black60",
             background: "black60"
         });
 
@@ -111,8 +115,11 @@ class ButtonComp extends Comp {
             class: "button",
             colour: "black100",
             background: "black10",
-            padding: "9px 16px",
+            width: "100%",
+            border: "border",
+            padding: "12px 28px",
             borderRadius: 8,
+            fontSize: 16,
             cursor: "pointer",
             transition: "background 0.1s ease-in-out"
         });

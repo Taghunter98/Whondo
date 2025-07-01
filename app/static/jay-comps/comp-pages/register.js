@@ -26,50 +26,37 @@ class RegisterPageComp extends Comp {
 
                 <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
 
-                <div class="modal">
+                <div class="modal" id="step1">
                     
                     <!-- step 1-->
-                    <h3 class="title">Personal Details</h3>
-                    <p class="text">Lets' find out a bit more about you!</p>
-                    <div class="row">
-                        <comp-input id="name" name="name"></comp-input>
-                        <comp-input id="surname" name="surname"></comp-input>
-                    </div>
-                    <div class="input">
-                        <comp-input id="email" name="email"></comp-input>
-                        <comp-input id="password" name="password"></comp-input>
-                        <comp-input id="confirm" name="confirm-password"></comp-input>
-                    </div>
-                    <div class="footer">
+
+                        <div class="textContainer">
+                            <p class="text">Step 1/2</p>
+                            <h3 class="title">Personal Details</h3>
+                            <p class="text">Lets' find out a bit more about you!</p>
+                        </div>
+
                         <div class="row">
-                            <comp-button class="back"></comp-button>
-                            <comp-button class="next"></comp-button>
+                            <comp-input id="name" name="name"></comp-input>
+                            <comp-input id="surname" name="surname"></comp-input>
+                        </div>
+
+                        <div class="input">
+                            <comp-input id="email" name="email"></comp-input>
+                            <comp-input id="password" name="password"></comp-input>
+                            <comp-input id="confirm" name="confirm-password"></comp-input>
+                        </div>
+                        <div class="footer">
+                            <div class="row">
+                                <comp-button class="back" id="back"></comp-button>
+                                <comp-button class="next" id="next"></comp-button>
+                            </div>
                             <p>Have an account?<a href="#" class="link"> Login</a></p>
                         </div>
                     </div>
-                </div>
-
-                <div class="modal">
-
-                    <div class="row">
-                        <comp-input id="age" name="age"></comp-input>
-                        <comp-input id="occupation" name="occupation"></comp-input>
-                    </div>
-                    
-                    <div class="input">
-                    <comp-input id="bio" name="bio"></comp-input>
-                    <comp-input id="file" class="file" name="file"></comp-input>
-                    </div>
-                    
-                    <div class="footer">
-                        <button-comp class="back"></button-comp>
-                        <button-comp id="submit"></button-comp>
-                        <p>Have an account?<a href="#" class="link"> Login</a></p>
-                    </div>
-                </div>
                 </form>
                 <div id="backgroundImage">
-                    <img src="" alt="">
+                    <img src="https://images.pexels.com/photos/4781426/pexels-photo-4781426.jpeg" alt="" class="image">
                 </div>
             </div>
         </div>
@@ -84,62 +71,55 @@ class RegisterPageComp extends Comp {
         
         const background = this.design.create({
             class: "background",
-            display: "flex",
-            flexDirection: "column",
             width: "100%",
             height: "100vh",
-            alignItems: "centre",
-            border: false,
-            gap: 0,
-            background: "black10",
-            justifyContent: "centre",
+            background: "black100",
         });
         
-        const backgroundMobile = this.design.create({
-            class: "background",
-            padding: 20,
-            width: "auto"
-        });
-
+        
         const container = this.design.create({
             class: "container",
             display: "flex",
-            flexDirection: "column",
-            width: "auto",
-            maxWidth: 500,
-            padding: 20,
-            alignItems: "center",
-            border: true,
-            borderRadius: 16,
-            gap: 15,
-            background: "white",
-            animation: fadeDown
-            
         });
 
-        const container2 = this.design.create({
-            class: "container2",
+        const backgroundImage = this.design.create({
+            class: "backgroundImage",
+            width: "100%",
+            height: "100vh",
+            paddingLeft: 400
+
+        });
+
+        const image = this.design.create({
+            class: "image",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover"
+        });
+
+        const modal = this.design.create({
+            class: "modal",
             display: "flex",
             flexDirection: "column",
-            width: "auto",
-            maxWidth: 500,
-            alignItems: "centre",
-            border: true,
-            borderRadius: 16,
-            gap: 15,
-            background: "none",
-            animation: fadeLeft
-
+            alignItems: "center",
+            width: 500,
+            background: "white",
+            position: "absolute",
+            zIndex: 800,
+            padding: 20,
+            borderRadius: 14,
+            marginLeft: 100,
+            marginTop: 100,
         });
 
-        const wrapper = this.design.create({
-            class: "wrapper",
+        const input = this.design.create({
+            class: "input",
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            alignItems: "centre",
-            padding: 15,
-            justifyContent: "centre",
+            gap: 10,
+            paddingTop: 20,
+            paddingBottom: 40,
         });
 
         const row = this.design.create({
@@ -151,42 +131,98 @@ class RegisterPageComp extends Comp {
             justifyContent: "space-between"
         });
 
-        const regis = this.design.create({
-            class: "reg",
-            display: "flex",
-            flexDirection: "column",
-            width: "auto",
-            alignItems: "centre",
-            gap: 15
-        });
-
         const title = this.design.create({
             class: "title",
-            alignSelf: "flex-start"
+            fontWeight: "bold"
         });
 
         const link = this.design.create({
 
             class: "link",
-            colour: "black",
+            colour: "black80",
             fontWeight: "bold", 
-            textDecoration: "none",
+            textDecoration: "underline",
+            cursor: "pointer",
+        });
+
+        const linkHover = this.design.create({
+            class: "link",
+            pseudoClass: "hover",
+            colour: "black100",
         });
 
 
+        const textContainer = this.design.create({
+            class: "textContainer",
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            gap: 5,
+        });
+
+        const text = this.design.create({
+            class: "text",
+            colour: "black60"
+        });
+
+        const footer = this.design.create({
+            class: "footer",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "centre",
+            width: "100%",
+            gap: 10,
+        });
+
+        //media query
+
+        const containerMob = this.design.create({
+            class: "container",
+            flexDirection: "column",
+            alignItems: "centre"
+        });
+
+        const backgroundImageMob =  this.design.create({
+            class: "backgroundImage",
+            height: "40vh",
+            margin: 0,
+            padding: 0
+        });
+
+        const modalMob = this.design.create({
+            class: "modal",
+            width: "auto",
+            margin: 0,
+            marginTop: 200
+        });
+        
+
+
         return /* css */ `
-        ${background}
-        ${title}
+       ${background}
+
         ${container}
-        ${wrapper}
-        ${regis}
+
+        ${backgroundImage}
+        ${image}
+
+        ${modal}
+        ${input}
         ${row}
-        ${container2}
         ${link}
+        ${linkHover}
+
+        ${textContainer}
+        ${title}
+        ${text}
+
+        ${footer}
         
 
         @media (max-width: 600px){
-            ${backgroundMobile}
+            ${containerMob}
+            ${backgroundImageMob}
+            ${modalMob}
         }
         `;
 
@@ -200,20 +236,21 @@ class RegisterPageComp extends Comp {
 
     hook(){
 
-        const compButton = this.shadowRoot.getElementById("submit");
+        const backButton = this.shadowRoot.querySelector(".back");
+        const nextButton = this.shadowRoot.querySelector(".next");
         const email      = this.shadowRoot.getElementById("email");
         const password   = this.shadowRoot.getElementById("password");
         const name       = this.shadowRoot.getElementById("name");
         const surname    = this.shadowRoot.getElementById("surname");
-        const age        = this.shadowRoot.getElementById("age");
-        const occupation = this.shadowRoot.getElementById("occupation");
         const bio        = this.shadowRoot.getElementById("bio");
         const file       = this.shadowRoot.getElementById("file");
         const result     = this.shadowRoot.getElementById('result');
 
         
-        compButton.buttonText    = "Register";
-        compButton.buttonVarient = 4;
+        
+        backButton.buttonText    = "Back";
+        nextButton.buttonText    = "Next";
+        backButton.buttonVarient = 2;
         email.inputLabel         = "Email";
         email.inputPrompt        = "Enter email";
         email.inputType          = "email";
@@ -225,11 +262,6 @@ class RegisterPageComp extends Comp {
         name.inputPrompt         = "Enter your name";
         surname.inputLabel       = "Surname";
         surname.inputPrompt      = "Enter you surname";
-        age.inputLabel           = "Age";
-        age.inputPrompt          = "Enter you age";
-        age.inputType            = "number";
-        occupation.inputLabel    = "Occupation";
-        occupation.inputPrompt   = "eg. student ";
         bio.inputLabel           = "Bio";
         bio.inputPrompt          = "Tell us more about you!";
         bio.inputType            = "textarea";
@@ -240,8 +272,6 @@ class RegisterPageComp extends Comp {
         surname.required         = true;
         email.required           = true;
         password.required        = true;
-        age.required             = true;
-        occupation.required      = true;
 
         /**
          * 
