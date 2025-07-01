@@ -106,6 +106,7 @@ def login():
                 current_app.logger.error(
                     f"User: {email} access denied, incorrect password"
                 )
+                return jsonify({"error": "Incorrect password", "status": False})
 
         else:
             current_app.logger.error(f"User: {email} not found")
