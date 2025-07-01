@@ -12,4 +12,8 @@ import './comps/navbar.js';
 
 // Pages
 import './comp-pages/login.js';
+
+import './comp-pages/register.js';
+
 import './comp-pages/create.js';
+
