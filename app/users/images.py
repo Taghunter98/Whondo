@@ -87,7 +87,7 @@ def upload_file(file: object, email: str, dir: str) -> str:
         try:
             date: str = str(datetime.now())[:10]
             path: str = os.path.join(
-                f"{current_app.config['UPLOAD_FOLDER']}/Profile", email
+                f"{current_app.config['UPLOAD_FOLDER']}/Profile", f"{email}/{dir}"
             )
 
             if not os.path.exists(path):
