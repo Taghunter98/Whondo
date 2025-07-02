@@ -40,11 +40,27 @@ def advert():
         if not lID:
             current_app.logger.warning("Unauthorised landlord login attempt")
             return jsonify({"error": "Unauthorised user is not a landlord"}), 401
+        
+        # Files upload -> move this to images when refactoring
+        uploaded_files: list = []
+        for file in images:
+            uploaded_files.append(upload_file(file, email))
+
+        image_paths: list = []
+        for i in range(10):
+            if i < len(uploaded_files):
+                image_paths.append(uploaded_files[i])
+            else:
+                image_paths.append("NULL")
+        
+        query_images: str = ", ".join(img for img in image_paths)
 
         connection: object = connect()
         cursor: object = connection.cursor()
 
-        query: str = ""
+        query: str = """
+        INSERT INTO Adverts
+        """
 
         cursor.execute()
 
@@ -53,11 +69,6 @@ def advert():
 
         cursor.close()
         connection.close()
-
-        # Files upload
-        uploaded_files: list = []
-        for file in images:
-            uploaded_files.append(upload_file(file, email))
 
     else:
         redirect("/")

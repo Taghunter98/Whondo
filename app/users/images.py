@@ -66,7 +66,7 @@ def validate_extention(filename: str) -> bool:
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def upload_file(file: object, email: str, dir: str) -> str:
+def upload_file(file: object, email: str) -> str:
     """
     The function handles file upload and creates a directory for the user's
     profile image within /Uploads/Profile/.
@@ -87,7 +87,7 @@ def upload_file(file: object, email: str, dir: str) -> str:
         try:
             date: str = str(datetime.now())[:10]
             path: str = os.path.join(
-                f"{current_app.config['UPLOAD_FOLDER']}/Profile", f"{email}/{dir}"
+                f"{current_app.config['UPLOAD_FOLDER']}/Profile", email
             )
 
             if not os.path.exists(path):
@@ -96,7 +96,7 @@ def upload_file(file: object, email: str, dir: str) -> str:
             file.save(os.path.join(path, f"{date}_{email}_{file.filename}"))
 
             current_app.logger.info("File stored successfully")
-            return f"Profile/{email}/{dir}/{date}_{email}_{file.filename}"
+            return f"Profile/{email}/{date}_{email}_{file.filename}"
 
         except Exception:
             current_app.logger.error("Can't store file")

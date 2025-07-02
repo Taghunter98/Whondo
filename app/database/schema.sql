@@ -64,11 +64,63 @@ CREATE TABLE Property (
 ALTER TABLE Property AUTO_INCREMENT=100;
 
 CREATE TABLE Keywords (
-    kID INT UNIQUE NOT NULL AUTO_INCREMENT
+    kID INT PRIMARY KEY AUTO_INCREMENT,
+    house BOOLEAN,
+    flat BOOLEAN,
+    bungalow BOOLEAN,
+    studio BOOLEAN,
+    bedsit BOOLEAN,
+    maisonette BOOLEAN,
+    shared_house BOOLEAN,
+    student_accommodation BOOLEAN,
+    en_suite BOOLEAN,
+    penthouse BOOLEAN,
+    furnished BOOLEAN,
+    unfurnished BOOLEAN,
+    bills_included BOOLEAN,
+    all_inclusive BOOLEAN,
+    double_room BOOLEAN,
+    single_room BOOLEAN,
+    balcony BOOLEAN,
+    garden BOOLEAN,
+    parking BOOLEAN,
+    pets_allowed BOOLEAN,
+    pet_friendly BOOLEAN,
+    wifi_included BOOLEAN,
+    utilities_included BOOLEAN,
+    short_let BOOLEAN,
+    long_let BOOLEAN,
+    no_deposit BOOLEAN,
+    low_deposit BOOLEAN,
+    zero_deposit BOOLEAN,
+    dss_accepted BOOLEAN,
+    guarantor_required BOOLEAN,
+    no_guarantor BOOLEAN,
+    student_friendly BOOLEAN,
+    city_centre BOOLEAN,
+    near_university BOOLEAN,
+    close_to_station BOOLEAN,
+    bus_route BOOLEAN,
+    zone_1 BOOLEAN,
+    zone_2 BOOLEAN,
+    zone_3 BOOLEAN,
+    zone_4 BOOLEAN,
+    cycle_friendly BOOLEAN,
+    LGBTQ_friendly BOOLEAN,
+    vegan_household BOOLEAN,
+    non_smoking BOOLEAN,
+    smoking_allowed BOOLEAN,
+    social_house BOOLEAN,
+    quiet_house BOOLEAN,
+    wheelchair_accessible BOOLEAN,
+    lift BOOLEAN,
+    ground_floor BOOLEAN,
+    bike_storage BOOLEAN
 );
 
 ALTER TABLE Keywords AUTO_INCREMENT=100;
 
+-- Fix this later add on delete cascade
 CREATE TABLE APIKeys (
     aID INT UNIQUE NOT NULL AUTO_INCREMENT,
     uID INT UNIQUE NOT NULL,
@@ -85,5 +137,20 @@ CREATE TABLE Adverts (
     kID INT UNIQUE NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    
+    tennants INT,
+    image1 VARCHAR(255),
+    image2 VARCHAR(255),
+    image3 VARCHAR(255),
+    image4 VARCHAR(255),
+    image5 VARCHAR(255),
+    image6 VARCHAR(255),
+    image7 VARCHAR(255),
+    image8 VARCHAR(255),
+    image9 VARCHAR(255),
+    image10 VARCHAR(255),
+    PRIMARY KEY (adID),
+    FOREIGN KEY (lID) REFERENCES Landlords,
+    FOREIGN KEY (kID) REFERENCES Keywords
 );
+
+ALTER TABLE Adverts AUTO_INCREMENT=100;
