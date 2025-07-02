@@ -212,7 +212,7 @@ class CookieBanner extends Comp {
 
         rejectBtn.addEventListener("click", () => {
             
-            document.cookie = "cookieConsent=rejected; path=/; max-age=1800";
+            document.cookie = "cookieConsent=rejected; path=/; max-age=31536000";
 
             document.cookie = "uID=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 
@@ -227,7 +227,7 @@ class CookieBanner extends Comp {
 
         acceptBtn.addEventListener("click", () => {
             
-            document.cookie = "cookieConsent=accepted; path=/; max-age=1800";
+            document.cookie = "cookieConsent=accepted; path=/; max-age=31536000";
 
             banner.style.animation = "slideDown 0.5s ease";
             banner.addEventListener("animationend", () => {
