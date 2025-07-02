@@ -9,13 +9,31 @@ Version:     1.0
 Description: Provides a function to store keywords in the database.
 """
 
+from flask import current_app
+
+from app.database.db_connect import connect
+
+
 def store_keywords(keywords: list) -> bool:
-    query = []
+    fields = []
     for key in keywords:
         query.append(key)
 
-    query_str = f"INSERT INTO Keywords ({", ".join(key for key in query)}) VALUES({", ".join("True" for i in range(len(keywords)))});"
-    print(query_str)
+    try:
+        connection: object = connect()
+        cursor: object = connection.cursor()
 
-keys = ["flat", "pet_friendly", "furnished"]
-store_keywords(keys)
+        query = f"INSERT INTO Keywords ({', '.join(f for f in fields)}) VALUES({', '.join('1' for i in range(len(keywords)))});"
+
+        cursor.execute(query)
+
+        inserted: bool = cursor.rowcount == 1
+
+        cursor.close()
+        connection.close()
+
+        return inserted
+
+    except Exception as err:
+        current_app.logger.error(f"Insert failed: {err}")
+        return False

@@ -17,12 +17,13 @@ from app.users.images import upload_file
 
 advert_bp = Blueprint("advert_bp", __name__)
 
+
 @advert_bp.route("/advert/new", methods=["POST", "GET"])
 def advert():
     if request.method == "POST":
-        if not session['email']:
+        if not session["email"]:
             redirect("/")
-        
+
         data: object = request.get_json()
         title: str = data.get("title")
         description: str = data.get("description")
@@ -34,13 +35,13 @@ def advert():
             return jsonify({"error": "Required fields are not provided"}), 400
 
         # Authenticate landlord
-        email: str = session['email']
+        email: str = session["email"]
         lID: int = auth_landlord(email)
 
         if not lID:
             current_app.logger.warning("Unauthorised landlord login attempt")
             return jsonify({"error": "Unauthorised user is not a landlord"}), 401
-        
+
         # Files upload -> move this to images when refactoring
         uploaded_files: list = []
         for file in images:
@@ -52,7 +53,7 @@ def advert():
                 image_paths.append(uploaded_files[i])
             else:
                 image_paths.append("NULL")
-        
+
         query_images: str = ", ".join(img for img in image_paths)
 
         connection: object = connect()

@@ -28,7 +28,7 @@ def auth_landlord(email: str) -> int:
     if not email:
         current_app.logger.error("Email not supplied")
         return None
-    
+
     uID: int = authenticate(email)
 
     connection: object = connect()

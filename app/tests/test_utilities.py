@@ -71,6 +71,7 @@ class TestEmailExists(unittest.TestCase):
         result: bool = check_email_exits("notinthedb@test.com")
         self.assertFalse(result, f"Function is returning: {result}")
 
+
 class TestAuthLandlordID(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
