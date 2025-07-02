@@ -24,18 +24,18 @@ class RegisterPageComp extends Comp {
 
             <div class="container">
 
+                <div class="modal">
 
-                
-                    
-                        <div class="modal" id="step1">
-                            
-                            <!-- step 1-->
+                    <form id="register" action="/register" enctype="multipart/form-data" method="post">
 
+                        <!-- step 1-->
+                        <div id="step1" class="step">
                             <div class="textContainer">
                                 <p class="text">Step 1/2</p>
-                                <h3 class="title">Personal Details</h3>
-                                <p class="text">Lets' find out a bit more about you!</p>
+                                <h3 class="title">Personal Details</h3> 
                             </div>
+
+                            <p class="text">Lets' find out a bit more about you!</p>
 
                             <div class="row">
                                 <comp-input id="name" name="name"></comp-input>
@@ -45,17 +45,48 @@ class RegisterPageComp extends Comp {
                             <div class="input">
                                 <comp-input id="email" name="email"></comp-input>
                                 <comp-input id="password" name="password"></comp-input>
-                                <comp-input id="confirm" name="confirm-password"></comp-input>
+                                <comp-input id="confirm" name="confirm"></comp-input>
                             </div>
+
                             <div class="footer">
                                 <div class="row">
-                                    <comp-button class="back" id="backBtn"></comp-button>
-                                    <comp-button class="next" id="nextBtn"></comp-button>
+                                    <comp-button class="back" id="backBtn" type=button></comp-button>
+                                    <comp-button class="next" id="nextBtn" type=button></comp-button>
                                 </div>
-                                    <p>Have an account?<a href="#" class="link"> Login</a></p>
+                                <p>Have an account?<a href="#" class="link"> Login</a></p>
+                            </div>
                         </div>
-                    
-                
+
+                        <div id="step2" class="step hidden" hidden>
+
+                            <div class="textContainer">
+                                <p class="text">Step 2/2</p>
+                                <h3 class="title">Personalise Profile</h3> 
+                            </div>
+
+                            <p class="text">Lets' find out a bit more about you!</p>
+
+                             <div class="row">
+                                <comp-input id="age" name="age"></comp-input>
+                                <comp-input id="occupation" name="occupation"></comp-input>
+                            </div>
+
+                            <div class="input">
+                                <comp-input id="bio" name="bio"></comp-input>
+                                <comp-input id="picture" name="picture"></comp-input>
+                            </div>
+
+                            <div class="footer">
+                                <div class="row">
+                                    <comp-button class="back" id="backBtn2" type="button"></comp-button>
+                                    <comp-button class="submit" id="submit" type="submit"></comp-button>
+                                </div>
+                                <p>Have an account?<a href="#" class="link"> Login</a></p>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="backgroundImage">
                 <img class="image" src="https://images.pexels.com/photos/4569340/pexels-photo-4569340.jpeg">
@@ -83,19 +114,11 @@ class RegisterPageComp extends Comp {
             display: "flex",
         });
 
-        const modalWrapper = this.design.create({
-            class: "modalWrapper",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "centre",
-        });
-
         const backgroundImage = this.design.create({
             class: "backgroundImage",
             width: "100%",
             height: "100vh",
-            paddingLeft: 400
-
+            paddingLeft: 400,
         });
 
         const image = this.design.create({
@@ -109,7 +132,7 @@ class RegisterPageComp extends Comp {
             class: "modal",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "centre",
             width: 500,
             background: "white",
             position: "absolute",
@@ -125,7 +148,7 @@ class RegisterPageComp extends Comp {
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            gap: 10,
+            gap: 20,
             paddingTop: 20,
             paddingBottom: 40,
         });
@@ -170,7 +193,10 @@ class RegisterPageComp extends Comp {
 
         const text = this.design.create({
             class: "text",
-            colour: "black60"
+            colour: "black60",
+            display: "flex",
+            alignSelf: "start",
+            marginBottom: 10
         });
 
         const footer = this.design.create({
@@ -210,7 +236,6 @@ class RegisterPageComp extends Comp {
        ${background}
 
         ${container}
-        ${modalWrapper}
 
         ${backgroundImage}
         ${image}
@@ -245,20 +270,32 @@ class RegisterPageComp extends Comp {
 
     hook(){
 
-        const backButton = this.shadowRoot.getElementById("backBtn");
-        const nextButton = this.shadowRoot.getElementById("nextBtn");
-        const email      = this.shadowRoot.getElementById("email");
-        const password   = this.shadowRoot.getElementById("password");
-        const name       = this.shadowRoot.getElementById("name");
-        const surname    = this.shadowRoot.getElementById("surname");
-        const result     = this.shadowRoot.getElementById('result');
+        const form         = this.shadowRoot.getElementById("registerForm");
+        const step1        = this.shadowRoot.getElementById("step1");
+        const step2        = this.shadowRoot.getElementById("step2");
+        const backButton   = this.shadowRoot.querySelector(".back");
+        const nextButton   = this.shadowRoot.getElementById("nextBtn");
+        const submitButton = this.shadowRoot.getElementById("submit");
+        const email        = this.shadowRoot.getElementById("email");
+        const password     = this.shadowRoot.getElementById("password");
+        const confirmPass  = this.shadowRoot.getElementById("confirm");
+        const name         = this.shadowRoot.getElementById("name");
+        const surname      = this.shadowRoot.getElementById("surname");
+        const age          = this.shadowRoot.getElementById("age");
+        const occupation   = this.shadowRoot.getElementById("occupation");
+        const bio          = this.shadowRoot.getElementById("bio");
+        const picture      = this.shadowRoot.getElementById("picture");
 
         
+        //button section
+        backButton.text      = "Back";
+        nextButton.text      = "Next";
+        backButton.variant   = 2;
+        nextButton.variant   = 1;
+        submitButton.text    = "submit";
+        submitButton.variant = 1;
         
-        backButton.text        = "Back";
-        nextButton.text        = "Next";
-        backButton.variant     = 2;
-        nextButton.variant     = 1;
+        //input section
         email.label            = "Email";
         email.prompt           = "Enter email";
         email.type             = "email";
@@ -266,14 +303,32 @@ class RegisterPageComp extends Comp {
         password.prompt        = "password";
         password.type          = "password";
         password.enableEntropy = true;
+        confirmPass.label      = "Confirm Password";
+        confirmPass.type       = "password";
+        confirmPass.prompt     = "confirm password";
         name.label             = "Name";
         name.prompt            = "Enter your name";
         surname.label          = "Surname";
         surname.prompt         = "Enter you surname";
-        name.required          = true;
-        surname.required       = true;
-        email.required         = true;
-        password.required      = true;
+        age.label              = "Age";
+        age.prompt             = "Enter your age";
+        age.type               = "number";
+        occupation.label       = "occupation";
+        occupation.prompt      = "Eg. student";
+        occupation.type        = "text";
+        bio.label              = "Bio";
+        bio.prompt             = "Tell us more about you...";
+        bio.type               = "textarea";
+        picture.label          = "Profile picture";
+        picture.prompt         = "Upload photo";
+        picture.type           = "file";
+
+        //required field
+        name.required        = true;
+        surname.required     = true;
+        email.required       = true;
+        password.required    = true;
+        confirmPass.required = true;
 
         /**
          * 

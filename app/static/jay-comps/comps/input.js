@@ -6,9 +6,9 @@ class InputComp extends Comp {
 
         super();
         
-        this.inputLabel_    = "";
-        this.inputType_     = "text";
-        this.inputPrompt_   = "Enter text";
+        this.label_         = "Label";
+        this.type_          = "text";
+        this.prompt_        = "Enter text";
         this.enableEntropy_ = false;
         this.required_      = false;
 
@@ -20,62 +20,63 @@ class InputComp extends Comp {
     
     }
 
-    set inputLabel(newInputLabel) {
+    set label(newLabel) {
 
-        this.inputLabel_ = newInputLabel;
+        this.label_ = newLabel;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    set inputType(newInputType) {
+    set type(newType) {
 
-        this.inputType_ = newInputType;
+        this.type_ = newType;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    set inputPrompt(newInputPrompt) {
+    set prompt(newPrompt) {
 
-        this.inputPrompt_ = newInputPrompt;
+        this.prompt_ = newPrompt;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    set enableEntropy(val){
+    set enableEntropy(flag){
 
-        this.enableEntropy_ = val;
+        this.enableEntropy_ = flag;
         this.update(this.createHTML(), this.css_);
     
     }
 
-    set required(val){
+    set required(flag){
 
-        this.required_ = val;
-        this.update(this.createHTML(), this.css_);
+        this.required_ = flag;
+        this.update(this.createHTML(), this.css);
+    
+    }
+        
+
+    get label() {
+
+        return this.label_;
     
     }
 
-    get inputLabel() {
+    get type() {
 
-        return this.inputLabel_;
+        return this.type_;
     
     }
 
-    get inputType() {
+    get prompt() {
 
-        return this.inputType_;
+        return this.prompt_;
     
     }
 
-    get inputPrompt() {
+    get value() {
 
-        return this.inputPrompt_;
-    
-    }
-
-    get inputValue() {
-
-        return this.shadowRoot.querySelector(".inputValue").value;
+        return this.shadowRoot.querySelector("input").value;
 
     }
 
@@ -93,45 +94,42 @@ class InputComp extends Comp {
 
 
     createHTML() {
-        
+
         let inputField;
 
-        if(this.inputType_ === "textarea"){
+        if(this.type_ === "textarea"){
 
-            inputField = `<textarea class="inputValue areaInput" placeholder="${this.inputPrompt_}" row="6"></textarea>`;
-        
-    
-        } else if (this.inputType_ === "file"){
+            inputField = `<textarea class="inputValue areaInput" placeholder="${this.prompt_}" row="6"></textarea>`;
 
-            inputField = `
-            <label class="fileWrapper">
+        } else if (this.type === "file"){
+
+            inputField = ` <label class="fileWrapper">
                 <div class="fileBox">
                     <span class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
                     </span>
-                    <span class="filePrompt">${this.inputPrompt_}</span>
+                    <span class="filePrompt">${this.prompt_}</span>
                 </div>
                 <input class="inputValue fileInput" type="file" accept=".png" hidden >
-            </label>
-            `;
-        
+            </label>`;
+
         }
-        
+
         else {
 
-            inputField = `<input class="inputValue" type="${this.inputType_}" placeholder="${this.inputPrompt_}">`;
+            inputField = `<input class="inputValue" type="${this.type_}" placeholder="${this.prompt_}">`;
 
-            if (this.inputType_ === "password" && this.enableEntropy_){
+            if (this.type_ === "password" && this.enableEntropy_){
 
                 inputField += `<div class="hint" style="display: none">Hint: Use a mix of letters, numbers, and symbols</div>`;
-            
+
             }
-        
+
         }
 
         return /* html */ `
         <div class="inputContainer">
-            <label>${this.inputLabel_}</label>
+            <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
             ${inputField}
         </div>
         `;
@@ -155,7 +153,7 @@ class InputComp extends Comp {
         const input = this.design.create({
             class: "inputValue",
             display: "block",
-            fontSize: 12,
+            fontSize: 16,
             width: "100%",
             padding: "8px 12px",
             border: "border",
@@ -181,18 +179,16 @@ class InputComp extends Comp {
         });
 
         const areaInput = this.design.create({
-
             class: "areaInput",
             resize: "none",
             height: "80px",
             width: "100%",
-
         });
 
         const fileWrapper = this.design.create({
             class: "fileWrapper",
             width: "100%",
-            cursor: "pointer",
+            cursor: "pointer"
         });
 
         const fileBox = this.design.create({
@@ -208,7 +204,7 @@ class InputComp extends Comp {
             background: "white",
             gap: 8,
             colour: "black60",
-            textAlign: "centre",
+            textAlign: "centre", 
         });
 
         const icon = this.design.create({
@@ -265,6 +261,7 @@ class InputComp extends Comp {
             paddingLeft: 2,
         });
 
+
         return /* css */ `
         
         ${inputContainer}
@@ -272,11 +269,13 @@ class InputComp extends Comp {
         ${input}
         ${inputHover}
         ${inputActive}
+
         ${hint}
         ${strengthVeryWeak}
         ${strengthRed}
         ${strengthYellow}
         ${strengthGreen}
+
         ${fileWrapper}
         ${fileBox}
         ${icon}
@@ -284,13 +283,14 @@ class InputComp extends Comp {
         ${fileStyle}
         ${fileHover}
         ${fileActive}
+
         ${areaInput}
 
         `;
     
     }
 
-    hook() {
+    hook(){
 
         const fileInput  = this.shadowRoot.querySelector(".fileInput");
         const filePrompt = this.shadowRoot.querySelector(".filePrompt");
@@ -308,7 +308,7 @@ class InputComp extends Comp {
                 
                 }else {
 
-                    filePrompt.textContent = this.inputPrompt_;
+                    filePrompt.textContent = this.prompt_;
                     
                 
                 }
@@ -318,7 +318,7 @@ class InputComp extends Comp {
         }
 
 
-        if(this.inputType_ === "password" && this.enableEntropy_){
+        if(this.type_ === "password" && this.enableEntropy_){
 
             const inputEn = this.shadowRoot.querySelector(".inputValue");
             const hintEl  = this.shadowRoot.querySelector(".hint");
