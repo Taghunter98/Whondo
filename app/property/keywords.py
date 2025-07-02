@@ -17,7 +17,7 @@ from app.database.db_connect import connect
 def store_keywords(keywords: list) -> bool:
     fields = []
     for key in keywords:
-        query.append(key)
+        fields.append(key)
 
     try:
         connection: object = connect()
