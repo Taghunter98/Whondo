@@ -116,4 +116,4 @@ class TestKeywords(unittest.TestCase):
             "bike_storage",
         ]
 
-        self.assertIsNotNone(type(store_keywords(ALL_KEYWORDS)), "Keywords were not stored")
+        self.assertIsNotNone(store_keywords(ALL_KEYWORDS), "Keywords were not stored")

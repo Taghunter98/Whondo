@@ -25,7 +25,7 @@ def store_keywords(keywords: list) -> int | None:
     cursor.execute(query)
     connection.commit()
 
-    kID: int = cursor.lastrowid()
+    kID: int = cursor.lastrowid
 
     cursor.close()
     connection.close()
