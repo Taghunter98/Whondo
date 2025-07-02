@@ -12,7 +12,7 @@ Description: Provides a function to store keywords in the database.
 from app.database.db_connect import connect
 
 
-def store_keywords(keywords: list) -> bool:
+def store_keywords(keywords: list) -> int | None:
     fields = []
     for key in keywords:
         fields.append(key)
@@ -25,9 +25,9 @@ def store_keywords(keywords: list) -> bool:
     cursor.execute(query)
     connection.commit()
 
-    inserted: bool = cursor.rowcount == 1
+    kID: int = cursor.lastrowid()
 
     cursor.close()
     connection.close()
 
-    return inserted
+    return kID

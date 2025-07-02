@@ -14,6 +14,7 @@ from flask import Blueprint, request, jsonify, session, redirect, current_app
 from app.utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
 from app.users.images import upload_file
+from app.property.keywords import store_keywords
 
 advert_bp = Blueprint("advert_bp", __name__)
 
