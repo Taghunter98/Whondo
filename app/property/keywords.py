@@ -23,6 +23,7 @@ def store_keywords(keywords: list) -> bool:
     query = f"INSERT INTO Keywords ({', '.join(f for f in fields)}) VALUES({', '.join('1' for i in range(len(keywords)))});"
 
     cursor.execute(query)
+    connection.commit()
 
     inserted: bool = cursor.rowcount == 1
 
