@@ -20,14 +20,14 @@ def auth_landlord(email: str) -> int:
         current_app.logger.error("Email not supplied")
         return None
     
-    uID: int = authenticate(email, (uID,))
+    uID: int = authenticate(email)
 
     connection: object = connect()
     cursor: object = connection.cursor()
 
     query: str = "SELECT l.lID, l.uID from Landlords l INNER JOIN Users u ON l.uID = u.uID WHERE u.uID = %s;"
 
-    cursor.execute(query)
+    cursor.execute(query, (uID,))
     result = cursor.fetchone()
 
     cursor.close()
