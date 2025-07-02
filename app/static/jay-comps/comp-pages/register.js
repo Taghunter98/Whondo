@@ -25,36 +25,37 @@ class RegisterPageComp extends Comp {
             <div class="container">
 
 
-                <form id="register" class="reg" action="/register" enctype="multipart/form-data" method="post">
+                
+                    
+                        <div class="modal" id="step1">
+                            
+                            <!-- step 1-->
 
-                    <div class="modal" id="step1">
-                        
-                        <!-- step 1-->
-
-                        <div class="textContainer">
-                            <p class="text">Step 1/2</p>
-                            <h3 class="title">Personal Details</h3>
-                            <p class="text">Lets' find out a bit more about you!</p>
-                        </div>
-
-                        <div class="row">
-                            <comp-input id="name" name="name"></comp-input>
-                            <comp-input id="surname" name="surname"></comp-input>
-                        </div>
-
-                        <div class="input">
-                            <comp-input id="email" name="email"></comp-input>
-                            <comp-input id="password" name="password"></comp-input>
-                            <comp-input id="confirm" name="confirm-password"></comp-input>
-                        </div>
-                        <div class="footer">
-                            <div class="row">
-                                <comp-button class="back" id="backBtn"></comp-button>
-                                <comp-button class="next" id="nextBtn"></comp-button>
+                            <div class="textContainer">
+                                <p class="text">Step 1/2</p>
+                                <h3 class="title">Personal Details</h3>
+                                <p class="text">Lets' find out a bit more about you!</p>
                             </div>
-                                <p>Have an account?<a href="#" class="link"> Login</a></p>
-                    </div>
-                </form>
+
+                            <div class="row">
+                                <comp-input id="name" name="name"></comp-input>
+                                <comp-input id="surname" name="surname"></comp-input>
+                            </div>
+
+                            <div class="input">
+                                <comp-input id="email" name="email"></comp-input>
+                                <comp-input id="password" name="password"></comp-input>
+                                <comp-input id="confirm" name="confirm-password"></comp-input>
+                            </div>
+                            <div class="footer">
+                                <div class="row">
+                                    <comp-button class="back" id="backBtn"></comp-button>
+                                    <comp-button class="next" id="nextBtn"></comp-button>
+                                </div>
+                                    <p>Have an account?<a href="#" class="link"> Login</a></p>
+                        </div>
+                    
+                
             </div>
             <div class="backgroundImage">
                 <img class="image" src="https://images.pexels.com/photos/4569340/pexels-photo-4569340.jpeg">
@@ -80,6 +81,13 @@ class RegisterPageComp extends Comp {
         const container = this.design.create({
             class: "container",
             display: "flex",
+        });
+
+        const modalWrapper = this.design.create({
+            class: "modalWrapper",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "centre",
         });
 
         const backgroundImage = this.design.create({
@@ -202,6 +210,7 @@ class RegisterPageComp extends Comp {
        ${background}
 
         ${container}
+        ${modalWrapper}
 
         ${backgroundImage}
         ${image}
