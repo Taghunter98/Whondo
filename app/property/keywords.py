@@ -13,6 +13,15 @@ from app.database.db_connect import connect
 
 
 def store_keywords(keywords: list) -> int:
+    """
+    The function stores the keywords provided in the database and returns the kID.
+
+    Args:
+        keywords (list): List of keywords
+
+    Returns:
+        int: The keyword ID (kID)
+    """
     fields = []
     for key in keywords:
         fields.append(key)
