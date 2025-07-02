@@ -273,7 +273,7 @@ class RegisterPageComp extends Comp {
         const form         = this.shadowRoot.getElementById("registerForm");
         const step1        = this.shadowRoot.getElementById("step1");
         const step2        = this.shadowRoot.getElementById("step2");
-        const backButton   = this.shadowRoot.querySelector(".back");
+        const backButton   = this.shadowRoot.querySelectorAll(".back");
         const nextButton   = this.shadowRoot.getElementById("nextBtn");
         const submitButton = this.shadowRoot.getElementById("submit");
         const email        = this.shadowRoot.getElementById("email");
@@ -288,9 +288,13 @@ class RegisterPageComp extends Comp {
 
         
         //button section
-        backButton.text      = "Back";
+        backButton.forEach(btn => {
+
+            btn.text    = "back";
+            btn.variant = 2;
+        
+        });
         nextButton.text      = "Next";
-        backButton.variant   = 2;
         nextButton.variant   = 1;
         submitButton.text    = "submit";
         submitButton.variant = 1;

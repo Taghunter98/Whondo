@@ -76,7 +76,7 @@ class ButtonComp extends Comp {
     
     createHTML() {
 
-        return /* html */ `<button id="button" class="button">${this.text_}</button>`;
+        return /* html */ `<button class="button">${this.text_}</button>`;
     
     }
 
