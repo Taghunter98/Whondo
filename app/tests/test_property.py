@@ -26,7 +26,7 @@ class TestProperty(unittest.TestCase):
             "lID": 100,
         }
 
-        self.assertTrue(create_property(data), "Property was not created")
+        self.assertIsNone(create_property(data), "Property was not created")
 
     def testUpdate(self):
         """

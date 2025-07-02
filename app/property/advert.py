@@ -60,6 +60,13 @@ def advert():
         connection: object = connect()
         cursor: object = connection.cursor()
 
+        kID: int = store_keywords(keywords)
+
+        if not kID:
+            return jsonify({"error": "Keyword upload failed"}), 400
+        
+        
+
         query: str = """
         INSERT INTO Adverts
         """

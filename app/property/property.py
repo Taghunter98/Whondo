@@ -14,15 +14,15 @@ from flask import current_app
 from app.database.db_connect import connect
 
 
-def create_property(values: dict) -> bool:
+def create_property(values: dict) -> int:
     """
-    The function inserts a new Property object into the database and returns the result.
+    The function inserts a new Property object into the database and returns the ID.
 
     Args:
         values (dict): Dictionary of sql values.
 
     Returns:
-        bool: Result
+        bool: Property ID (pID)
     """
     query: str = """
     INSERT INTO Property (propType, bedrooms, bathrooms, name, street, town, county, postcode, lID)
@@ -48,16 +48,16 @@ def create_property(values: dict) -> bool:
         cursor.execute(query, params)
         connection.commit()
 
-        inserted: bool = cursor.rowcount == 1
+        pID: int = cursor.lastrowid
 
         cursor.close()
         connection.close()
 
-        return inserted
+        return pID
 
     except Exception as err:
         current_app.logger.error(f"Insert failed: {err}")
-        return False
+        return -1
 
 
 def delete_property(lID: int) -> bool:
