@@ -12,7 +12,7 @@ Description: Provides a function to store keywords in the database.
 from app.database.db_connect import connect
 
 
-def store_keywords(keywords: list) -> int | None:
+def store_keywords(keywords: list) -> int:
     fields = []
     for key in keywords:
         fields.append(key)
