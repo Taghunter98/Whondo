@@ -18,7 +18,7 @@ class ButtonComp extends Comp {
         super();                                                    
 
         this.text_    = "This is a button";
-        this.varient_ = 1;    
+        this.variant_ = 1;    
         
         this.name_ = "Button";
         this.html_ = this.createHTML();
@@ -41,13 +41,13 @@ class ButtonComp extends Comp {
     }
 
     /**
-     * @brief A setter method that sets the Comp's button varient (1, 2, 3).
+     * @brief A setter method that sets the Comp's button variant (1, 2, 3).
      * 
-     * @param {string} newVarient
+     * @param {string} newVariant
      */
-    set varient(newVarient) {
+    set variant(newVariant) {
 
-        this.varient_ = newVarient;
+        this.variant_ = newVariant;
         this.update(this.html_, this.createCSS());
     
     }
@@ -64,13 +64,13 @@ class ButtonComp extends Comp {
     }
 
     /**
-     * @brief A getter method that returns the Comp's button varient.
+     * @brief A getter method that returns the Comp's button variant.
      * 
-     * @returns {number} Comp's button varient. 
+     * @returns {number} Comp's button variant. 
      */
-    get varient() {
+    get variant() {
 
-        return this.varient_;
+        return this.variant_;
     
     }
     
@@ -136,14 +136,14 @@ class ButtonComp extends Comp {
             background: "black40"
         });
         
-        if (this.varient_ == 1) {
+        if (this.variant_ == 1) {
 
             button       = primary;
             buttonHover  = primaryHover;
             buttonActive = primaryActive;
         
         }
-        else if (this.varient_ == 2) {
+        else if (this.variant_ == 2) {
 
             button       = secondary;
             buttonHover  = secondaryHover;
