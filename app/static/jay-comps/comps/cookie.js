@@ -196,9 +196,10 @@ class CookieBanner extends Comp {
         const acceptBtn = this.shadowRoot.getElementById("accept");
         const banner    = this.shadowRoot.querySelector(".banner");
 
-        rejectBtn.buttonText    = "Reject";
-        rejectBtn.buttonVarient = 2;
-        acceptBtn.buttonText    = "Accept";
+        rejectBtn.text    = "Reject";
+        rejectBtn.variant = 2;
+        acceptBtn.text    = "Accept";
+        acceptBtn.variant = 1;
 
         const consent = getCookie("cookieConsent");
         if ( consent === "accepted" || consent === "rejected") {
