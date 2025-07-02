@@ -238,7 +238,7 @@ class LoginPageComp extends Comp {
             
 
             const consentCookie = getCookie("cookieConsent");
-            const cookieConsent = consentCookie === "accept" ? "true" : "false";
+            const cookieConsent = consentCookie === "accepted" ? "true" : "false";
 
             let jsonData = {email : email.value, password : pass.value, consent: cookieConsent};
 
