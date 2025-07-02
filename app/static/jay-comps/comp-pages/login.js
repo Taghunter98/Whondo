@@ -226,10 +226,21 @@ class LoginPageComp extends Comp {
         pass.type       = "password";
         pass.prompt     = "Enter password";
 
+        function getCookie(name){
+
+            const value = `; ${document.cookie}`;
+            const part  = value.split(`; ${name}=`);
+            if(part.length == 2) return part.pop().split(";").shift(); 
+        
+        }
+    
         compButton.addEventListener("click", () => {
             
-            let cookie   = "true";
-            let jsonData = {email : email.value, password : pass.value, consent: cookie};
+
+            const consentCookie = getCookie("cookieConsent");
+            const cookieConsent = consentCookie === "accept" ? "true" : "false";
+
+            let jsonData = {email : email.value, password : pass.value, consent: cookieConsent};
 
             this.login(result, jsonData);
         

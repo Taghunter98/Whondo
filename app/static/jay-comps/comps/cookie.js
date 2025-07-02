@@ -131,7 +131,7 @@ class CookieBanner extends Comp {
             class: "action",
             display: "flex",
             flexDirection: "row",
-            flexDirection: "flex-end",
+            justifyContent: "space-between",
             gap: 20,
         });
 
@@ -139,6 +139,8 @@ class CookieBanner extends Comp {
             class: "btn",
             fontSize: "0.9rem",
             width: "auto",
+            boxSizing: "border-box",
+            
         });
 
         //Mobile query
