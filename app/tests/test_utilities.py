@@ -75,7 +75,7 @@ class TestAuthLandlordID(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """
-        Test method sets up authenticate result for testing.
+        Test method sets up auth_landlord result for testing.
 
         Returns:
             int: User ID (uID)
@@ -87,7 +87,7 @@ class TestAuthLandlordID(unittest.TestCase):
 
     def testNotNone(self):
         """
-        Test method tests if authenticate returns a valid result
+        Test method tests if auth_landlord returns a valid result
         that is not None.
         """
 
@@ -96,16 +96,16 @@ class TestAuthLandlordID(unittest.TestCase):
 
     def testCorrectAuth(self):
         """
-        Test method tests if authenticate returns a valid result.
+        Test method tests if auth_landlord returns a valid result.
         """
 
         result = self.setUpClass()
-        self.assertEqual(result, 100, f"Function is returning uID: {result}")
+        self.assertEqual(result, 100, f"Function is returning lID: {result}")
 
     def testValidInteger(self):
         """
-        Test method tests if authenticate result is a valid integer.
+        Test method tests if auth_landlord result is a valid integer.
         """
 
         result = self.setUpClass()
-        self.assertTrue(isinstance(result, int), "User ID is not a valid integer")
+        self.assertTrue(isinstance(result, int), "Landlord ID is not a valid integer")

@@ -15,6 +15,15 @@ from app.utilities.authid import authenticate
 
 
 def auth_landlord(email: str) -> int:
+    """
+    The function authenticates landlord IDs from a provided email.
+
+    Args:
+        email (str): User's email
+
+    Returns:
+        int | None: Landlord ID or None
+    """
 
     if not email:
         current_app.logger.error("Email not supplied")
@@ -37,5 +46,5 @@ def auth_landlord(email: str) -> int:
         lID: int = result[0]
         return lID
     else:
-        current_app.logger.error("Email does not match uID records in database")
+        current_app.logger.error("Email does not match lID records in database")
         return None
