@@ -229,7 +229,7 @@ class CardComp extends Comp {
     hook() {
 
         const cardButton         = this.shadowRoot.getElementById("button");
-        cardButton.buttonVarient = 2;
+        cardButton.buttonVariant = 2;
 
         cardButton.addEventListener("click", this.onButtonClick.bind(this));
     
