@@ -15,6 +15,7 @@ from app.utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
 from app.users.images import upload_file
 from app.property.keywords import store_keywords
+from app.property.property import create_property
 
 advert_bp = Blueprint("advert_bp", __name__)
 
@@ -65,7 +66,8 @@ def advert():
         if not kID:
             return jsonify({"error": "Keyword upload failed"}), 400
         
-        
+        # TODO make this shit work tomorrow
+        pID: int = create_property()
 
         query: str = """
         INSERT INTO Adverts
