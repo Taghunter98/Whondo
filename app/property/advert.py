@@ -29,7 +29,7 @@ def advert():
         email: str = request.form.get("email")
         title: str = request.form.get("title")
         description: str = request.form.get("description")
-        keywords: list = request.form.get("keywords")
+        keywords: list = request.form.getlist("keywords")
         tennants: int = request.form.get("tennants")
         images: list = request.files.getlist("images")
 
