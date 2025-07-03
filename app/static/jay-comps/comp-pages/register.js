@@ -57,7 +57,7 @@ class RegisterPageComp extends Comp {
                             </div>
                         </div>
 
-                        <div id="step2" class="step hidden" hidden>
+                        <div id="step2" class="step2" hidden>
 
                             <div class="textContainer">
                                 <p class="text">Step 2/2</p>
@@ -226,6 +226,8 @@ class RegisterPageComp extends Comp {
         const modalMob = this.design.create({
             class: "modal",
             width: "auto",
+            maxWidth: 350,
+            minWidth: 250,
             margin: 0,
             marginTop: 200
         });
@@ -290,13 +292,13 @@ class RegisterPageComp extends Comp {
         //button section
         backButton.forEach(btn => {
 
-            btn.text    = "back";
+            btn.text    = "Back";
             btn.variant = 2;
         
         });
         nextButton.text      = "Next";
         nextButton.variant   = 1;
-        submitButton.text    = "submit";
+        submitButton.text    = "Submit";
         submitButton.variant = 1;
         
         //input section
@@ -337,6 +339,41 @@ class RegisterPageComp extends Comp {
         /**
          * 
          */
+
+        function showError(inputComp, message){
+
+            const field = inputComp.shadowRoot.querySelector(".inputValue");
+            const error = document.createElement("div");
+
+            error.className   = "input-error" ;
+            error.textContent = message;
+
+            field.classList.add("strength-very-weak");
+
+            const existing = field.parentElement.querySelector(".input-error");
+            if(!existing){
+                
+                field.insertAdjacentElement("afterend", error);
+                
+
+            }
+        
+        }
+
+        function clearError(inputComp){
+
+            const field = inputComp.shadowRoot.querySelector(".inputValue");
+            field.classList.remove("strength-very-weak");
+
+            const existing = field.parentElement.querySelector(".input-error");
+            if(existing){
+
+                existing.remove();
+            
+            }
+        
+        }
+
         nextButton.addEventListener("click", () => {
 
             const inputs = [name, surname, email, password, confirmPass];
@@ -359,16 +396,37 @@ class RegisterPageComp extends Comp {
             
             }
 
-            if (!valid){
+            const passwordVal = password.value.trim();
+            const confirmVal  = confirmPass.value.trim();
 
-                result.innerText = "Please fill in all required fields.";
-                return;
+            if(confirmVal != passwordVal){
+
+                showError(confirmPass, "Password do not match");
+                c.classList.add("strength-very-weak");
             
             }
 
-            step1.classList.add("hidden");
+            if(!valid) return;
+            
+
+
+            step1.setAttribute("hidden", "");
+            step2.removeAttribute("hidden");
+            
         
         });
+
+        
+
+        const backBtn2 = this.shadowRoot.getElementById("backBtn2");
+
+        backBtn2.addEventListener("click", () => {
+
+            step2.setAttribute("hidden", "");
+            step1.removeAttribute("hidden");
+        
+        });
+
 
         const loginLink = this.shadowRoot.querySelector(".link");
 
