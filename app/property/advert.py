@@ -26,38 +26,38 @@ def advert():
         # if not session["email"]:  REFACTOR THIS IN PRODUCTION
         #     redirect("/")
 
-        data: object = request.get_json()
+        data: dict = request.get_json()
         email: str = data.get("email")
         title: str = data.get("title")
         description: str = data.get("description")
         keywords: list = data.get("keywords")
         tennants: int = data.get("tennants")
+        images: list = request.files.getlist()
 
         if not title or not description or not keywords or not images:
             return jsonify({"error": "Required fields are not provided"}), 400
 
-        prop_values: list = [
-            data.get("propType"),
-            data.get("bedrooms"),
-            data.get("bathrooms"),
-            data.get("name"),
-            data.get("street"),
-            data.get("town"),
-            data.get("county"),
-            data.get("postcode"),
-        ]
-
-        if any(e is None for e in prop_values):
-            return jsonify({"error": "Required property fields are not provided"}), 400
-
-        images: list = request.files.getlist()
-        
         # email: str = session["email"]
         lID: int = auth_landlord(email)
 
         if not lID:
             current_app.logger.warning("Unauthorised landlord login attempt")
             return jsonify({"error": "Unauthorised user is not a landlord"}), 401
+
+        prop_data = {
+            "propType": data.get("propType"),
+            "bedrooms": data.get("bedrooms"),
+            "bathrooms": data.get("bathrooms"),
+            "name": data.get("name"),
+            "street": data.get("street"),
+            "town": data.get("town"),
+            "county": data.get("county"),
+            "postcode": data.get("postcode"),
+            "lID": lID,
+        }
+
+        if any(e is None for e in prop_data):
+            return jsonify({"error": "Required property fields are not provided"}), 400
 
         # Files upload -> move this to images when refactoring
         uploaded_files: list = []
@@ -69,25 +69,25 @@ def advert():
             if i < len(uploaded_files):
                 image_paths.append(uploaded_files[i])
             else:
-                image_paths.append("NULL")
-
-        query_images: str = ", ".join(img for img in image_paths)
+                image_paths.append(None)
 
         connection: object = connect()
         cursor: object = connection.cursor()
 
         kID: int = store_keywords(keywords)
-        pID: int = create_property(prop_values)
+        pID: int = create_property(prop_data)
 
         if not kID or not pID:
             return jsonify({"error": "Keyword or Property upload failed"}), 400
 
-        query: str = """
+        query = """
         INSERT INTO Adverts (lID, pID, kID, title, description, tennants, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
 
-        cursor.execute(query, (lID, pID, kID, title, description, tennants, query_images))
+        params = (lID, pID, kID, title, description, tennants, *image_paths)
+
+        cursor.execute(query, params)
 
         connection.commit()
         current_app.logger.info(f"MySQL status: {cursor.rowcount}")

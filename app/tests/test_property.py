@@ -24,10 +24,12 @@ class TestProperty(unittest.TestCase):
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 2AA",
-            "lID": 100
+            "lID": 100,
         }
 
-        self.assertEqual(type(create_property(data)), int, f"Property is returning {data}")
+        self.assertEqual(
+            type(create_property(data)), int, f"Property is returning {data}"
+        )
 
     def testUpdate(self):
         """
@@ -42,7 +44,7 @@ class TestProperty(unittest.TestCase):
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 1AA",
-            "lID": 100
+            "lID": 100,
         }
 
         self.assertTrue(update_property(data), "Property was not updated")
@@ -125,7 +127,6 @@ class TestKeywords(unittest.TestCase):
     "Skipping test in CI pipeline: This test needs DB access",
 )
 class TestAdvertSuccess(unittest.TestCase):
-
     def testSuccess(self):
         URL = "https://whondo.com/advert/new"
         API_DATA = {
@@ -144,13 +145,15 @@ class TestAdvertSuccess(unittest.TestCase):
         }
 
         resp = requests.post(URL, json=API_DATA)
-        
-        self.assertEqual(resp.status_code, 201, f"Response is returning {resp.status_code}")
-    
+
+        self.assertEqual(
+            resp.status_code, 201, f"Response is returning {resp.status_code}"
+        )
+
     # def testFail(self):
     #     URL = "https://whondo.com/advert/new"
     #     API_DATA = {
-            
+
     #         "description": "Very spacious and central location",
     #         "keywords": ["house", "zone_1", "furnished", "city_centre"],
     #         "propType": "house",
