@@ -9,7 +9,7 @@ Version:     1.0
 Description: Serves a Blueprint API for creating a new advert.
 """
 
-from flask import Blueprint, request, jsonify, session, redirect, current_app
+from flask import Blueprint, request, jsonify, session, redirect, current_app, render_template
 import json
 
 from app.utilities.auth_lid import auth_landlord
@@ -100,4 +100,7 @@ def advert():
         return jsonify({"message": "Advert created successfully"}), 201
 
     else:
-        redirect("/")
+        if not session["email"]: 
+            redirect("/")
+        else:
+            render_template("property.html")

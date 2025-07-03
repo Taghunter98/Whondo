@@ -54,7 +54,7 @@ def create_property(values: dict) -> int:
         return pID
 
     except Exception as err:
-        print("Insert failed: {err}")
+        print(f"Insert failed: {err}")
         return -1
 
 

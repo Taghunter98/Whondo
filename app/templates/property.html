@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Advert</title>
+</head>
+<body>
+    <div id="form">
+        <h2>Create Advert</h2>
+        <form id="advert" action="/advert/new" enctype="multipart/form-data" method="post">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="title" placeholder="Title" required>
+            <input type="text" name="description" placeholder="Description" required>
+            <!-- Multiple keywords: add more fields or use Ctrl+Click in select -->
+            <input type="text" name="keywords" placeholder="Keyword 1" required>
+            <input type="text" name="keywords" placeholder="Keyword 2">
+            <input type="number" name="tennants" placeholder="Number of Tennants" required>
+            <input type="text" name="propType" placeholder="Property Type" required>
+            <input type="number" name="bedrooms" placeholder="Bedrooms" required>
+            <input type="number" name="bathrooms" placeholder="Bathrooms" required>
+            <input type="text" name="name" placeholder="Property Name" required>
+            <input type="text" name="street" placeholder="Street" required>
+            <input type="text" name="town" placeholder="Town" required>
+            <input type="text" name="county" placeholder="County" required>
+            <input type="text" name="postcode" placeholder="Postcode" required>
+            <!-- Multiple images -->
+            <input type="file" name="images" multiple required>
+            <button type="submit">Create Advert</button>
+        </form>
+    </div>
+
+    <style>
+        #form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+            margin: 40px auto;
+        }
+        #advert {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+</body>
+</html>
