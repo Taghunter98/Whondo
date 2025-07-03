@@ -141,7 +141,7 @@ class TestAdvert(unittest.TestCase):
             "lID": 100,
         }
 
-        images = ["test1.png", "test2.png"]
+        images = ["test1.png", "test2.png", "test3.png", "test4.png", None, None, None, None, None, None]
 
         self.assertEqual(
             type(create_advert(data, images)), int, "Advert was not created"
