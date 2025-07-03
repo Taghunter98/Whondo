@@ -98,8 +98,6 @@ class RegisterPageComp extends Comp {
 
     createCSS(){
         
-        const fadeDown = this.effect.prop("slideDown", .5);
-        const fadeLeft = this.effect.prop("fadeLeft", .5);
         
         const background = this.design.create({
             class: "background",
@@ -208,6 +206,13 @@ class RegisterPageComp extends Comp {
             gap: 10,
         });
 
+        const inputError = this.design.create({
+            class: "input-error",
+            colour: "red",
+            fontSize: 12,
+            marginTop: 4,
+        });
+
         //media query
 
         const containerMob = this.design.create({
@@ -247,6 +252,8 @@ class RegisterPageComp extends Comp {
         ${row}
         ${link}
         ${linkHover}
+
+        ${inputError}
 
         ${textContainer}
         ${title}
@@ -402,10 +409,11 @@ class RegisterPageComp extends Comp {
             if(confirmVal != passwordVal){
 
                 showError(confirmPass, "Password do not match");
-                c.classList.add("strength-very-weak");
+                valid = false;
             
             }
 
+            
             if(!valid) return;
             
 
@@ -416,7 +424,33 @@ class RegisterPageComp extends Comp {
         
         });
 
-        
+        confirmPass.addEventListener("input", () => {
+
+            const confirmInput = confirmPass.shadowRoot.querySelector(".inputValue");
+            const passwordVal  = password.value.trim();
+            const confirmVal   = confirmPass.value.trim();
+
+            confirmInput.classList.remove("strength-very-weak", "strength-red", "strength-yellow", "strength-green");
+
+            if (confirmVal === passwordVal) {
+
+                confirmInput.classList.add("strength-green");
+            
+            } 
+
+        });
+
+
+        [name, surname, email, password, confirmPass].forEach(input => {
+
+            input.addEventListener("input", () => {
+
+                clearError(input);
+            
+            });
+
+        });
+
 
         const backBtn2 = this.shadowRoot.getElementById("backBtn2");
 

@@ -327,11 +327,12 @@ class InputComp extends Comp {
                 const password = inputEn.value;
                 const entropy  = this.calculateEntropy(password);
 
-                inputEn.classList.remove("strength-very-red","strength-red", "strength-yellow", "strength-green");
+                inputEn.classList.remove("strength-very-weak","strength-red", "strength-yellow", "strength-green");
 
                 if(entropy < 20){
                     
-                    inputEn.classList.add("strength-very-weak");
+                    inputEn.classList.add("strength-red");
+                    
                     if(hintEl) {
 
                         hintEl.style.display = "block";
