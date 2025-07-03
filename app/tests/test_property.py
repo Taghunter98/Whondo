@@ -130,6 +130,7 @@ class TestKeywords(unittest.TestCase):
 class TestAdvertSuccess(unittest.TestCase):
  
     def testSuccess(self):
+        url = "https://whondo.com/advert/new"
         data = {
             "email": "test@test.com",
             "title": "The home of the Prime Minister",
@@ -146,22 +147,22 @@ class TestAdvertSuccess(unittest.TestCase):
             "postcode": "SW1A 1AA",
         }
 
-        data['images'] = [
-            (io.BytesIO(b"fake image data"), "test1.jpg"),
-            (io.BytesIO(b"fake image data"), "test2.jpg"),
+        # Files as a list of tuples: (fieldname, (filename, fileobj, mimetype))
+        files = [
+            ("images", ("test1.jpg", io.BytesIO(b"fake image data 1"), "image/jpeg")),
+            ("images", ("test2.jpg", io.BytesIO(b"fake image data 2"), "image/jpeg")),
         ]
-       
-        files = [('images', img) for img in data['images']]
 
         response = requests.post(
-            "https://whondo.com/advert/new",
-            json=data,
-            files=files,
+            url,
+            data=data,   # form fields
+            files=files  # files
         )
 
         self.assertEqual(
             response.status_code, 201, f"Response is returning {response.status_code}"
         )
+
 
     # def testFail(self):
     #     URL = "https://whondo.com/advert/new"

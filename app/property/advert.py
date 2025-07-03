@@ -26,12 +26,11 @@ def advert():
         # if not session["email"]:  REFACTOR THIS IN PRODUCTION
         #     redirect("/")
 
-        data: dict = request.get_json()
-        email: str = data.get("email")
-        title: str = data.get("title")
-        description: str = data.get("description")
-        keywords: list = data.get("keywords")
-        tennants: int = data.get("tennants")
+        email: str = request.form.get("email")
+        title: str = request.form.get("title")
+        description: str = request.form.get("description")
+        keywords: list = request.form.get("keywords")
+        tennants: int = request.form.get("tennants")
         images: list = request.files.getlist("images")
 
         if not title or not description or not keywords or not images:
@@ -45,14 +44,14 @@ def advert():
             return jsonify({"error": "Unauthorised user is not a landlord"}), 401
 
         prop_data = {
-            "propType": data.get("propType"),
-            "bedrooms": data.get("bedrooms"),
-            "bathrooms": data.get("bathrooms"),
-            "name": data.get("name"),
-            "street": data.get("street"),
-            "town": data.get("town"),
-            "county": data.get("county"),
-            "postcode": data.get("postcode"),
+            "propType": request.form.get("propType"),
+            "bedrooms": request.form.get("bedrooms"),
+            "bathrooms": request.form.get("bathrooms"),
+            "name": request.form.get("name"),
+            "street": request.form.get("street"),
+            "town": request.form.get("town"),
+            "county": request.form.get("county"),
+            "postcode": request.form.get("postcode"),
             "lID": lID,
         }
 
