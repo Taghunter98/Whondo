@@ -103,7 +103,9 @@ class InputComp extends Comp {
 
         } else if (this.type === "file"){
 
-            inputField = ` <label class="fileWrapper">
+            inputField = ` 
+            
+            <label class="fileWrapper">
                 <div class="fileBox">
                     <span class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
@@ -111,7 +113,9 @@ class InputComp extends Comp {
                     <span class="filePrompt">${this.prompt_}</span>
                 </div>
                 <input class="inputValue fileInput" type="file" accept=".png" hidden >
-            </label>`;
+            </label>
+            
+            `;
 
         }
 
