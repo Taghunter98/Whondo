@@ -27,7 +27,7 @@ class TestProperty(unittest.TestCase):
             "lID": 100
         }
 
-        self.assertEqual(type(create_property(data)), "<class 'int'>", f"Property is returning {data}")
+        self.assertEqual(type(create_property(data)), int, f"Property is returning {data}")
 
     def testUpdate(self):
         """
