@@ -31,10 +31,25 @@ def advert():
         description: str = data.get("description")
         keywords: list = data.get("keywords")
         tennants: int = data.get("tennants")
-        images: list = request.files.getlist()
 
         if not title or not description or not keywords or not images:
             return jsonify({"error": "Required fields are not provided"}), 400
+
+        prop_values: list = [
+            data.get("propType"),
+            data.get("bedrooms"),
+            data.get("bathrooms"),
+            data.get("name"),
+            data.get("street"),
+            data.get("town"),
+            data.get("county"),
+            data.get("postcode"),
+        ]
+
+        if any(e is None for e in prop_values):
+            return jsonify({"error": "Required property fields are not provided"}), 400
+
+        images: list = request.files.getlist()
 
         # Authenticate landlord
         email: str = session["email"]
@@ -62,24 +77,25 @@ def advert():
         cursor: object = connection.cursor()
 
         kID: int = store_keywords(keywords)
+        pID: int = create_property(prop_values)
 
-        if not kID:
-            return jsonify({"error": "Keyword upload failed"}), 400
-        
-        # TODO make this shit work tomorrow
-        pID: int = create_property()
+        if not kID or not pID:
+            return jsonify({"error": "Keyword or Property upload failed"}), 400
 
         query: str = """
-        INSERT INTO Adverts
+        INSERT INTO Adverts (lID, pID, kID, title, description, tennants, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
 
-        cursor.execute()
+        cursor.execute(query, (lID, pID, kID, title, description, tennants, query_images))
 
         connection.commit()
         current_app.logger.info(f"MySQL status: {cursor.rowcount}")
 
         cursor.close()
         connection.close()
+
+        return jsonify({"message": "Advert created successfully"}), 201
 
     else:
         redirect("/")

@@ -1,5 +1,6 @@
 import unittest
 import os
+import requests
 
 from app.property.property import create_property, update_property, delete_property
 from app.property.keywords import store_keywords
@@ -117,3 +118,90 @@ class TestKeywords(unittest.TestCase):
         ]
 
         self.assertIsNotNone(store_keywords(ALL_KEYWORDS), "Keywords were not stored")
+
+
+@unittest.skipIf(
+    os.environ.get("CI") == "true",
+    "Skipping test in CI pipeline: This test needs DB access",
+)
+class TestAdvertSuccess(unittest.TestCase):
+
+    def testSuccess(self):
+        URL = "https://whondo.com/advert/new"
+        API_DATA = {
+            "title": "The home of the Prime Minister",
+            "description": "Very spacious and central location",
+            "keywords": ["house", "zone_1", "furnished", "city_centre"],
+            "propType": "house",
+            "bedrooms": 240,
+            "bathrooms": 78,
+            "name": "Buckingham Palace",
+            "street": "The Mall",
+            "town": "London",
+            "county": "City of London",
+            "postcode": "SW1A 1AA",
+            "lID": 100,
+        }
+
+        data = requests.post(URL, json=API_DATA)
+
+        self.assertIsNotNone(data.json())
+        self.assertEqual(data.status_code, 201, f"Response is returning {data.status_code}")
+    
+    def testFail(self):
+        URL = "https://whondo.com/advert/new"
+        API_DATA = {
+            
+            "description": "Very spacious and central location",
+            "keywords": ["house", "zone_1", "furnished", "city_centre"],
+            "propType": "house",
+            "bedrooms": 240,
+            "bathrooms": 78,
+            "name": "Buckingham Palace",
+            "street": "The Mall",
+            "town": "London",
+            "county": "City of London",
+            "postcode": "SW1A 1AA",
+            "lID": 100,
+        }
+
+        data = requests.post(URL, json=API_DATA)
+
+        self.assertIsNotNone(data.json())
+        self.assertEqual(data.status_code, 400, f"Response is returning {data.status_code}")
+
+    def testPropertyFail(self):
+        URL = "https://whondo.com/advert/new"
+        API_DATA = {
+            "title": "The home of the Prime Minister",
+            "description": "Very spacious and central location",
+            "keywords": ["house", "zone_1", "furnished", "city_centre"],
+            "lID": 100,
+        }
+
+        data = requests.post(URL, json=API_DATA)
+
+        self.assertIsNotNone(data.json())
+        self.assertEqual(data.status_code, 400, f"Response is returning {data.status_code}")
+
+    def testLandlordAuth(self):
+        URL = "https://whondo.com/advert/new"
+        API_DATA = {
+            "title": "The home of the Prime Minister",
+            "description": "Very spacious and central location",
+            "keywords": ["house", "zone_1", "furnished", "city_centre"],
+            "propType": "house",
+            "bedrooms": 240,
+            "bathrooms": 78,
+            "name": "Buckingham Palace",
+            "street": "The Mall",
+            "town": "London",
+            "county": "City of London",
+            "postcode": "SW1A 1AA",
+            "lID": 0,
+        }
+
+        data = requests.post(URL, json=API_DATA)
+
+        self.assertIsNotNone(data.json())
+        self.assertEqual(data.status_code, 401, f"Response is returning {data.status_code}")

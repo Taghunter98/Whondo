@@ -1,0 +1,1 @@
+from advert import advert_bp
