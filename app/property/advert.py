@@ -15,7 +15,7 @@ from app.database.db_connect import connect
 def create_advert(values: dict, images: list) -> int:
     query: str = """
     INSERT INTO Adverts (lID, title, description, tennants, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     params = (
@@ -51,7 +51,7 @@ def delete_advert(lID: int) -> bool:
     Returns:
         bool: Result
     """
-    query: str = "DELETE FROM Advert WHERE lID = %s"
+    query: str = "DELETE FROM Adverts WHERE lID = %s"
 
     try:
         connection: object = connect()
