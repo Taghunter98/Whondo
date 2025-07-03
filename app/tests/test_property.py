@@ -128,6 +128,7 @@ class TestKeywords(unittest.TestCase):
     "Skipping test in CI pipeline: This test needs DB access",
 )
 class TestAdvertSuccess(unittest.TestCase):
+ 
     def testSuccess(self):
         data = {
             "email": "test@test.com",
@@ -158,7 +159,7 @@ class TestAdvertSuccess(unittest.TestCase):
        
         files = [('images', img) for img in data['images']]
 
-        response = self.client.post(
+        response = requests.post(
             "/advert/new",
             data=multipart_data,
             content_type='multipart/form-data',
