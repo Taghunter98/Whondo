@@ -10,6 +10,7 @@ Description: Serves a Blueprint API for creating a new advert.
 """
 
 from flask import Blueprint, request, jsonify, session, redirect, current_app
+import json
 
 from app.utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
@@ -29,9 +30,11 @@ def advert():
         email: str = request.form.get("email")
         title: str = request.form.get("title")
         description: str = request.form.get("description")
-        keywords: list = request.form.getlist("keywords")
-        tennants: int = request.form.get("tennants")
+        keywords_raw: bytes = request.form.get("keywords")
+        tennants: int = int(request.form.get("tennants"))
         images: list = request.files.getlist("images")
+
+        keywords: list = json.loads(keywords_raw)
 
         if not title or not description or not keywords or not images:
             return jsonify({"error": "Required fields are not provided"}), 400
