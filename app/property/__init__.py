@@ -1,1 +1,1 @@
-from .advert import advert_bp
+from .create_advert import advert_bp

@@ -39,23 +39,18 @@ def create_property(values: dict) -> int:
         values["lID"],
     )
 
-    try:
-        connection: object = connect()
-        cursor: object = connection.cursor()
+    connection: object = connect()
+    cursor: object = connection.cursor()
 
-        cursor.execute(query, params)
-        connection.commit()
+    cursor.execute(query, params)
+    connection.commit()
 
-        pID: int = cursor.lastrowid
+    pID: int = cursor.lastrowid
 
-        cursor.close()
-        connection.close()
+    cursor.close()
+    connection.close()
 
-        return pID
-
-    except Exception as err:
-        print(f"Insert failed: {err}")
-        return -1
+    return pID
 
 
 def delete_property(lID: int) -> bool:

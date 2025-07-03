@@ -133,7 +133,7 @@ def create_app() -> Flask:
     from .users.images import image_bp, image_purge_bp
     from .users.verify import verify_bp
     from .utilities.key_gen import gen_key_bp
-    from .property.advert import advert_bp
+    from .property.create_advert import advert_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)

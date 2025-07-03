@@ -5,6 +5,7 @@ import io
 
 from app.property.property import create_property, update_property, delete_property
 from app.property.keywords import store_keywords
+from app.property.advert import create_advert, delete_advert
 
 
 @unittest.skipIf(
@@ -127,92 +128,27 @@ class TestKeywords(unittest.TestCase):
     os.environ.get("CI") == "true",
     "Skipping test in CI pipeline: This test needs DB access",
 )
-class TestAdvertSuccess(unittest.TestCase):
- 
-    def testSuccess(self):
-        url = "https://whondo.com/advert/new"
+class TestAdvert(unittest.TestCase):
+    def testCreation(self):
+        """
+        Test method tests that the advert was created successfully.
+        """
         data = {
-            "email": "test@test.com",
-            "title": "The home of the Prime Minister",
-            "description": "Very spacious and central location",
-            "keywords": '["house", "zone_1", "furnished", "city_centre"]',
+            "title": "Test title",
+            "description": "Test description",
+            "price": 1000,
             "tennants": 4,
-            "propType": "house",
-            "bedrooms": 240,
-            "bathrooms": 78,
-            "name": "Buckingham Palace",
-            "street": "The Mall",
-            "town": "London",
-            "county": "City of London",
-            "postcode": "SW1A 1AA",
+            "lID": 100,
         }
 
-        # Files as a list of tuples: (fieldname, (filename, fileobj, mimetype))
-        files = [
-            ("images", ("test1.jpg", io.BytesIO(b"fake image data 1"), "image/jpeg")),
-            ("images", ("test2.jpg", io.BytesIO(b"fake image data 2"), "image/jpeg")),
-        ]
-
-        response = requests.post(
-            url,
-            data=data,   # form fields
-            files=files  # files
-        )
+        images = ["test1.png", "test2.png"]
 
         self.assertEqual(
-            response.status_code, 201, f"Response is returning {response.status_code}"
+            type(create_advert(data, images)), int, "Advert was not created"
         )
 
-
-    # def testFail(self):
-    #     URL = "https://whondo.com/advert/new"
-    #     API_DATA = {
-
-    #         "description": "Very spacious and central location",
-    #         "keywords": ["house", "zone_1", "furnished", "city_centre"],
-    #         "propType": "house",
-    #         "bedrooms": 240,
-    #         "bathrooms": 78,
-    #         "name": "Buckingham Palace",
-    #         "street": "The Mall",
-    #         "town": "London",
-    #         "county": "City of London",
-    #         "postcode": "SW1A 1AA",
-    #     }
-
-    #     resp = requests.post(URL, json=API_DATA)
-
-    #     self.assertEqual(resp.status_code, 400, f"Response is returning {resp.status_code}")
-
-    # def testPropertyFail(self):
-    #     URL = "https://whondo.com/advert/new"
-    #     API_DATA = {
-    #         "title": "The home of the Prime Minister",
-    #         "description": "Very spacious and central location",
-    #         "keywords": ["house", "zone_1", "furnished", "city_centre"],
-    #     }
-
-    #     resp = requests.post(URL, json=API_DATA)
-
-    #     self.assertEqual(resp.status_code, 400, f"Response is returning {resp.status_code}")
-
-    # def testLandlordAuth(self):
-    #     URL = "https://whondo.com/advert/new"
-    #     API_DATA = {
-    #         "email": "notalandlord@test.com",
-    #         "title": "The home of the Prime Minister",
-    #         "description": "Very spacious and central location",
-    #         "keywords": ["house", "zone_1", "furnished", "city_centre"],
-    #         "propType": "house",
-    #         "bedrooms": 240,
-    #         "bathrooms": 78,
-    #         "name": "Buckingham Palace",
-    #         "street": "The Mall",
-    #         "town": "London",
-    #         "county": "City of London",
-    #         "postcode": "SW1A 1AA"
-    #     }
-
-    #     resp = requests.post(URL, json=API_DATA)
-
-    #     self.assertEqual(resp.status_code, 401, f"Response is returning {resp.status_code}")
+    def testDeletion(self):
+        """
+        Test method tests that the advert was deleted successfully.
+        """
+        self.assertTrue(delete_advert(100), "Advert was not deleted")
