@@ -34,7 +34,7 @@ def advert():
         tennants: int = data.get("tennants")
         images: list = request.files.getlist()
 
-        if not title or not description or not keywords or not images:
+        if not title or not description or not keywords:
             return jsonify({"error": "Required fields are not provided"}), 400
 
         # email: str = session["email"]
