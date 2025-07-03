@@ -150,21 +150,13 @@ class TestAdvertSuccess(unittest.TestCase):
             (io.BytesIO(b"fake image data"), "test1.jpg"),
             (io.BytesIO(b"fake image data"), "test2.jpg"),
         ]
-
-        multipart_data = {}
-        for key, value in data.items():
-            if key == "images":
-                continue
-            multipart_data[key] = value
        
         files = [('images', img) for img in data['images']]
 
         response = requests.post(
-            "/advert/new",
-            data=multipart_data,
-            content_type='multipart/form-data',
+            "https://whondo.com/advert/new",
+            json=data,
             files=files,
-            follow_redirects=True
         )
 
         self.assertEqual(
