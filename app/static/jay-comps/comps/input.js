@@ -103,10 +103,11 @@ class InputComp extends Comp {
 
         } else if (this.type === "file"){
 
-            inputField = ` 
+            inputField = /* html */ ` 
             
             <label class="fileWrapper">
                 <div class="fileBox">
+                    <img class="filePreview" src="" alt="preview" hidden>
                     <span class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
                     </span>
@@ -271,6 +272,15 @@ class InputComp extends Comp {
             background: "back10",
         });
 
+        const filePreview = this.design.create({
+            class: "filePreview",
+            width: 120,
+            height: 120,
+            objectFit: "cover",
+            borderRadius: 6,
+            marginTop: 8,
+        });
+
 
         return /* css */ `
         
@@ -294,6 +304,7 @@ class InputComp extends Comp {
         ${fileHover}
         ${fileActive}
         ${filesBoxDrag}
+        ${filePreview}
 
         ${areaInput}
         
@@ -306,7 +317,8 @@ class InputComp extends Comp {
         const fileInput  = this.shadowRoot.querySelector(".fileInput");
         const filePrompt = this.shadowRoot.querySelector(".filePrompt");
         const icon       = this.shadowRoot.querySelector(".icon");
-
+        const preview    = this.shadowRoot.querySelector(".filePreview");
+        
         if(fileInput && filePrompt){
 
             fileInput.addEventListener("change", () => {
@@ -316,11 +328,30 @@ class InputComp extends Comp {
 
                     filePrompt.textContent = file.name;
                     icon.innerHTML         = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>`;
+
+                    if(preview && file.type.startsWith("image/")){
+
+                        const reader  = new FileReader();
+                        reader.onload = () =>{
+
+                            preview.src = reader.result;
+                            preview.removeAttribute("hidden");
+                        
+                        };
+
+                        reader.readAsDataURL(file);
+                    
+                    }
                 
                 }else {
 
                     filePrompt.textContent = this.prompt_;
+                    if(preview){
+
+                        preview.setAttribute("hidden", "");
+                        preview.src = "";
                     
+                    }
                 
                 }
             
