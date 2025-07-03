@@ -12,9 +12,14 @@
             <input type="email" name="email" placeholder="Email" required>
             <input type="text" name="title" placeholder="Title" required>
             <input type="text" name="description" placeholder="Description" required>
-            <!-- Multiple keywords: add more fields or use Ctrl+Click in select -->
-            <input type="text" name="keywords" placeholder="Keyword 1" required>
-            <input type="text" name="keywords" placeholder="Keyword 2">
+
+            <!-- Dynamic Keywords Section -->
+            <label>Add Keywords:</label>
+            <div id="keywords-list"></div>
+            <input type="text" id="keyword-input" placeholder="Add keyword">
+            <button type="button" onclick="addKeyword()">Add Keyword</button>
+            <input type="hidden" name="keywords" id="keywords-hidden">
+
             <input type="number" name="tennants" placeholder="Number of Tennants" required>
             <input type="text" name="propType" placeholder="Property Type" required>
             <input type="number" name="bedrooms" placeholder="Bedrooms" required>
@@ -24,7 +29,6 @@
             <input type="text" name="town" placeholder="Town" required>
             <input type="text" name="county" placeholder="County" required>
             <input type="text" name="postcode" placeholder="Postcode" required>
-            <!-- Multiple images -->
             <input type="file" name="images" multiple required>
             <button type="submit">Create Advert</button>
         </form>
@@ -43,6 +47,69 @@
             flex-direction: column;
             gap: 10px;
         }
+        #keywords-list span {
+            display: inline-block;
+            background: #e0e0e0;
+            padding: 3px 8px;
+            margin: 2px;
+            border-radius: 12px;
+        }
+        #keywords-list button {
+            background: none;
+            border: none;
+            color: red;
+            margin-left: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
     </style>
+    <script>
+        let keywords = [];
+
+        function addKeyword() {
+            const input = document.getElementById('keyword-input');
+            const kw = input.value.trim();
+            if (kw && !keywords.includes(kw)) {
+                keywords.push(kw);
+                input.value = '';
+                updateKeywordsDisplay();
+                updateKeywordsHidden();
+            }
+        }
+
+        function updateKeywordsDisplay() {
+            const listDiv = document.getElementById('keywords-list');
+            listDiv.innerHTML = "";
+            keywords.forEach((kw, idx) => {
+                const span = document.createElement('span');
+                span.textContent = kw;
+                // Add a remove button for each keyword
+                const removeBtn = document.createElement('button');
+                removeBtn.type = "button";
+                removeBtn.textContent = "x";
+                removeBtn.onclick = () => {
+                    keywords.splice(idx, 1);
+                    updateKeywordsDisplay();
+                    updateKeywordsHidden();
+                };
+                span.appendChild(removeBtn);
+                listDiv.appendChild(span);
+            });
+        }
+
+        function updateKeywordsHidden() {
+            document.getElementById('keywords-hidden').value = JSON.stringify(keywords);
+        }
+
+        document.getElementById('advert').addEventListener('submit', function(event) {
+            const input = document.getElementById('keyword-input');
+            const kw = input.value.trim();
+            if (kw && !keywords.includes(kw)) {
+                keywords.push(kw);
+                updateKeywordsDisplay();
+                updateKeywordsHidden();
+            }
+        });
+    </script>
 </body>
 </html>
