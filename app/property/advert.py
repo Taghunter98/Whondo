@@ -21,8 +21,8 @@ def create_advert(values: dict, images: list) -> int:
     params: tuple = (
         values["lID"],
         values["title"],
-        values["description"],
         values["price"],
+        values["description"],
         values["tennants"],
         *images
     )
