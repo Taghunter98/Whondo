@@ -337,9 +337,9 @@ class RegisterPageComp extends Comp {
         /**
          * 
          */
-        compButton.addEventListener("click", () => {
+        nextButton.addEventListener("click", () => {
 
-            const inputs = [name, surname, email, password, age, occupation];
+            const inputs = [name, surname, email, password, confirmPass];
             let valid    = true;
             
             for(const input of inputs){
@@ -366,7 +366,7 @@ class RegisterPageComp extends Comp {
             
             }
 
-            result.innerText = "welcome";
+            step1.classList.add("hidden");
         
         });
 

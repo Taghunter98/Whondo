@@ -389,7 +389,7 @@ class InputComp extends Comp {
 
     isEmpty(){
 
-        const val = this.inputValue?.trim();
+        const val = this.value?.trim();
         return !val;
     
     }
