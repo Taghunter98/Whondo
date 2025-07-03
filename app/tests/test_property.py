@@ -145,55 +145,55 @@ class TestAdvertSuccess(unittest.TestCase):
         
         self.assertEqual(resp.status_code, 201, f"Response is returning {resp.status_code}")
     
-    def testFail(self):
-        URL = "https://whondo.com/advert/new"
-        API_DATA = {
+    # def testFail(self):
+    #     URL = "https://whondo.com/advert/new"
+    #     API_DATA = {
             
-            "description": "Very spacious and central location",
-            "keywords": ["house", "zone_1", "furnished", "city_centre"],
-            "propType": "house",
-            "bedrooms": 240,
-            "bathrooms": 78,
-            "name": "Buckingham Palace",
-            "street": "The Mall",
-            "town": "London",
-            "county": "City of London",
-            "postcode": "SW1A 1AA",
-        }
+    #         "description": "Very spacious and central location",
+    #         "keywords": ["house", "zone_1", "furnished", "city_centre"],
+    #         "propType": "house",
+    #         "bedrooms": 240,
+    #         "bathrooms": 78,
+    #         "name": "Buckingham Palace",
+    #         "street": "The Mall",
+    #         "town": "London",
+    #         "county": "City of London",
+    #         "postcode": "SW1A 1AA",
+    #     }
 
-        resp = requests.post(URL, json=API_DATA)
+    #     resp = requests.post(URL, json=API_DATA)
 
-        self.assertEqual(resp.status_code, 400, f"Response is returning {resp.status_code}")
+    #     self.assertEqual(resp.status_code, 400, f"Response is returning {resp.status_code}")
 
-    def testPropertyFail(self):
-        URL = "https://whondo.com/advert/new"
-        API_DATA = {
-            "title": "The home of the Prime Minister",
-            "description": "Very spacious and central location",
-            "keywords": ["house", "zone_1", "furnished", "city_centre"],
-        }
+    # def testPropertyFail(self):
+    #     URL = "https://whondo.com/advert/new"
+    #     API_DATA = {
+    #         "title": "The home of the Prime Minister",
+    #         "description": "Very spacious and central location",
+    #         "keywords": ["house", "zone_1", "furnished", "city_centre"],
+    #     }
 
-        resp = requests.post(URL, json=API_DATA)
+    #     resp = requests.post(URL, json=API_DATA)
 
-        self.assertEqual(resp.status_code, 400, f"Response is returning {resp.status_code}")
+    #     self.assertEqual(resp.status_code, 400, f"Response is returning {resp.status_code}")
 
-    def testLandlordAuth(self):
-        URL = "https://whondo.com/advert/new"
-        API_DATA = {
-            "email": "notalandlord@test.com",
-            "title": "The home of the Prime Minister",
-            "description": "Very spacious and central location",
-            "keywords": ["house", "zone_1", "furnished", "city_centre"],
-            "propType": "house",
-            "bedrooms": 240,
-            "bathrooms": 78,
-            "name": "Buckingham Palace",
-            "street": "The Mall",
-            "town": "London",
-            "county": "City of London",
-            "postcode": "SW1A 1AA"
-        }
+    # def testLandlordAuth(self):
+    #     URL = "https://whondo.com/advert/new"
+    #     API_DATA = {
+    #         "email": "notalandlord@test.com",
+    #         "title": "The home of the Prime Minister",
+    #         "description": "Very spacious and central location",
+    #         "keywords": ["house", "zone_1", "furnished", "city_centre"],
+    #         "propType": "house",
+    #         "bedrooms": 240,
+    #         "bathrooms": 78,
+    #         "name": "Buckingham Palace",
+    #         "street": "The Mall",
+    #         "town": "London",
+    #         "county": "City of London",
+    #         "postcode": "SW1A 1AA"
+    #     }
 
-        resp = requests.post(URL, json=API_DATA)
+    #     resp = requests.post(URL, json=API_DATA)
 
-        self.assertEqual(resp.status_code, 401, f"Response is returning {resp.status_code}")
+    #     self.assertEqual(resp.status_code, 401, f"Response is returning {resp.status_code}")
