@@ -10,6 +10,7 @@ Description: Provides a function to create an advert in the database.
 """
 
 from app.database.db_connect import connect
+from flask import current_app
 
 
 def create_advert(values: dict, images: list) -> int:
@@ -29,7 +30,7 @@ def create_advert(values: dict, images: list) -> int:
 
     connection: object = connect()
     cursor: object = connection.cursor()
-    
+    current_app.logger.info(f"DEBUG: param len: {len(query)} images: {images}")
     cursor.execute(query, params)
     connection.commit()
 
