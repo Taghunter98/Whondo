@@ -1,6 +1,7 @@
 import unittest
 import os
 import requests
+import io
 
 from app.property.property import create_property, update_property, delete_property
 from app.property.keywords import store_keywords
@@ -128,12 +129,12 @@ class TestKeywords(unittest.TestCase):
 )
 class TestAdvertSuccess(unittest.TestCase):
     def testSuccess(self):
-        URL = "https://whondo.com/advert/new"
-        API_DATA = {
+        data = {
             "email": "test@test.com",
             "title": "The home of the Prime Minister",
             "description": "Very spacious and central location",
-            "keywords": ["house", "zone_1", "furnished", "city_centre"],
+            "keywords": '["house", "zone_1", "furnished", "city_centre"]',
+            "tennants": 4,
             "propType": "house",
             "bedrooms": 240,
             "bathrooms": 78,
@@ -144,10 +145,29 @@ class TestAdvertSuccess(unittest.TestCase):
             "postcode": "SW1A 1AA",
         }
 
-        resp = requests.post(URL, json=API_DATA)
+        data['images'] = [
+            (io.BytesIO(b"fake image data"), "test1.jpg"),
+            (io.BytesIO(b"fake image data"), "test2.jpg"),
+        ]
+
+        multipart_data = {}
+        for key, value in data.items():
+            if key == "images":
+                continue
+            multipart_data[key] = value
+       
+        files = [('images', img) for img in data['images']]
+
+        response = self.client.post(
+            "/advert/new",
+            data=multipart_data,
+            content_type='multipart/form-data',
+            files=files,
+            follow_redirects=True
+        )
 
         self.assertEqual(
-            resp.status_code, 201, f"Response is returning {resp.status_code}"
+            response.status_code, 201, f"Response is returning {response.status_code}"
         )
 
     # def testFail(self):
