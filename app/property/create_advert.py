@@ -106,9 +106,7 @@ def advert():
         VALUES (%s, %s, %s, %s)
         """
 
-        params = (lID, pID, kID, adID)
-
-        cursor.execute(query, params)
+        cursor.execute(query, (lID, pID, kID, adID))
 
         connection.commit()
         current_app.logger.info(f"MySQL status: {cursor.rowcount}")

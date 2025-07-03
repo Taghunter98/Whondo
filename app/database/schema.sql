@@ -56,7 +56,7 @@ CREATE TABLE Property (
     town VARCHAR(255) NOT NULL,
     county VARCHAR(255) NOT NULL,
     postcode CHAR(10),
-    lID INT UNIQUE NOT NULL,
+    lID INT NOT NULL,
     PRIMARY KEY (pID),
     FOREIGN KEY (lID) REFERENCES Landlords ON DELETE CASCADE
 );
