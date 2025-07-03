@@ -84,11 +84,11 @@ def advert():
                 image_paths.append(None)
 
         advert_data: dict = {
+            "lID": lID,
             "title": title,
-            "description": description,
             "price": price,
-            "tennants": tennants,
-            "lID": lID
+            "description": description,
+            "tennants": tennants
         }
 
         connection: object = connect()

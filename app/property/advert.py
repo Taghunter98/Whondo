@@ -29,7 +29,7 @@ def create_advert(values: dict, images: list) -> int:
 
     connection: object = connect()
     cursor: object = connection.cursor()
-
+    
     cursor.execute(query, params)
     connection.commit()
 
