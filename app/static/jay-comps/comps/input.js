@@ -114,7 +114,7 @@ class InputComp extends Comp {
                 </div>
                 <input class="inputValue fileInput" type="file" accept=".png" hidden >
             </label>
-            
+
             `;
 
         }
@@ -151,7 +151,7 @@ class InputComp extends Comp {
             padding: 0,
             alignItems: "start",
             gap: 10,
-            background: "--white"
+            background: "white"
         });
 
         const input = this.design.create({
