@@ -15,16 +15,16 @@ from app.database.db_connect import connect
 def create_advert(values: dict, images: list) -> int:
     query: str = """
     INSERT INTO Adverts (lID, title, description, tennants, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
-    params = (
+    params: tuple = (
         values["lID"],
         values["title"],
         values["description"],
         values["price"],
         values["tennants"],
-        *images,
+        *images
     )
 
     connection: object = connect()
