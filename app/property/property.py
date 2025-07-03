@@ -9,8 +9,6 @@ Version:     1.0
 Description: Serves a Blueprint API for logging in and verifying users.
 """
 
-from flask import current_app
-
 from app.database.db_connect import connect
 
 
@@ -56,7 +54,7 @@ def create_property(values: dict) -> int:
         return pID
 
     except Exception as err:
-        current_app.logger.error(f"Insert failed: {err}")
+        print("Insert failed: {err}")
         return -1
 
 
@@ -86,7 +84,7 @@ def delete_property(lID: int) -> bool:
 
         return deleted
     except Exception as err:
-        current_app.logger.error(f"Deletion failed: {err}")
+        print(f"Deletion failed: {err}")
         return False
 
 
@@ -131,5 +129,5 @@ def update_property(values: dict) -> bool:
         return True
 
     except Exception as err:
-        current_app.logger.error(f"Update failed: {err}")
+        print(f"Update failed: {err}")
         return False
