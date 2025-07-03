@@ -101,6 +101,6 @@ def advert():
 
     else:
         if session.get("uID"): 
-            render_template("property.html")
+            return render_template("property.html")
         else:
-            redirect("/")
+            return redirect("/")
