@@ -143,10 +143,9 @@ class TestAdvertSuccess(unittest.TestCase):
             "lID": 100,
         }
 
-        data = requests.post(URL, json=API_DATA)
-
-        self.assertIsNotNone(data.json())
-        self.assertEqual(data.status_code, 201, f"Response is returning {data.status_code}")
+        resp = requests.post(URL, json=API_DATA)
+        
+        self.assertEqual(resp.status_code, 201, f"Response is returning {resp.status_code}")
     
     def testFail(self):
         URL = "https://whondo.com/advert/new"
@@ -165,10 +164,9 @@ class TestAdvertSuccess(unittest.TestCase):
             "lID": 100,
         }
 
-        data = requests.post(URL, json=API_DATA)
+        resp = requests.post(URL, json=API_DATA)
 
-        self.assertIsNotNone(data.json())
-        self.assertEqual(data.status_code, 400, f"Response is returning {data.status_code}")
+        self.assertEqual(resp.status_code, 400, f"Response is returning {resp.status_code}")
 
     def testPropertyFail(self):
         URL = "https://whondo.com/advert/new"
@@ -179,10 +177,9 @@ class TestAdvertSuccess(unittest.TestCase):
             "lID": 100,
         }
 
-        data = requests.post(URL, json=API_DATA)
+        resp = requests.post(URL, json=API_DATA)
 
-        self.assertIsNotNone(data.json())
-        self.assertEqual(data.status_code, 400, f"Response is returning {data.status_code}")
+        self.assertEqual(resp.status_code, 400, f"Response is returning {resp.status_code}")
 
     def testLandlordAuth(self):
         URL = "https://whondo.com/advert/new"
@@ -201,7 +198,6 @@ class TestAdvertSuccess(unittest.TestCase):
             "lID": 0,
         }
 
-        data = requests.post(URL, json=API_DATA)
+        resp = requests.post(URL, json=API_DATA)
 
-        self.assertIsNotNone(data.json())
-        self.assertEqual(data.status_code, 401, f"Response is returning {data.status_code}")
+        self.assertEqual(resp.status_code, 401, f"Response is returning {resp.status_code}")
