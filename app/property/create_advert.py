@@ -25,6 +25,7 @@ from app.database.db_connect import connect
 from app.users.images import upload_file
 from app.property.keywords import store_keywords
 from app.property.property import create_property
+from app.property.advert import create_advert
 
 advert_bp = Blueprint("advert_bp", __name__)
 
@@ -37,6 +38,7 @@ def advert():
 
         email: str = request.form.get("email")
         title: str = request.form.get("title")
+        price: int = int(request.form.get("price"))
         description: str = request.form.get("description")
         keywords_raw: bytes = request.form.get("keywords")
         tennants: int = int(request.form.get("tennants"))
@@ -81,21 +83,30 @@ def advert():
             else:
                 image_paths.append(None)
 
+        advert_data: dict = {
+            "title": title,
+            "description": description,
+            "price": price,
+            "tennants": tennants,
+            "lID": lID
+        }
+
         connection: object = connect()
         cursor: object = connection.cursor()
 
         kID: int = store_keywords(keywords)
         pID: int = create_property(prop_data)
+        adID: int = create_advert(advert_data, uploaded_files)
 
-        if not kID or not pID:
-            return jsonify({"error": "Keyword or Property upload failed"}), 400
+        if not kID or not pID or not adID:
+            return jsonify({"error": "Keyword, Property or Advert upload failed"}), 400
 
         query = """
-        INSERT INTO Adverts (lID, pID, kID, title, description, tennants, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO PropertyKeywordAdvert (lID, pID, kID)
+        VALUES (%s, %s, %s)
         """
 
-        params = (lID, pID, kID, title, description, tennants, *image_paths)
+        params = (lID, pID, kID)
 
         cursor.execute(query, params)
 
