@@ -102,11 +102,11 @@ def advert():
             return jsonify({"error": "Keyword, Property or Advert upload failed"}), 400
 
         query = """
-        INSERT INTO PropertyKeywordAdvert (lID, pID, kID)
-        VALUES (%s, %s, %s)
+        INSERT INTO PropertyKeywordAdvert (lID, pID, kID, adID)
+        VALUES (%s, %s, %s, %s)
         """
 
-        params = (lID, pID, kID)
+        params = (lID, pID, kID, adID)
 
         cursor.execute(query, params)
 
