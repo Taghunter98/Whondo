@@ -261,6 +261,12 @@ class InputComp extends Comp {
             paddingLeft: 2,
         });
 
+        const filesBoxDrag = this.design.create({
+            class: "dragover",
+            outline: "solid 2px var(--black100)",
+            background: "back10",
+        });
+
 
         return /* css */ `
         
@@ -283,9 +289,10 @@ class InputComp extends Comp {
         ${fileStyle}
         ${fileHover}
         ${fileActive}
+        ${filesBoxDrag}
 
         ${areaInput}
-
+        
         `;
     
     }
@@ -314,6 +321,42 @@ class InputComp extends Comp {
                 }
             
             });
+
+            const dropArea = this.shadowRoot.querySelector(".fileBox");
+
+            if(dropArea) {
+
+                dropArea.addEventListener("dragover", (e) => {
+
+                    e.preventDefault();
+                    dropArea.classList.add("dragover");
+                
+                });
+
+                dropArea.addEventListener("dragleave", (e) => {
+
+                    e.preventDefault();
+                    dropArea.classList.remove("dragover");
+                
+                });
+
+                dropArea.addEventListener("drop", (e) => {
+
+                    e.preventDefault();
+                    dropArea.classList.remove("dragover");
+
+                    const droppedFiles = e.dataTransfer.files;
+                    if(droppedFiles.length > 0){
+
+                        fileInput.files = droppedFiles;
+
+                        fileInput.dispatchEvent(new Event("change"));
+                    
+                    }
+                
+                });
+            
+            }
         
         }
 
@@ -387,6 +430,8 @@ class InputComp extends Comp {
         return password.length * Math.log2(poolSize || 1);;
     
     }
+
+
 
     isEmpty(){
 
