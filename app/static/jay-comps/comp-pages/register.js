@@ -279,21 +279,28 @@ class RegisterPageComp extends Comp {
 
     hook(){
 
-        const form         = this.shadowRoot.getElementById("registerForm");
-        const step1        = this.shadowRoot.getElementById("step1");
-        const step2        = this.shadowRoot.getElementById("step2");
+        //form section 
+        const form = this.shadowRoot.getElementById("registerForm");
+        
+        //modal section
+        const step1 = this.shadowRoot.getElementById("step1");
+        const step2 = this.shadowRoot.getElementById("step2");
+
+        //button section
         const backButton   = this.shadowRoot.querySelectorAll(".back");
         const nextButton   = this.shadowRoot.getElementById("nextBtn");
         const submitButton = this.shadowRoot.getElementById("submit");
-        const email        = this.shadowRoot.getElementById("email");
-        const password     = this.shadowRoot.getElementById("password");
-        const confirmPass  = this.shadowRoot.getElementById("confirm");
-        const name         = this.shadowRoot.getElementById("name");
-        const surname      = this.shadowRoot.getElementById("surname");
-        const age          = this.shadowRoot.getElementById("age");
-        const occupation   = this.shadowRoot.getElementById("occupation");
-        const bio          = this.shadowRoot.getElementById("bio");
-        const picture      = this.shadowRoot.getElementById("picture");
+
+        //input section
+        const email       = this.shadowRoot.getElementById("email");
+        const password    = this.shadowRoot.getElementById("password");
+        const confirmPass = this.shadowRoot.getElementById("confirm");
+        const name        = this.shadowRoot.getElementById("name");
+        const surname     = this.shadowRoot.getElementById("surname");
+        const age         = this.shadowRoot.getElementById("age");
+        const occupation  = this.shadowRoot.getElementById("occupation");
+        const bio         = this.shadowRoot.getElementById("bio");
+        const picture     = this.shadowRoot.getElementById("picture");
 
         
         //button section
@@ -344,9 +351,8 @@ class RegisterPageComp extends Comp {
         confirmPass.required = true;
 
         /**
-         * 
+         * @brief Show error message under input
          */
-
         function showError(inputComp, message){
 
             const field = inputComp.shadowRoot.querySelector(".inputValue");
@@ -367,6 +373,10 @@ class RegisterPageComp extends Comp {
         
         }
 
+        /**
+         * 
+         * @brief clear error message if there exist before
+         */
         function clearError(inputComp){
 
             const field = inputComp.shadowRoot.querySelector(".inputValue");
@@ -381,6 +391,10 @@ class RegisterPageComp extends Comp {
         
         }
 
+        /**
+         * @brief Event that validate form check if the form is empty or not
+         * and check if password match or not and switch between step1 and step2 modal
+         */
         nextButton.addEventListener("click", () => {
 
             const inputs = [name, surname, email, password, confirmPass];
@@ -424,6 +438,9 @@ class RegisterPageComp extends Comp {
         
         });
 
+        /**
+         * @brief check password match if it match green status will appear
+         */
         confirmPass.addEventListener("input", () => {
 
             const confirmInput = confirmPass.shadowRoot.querySelector(".inputValue");
@@ -440,7 +457,9 @@ class RegisterPageComp extends Comp {
 
         });
 
-
+        /**
+         * @brief clear all input field status with when user type in the box
+         */
         [name, surname, email, password, confirmPass].forEach(input => {
 
             input.addEventListener("input", () => {
@@ -452,6 +471,9 @@ class RegisterPageComp extends Comp {
         });
 
 
+        /**
+         * @brief Event for going back to step1 
+         */
         const backBtn2 = this.shadowRoot.getElementById("backBtn2");
 
         backBtn2.addEventListener("click", () => {
