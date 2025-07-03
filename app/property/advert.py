@@ -23,10 +23,11 @@ advert_bp = Blueprint("advert_bp", __name__)
 @advert_bp.route("/advert/new", methods=["POST", "GET"])
 def advert():
     if request.method == "POST":
-        if not session["email"]:
-            redirect("/")
+        # if not session["email"]:  REFACTOR THIS IN PRODUCTION
+        #     redirect("/")
 
         data: object = request.get_json()
+        email: str = data.get("email")
         title: str = data.get("title")
         description: str = data.get("description")
         keywords: list = data.get("keywords")
@@ -50,9 +51,8 @@ def advert():
             return jsonify({"error": "Required property fields are not provided"}), 400
 
         images: list = request.files.getlist()
-
-        # Authenticate landlord
-        email: str = session["email"]
+        
+        # email: str = session["email"]
         lID: int = auth_landlord(email)
 
         if not lID:

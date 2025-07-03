@@ -24,7 +24,6 @@ class TestProperty(unittest.TestCase):
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 2AA",
-            "lID": 100,
         }
 
         self.assertIsNotNone(create_property(data), "Property was not created")
@@ -42,7 +41,6 @@ class TestProperty(unittest.TestCase):
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 1AA",
-            "lID": 100,
         }
 
         self.assertTrue(update_property(data), "Property was not updated")
@@ -129,6 +127,7 @@ class TestAdvertSuccess(unittest.TestCase):
     def testSuccess(self):
         URL = "https://whondo.com/advert/new"
         API_DATA = {
+            "email": "test@test.com",
             "title": "The home of the Prime Minister",
             "description": "Very spacious and central location",
             "keywords": ["house", "zone_1", "furnished", "city_centre"],
@@ -140,7 +139,6 @@ class TestAdvertSuccess(unittest.TestCase):
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 1AA",
-            "lID": 100,
         }
 
         resp = requests.post(URL, json=API_DATA)
@@ -161,7 +159,6 @@ class TestAdvertSuccess(unittest.TestCase):
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 1AA",
-            "lID": 100,
         }
 
         resp = requests.post(URL, json=API_DATA)
@@ -174,7 +171,6 @@ class TestAdvertSuccess(unittest.TestCase):
             "title": "The home of the Prime Minister",
             "description": "Very spacious and central location",
             "keywords": ["house", "zone_1", "furnished", "city_centre"],
-            "lID": 100,
         }
 
         resp = requests.post(URL, json=API_DATA)
@@ -184,6 +180,7 @@ class TestAdvertSuccess(unittest.TestCase):
     def testLandlordAuth(self):
         URL = "https://whondo.com/advert/new"
         API_DATA = {
+            "email": "notalandlord@test.com",
             "title": "The home of the Prime Minister",
             "description": "Very spacious and central location",
             "keywords": ["house", "zone_1", "furnished", "city_centre"],
@@ -194,8 +191,7 @@ class TestAdvertSuccess(unittest.TestCase):
             "street": "The Mall",
             "town": "London",
             "county": "City of London",
-            "postcode": "SW1A 1AA",
-            "lID": 0,
+            "postcode": "SW1A 1AA"
         }
 
         resp = requests.post(URL, json=API_DATA)
