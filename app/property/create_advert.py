@@ -96,7 +96,7 @@ def advert():
 
         kID: int = store_keywords(keywords)
         pID: int = create_property(prop_data)
-        adID: int = create_advert(advert_data, uploaded_files)
+        adID: int = create_advert(advert_data, image_paths)
 
         if not kID or not pID or not adID:
             return jsonify({"error": "Keyword, Property or Advert upload failed"}), 400
