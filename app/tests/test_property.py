@@ -24,9 +24,10 @@ class TestProperty(unittest.TestCase):
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 2AA",
+            "lID": 100
         }
 
-        self.assertIsNotNone(create_property(data), "Property was not created")
+        self.assertEqual(type(create_property(data)), "<class 'int'>", f"Property is returning {data}")
 
     def testUpdate(self):
         """
@@ -41,6 +42,7 @@ class TestProperty(unittest.TestCase):
             "town": "London",
             "county": "City of London",
             "postcode": "SW1A 1AA",
+            "lID": 100
         }
 
         self.assertTrue(update_property(data), "Property was not updated")
