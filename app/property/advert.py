@@ -100,7 +100,7 @@ def advert():
         return jsonify({"message": "Advert created successfully"}), 201
 
     else:
-        if session.get["uID"]: 
+        if not session.get["uID"]: 
             redirect("/")
         else:
             render_template("property.html")
