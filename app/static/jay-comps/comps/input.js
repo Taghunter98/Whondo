@@ -203,16 +203,18 @@ class InputComp extends Comp {
             class: "fileBox",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "centre",
-            alignItems: "centre",
-            padding: 40,
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            maxWidth: "100%",
+            padding: 20,
             border: "2px",
             borderRadius: "12px",
             borderStyle: "dotted",
             background: "white",
             gap: 8,
-            colour: "black60",
-            textAlign: "centre", 
+            boxSizing: "border-box",
+            textAlign: "center"
         });
 
         const icon = this.design.create({
@@ -277,17 +279,48 @@ class InputComp extends Comp {
 
         const filePreview = this.design.create({
             class: "filePreview",
-            width: 120,
-            height: 120,
+            maxWidth: "100%",   
+            height: "auto",
             objectFit: "cover",
             borderRadius: 6,
-            marginTop: 8,
+            marginTop: 8
         });
 
         const reuploadBtn = this.design.create({
             class: "reuploadBtn",
             width: "auto",
             marginTop: 12,
+        });
+
+        const fileBoxMob = this.design.create({
+            class: "fileBox",
+            maxWidth: 240,
+            padding: 14,
+            display: "flex",
+            justifyContent: "centre",
+            alignItems: "centre",
+            margin: "0 auto"
+
+        });
+
+        const filePreMob = this.design.create({
+            class: "filePreview",
+            maxWidth: "100%",
+            height: "auto",
+            objectFit: "cover",
+            borderRadius: 6,
+        });
+
+        const filePromptMob = this.design.create({
+            class: "filePrompt",
+            fontSize: "0.8rem",
+            wordWrap: "break-word",
+            maxWidth: 120
+        });
+
+        const reloadMob = this.design.create({
+            marginTop:  8,
+            width: "100%",
         });
 
 
@@ -317,8 +350,23 @@ class InputComp extends Comp {
 
         ${reuploadBtn}
         ${areaInput}
+
+        @media (max-width: 600px){
+            ${fileBoxMob}
+            ${filePreMob}
+            ${filePromptMob}
+            ${reloadMob}
+        }
         
         `;
+    
+    }
+
+    async register(result, json) {
+
+        let data = await this.api.request("/register", "POST", json);
+        
+        (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
     
     }
 
@@ -329,6 +377,14 @@ class InputComp extends Comp {
         const icon       = this.shadowRoot.querySelector(".icon");
         const preview    = this.shadowRoot.querySelector(".filePreview");
 
+
+        const box = this.shadowRoot.querySelector(".fileBox");
+        if (box && fileInput) {
+
+            box.addEventListener("click", () => fileInput.click());
+
+        }
+        
         customElements.whenDefined("comp-button").then(() => {
 
             requestAnimationFrame(() => {
@@ -352,6 +408,7 @@ class InputComp extends Comp {
             });
         
         });
+
         
         if(fileInput && filePrompt){
 

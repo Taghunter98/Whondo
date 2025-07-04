@@ -37,7 +37,7 @@ class RegisterPageComp extends Comp {
 
                             <p class="text">Lets' find out a bit more about you!</p>
 
-                            <div class="row">
+                            <div class="inputRow">
                                 <comp-input id="name" name="name"></comp-input>
                                 <comp-input id="surname" name="surname"></comp-input>
                             </div>
@@ -49,7 +49,7 @@ class RegisterPageComp extends Comp {
                             </div>
 
                             <div class="footer">
-                                <div class="row">
+                                <div class="btnRow">
                                     <comp-button class="back" id="backBtn" type=button></comp-button>
                                     <comp-button class="next" id="nextBtn" type=button></comp-button>
                                 </div>
@@ -66,7 +66,7 @@ class RegisterPageComp extends Comp {
 
                             <p class="text">Lets' find out a bit more about you!</p>
 
-                             <div class="row">
+                             <div class="inputRow">
                                 <comp-input id="age" name="age"></comp-input>
                                 <comp-input id="occupation" name="occupation"></comp-input>
                             </div>
@@ -77,7 +77,7 @@ class RegisterPageComp extends Comp {
                             </div>
 
                             <div class="footer">
-                                <div class="row">
+                                <div class="btnRow">
                                     <comp-button class="back" id="backBtn2" type="button"></comp-button>
                                     <comp-button class="submit" id="submit" type="submit"></comp-button>
                                 </div>
@@ -104,6 +104,7 @@ class RegisterPageComp extends Comp {
             width: "100%",
             height: "100vh",
             background: "black100",
+            overflow: "hidden"
         });
         
         
@@ -151,8 +152,17 @@ class RegisterPageComp extends Comp {
             paddingBottom: 40,
         });
 
-        const row = this.design.create({
-            class: "row",
+        const inputRow = this.design.create({
+            class: "inputRow",
+            display: "flex",
+            flexDirection: "row",
+            gap: 15,
+            width: "100%",
+            justifyContent: "space-between"
+        });
+
+        const btnRow = this.design.create({
+            class: "btnRow",
             display: "flex",
             flexDirection: "row",
             gap: 15,
@@ -234,9 +244,24 @@ class RegisterPageComp extends Comp {
             maxWidth: 350,
             minWidth: 250,
             margin: 0,
-            marginTop: 200
+            marginTop: 100,
+            maxHeight: "90vh",
+            overflowY: "auto",
+            boxSizing: "border-box"
         });
         
+        const inputMob = this.design.create({
+            class: "input",
+            paddingTop: 10,
+            paddingBottom: 20,
+            gap: 15,
+        });
+
+        const inputRowMob = this.design.create({
+            class: "inputRow",
+            flexDirection: "column",
+        });
+       
 
 
         return /* css */ `
@@ -249,7 +274,8 @@ class RegisterPageComp extends Comp {
 
         ${modal}
         ${input}
-        ${row}
+        ${inputRow}
+        ${btnRow}
         ${link}
         ${linkHover}
 
@@ -266,6 +292,8 @@ class RegisterPageComp extends Comp {
             ${containerMob}
             ${backgroundImageMob}
             ${modalMob}
+            ${inputMob}
+            ${inputRowMob}
         }
         `;
 
@@ -487,6 +515,8 @@ class RegisterPageComp extends Comp {
         const loginLink = this.shadowRoot.querySelector(".link");
 
         loginLink.addEventListener("click", () => this.openWindow());
+
+        
 
     
     }
