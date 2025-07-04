@@ -189,6 +189,20 @@ class ButtonComp extends Comp {
             attributes: true,
             attributeFilter: ['hidden']
         });
+
+        // Inside comp-button component
+        this.addEventListener("click", () => {
+
+            const form = this.closest("form");
+            if (this.getAttribute("type") === "submit" && form) {
+
+                form.requestSubmit();
+            
+            }
+
+        });
+
+
     
     }
 

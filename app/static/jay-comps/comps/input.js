@@ -107,7 +107,7 @@ class InputComp extends Comp {
             
             <div class="fileWrapper">
                 <div class="fileBox">
-                    <img class="filePreview" src="" alt="preview" hidden>
+                    <img class="filePreview" src="" hidden>
                     <span class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                         <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
@@ -279,11 +279,15 @@ class InputComp extends Comp {
 
         const filePreview = this.design.create({
             class: "filePreview",
-            maxWidth: "100%",   
-            height: "auto",
+            width: "auto",             
+            maxWidth: "150px",       
+            maxHeight: "150px",        
             objectFit: "cover",
+            display: "block",
+            marginTop: 8,
+            marginLeft: "auto",        
+            marginRight: "auto",
             borderRadius: 6,
-            marginTop: 8
         });
 
         const reuploadBtn = this.design.create({
@@ -293,13 +297,12 @@ class InputComp extends Comp {
         });
 
         const fileBoxMob = this.design.create({
-            class: "fileBox",
-            maxWidth: 240,
-            padding: 14,
-            display: "flex",
-            justifyContent: "centre",
-            alignItems: "centre",
-            margin: "0 auto"
+            class: "filePreview",
+            maxWidth: "100px",     
+            maxHeight: "100px",
+            marginTop: 8,
+            marginLeft: "auto",
+            marginRight: "auto",
 
         });
 

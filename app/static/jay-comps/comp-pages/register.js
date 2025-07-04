@@ -61,7 +61,7 @@ class RegisterPageComp extends Comp {
 
                             <div class="textContainer">
                                 <p class="text">Step 2/2</p>
-                                <h3 class="title">Personalise Profile</h3> 
+                                <h3 class="title">Personalise</h3> 
                             </div>
 
                             <p class="text">Lets' find out a bit more about you!</p>
@@ -102,9 +102,10 @@ class RegisterPageComp extends Comp {
         const background = this.design.create({
             class: "background",
             width: "100%",
-            height: "100vh",
-            background: "black100",
-            overflow: "hidden"
+            minHeight: "100vh",
+            background: "black100",     
+            minHeight: "100vh",
+            overflow: "hidden"       
         });
         
         
@@ -132,7 +133,8 @@ class RegisterPageComp extends Comp {
             display: "flex",
             flexDirection: "column",
             alignItems: "centre",
-            width: 500,
+            width: "100%",
+            maxWidth: 500,
             background: "white",
             position: "absolute",
             zIndex: 800,
@@ -140,6 +142,7 @@ class RegisterPageComp extends Comp {
             borderRadius: 14,
             marginLeft: 100,
             marginTop: 100,
+            boxSizing: "border-box"
         });
 
         const input = this.design.create({
@@ -244,9 +247,7 @@ class RegisterPageComp extends Comp {
             maxWidth: 350,
             minWidth: 250,
             margin: 0,
-            marginTop: 100,
-            maxHeight: "90vh",
-            overflowY: "auto",
+            marginTop: 60,
             boxSizing: "border-box"
         });
         
@@ -305,18 +306,11 @@ class RegisterPageComp extends Comp {
     
     }
 
-    async register(result, json) {
-
-        let data = await this.api.request("/register", "POST", json);
-        
-        (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
-    
-    }
 
     hook(){
 
-        //form section 
-        const form = this.shadowRoot.getElementById("registerForm");
+        //form section
+        const form = this.shadowRoot.getElementById("register");
         
         //modal section
         const step1 = this.shadowRoot.getElementById("step1");
@@ -516,29 +510,6 @@ class RegisterPageComp extends Comp {
 
             step2.setAttribute("hidden", "");
             step1.removeAttribute("hidden");
-        
-        });
-
-
-        const loginLink = this.shadowRoot.querySelector(".link");
-
-        loginLink.addEventListener("click", () => this.openWindow());
-
-        submitButton.addEventListener("click", () => {
-
-            let jsonData = {
-
-                email : email.value,
-                password: password.value,
-                name: name.value,
-                surname: surname.value,
-                age: age.value,
-                occupation: occupation.value,
-                bio: bio.value,
-
-            };
-
-            this.register(result, jsonData);
         
         });
 
