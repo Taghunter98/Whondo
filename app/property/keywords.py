@@ -51,7 +51,7 @@ def delete_keywords(kID: int) -> bool:
     Returns:
         bool: Result
     """
-    query: str = "DELETE FROM Adverts WHERE kID = %s"
+    query: str = "DELETE FROM Keywords WHERE kID = %s"
 
     
     connection: object = connect()
