@@ -76,7 +76,9 @@ class ButtonComp extends Comp {
     
     createHTML() {
 
-        return /* html */ `<button class="button">${this.text_}</button>`;
+        const hiddenAttr = this.hasAttribute("hidden") ? 'hidden' : '';
+        return /* html */ `
+            <button class="button" ${hiddenAttr}>${this.text_}</button>`;
     
     }
 
@@ -156,6 +158,37 @@ class ButtonComp extends Comp {
         ${buttonHover}
         ${buttonActive}
         `;
+    
+    }
+
+    hook(){
+
+        const btn = this.shadowRoot.querySelector("button");
+
+        if (this.hasAttribute("hidden")) {
+
+            btn.setAttribute("hidden", "");
+        
+        }
+
+        const observer = new MutationObserver(() => {
+
+            if (this.hasAttribute("hidden")) {
+
+                btn.setAttribute("hidden", "");
+            
+            } else {
+
+                btn.removeAttribute("hidden");
+            
+            }
+        
+        });
+
+        observer.observe(this, {
+            attributes: true,
+            attributeFilter: ['hidden']
+        });
     
     }
 

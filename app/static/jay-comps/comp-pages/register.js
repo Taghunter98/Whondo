@@ -312,7 +312,7 @@ class RegisterPageComp extends Comp {
         });
         nextButton.text      = "Next";
         nextButton.variant   = 1;
-        submitButton.text    = "Submit";
+        submitButton.text    = "Register";
         submitButton.variant = 1;
         
         //input section

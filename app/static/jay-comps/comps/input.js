@@ -105,16 +105,19 @@ class InputComp extends Comp {
 
             inputField = /* html */ ` 
             
-            <label class="fileWrapper">
+            <div class="fileWrapper">
                 <div class="fileBox">
                     <img class="filePreview" src="" alt="preview" hidden>
                     <span class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                        <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
+                    </svg>
                     </span>
                     <span class="filePrompt">${this.prompt_}</span>
+                    <input class="inputValue fileInput" type="file" accept=".png" hidden>
+                    <comp-button class="reuploadBtn" hidden></comp-button>
                 </div>
-                <input class="inputValue fileInput" type="file" accept=".png" hidden >
-            </label>
+            </div>
 
             `;
 
@@ -281,6 +284,12 @@ class InputComp extends Comp {
             marginTop: 8,
         });
 
+        const reuploadBtn = this.design.create({
+            class: "reuploadBtn",
+            width: "auto",
+            marginTop: 12,
+        });
+
 
         return /* css */ `
         
@@ -306,6 +315,7 @@ class InputComp extends Comp {
         ${filesBoxDrag}
         ${filePreview}
 
+        ${reuploadBtn}
         ${areaInput}
         
         `;
@@ -318,6 +328,30 @@ class InputComp extends Comp {
         const filePrompt = this.shadowRoot.querySelector(".filePrompt");
         const icon       = this.shadowRoot.querySelector(".icon");
         const preview    = this.shadowRoot.querySelector(".filePreview");
+
+        customElements.whenDefined("comp-button").then(() => {
+
+            requestAnimationFrame(() => {
+
+                const reuploadBtn = this.shadowRoot.querySelector(".reuploadBtn");
+
+                if (reuploadBtn) {
+
+                    reuploadBtn.text    = "Re-upload Photo";
+                    reuploadBtn.variant = 2;
+                    reuploadBtn.setAttribute("hidden", "");
+
+                    reuploadBtn.addEventListener("click", () => {
+
+                        fileInput?.click(); 
+                    
+                    });
+                
+                }
+            
+            });
+        
+        });
         
         if(fileInput && filePrompt){
 
@@ -337,6 +371,9 @@ class InputComp extends Comp {
 
                             preview.src = reader.result;
                             preview.removeAttribute("hidden");
+
+                            const reuploadBtn = this.shadowRoot.querySelector(".reuploadBtn");
+                            reuploadBtn?.removeAttribute("hidden");
                         
                         };
 
