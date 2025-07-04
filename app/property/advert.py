@@ -10,7 +10,6 @@ Description: Provides a function to create an advert in the database.
 """
 
 from app.database.db_connect import connect
-from flask import current_app
 
 
 def create_advert(values: dict, images: list) -> int:
@@ -24,12 +23,12 @@ def create_advert(values: dict, images: list) -> int:
         values["price"],
         values["description"],
         values["tennants"],
-        *images
+        *images,
     )
 
     connection: object = connect()
     cursor: object = connection.cursor()
-    current_app.logger.info(f"DEBUG: param len: {len(query)} images: {images}")
+
     cursor.execute(query, params)
     connection.commit()
 
@@ -40,8 +39,37 @@ def create_advert(values: dict, images: list) -> int:
 
     return adID
 
+def update_advert(values: dict, images: list, adID) -> bool:
+    query: str = """
+    UPDATE Adverts 
+    SET title = %s, price = %s, description = %s, tennants = %s, image1 = %s, image2 = %s, image3 = %s, image4 = %s, image5 = %s, image6 = %s, image7 = %s, image8 = %s, image9 = %s, image10 = %s
+    WHERE adID = %s
+    """
 
-def delete_advert(lID: int) -> bool:
+    params: tuple = (
+        values["title"],
+        values["price"],
+        values["description"],
+        values["tennants"],
+        *images,
+        adID
+    )
+
+    connection: object = connect()
+    cursor: object = connection.cursor()
+
+    cursor.execute(query, params)
+    connection.commit()
+
+    updated: bool = cursor.rowcount == 1
+
+    cursor.close()
+    connection.close()
+
+    return updated
+
+
+def delete_advert(adID: int) -> bool:
     """
     The function deletes a value from the databse and returns the result.
 
@@ -51,21 +79,19 @@ def delete_advert(lID: int) -> bool:
     Returns:
         bool: Result
     """
-    query: str = "DELETE FROM Adverts WHERE lID = %s"
+    query: str = "DELETE FROM Adverts WHERE adID = %s"
 
-    try:
-        connection: object = connect()
-        cursor: object = connection.cursor()
+    
+    connection: object = connect()
+    cursor: object = connection.cursor()
 
-        cursor.execute(query, (lID,))
-        connection.commit()
+    cursor.execute(query, (adID,))
+    connection.commit()
 
-        deleted: bool = cursor.rowcount == 1
+    deleted: bool = cursor.rowcount == 1
 
-        cursor.close()
-        connection.close()
+    cursor.close()
+    connection.close()
 
-        return deleted
-    except Exception as err:
-        print(f"Deletion failed: {err}")
-        return False
+    return deleted
+  

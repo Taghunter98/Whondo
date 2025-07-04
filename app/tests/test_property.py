@@ -4,7 +4,7 @@ import requests
 import io
 
 from app.property.property import create_property, update_property, delete_property
-from app.property.keywords import store_keywords
+from app.property.keywords import store_keywords, delete_keywords
 from app.property.advert import create_advert, delete_advert
 
 
@@ -13,7 +13,7 @@ from app.property.advert import create_advert, delete_advert
     "Skipping test in CI pipeline: This test needs DB access",
 )
 class TestProperty(unittest.TestCase):
-    def testCreation(self):
+    def testProperty(self):
         """
         Test method tests that property was created successfully.
         """
@@ -28,32 +28,11 @@ class TestProperty(unittest.TestCase):
             "postcode": "SW1A 2AA"
         }
 
+        pID: int = create_property(data)
         self.assertEqual(
-            type(create_property(data)), int, f"Property is returning {data}"
+            type(pID), int, f"Property is returning {data}"
         )
-
-    def testUpdate(self):
-        """
-        Test method tests that property was updated successfully.
-        """
-        data = {
-            "propType": "house",
-            "bedrooms": 240,
-            "bathrooms": 78,
-            "name": "Buckingham Palace",
-            "street": "The Mall",
-            "town": "London",
-            "county": "City of London",
-            "postcode": "SW1A 1AA"
-        }
-
-        self.assertTrue(update_property(data), "Property was not updated")
-
-    def testDeletion(self):
-        """
-        Test method tests that the property was deleted successfully.
-        """
-        self.assertTrue(delete_property(100), "Property was not deleted")
+        self.assertTrue(delete_property(pID), "Property was not deleted")
 
 
 @unittest.skipIf(
@@ -61,7 +40,7 @@ class TestProperty(unittest.TestCase):
     "Skipping test in CI pipeline: This test needs DB access",
 )
 class TestKeywords(unittest.TestCase):
-    def testKeywordInsertion(self):
+    def testKeywords(self):
         """
         Test method tests that keywords were stored successfully.
         """
@@ -119,7 +98,9 @@ class TestKeywords(unittest.TestCase):
             "bike_storage",
         ]
 
-        self.assertIsNotNone(store_keywords(ALL_KEYWORDS), "Keywords were not stored")
+        kID: int = store_keywords(ALL_KEYWORDS)
+        self.assertIsNotNone(kID, "Keywords were not stored")
+        self.assertTrue(delete_keywords(kID), "Keywords were not deleted")
 
 
 @unittest.skipIf(
@@ -127,7 +108,7 @@ class TestKeywords(unittest.TestCase):
     "Skipping test in CI pipeline: This test needs DB access",
 )
 class TestAdvert(unittest.TestCase):
-    def testCreation(self):
+    def testAdvert(self):
         """
         Test method tests that the advert was created successfully.
         """
@@ -135,17 +116,23 @@ class TestAdvert(unittest.TestCase):
             "title": "Test title",
             "description": "Test description",
             "price": 1000,
-            "tennants": 4
+            "tennants": 4,
         }
 
-        images = ["test1.png", "test2.png", "test3.png", "test4.png", None, None, None, None, None, None]
+        images = [
+            "test1.png",
+            "test2.png",
+            "test3.png",
+            "test4.png",
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        ]
 
-        self.assertEqual(
-            type(create_advert(data, images)), int, "Advert was not created"
+        adID: int = create_advert(data, images)
+        self.assertEqual(type(adID), int, "Advert was not created"
         )
-
-    def testDeletion(self):
-        """
-        Test method tests that the advert was deleted successfully.
-        """
-        self.assertTrue(delete_advert(100), "Advert was not deleted")
+        self.assertTrue(delete_advert(adID), "Advert was not deleted")

@@ -22,7 +22,7 @@ import json
 
 from app.utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
-from app.users.images import upload_file, convert_images
+from app.users.images import convert_images
 from app.property.keywords import store_keywords
 from app.property.property import create_property
 from app.property.advert import create_advert
@@ -32,6 +32,22 @@ advert_bp = Blueprint("advert_bp", __name__)
 
 @advert_bp.route("/advert/new", methods=["POST", "GET"])
 def advert():
+    """
+    The REST API creates a new advert in the database.
+
+    Function first authenticates landlords via the session email variable, then if authenticated
+    the request data is collected and validated.
+
+    The images are stored and a list of the paths is returned to be stored.
+
+    The Property data, Keyword data and Advert data are stored and primary keys collected.
+
+    The full advert is stored in PropertyKeywordAdvert with each respective key.
+
+
+    Returns:
+        Response: Response of successs or appropriate error message
+    """
     if request.method == "POST":
         if not session.get("email"):
             redirect("/")
@@ -51,10 +67,6 @@ def advert():
         email: str = session.get("email")
         lID: int = auth_landlord(email)
 
-        if not lID:
-            current_app.logger.warning("Unauthorised landlord login attempt")
-            return jsonify({"error": "Unauthorised user is not a landlord"}), 401
-
         prop_data: dict = {
             "propType": request.form.get("propType"),
             "bedrooms": request.form.get("bedrooms"),
@@ -63,7 +75,7 @@ def advert():
             "street": request.form.get("street"),
             "town": request.form.get("town"),
             "county": request.form.get("county"),
-            "postcode": request.form.get("postcode")
+            "postcode": request.form.get("postcode"),
         }
 
         image_paths: list = convert_images(images, email)
@@ -72,7 +84,7 @@ def advert():
             "title": title,
             "price": price,
             "description": description,
-            "tennants": tennants
+            "tennants": tennants,
         }
 
         connection: object = connect()

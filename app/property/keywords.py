@@ -40,3 +40,29 @@ def store_keywords(keywords: list) -> int:
     connection.close()
 
     return kID
+
+def delete_keywords(kID: int) -> bool:
+    """
+    The function deletes a value from the databse and returns the result.
+
+    Args:
+        lID (int): The landlord ID for the advert
+
+    Returns:
+        bool: Result
+    """
+    query: str = "DELETE FROM Adverts WHERE kID = %s"
+
+    
+    connection: object = connect()
+    cursor: object = connection.cursor()
+
+    cursor.execute(query, (kID,))
+    connection.commit()
+
+    deleted: bool = cursor.rowcount == 1
+
+    cursor.close()
+    connection.close()
+
+    return deleted

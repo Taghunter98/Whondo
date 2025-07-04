@@ -35,7 +35,7 @@ def create_property(values: dict) -> int:
         values["street"],
         values["town"],
         values["county"],
-        values["postcode"]
+        values["postcode"],
     )
 
     connection: object = connect()
@@ -52,23 +52,23 @@ def create_property(values: dict) -> int:
     return pID
 
 
-def delete_property(lID: int) -> bool:
+def delete_property(pID: int) -> bool:
     """
     The function deletes a value from the databse and returns the result.
 
     Args:
-        lID (int): The landlord ID for the property
+        pID (int): The landlord ID for the property
 
     Returns:
         bool: Result
     """
-    query: str = "DELETE FROM Property WHERE lID = %s"
+    query: str = "DELETE FROM Property WHERE pID = %s"
 
     try:
         connection: object = connect()
         cursor: object = connection.cursor()
 
-        cursor.execute(query, (lID,))
+        cursor.execute(query, (pID,))
         connection.commit()
 
         deleted: bool = cursor.rowcount == 1

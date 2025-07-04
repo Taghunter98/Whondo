@@ -149,4 +149,4 @@ def convert_images(images: list, email: str) -> list:
         else:
             image_paths.append(None)
 
-    return image_paths        
+    return image_paths
