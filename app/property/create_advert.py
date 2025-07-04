@@ -33,7 +33,7 @@ advert_bp = Blueprint("advert_bp", __name__)
 @advert_bp.route("/advert/new", methods=["POST", "GET"])
 def advert():
     if request.method == "POST":
-        if not session.get["email"]:
+        if not session.get("email"):
             redirect("/")
 
         title: str = request.form.get("title")
