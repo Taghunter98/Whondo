@@ -71,7 +71,10 @@ class TestEmailExists(unittest.TestCase):
         result: bool = check_email_exits("notinthedb@test.com")
         self.assertFalse(result, f"Function is returning: {result}")
 
-
+@unittest.skipIf(
+    os.environ.get("CI") == "true",
+    "Skipping test in CI pipeline: This test needs DB access",
+)
 class TestAuthLandlordID(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
