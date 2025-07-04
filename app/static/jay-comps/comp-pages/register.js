@@ -305,6 +305,14 @@ class RegisterPageComp extends Comp {
     
     }
 
+    async register(result, json) {
+
+        let data = await this.api.request("/register", "POST", json);
+        
+        (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
+    
+    }
+
     hook(){
 
         //form section 
@@ -516,7 +524,23 @@ class RegisterPageComp extends Comp {
 
         loginLink.addEventListener("click", () => this.openWindow());
 
+        submitButton.addEventListener("click", () => {
+
+            let jsonData = {
+
+                email : email.value,
+                password: password.value,
+                name: name.value,
+                surname: surname.value,
+                age: age.value,
+                occupation: occupation.value,
+                bio: bio.value,
+
+            };
+
+            this.register(result, jsonData);
         
+        });
 
     
     }

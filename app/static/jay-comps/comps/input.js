@@ -362,13 +362,6 @@ class InputComp extends Comp {
     
     }
 
-    async register(result, json) {
-
-        let data = await this.api.request("/register", "POST", json);
-        
-        (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
-    
-    }
 
     hook(){
 
