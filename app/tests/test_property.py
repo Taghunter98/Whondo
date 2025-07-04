@@ -25,8 +25,7 @@ class TestProperty(unittest.TestCase):
             "street": "Downing Street",
             "town": "London",
             "county": "City of London",
-            "postcode": "SW1A 2AA",
-            "lID": 100,
+            "postcode": "SW1A 2AA"
         }
 
         self.assertEqual(
@@ -45,8 +44,7 @@ class TestProperty(unittest.TestCase):
             "street": "The Mall",
             "town": "London",
             "county": "City of London",
-            "postcode": "SW1A 1AA",
-            "lID": 100,
+            "postcode": "SW1A 1AA"
         }
 
         self.assertTrue(update_property(data), "Property was not updated")
@@ -137,8 +135,7 @@ class TestAdvert(unittest.TestCase):
             "title": "Test title",
             "description": "Test description",
             "price": 1000,
-            "tennants": 4,
-            "lID": 100,
+            "tennants": 4
         }
 
         images = ["test1.png", "test2.png", "test3.png", "test4.png", None, None, None, None, None, None]

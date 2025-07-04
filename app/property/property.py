@@ -23,8 +23,8 @@ def create_property(values: dict) -> int:
         bool: Property ID (pID)
     """
     query: str = """
-    INSERT INTO Property (propType, bedrooms, bathrooms, name, street, town, county, postcode, lID)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    INSERT INTO Property (propType, bedrooms, bathrooms, name, street, town, county, postcode)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     params: tuple = (
@@ -35,8 +35,7 @@ def create_property(values: dict) -> int:
         values["street"],
         values["town"],
         values["county"],
-        values["postcode"],
-        values["lID"],
+        values["postcode"]
     )
 
     connection: object = connect()

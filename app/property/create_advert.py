@@ -63,14 +63,12 @@ def advert():
             "street": request.form.get("street"),
             "town": request.form.get("town"),
             "county": request.form.get("county"),
-            "postcode": request.form.get("postcode"),
-            "lID": lID,
+            "postcode": request.form.get("postcode")
         }
 
         image_paths: list = convert_images(images, email)
 
         advert_data: dict = {
-            "lID": lID,
             "title": title,
             "price": price,
             "description": description,

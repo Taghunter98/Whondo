@@ -15,12 +15,11 @@ from flask import current_app
 
 def create_advert(values: dict, images: list) -> int:
     query: str = """
-    INSERT INTO Adverts (lID, title, price, description, tennants, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    INSERT INTO Adverts (title, price, description, tennants, image1, image2, image3, image4, image5, image6, image7, image8, image9, image10)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     params: tuple = (
-        values["lID"],
         values["title"],
         values["price"],
         values["description"],
