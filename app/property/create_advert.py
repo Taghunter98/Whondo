@@ -22,7 +22,7 @@ import json
 
 from app.utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
-from app.users.images import upload_file
+from app.users.images import upload_file, convert_images
 from app.property.keywords import store_keywords
 from app.property.property import create_property
 from app.property.advert import create_advert
@@ -56,7 +56,7 @@ def advert():
             current_app.logger.warning("Unauthorised landlord login attempt")
             return jsonify({"error": "Unauthorised user is not a landlord"}), 401
 
-        prop_data = {
+        prop_data: dict = {
             "propType": request.form.get("propType"),
             "bedrooms": request.form.get("bedrooms"),
             "bathrooms": request.form.get("bathrooms"),
@@ -68,20 +68,7 @@ def advert():
             "lID": lID,
         }
 
-        if any(e is None for e in prop_data):
-            return jsonify({"error": "Required property fields are not provided"}), 400
-
-        # Files upload -> move this to images when refactoring
-        uploaded_files: list = []
-        for file in images:
-            uploaded_files.append(upload_file(file, email))
-
-        image_paths: list = []
-        for i in range(10):
-            if i < len(uploaded_files):
-                image_paths.append(uploaded_files[i])
-            else:
-                image_paths.append(None)
+        image_paths: list = convert_images(images, email)
 
         advert_data: dict = {
             "lID": lID,
