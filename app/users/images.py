@@ -135,3 +135,18 @@ def purge():
     connection.close()
 
     return jsonify({"emails": emails})
+
+
+def convert_images(images: list, email: str) -> list:
+    uploaded_files: list = []
+    for file in images:
+        uploaded_files.append(upload_file(file, email))
+
+    image_paths: list = []
+    for i in range(10):
+        if i < len(uploaded_files):
+            image_paths.append(uploaded_files[i])
+        else:
+            image_paths.append(None)
+
+    return image_paths
