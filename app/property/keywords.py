@@ -41,19 +41,19 @@ def store_keywords(keywords: list) -> int:
 
     return kID
 
+
 def delete_keywords(kID: int) -> bool:
     """
     The function deletes a value from the databse and returns the result.
 
     Args:
-        lID (int): The landlord ID for the advert
+        kID (int): The keyword ID
 
     Returns:
         bool: Result
     """
     query: str = "DELETE FROM Keywords WHERE kID = %s"
 
-    
     connection: object = connect()
     cursor: object = connection.cursor()
 

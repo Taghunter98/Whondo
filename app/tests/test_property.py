@@ -1,7 +1,5 @@
 import unittest
 import os
-import requests
-import io
 
 from app.property.property import create_property, update_property, delete_property
 from app.property.keywords import store_keywords, delete_keywords
@@ -25,13 +23,23 @@ class TestProperty(unittest.TestCase):
             "street": "Downing Street",
             "town": "London",
             "county": "City of London",
-            "postcode": "SW1A 2AA"
+            "postcode": "SW1A 2AA",
+        }
+
+        new_data = {
+            "propType": "house",
+            "bedrooms": 5,
+            "bathrooms": 3,
+            "name": "4",
+            "street": "Privet Drive",
+            "town": "London",
+            "county": "City of London",
+            "postcode": "SW1A 2AA",
         }
 
         pID: int = create_property(data)
-        self.assertEqual(
-            type(pID), int, f"Property is returning {data}"
-        )
+        self.assertEqual(type(pID), int, f"Property is returning {data}")
+        self.assertTrue(update_property(new_data, pID), "Property was not deleted")
         self.assertTrue(delete_property(pID), "Property was not deleted")
 
 
@@ -133,6 +141,5 @@ class TestAdvert(unittest.TestCase):
         ]
 
         adID: int = create_advert(data, images)
-        self.assertEqual(type(adID), int, "Advert was not created"
-        )
+        self.assertEqual(type(adID), int, "Advert was not created")
         self.assertTrue(delete_advert(adID), "Advert was not deleted")

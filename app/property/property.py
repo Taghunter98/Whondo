@@ -57,37 +57,34 @@ def delete_property(pID: int) -> bool:
     The function deletes a value from the databse and returns the result.
 
     Args:
-        pID (int): The landlord ID for the property
+        pID (int): The Property ID
 
     Returns:
         bool: Result
     """
     query: str = "DELETE FROM Property WHERE pID = %s"
 
-    try:
-        connection: object = connect()
-        cursor: object = connection.cursor()
+    connection: object = connect()
+    cursor: object = connection.cursor()
 
-        cursor.execute(query, (pID,))
-        connection.commit()
+    cursor.execute(query, (pID,))
+    connection.commit()
 
-        deleted: bool = cursor.rowcount == 1
+    deleted: bool = cursor.rowcount == 1
 
-        cursor.close()
-        connection.close()
+    cursor.close()
+    connection.close()
 
-        return deleted
-    except Exception as err:
-        print(f"Deletion failed: {err}")
-        return False
+    return deleted
 
 
-def update_property(values: dict) -> bool:
+def update_property(values: dict, pID: int) -> bool:
     """
     The function updates the property and returns the result.
 
     Args:
         values (dict): Dictionary of sql values
+        pID (int): Property ID
 
     Returns:
         bool: Result
@@ -95,7 +92,7 @@ def update_property(values: dict) -> bool:
     query: str = """
     UPDATE Property
     SET propType = %s, bedrooms = %s, bathrooms = %s, name = %s, street = %s, town = %s, county = %s, postcode = %s
-    WHERE lID = %s;
+    WHERE pID = %s;
     """
 
     params: tuple = (
@@ -107,21 +104,16 @@ def update_property(values: dict) -> bool:
         values["town"],
         values["county"],
         values["postcode"],
-        values["lID"],
+        pID
     )
+    
+    connection: object = connect()
+    cursor: object = connection.cursor()
 
-    try:
-        connection: object = connect()
-        cursor: object = connection.cursor()
+    cursor.execute(query, params)
+    connection.commit()
 
-        cursor.execute(query, params)
-        connection.commit()
+    cursor.close()
+    connection.close()
 
-        cursor.close()
-        connection.close()
-
-        return True
-
-    except Exception as err:
-        print(f"Update failed: {err}")
-        return False
+    return True

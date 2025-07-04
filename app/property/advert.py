@@ -39,6 +39,7 @@ def create_advert(values: dict, images: list) -> int:
 
     return adID
 
+
 def update_advert(values: dict, images: list, adID) -> bool:
     query: str = """
     UPDATE Adverts 
@@ -52,7 +53,7 @@ def update_advert(values: dict, images: list, adID) -> bool:
         values["description"],
         values["tennants"],
         *images,
-        adID
+        adID,
     )
 
     connection: object = connect()
@@ -81,7 +82,6 @@ def delete_advert(adID: int) -> bool:
     """
     query: str = "DELETE FROM Adverts WHERE adID = %s"
 
-    
     connection: object = connect()
     cursor: object = connection.cursor()
 
@@ -94,4 +94,3 @@ def delete_advert(adID: int) -> bool:
     connection.close()
 
     return deleted
-  
