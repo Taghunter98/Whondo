@@ -33,7 +33,7 @@ advert_bp = Blueprint("advert_bp", __name__)
 @advert_bp.route("/advert/new", methods=["POST", "GET"])
 def advert():
     if request.method == "POST":
-        if not session.get("email") or not auth_landlord(session.get("email")):
+        if not session.get("email"):
             redirect("/")
 
         title: str = request.form.get("title")
@@ -101,7 +101,7 @@ def advert():
         return jsonify({"message": "Advert created successfully"}), 201
 
     else:
-        if session.get("uID"):
+        if session.get("uID") and auth_landlord(session.get("email")):
             return render_template("property.html")
         else:
             return redirect("/")
