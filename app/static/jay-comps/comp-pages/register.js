@@ -134,7 +134,7 @@ class RegisterPageComp extends Comp {
             flexDirection: "column",
             alignItems: "centre",
             width: "100%",
-            maxWidth: 540,  
+            maxWidth: 500,  
             minWidth: 320,
             background: "white",
             position: "absolute",
