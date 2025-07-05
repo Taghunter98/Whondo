@@ -395,7 +395,7 @@ class InputComp extends Comp {
 
                     reuploadBtn.addEventListener("click", () => {
                         
-                        e.stopPropagation();
+                        
                         fileInput.value = "";
                         fileInput?.click(); 
                     
