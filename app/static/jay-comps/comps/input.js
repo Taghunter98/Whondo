@@ -294,7 +294,7 @@ class InputComp extends Comp {
         const reuploadBtn = this.design.create({
             class: "reuploadBtn",
             width: "auto",
-            marginTop: 12,
+            marginTop: 5,
         });
 
         const fileBoxMob = this.design.create({
@@ -400,7 +400,7 @@ class InputComp extends Comp {
 
                     reuploadBtn.addEventListener("click", () => {
                         
-                        
+                        e.stopPropagation();
                         fileInput.value = "";
                         fileInput?.click(); 
                     

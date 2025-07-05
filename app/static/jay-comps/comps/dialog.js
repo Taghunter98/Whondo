@@ -9,6 +9,7 @@ class DialogComp extends Comp {
         this.title_     = "Hello World";
         this.paragraph_ = "This is a paragraph";
         this.svgIcon_   = "";
+        this.text_      = "this is a button";
 
         this.name_ = "Dialog";
         this.html_ = this.createHTML();
@@ -40,6 +41,13 @@ class DialogComp extends Comp {
     
     }
 
+    set text(value){
+
+        this.text_ = value;
+        this.update(this.createHTML(), this.css_);
+    
+    }
+
     get paragraph() {
 
         return this.paragraph_;
@@ -59,6 +67,12 @@ class DialogComp extends Comp {
     
     }
 
+    get text() {
+
+        return this.text_;
+    
+    }
+
     createHTML() {
 
         return /* html */ `
@@ -70,6 +84,7 @@ class DialogComp extends Comp {
                     <svg class="icon" ${this.svgIcon_}></svg>
                     <h3 class="head">${this.title_}</h3>
                     <p class="dialog">${this.paragraph_}</p>
+                    <comp-button class="btn">${this.text_}</comp-button>
 
                 </div>
 

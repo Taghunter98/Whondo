@@ -76,9 +76,9 @@ class ButtonComp extends Comp {
     
     createHTML() {
 
-        const hiddenAttr = this.hasAttribute("hidden") ? 'hidden' : '';
+        
         return /* html */ `
-            <button class="button" ${hiddenAttr}>${this.text_}</button>`;
+            <button class="button">${this.text_}</button>`;
     
     }
 
