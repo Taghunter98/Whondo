@@ -104,7 +104,6 @@ class RegisterPageComp extends Comp {
             width: "100%",
             minHeight: "100vh",
             background: "black100",     
-            minHeight: "100vh",
             overflow: "hidden"       
         });
         
