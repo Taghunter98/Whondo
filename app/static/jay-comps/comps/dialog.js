@@ -73,6 +73,29 @@ class DialogComp extends Comp {
     
     }
 
+    hideButton() {
+
+        requestAnimationFrame(() => {
+
+            const btn = this.shadowRoot?.querySelector("comp-button");
+            if (btn) btn.setAttribute("hidden", "");
+        
+        });
+
+    }
+
+    showButton() {
+
+        requestAnimationFrame(() => {
+
+            const btn = this.shadowRoot?.querySelector("comp-button");
+            if (btn) btn.removeAttribute("hidden");
+        
+        });
+
+    }
+
+
     createHTML() {
 
         return /* html */ `

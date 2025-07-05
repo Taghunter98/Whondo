@@ -169,6 +169,10 @@ class ButtonComp extends Comp {
 
             btn.setAttribute("hidden", "");
         
+        } else {
+
+            btn.removeAttribute("hidden");
+        
         }
 
         const observer = new MutationObserver(() => {
