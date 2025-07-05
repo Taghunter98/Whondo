@@ -214,7 +214,8 @@ class InputComp extends Comp {
             background: "white",
             gap: 8,
             boxSizing: "border-box",
-            textAlign: "center"
+            textAlign: "center",
+            maxHeight: 220,
         });
 
         const icon = this.design.create({
@@ -281,7 +282,7 @@ class InputComp extends Comp {
             class: "filePreview",
             width: "auto",             
             maxWidth: "150px",       
-            maxHeight: "150px",        
+            maxHeight: "120px",        
             objectFit: "cover",
             display: "block",
             marginTop: 8,
@@ -322,7 +323,8 @@ class InputComp extends Comp {
         });
 
         const reloadMob = this.design.create({
-            marginTop:  8,
+            class: "reuploadBtn",
+            marginTop:  2,
             width: "100%",
         });
 
@@ -373,7 +375,10 @@ class InputComp extends Comp {
         const icon       = this.shadowRoot.querySelector(".icon");
         const preview    = this.shadowRoot.querySelector(".filePreview");
 
-
+        /**
+         * Allow to click directly in the file box to update 
+         * help support mobile user
+         */
         const box = this.shadowRoot.querySelector(".fileBox");
         if (box && fileInput) {
 
@@ -407,7 +412,11 @@ class InputComp extends Comp {
         
         });
 
-        
+        /**
+         * @brief Logic for file input when there file upload it get name
+         * of that file adn display it and hidden icon and un hidden button when 
+         * there are uploaded file
+         */
         if(fileInput && filePrompt){
 
             fileInput.addEventListener("change", () => {
@@ -450,6 +459,10 @@ class InputComp extends Comp {
             
             });
 
+            /**
+             * @brief Drag and drop file logic allow file input accept 
+             * drag and drop action
+             */
             const dropArea = this.shadowRoot.querySelector(".fileBox");
 
             if(dropArea) {
@@ -488,7 +501,11 @@ class InputComp extends Comp {
         
         }
 
-
+        /**
+         * @brief This is password entropy score logic it give a colour
+         * and small hint base one the score 
+         * 
+         */
         if(this.type_ === "password" && this.enableEntropy_){
 
             const inputEn = this.shadowRoot.querySelector(".inputValue");
@@ -547,6 +564,12 @@ class InputComp extends Comp {
 
     }
 
+    /**
+     * 
+     * @brief This method calculate the password entropy score 
+     * use to build password status
+     *  
+     */
     calculateEntropy(password){
 
         let poolSize = 0;

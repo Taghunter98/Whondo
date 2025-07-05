@@ -470,7 +470,7 @@ class RegisterPageComp extends Comp {
         });
 
         /**
-         * @brief check password match if it match green status will appear
+         * @brief validate password match if it match green status will appear
          */
         confirmPass.addEventListener("input", () => {
 
@@ -490,6 +490,7 @@ class RegisterPageComp extends Comp {
 
         /**
          * @brief clear all input field status with when user type in the box
+         * clean ui
          */
         [name, surname, email, password, confirmPass].forEach(input => {
 
