@@ -17,8 +17,8 @@ class ButtonComp extends Comp {
 
         super();                                                    
 
-        this.buttonText_    = "This is a button";
-        this.buttonVarient_ = 1;    
+        this.text_    = "This is a button";
+        this.variant_ = 1;    
         
         this.name_ = "Button";
         this.html_ = this.createHTML();
@@ -31,23 +31,23 @@ class ButtonComp extends Comp {
     /**
      * @brief A setter method that sets the Comp's button text.
      * 
-     * @param {string} newButtonText
+     * @param {string} newText
      */
-    set buttonText(newButtonText) {
+    set text(newText) {
 
-        this.buttonText_ = newButtonText;
+        this.text_ = newText;
         this.update(this.createHTML(), this.css_);
     
     }
 
     /**
-     * @brief A setter method that sets the Comp's button varient (1, 2, 3).
+     * @brief A setter method that sets the Comp's button variant (1, 2, 3).
      * 
-     * @param {string} newButtonVarient
+     * @param {string} newVariant
      */
-    set buttonVarient(newButtonVarient) {
+    set variant(newVariant) {
 
-        this.buttonVarient_ = newButtonVarient;
+        this.variant_ = newVariant;
         this.update(this.html_, this.createCSS());
     
     }
@@ -57,26 +57,28 @@ class ButtonComp extends Comp {
      * 
      * @returns {string} Comp's button text. 
      */
-    get buttonText() {
+    get text() {
 
-        return this.buttonText_;
+        return this.text_;
     
     }
 
     /**
-     * @brief A getter method that returns the Comp's button varient.
+     * @brief A getter method that returns the Comp's button variant.
      * 
-     * @returns {number} Comp's button varient. 
+     * @returns {number} Comp's button variant. 
      */
-    get buttonVarient() {
+    get variant() {
 
-        return this.buttonVarient_;
+        return this.variant_;
     
     }
     
     createHTML() {
 
-        return /* html */ `<button id="button" class="button">${this.buttonText_}</button>`;
+        
+        return /* html */ `
+            <button class="button">${this.text_}</button>`;
     
     }
 
@@ -87,23 +89,27 @@ class ButtonComp extends Comp {
         const primary = this.design.create({
             class: "button",
             colour: "white",
+            width: "100%",
             background: "black100",
-            padding: "9px 16px",
-            border: "border",
+            padding: "12px 28px",
+            border: "black100",
             borderRadius: 8,
+            fontSize: 16,
             cursor: "pointer",
             transition: "background 0.1s ease-in-out"
         });
 
         const primaryHover = this.design.create({
             class: "button",
-            psuedoClass: "hover",
+            pseudoClass: "hover",
+            border: "black",
             background: "black80",
         });
 
         const primaryActive = this.design.create({
             class: "button",
-            psuedoClass: "active",
+            pseudoClass: "active",
+            border: "black60",
             background: "black60"
         });
 
@@ -111,73 +117,96 @@ class ButtonComp extends Comp {
             class: "button",
             colour: "black100",
             background: "black10",
-            padding: "9px 16px",
+            width: "100%",
+            border: "border",
+            padding: "12px 28px",
             borderRadius: 8,
+            fontSize: 16,
             cursor: "pointer",
             transition: "background 0.1s ease-in-out"
         });
 
         const secondaryHover = this.design.create({
             class: "button",
-            psuedoClass: "hover",
+            pseudoClass: "hover",
             background: "black20"
         });
 
         const secondaryActive = this.design.create({
             class: "button",
-            psuedoClass: "active",
+            pseudoClass: "active",
             background: "black40"
         });
-
-        const longButton = this.design.create({
-            class: "button",
-            width: "100%",
-            padding: "9px 16px",
-            textAlign: "centre",
-            colour: "white",
-            background: "black100",
-            border: "border",
-            borderRadius: 8,
-            cursor: "pointer",
-            transition: "background 0.1s ease-in-out",
-        });
-
-        let tertiary;
         
-        if (this.buttonVarient_ == 1) {
+        if (this.variant_ == 1) {
 
             button       = primary;
             buttonHover  = primaryHover;
             buttonActive = primaryActive;
         
         }
-        else if (this.buttonVarient_ == 2) {
+        else if (this.variant_ == 2) {
 
             button       = secondary;
             buttonHover  = secondaryHover;
             buttonActive = secondaryActive;
         
         }
-        else if (this.buttonVarient_ == 3) {
- 
-            button = tertiary;
-
-        }
-        else if (this.buttonVarient_ == 4){
-
-            button       = longButton;
-            buttonHover  = primaryHover;
-            buttonActive = primaryActive;
-            ;        
-
-        }
-        
 
         return `
         ${button}
         ${buttonHover}
         ${buttonActive}
         `;
+    
+    }
+
+    hook(){
+
+        const btn = this.shadowRoot.querySelector("button");
+
+        if (this.hasAttribute("hidden")) {
+
+            btn.setAttribute("hidden", "");
+        
+        } else {
+
+            btn.removeAttribute("hidden");
+        
+        }
+
+        const observer = new MutationObserver(() => {
+
+            if (this.hasAttribute("hidden")) {
+
+                btn.setAttribute("hidden", "");
+            
+            } else {
+
+                btn.removeAttribute("hidden");
+            
+            }
+        
+        });
+
+        observer.observe(this, {
+            attributes: true,
+            attributeFilter: ['hidden']
+        });
+
+        // Inside comp-button component
+        this.addEventListener("click", () => {
+
+            const form = this.closest("form");
+            if (this.getAttribute("type") === "submit" && form) {
+
+                form.requestSubmit();
+            
+            }
+
+        });
+
+
     
     }
 

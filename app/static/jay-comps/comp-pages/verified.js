@@ -87,10 +87,10 @@ class Verified extends Comp {
         describe.title     = "Verified!";
         describe.paragraph = `Welcome {{ email }}!<br>Your account has now been verified.`;
     
-        btn.buttonText_   = "Continue";
-        btn.buttonVarient = 4;
-    
+        btn.buttonText = "Continue";
+        
     }
+    
 
 }
 
