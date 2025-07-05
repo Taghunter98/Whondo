@@ -389,12 +389,14 @@ class InputComp extends Comp {
 
                 if (reuploadBtn) {
 
-                    reuploadBtn.text    = "Re-upload Photo";
+                    reuploadBtn.text    = "Upload another";
                     reuploadBtn.variant = 2;
                     reuploadBtn.setAttribute("hidden", "");
 
                     reuploadBtn.addEventListener("click", () => {
-
+                        
+                        e.stopPropagation();
+                        fileInput.value = "";
                         fileInput?.click(); 
                     
                     });
