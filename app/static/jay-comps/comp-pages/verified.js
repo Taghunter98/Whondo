@@ -93,7 +93,7 @@ class Verified extends Comp {
     
         btn.buttonText = "Continue";
         
-    }
+    } 
     
 
 }
