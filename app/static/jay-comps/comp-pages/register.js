@@ -309,8 +309,6 @@ class RegisterPageComp extends Comp {
 
     hook(){
 
-        //form section
-        const form = this.shadowRoot.getElementById("register");
         
         //modal section
         const step1 = this.shadowRoot.getElementById("step1");
