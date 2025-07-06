@@ -512,6 +512,15 @@ class RegisterPageComp extends Comp {
         
         });
 
+        const loginLink = this.shadowRoot.querySelector(".link");
+
+        loginLink.addEventListener("click", (e) => {
+
+            e.preventDefault;
+            this.openWindow();
+
+        });
+
     
     }
 
