@@ -325,6 +325,7 @@ class RegisterPageComp extends Comp {
             // LOOK AT THIS LATER
             if(inputs[i].required && inputs[i].isEmpty()){
 
+                const inputField = inputs[i].shadowRoot.querySelector(".inputValue");
                 inputField.classList.add("strength-very-weak");
                 isValid = false;
 
