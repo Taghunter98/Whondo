@@ -22,13 +22,13 @@ import json
 
 from app.utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
-from app.users.images import convert_images
+from app.users.images import  convert_images
 from app.property.keywords import store_keywords
 from app.property.property import create_property
 from app.property.advert import create_advert
 
 advert_bp = Blueprint("advert_bp", __name__)
-
+delete_ad_bp = Blueprint("delete_ad_bp", __name__)
 
 @advert_bp.route("/advert/new", methods=["POST", "GET"])
 def advert():
@@ -105,7 +105,6 @@ def advert():
         cursor.execute(query, (lID, pID, kID, adID))
 
         connection.commit()
-        current_app.logger.info(f"MySQL status: {cursor.rowcount}")
 
         cursor.close()
         connection.close()
@@ -117,3 +116,30 @@ def advert():
             return render_template("property.html")
         else:
             return redirect("/")
+
+
+@delete_ad_bp.route("/advert/delete", methods=["POST", "GET"])
+def delete_ad():
+    if request.method == "POST":
+        if not session.get("uID") and auth_landlord(session.get("email")):
+            return jsonify({"error": "not logged in or unauthorised"})
+        
+        pkaID: int = request.args.get("pkaID")
+        lID: int = auth_landlord(session.get("email"))
+        
+        if not pkaID:
+            return jsonify({"error": "pkaID not provided"}), 400
+        
+        connection: object = connect()
+        cursor: object = connection.cursor()
+
+        query: str = "SELECT pID, kID, adID FROM Adverts WHERE adID = %s"
+
+        cursor.execute(query, (pkaID,))
+
+        connection.commit()
+        
+        cursor.close
+
+    else:
+        return redirect("/")
