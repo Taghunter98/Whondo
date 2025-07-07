@@ -16,7 +16,7 @@ class TestPropertyKeywordAdvert(unittest.TestCase):
     def testDatatype(self):
         data = self.setUpClass()
 
-        self.assertEqual(type(data), dict)
+        self.assertEqual(type(data), list)
 
     def testDataIsValid(self):
         data = self.setUpClass()

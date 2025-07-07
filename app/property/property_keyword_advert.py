@@ -13,14 +13,14 @@ from flask import jsonify
 
 from app.database.db_connect import connect
 
-def get_ids(pkaID: int) -> dict:
+def get_ids(pkaID: int) -> list:
     connection: object = connect()
     cursor: object = connection.cursor(dictionary=True)
 
     query: str = "SELECT pID, kID, adID FROM PropertyKeywordAdvert WHERE pkaID = %s"
 
     cursor.execute(query, (pkaID,))
-    data: tuple = cursor.fetchall()
+    data: list = cursor.fetchall()
 
     cursor.close()
     connection.close()
