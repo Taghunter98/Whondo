@@ -24,7 +24,7 @@ class RegisterPageComp extends Comp {
 
                 <div class="modal">
 
-                    <form id="register" class="formObj" action="/register" enctype="multipart/form-data" method="post">
+                    <form id="register" class="formObj">
 
                         <!-- Personal information -->
                         <div id="step1">
@@ -298,18 +298,96 @@ class RegisterPageComp extends Comp {
 
     }
 
-    openWindow(){
+    /**
+     * Helper method validates password inputs.
+     * @param {string} input1 
+     * @param {string} input2 
+     * @returns Valid status
+     */
+    checkPassword(input1, input2) {
 
-        window.location.assign("/login");
+        return (input1.value.trim() == input2.value.trim()) ? true : false;
     
     }
 
+    /**
+     * Helper method validates a list of all inputs and returns valid status.
+     * @param {Array<HTMLElement>} inputs 
+     * @returns Valid status
+     */
+    validateElements(inputs) {
+
+        let isValid = true;
+        for(let i in inputs){
+
+            console.log(inputs[i].value);
+            
+            // LOOK AT THIS LATER
+            if(inputs[i].required && inputs[i].isEmpty()){
+
+                inputField.classList.add("strength-very-weak");
+                isValid = false;
+
+            }
+            
+        }
+
+        return (!this.checkPassword(inputs[3], inputs[4])) ? false : isValid;
+    
+    }
+
+    /*
+    REFACTOR THIS SHIT
+    - in input add a new field for underline which can be adjusted etc
+    */
+    showError(inputComp, message){
+
+        // REVIEW LATER
+        const field = inputComp.shadowRoot.querySelector(".inputValue");
+        const error = document.createElement("div");
+
+        error.className   = "input-error" ;
+        error.textContent = message;
+
+        field.classList.add("strength-very-weak");
+
+        const existing = field.parentElement.querySelector(".input-error");
+        if(!existing) field.insertAdjacentElement("afterend", error);
+        
+    }
+    clearError(inputComp){
+
+        const field = inputComp.shadowRoot.querySelector(".inputValue");
+        field.classList.remove("strength-very-weak");
+
+        const existing = field.parentElement.querySelector(".input-error");
+        if(existing) existing.remove();
+        
+    }
+
+    // MOVE TO NEW PASSWORD INPUT LATER
+    validateEntropy(password, confirmPass) {
+
+        if (confirmPass.value == '' || password.value == '') return;
+        else if (confirmPass.value === password.value) confirmPass.shadowRoot.querySelector(".inputValue").classList.add("strength-green");
+        else confirmPass.shadowRoot.querySelector(".inputValue").classList.remove("strength-green");
+    
+    }
+
+    submitForm(form) {
+        // grab the form
+        // manually submit
+        // validate response
+    }
 
     hook(){
 
+        /**
+         * Comp elements, and styling
+         */
         const step1        = this.shadowRoot.getElementById("step1");
         const step2        = this.shadowRoot.getElementById("step2");
-        const backButton   = this.shadowRoot.querySelectorAll(".back");
+        const backButton   = this.shadowRoot.getElementById("backBtn");
         const nextButton   = this.shadowRoot.getElementById("nextBtn");
         const submitButton = this.shadowRoot.getElementById("submit");
         const email        = this.shadowRoot.getElementById("email");
@@ -322,20 +400,26 @@ class RegisterPageComp extends Comp {
         const bio          = this.shadowRoot.getElementById("bio");
         const picture      = this.shadowRoot.getElementById("picture");
 
-        
-        // 
-        backButton.forEach(btn => {
-
-            btn.text    = "Back";
-            btn.variant = 2;
-        
-        });
+        backButton.text      = "Back";
+        backButton.variant   = 2;
         nextButton.text      = "Next";
         nextButton.variant   = 1;
         submitButton.text    = "Register";
         submitButton.variant = 1;
         
-        //input section
+        /**
+         * Form inputs
+         * - email
+         * - password
+         * - name
+         * - surname
+         * - age
+         * - occupation
+         * - bio
+         * - profile picture
+         * 
+         * Required fields are also set
+         */
         email.label            = "Email";
         email.prompt           = "Enter email";
         email.type             = "email";
@@ -363,117 +447,35 @@ class RegisterPageComp extends Comp {
         picture.prompt         = "Upload photo";
         picture.type           = "file";
 
-        //required field
         name.required        = true;
         surname.required     = true;
         email.required       = true;
         password.required    = true;
         confirmPass.required = true;
 
-        /**
-         * @brief Show error message under input
-         */
-        function showError(inputComp, message){
-
-            const field = inputComp.shadowRoot.querySelector(".inputValue");
-            const error = document.createElement("div");
-
-            error.className   = "input-error" ;
-            error.textContent = message;
-
-            field.classList.add("strength-very-weak");
-
-            const existing = field.parentElement.querySelector(".input-error");
-            if(!existing){
-                
-                field.insertAdjacentElement("afterend", error);
-                
-
-            }
-        
-        }
-
-        /**
-         * 
-         * @brief clear error message if there exist before
-         */
-        function clearError(inputComp){
-
-            const field = inputComp.shadowRoot.querySelector(".inputValue");
-            field.classList.remove("strength-very-weak");
-
-            const existing = field.parentElement.querySelector(".input-error");
-            if(existing){
-
-                existing.remove();
-            
-            }
-        
-        }
-
-        /**
-         * @brief Event that validate form check if the form is empty or not
-         * and check if password match or not and switch between step1 and step2 modal
-         */
+        // Input validation
         nextButton.addEventListener("click", () => {
 
-            const inputs = [name, surname, email, password, confirmPass];
-            let valid    = true;
+            let valid = this.validateElements([name, surname, email, password, confirmPass]);
+            if (valid) {
+
+                step1.setAttribute("hidden", "");
+                step2.removeAttribute("hidden");
             
-            for(const input of inputs){
-                
-                const inputField = input.shadowRoot.querySelector(".inputValue");
-                
-                //reset colour
-                inputField.classList.remove("strength-very-weak");
-                
-                if(input.required && input.isEmpty()){
-
-                    inputField.classList.add("strength-very-weak");
-                    
-                    valid = false;
-
-                }
-            
-            }
-
-            const passwordVal = password.value.trim();
-            const confirmVal  = confirmPass.value.trim();
-
-            if(confirmVal != passwordVal){
-
-                showError(confirmPass, "Password do not match");
-                valid = false;
-            
-            }
-
-            
-            if(!valid) return;
-            
-
-
-            step1.setAttribute("hidden", "");
-            step2.removeAttribute("hidden");
-            
+            } else console.log(valid);
         
         });
 
-        /**
-         * @brief validate password match if it match green status will appear
-         */
+        
         confirmPass.addEventListener("input", () => {
-
-            const confirmInput = confirmPass.shadowRoot.querySelector(".inputValue");
-            const passwordVal  = password.value.trim();
-            const confirmVal   = confirmPass.value.trim();
-
-            confirmInput.classList.remove("strength-very-weak", "strength-red", "strength-yellow", "strength-green");
-
-            if (confirmVal === passwordVal) {
-
-                confirmInput.classList.add("strength-green");
             
-            } 
+            this.validateEntropy(password, confirmPass);
+
+        });
+
+        password.addEventListener("input", () => {
+            
+            this.validateEntropy(password, confirmPass);
 
         });
 
@@ -485,7 +487,7 @@ class RegisterPageComp extends Comp {
 
             input.addEventListener("input", () => {
 
-                clearError(input);
+                this.clearError(input);
             
             });
 
@@ -498,7 +500,7 @@ class RegisterPageComp extends Comp {
         const backBtn2 = this.shadowRoot.getElementById("backBtn2");
 
         backBtn2.addEventListener("click", () => {
-
+            
             step2.setAttribute("hidden", "");
             step1.removeAttribute("hidden");
         

@@ -145,6 +145,7 @@ class ButtonComp extends Comp {
             buttonActive = primaryActive;
         
         }
+        
         else if (this.variant_ == 2) {
 
             button       = secondary;
@@ -158,55 +159,6 @@ class ButtonComp extends Comp {
         ${buttonHover}
         ${buttonActive}
         `;
-    
-    }
-
-    hook(){
-
-        const btn = this.shadowRoot.querySelector("button");
-
-        if (this.hasAttribute("hidden")) {
-
-            btn.setAttribute("hidden", "");
-        
-        } else {
-
-            btn.removeAttribute("hidden");
-        
-        }
-
-        const observer = new MutationObserver(() => {
-
-            if (this.hasAttribute("hidden")) {
-
-                btn.setAttribute("hidden", "");
-            
-            } else {
-
-                btn.removeAttribute("hidden");
-            
-            }
-        
-        });
-
-        observer.observe(this, {
-            attributes: true,
-            attributeFilter: ['hidden']
-        });
-
-        // Inside comp-button component
-        this.addEventListener("click", () => {
-
-            const form = this.closest("form");
-            if (this.getAttribute("type") === "submit" && form) {
-
-                form.requestSubmit();
-            
-            }
-
-        });
-
-
     
     }
 

@@ -54,7 +54,6 @@ class InputComp extends Comp {
         this.update(this.createHTML(), this.css);
     
     }
-        
 
     get label() {
 
