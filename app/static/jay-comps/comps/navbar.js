@@ -257,13 +257,13 @@ class Navbar extends Comp {
         const registerMob = this.shadowRoot.getElementById("registerMob");
         
         register.text       = "Register";
-        register.varient    = 2;
+        register.variant    = 2;
         login.text          = "login";
         menu.path           = "menu.svg";
         close.path          = "close.svg";
         loginMob.text       = "Login";
         registerMob.text    = "Register";
-        registerMob.varient = 2;
+        registerMob.variant = 2;
 
         window.addEventListener("scroll", this.navbarScroll.bind(this));
 
