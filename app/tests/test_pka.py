@@ -16,11 +16,11 @@ class TestPropertyKeywordAdvert(unittest.TestCase):
     def testDatatype(self):
         data = self.setUpClass()
 
-        self.assertEqual(type(data), list)
+        self.assertEqual(type(data), dict)
 
     def testDataIsValid(self):
         data = self.setUpClass()
-        print(data)
-        self.assertEqual(data[0][0], 105, f"Function is returning: {data}")
-        self.assertEqual(data[0][1], 130, f"Function is returning: {data}")
-        self.assertEqual(data[0][2], 105, f"Function is returning: {data}")
+   
+        self.assertEqual(data[0]["pID"], 105, f"Function is returning: {data}")
+        self.assertEqual(data[0]["kID"], 130, f"Function is returning: {data}")
+        self.assertEqual(data[0]["adID"], 105, f"Function is returning: {data}")

@@ -13,7 +13,7 @@ from flask import jsonify
 
 from app.database.db_connect import connect
 
-def get_ids(pkaID: int) -> list:
+def get_ids(pkaID: int) -> dict:
     connection: object = connect()
     cursor: object = connection.cursor(dictionary=True)
 
