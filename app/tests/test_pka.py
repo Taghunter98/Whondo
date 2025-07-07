@@ -20,7 +20,7 @@ class TestPropertyKeywordAdvert(unittest.TestCase):
 
     def testDataIsValid(self):
         data = self.setUpClass()
-
+        print(data)
         self.assertEqual(data[0][0], 105, f"Function is returning: {data}")
         self.assertEqual(data[0][1], 130, f"Function is returning: {data}")
         self.assertEqual(data[0][2], 105, f"Function is returning: {data}")
