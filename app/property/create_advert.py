@@ -130,16 +130,9 @@ def delete_ad():
         if not pkaID:
             return jsonify({"error": "pkaID not provided"}), 400
         
-        connection: object = connect()
-        cursor: object = connection.cursor()
+       
 
-        query: str = "SELECT pID, kID, adID FROM Adverts WHERE adID = %s"
-
-        cursor.execute(query, (pkaID,))
-
-        connection.commit()
         
-        cursor.close
 
     else:
         return redirect("/")
