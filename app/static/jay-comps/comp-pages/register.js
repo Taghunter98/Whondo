@@ -518,4 +518,4 @@ class RegisterPageComp extends Comp {
 
 }
 
-customElements.define("register-comp", RegisterPageComp);
+customElements.define("comp-register", RegisterPageComp);
