@@ -122,13 +122,22 @@ def advert():
 
 @delete_ad_bp.route("/advert/delete", methods=["POST", "GET"])
 def delete_ad():
+    """
+    The REST API deletes an advert based on the primary key (pkaID).
+
+    The arguments are first validated and the pkaID is used to return all keys.
+
+    These keys are each deleted and validated via helper functions.
+
+    Returns:
+        Response: HTTP response
+    """
     if request.method == "POST":
         if not session.get("uID") and auth_landlord(session.get("email")):
             return jsonify({"error": "not logged in or unauthorised"})
 
         data: list = request.get_json()
         pkaID: int = data["pkaID"]
-        lID: int = auth_landlord(session.get("email"))
 
         if not pkaID:
             return jsonify({"error": "pkaID not provided"}), 400
@@ -137,12 +146,12 @@ def delete_ad():
 
         if data is None:
             return jsonify({"error": "Advert records do not exist or pkaID is invalid"})
-        
+
         pID: int = data[0]["pID"]
         kID: int = data[0]["kID"]
         adID: int = data[0]["adID"]
 
-        if (delete_advert(adID) and delete_keywords(kID) and delete_property(pID)):
+        if delete_advert(adID) and delete_keywords(kID) and delete_property(pID):
             return jsonify({"message": "Advert was deleted successfully"}), 200
         else:
             return jsonify({"error": "There was a problem deleting the advert"}), 409
