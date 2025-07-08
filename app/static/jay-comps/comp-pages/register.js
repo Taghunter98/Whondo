@@ -43,7 +43,7 @@ class RegisterPageComp extends Comp {
                                 
                                 <comp-input id="email" name="email"></comp-input>
                                 <comp-password id="password" name="password"></comp-password>
-                                <comp-input id="confirm" name="confirm"></comp-input>
+                                <comp-password id="confirm" name="confirm"></comp-password>
                             </div>
 
                             <div class="footer">
