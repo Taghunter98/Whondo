@@ -9,11 +9,19 @@ Version:     1.0
 Description: Provides a helper function to return ID's from PropertyKeywordAdvert.
 """
 
-from flask import jsonify
-
 from app.database.db_connect import connect
 
+
 def get_ids(pkaID: int) -> list:
+    """
+    The helper function returns the ID records from the 3NF table.
+
+    Args:
+        pkaID (int): The primary key for the PropertyKeywordAdvert table
+
+    Returns:
+        list: List of ID records
+    """
     connection: object = connect()
     cursor: object = connection.cursor(dictionary=True)
 
@@ -26,5 +34,3 @@ def get_ids(pkaID: int) -> list:
     connection.close()
 
     return data
-
-    
