@@ -24,7 +24,7 @@ class RegisterPageComp extends Comp {
 
                 <div class="modal">
 
-                    <form id="register" class="formObj">
+                    <form class="formObj" action="https://whondo.com/register", method="POST">
 
                         <!-- Personal information -->
                         <div id="step1">
@@ -42,7 +42,7 @@ class RegisterPageComp extends Comp {
                                 </div>
                                 
                                 <comp-input id="email" name="email"></comp-input>
-                                <comp-input id="password" name="password"></comp-input>
+                                <comp-password id="password" name="password"></comp-password>
                                 <comp-input id="confirm" name="confirm"></comp-input>
                             </div>
 
@@ -71,8 +71,8 @@ class RegisterPageComp extends Comp {
                             </div>
 
                             <div class="input">
-                                <comp-input id="bio" name="bio"></comp-input>
-                                <comp-input id="picture" name="picture"></comp-input>
+                                <comp-textarea id="bio" name="bio"></comp-textarea>
+                                <comp-file id="picture" name="picture"></comp-file>
                             </div>
 
                             <div class="footer">
@@ -320,13 +320,10 @@ class RegisterPageComp extends Comp {
         let isValid = true;
         for(let i in inputs){
 
-            console.log(inputs[i].value);
-            
-            // LOOK AT THIS LATER
             if(inputs[i].required && inputs[i].isEmpty()){
 
                 const inputField = inputs[i].shadowRoot.querySelector(".inputValue");
-                inputField.classList.add("strength-very-weak");
+                inputField.classList.add("error");
                 isValid = false;
 
             }
@@ -337,58 +334,41 @@ class RegisterPageComp extends Comp {
     
     }
 
-    /*
-    REFACTOR THIS SHIT
-    - in input add a new field for underline which can be adjusted etc
-    */
-    showError(inputComp, message){
-
-        // REVIEW LATER
-        const field = inputComp.shadowRoot.querySelector(".inputValue");
-        const error = document.createElement("div");
-
-        error.className   = "input-error" ;
-        error.textContent = message;
-
-        field.classList.add("strength-very-weak");
-
-        const existing = field.parentElement.querySelector(".input-error");
-        if(!existing) field.insertAdjacentElement("afterend", error);
-        
-    }
-    clearError(inputComp){
-
-        const field = inputComp.shadowRoot.querySelector(".inputValue");
-        field.classList.remove("strength-very-weak");
-
-        const existing = field.parentElement.querySelector(".input-error");
-        if(existing) existing.remove();
-        
-    }
-
-    // MOVE TO NEW PASSWORD INPUT LATER
-    validateEntropy(password, confirmPass) {
+    /**
+     * Method validates if passwords match.
+     * @param {*} password 
+     * @param {*} confirmPass 
+     * @returns Valid status
+     */
+    validatePasswords(password, confirmPass) {
 
         if (confirmPass.value == '' || password.value == '') return;
-        else if (confirmPass.value === password.value) confirmPass.shadowRoot.querySelector(".inputValue").classList.add("strength-green");
-        else confirmPass.shadowRoot.querySelector(".inputValue").classList.remove("strength-green");
+        else if (confirmPass.value === password.value) confirmPass.shadowRoot.querySelector(".inputValue").classList.add("success");
+        else confirmPass.shadowRoot.querySelector(".inputValue").classList.remove("success");
     
     }
 
-    submitForm(form) {
-        // grab the form
-        // manually submit
-        // validate response
+    validateInputs(inputs, state) {
+
+        if (state) {
+
+            for (let i in inputs) inputs[i].shadowRoot.querySelector(".inputValue").classList.add("error");
+        
+        } else {
+
+            for (let i in inputs) inputs[i].shadowRoot.querySelector(".inputValue").classList.remove("error");
+        
+        }
+    
     }
 
     hook(){
 
-        /**
-         * Comp elements, and styling
-         */
+        const form         = this.shadowRoot.querySelector("form");
         const step1        = this.shadowRoot.getElementById("step1");
         const step2        = this.shadowRoot.getElementById("step2");
         const backButton   = this.shadowRoot.getElementById("backBtn");
+        const backBtn2     = this.shadowRoot.getElementById("backBtn2");
         const nextButton   = this.shadowRoot.getElementById("nextBtn");
         const submitButton = this.shadowRoot.getElementById("submit");
         const email        = this.shadowRoot.getElementById("email");
@@ -400,26 +380,18 @@ class RegisterPageComp extends Comp {
         const occupation   = this.shadowRoot.getElementById("occupation");
         const bio          = this.shadowRoot.getElementById("bio");
         const picture      = this.shadowRoot.getElementById("picture");
-
+        
         backButton.text      = "Back";
         backButton.variant   = 2;
+        backBtn2.text        = "Back";
+        backBtn2.variant     = 2;
         nextButton.text      = "Next";
         nextButton.variant   = 1;
         submitButton.text    = "Register";
         submitButton.variant = 1;
         
         /**
-         * Form inputs
-         * - email
-         * - password
-         * - name
-         * - surname
-         * - age
-         * - occupation
-         * - bio
-         * - profile picture
-         * 
-         * Required fields are also set
+         * Form inputs and required fields
          */
         email.label            = "Email";
         email.prompt           = "Enter email";
@@ -454,52 +426,45 @@ class RegisterPageComp extends Comp {
         password.required    = true;
         confirmPass.required = true;
 
-        // Input validation
+        /**
+         * Event listener checks for all inputs to be valid, if so then the step 2 modal is revealed.
+         */
         nextButton.addEventListener("click", () => {
 
-            let valid = this.validateElements([name, surname, email, password, confirmPass]);
+            const inputs = [name, surname, email, password, confirmPass];
+
+            let valid = this.validateElements(inputs);
+
             if (valid) {
 
                 step1.setAttribute("hidden", "");
                 step2.removeAttribute("hidden");
             
-            } else console.log(valid);
+            } else this.validateInputs(inputs, true);
         
         });
 
-        
+        /**
+         * Event listener reviews password entropy
+         */
         confirmPass.addEventListener("input", () => {
             
-            this.validateEntropy(password, confirmPass);
+            this.validatePasswords(password, confirmPass);
 
         });
 
+        /**
+         * Event listener removes passsword entropy check
+         */
         password.addEventListener("input", () => {
             
-            this.validateEntropy(password, confirmPass);
+            this.validatePasswords(password, confirmPass);
 
         });
 
         /**
-         * @brief clear all input field status with when user type in the box
-         * clean ui
+         * Returns user to step 1
          */
-        [name, surname, email, password, confirmPass].forEach(input => {
-
-            input.addEventListener("input", () => {
-
-                this.clearError(input);
-            
-            });
-
-        });
-
-
-        /**
-         * @brief Event for going back to step1 
-         */
-        const backBtn2 = this.shadowRoot.getElementById("backBtn2");
-
         backBtn2.addEventListener("click", () => {
             
             step2.setAttribute("hidden", "");
@@ -507,15 +472,7 @@ class RegisterPageComp extends Comp {
         
         });
 
-        const loginLink = this.shadowRoot.querySelector(".link");
-
-        loginLink.addEventListener("click", (e) => {
-
-            e.preventDefault;
-            this.openWindow();
-
-        });
-
+        submitButton.addEventListener("click", () => form.submit());
     
     }
 

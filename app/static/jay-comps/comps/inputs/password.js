@@ -1,5 +1,5 @@
 import { InputComp } from "./input.js";
-/** @extends {InputComp} */
+
 class PasswordComp extends InputComp {
 
     constructor(){
@@ -34,6 +34,19 @@ class PasswordComp extends InputComp {
         
     }
 
+    set enableEntropy(flag) {
+
+        this.enableEntropy_ = flag;
+        this.update(this.createHTML(), this.css_);
+    
+    }
+
+    get enableEntropy() {
+
+        return this.enableEntropy_;
+    
+    }
+
     calculateEntropy(password){
 
         let poolSize = 0;
@@ -43,6 +56,30 @@ class PasswordComp extends InputComp {
         if(/[^A-Za-z0-9]/.test(password)) poolSize += 32;
 
         return password.length * Math.log2(poolSize || 1);
+    
+    }
+
+    validateInput(input, hint, entropy) {
+
+        entropy < 78 && entropy > 0 ? hint.style.display = "block" : hint.style.display = "none";
+        
+        if (entropy == 0) input.classList.remove("success", "warning", "error");
+
+        else if ( entropy < 60) {
+
+            input.classList.add("error");
+            hint.textContent = "Weak: Try adding symbols, numbers or uppercase letters.";
+            
+        } else if (entropy < 78) {
+
+            input.classList.add("warning");
+            hint.textContent = "Almost strong: Consider mixing symbols and length.";
+            
+        } else if (entropy > 78) {
+
+            input.classList.add("success");
+            
+        }
     
     }
 
@@ -56,30 +93,7 @@ class PasswordComp extends InputComp {
             input.addEventListener("input", () => {
 
                 const entropy = this.calculateEntropy(input.value);
-                if(entropy < 20) {
-
-                    input.classList.add("strength-red");
-                    hint.style.display = "block";
-                    hint.textContent   = "Too weak. Add more variety.";
-            
-                } else if ( entropy < 60) {
-
-                    input.classList.add("strength-red");
-                    hint.style.display = "block";
-                    hint.textContent   = "Weak: Try adding symbols, numbers or uppercase letters.";
-            
-                } else if (entropy < 78) {
-
-                    input.classList.add("strength-yellow");
-                    hint.style.display = "block";
-                    hint.textContent   = "Almost strong: Consider mixing symbols and length.";
-            
-                } else {
-
-                    input.classList.add("strength-green");
-                    hint.style.display = "none";
-            
-                }
+                this.validateInput(input, hint, entropy);
         
             });
 
