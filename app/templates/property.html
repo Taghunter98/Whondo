@@ -37,7 +37,7 @@
     <h3>Delete advert</h3>
     <input id="pkaID" type="text" value="pkaID" placeholder="pkaID">
     <button id="deleteBtn">Delete</button>
-    
+
     <style>
         #form {
             display: flex;
@@ -103,6 +103,14 @@
 
         function updateKeywordsHidden() {
             document.getElementById('keywords-hidden').value = JSON.stringify(keywords);
+        }
+
+        async function deleteProperty() {
+            const pkaID = document.getElementById("pkaID").value;
+
+            fetch("/advert/delete").then(resp => {
+                
+            })
         }
 
         document.getElementById('advert').addEventListener('submit', function(event) {
