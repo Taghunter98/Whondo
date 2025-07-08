@@ -108,8 +108,8 @@
         async function deleteProperty() {
             const pkaID = document.getElementById("pkaID").value;
 
-            fetch("/advert/delete").then(resp => {
-                
+            fetch(`/advert/delete?id=${pkaID}`).then(resp => {
+                console.log(resp);
             })
         }
 
