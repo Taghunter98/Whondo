@@ -1,6 +1,6 @@
 import { Comp } from "jay-comp";
 
-class InputComp extends Comp {
+export class InputComp extends Comp {
 
     constructor() {
 

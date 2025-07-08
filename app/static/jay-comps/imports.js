@@ -9,6 +9,9 @@ import './comps/input.js';
 import './comps/dialog.js';
 import './comps/icon.js';
 import './comps/navbar.js';
+import './comps/password.js';
+import './comps/file.js';
+import './comps/textarea.js';
 
 // Pages
 import './comp-pages/login.js';
