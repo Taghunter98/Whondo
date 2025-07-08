@@ -23,11 +23,13 @@ import json
 from app.utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
 from app.users.images import convert_images
-from app.property.keywords import store_keywords
-from app.property.property import create_property
-from app.property.advert import create_advert
+from app.property.keywords import store_keywords, delete_keywords
+from app.property.property import create_property, delete_property
+from app.property.advert import create_advert, delete_advert
+from app.property.property_keyword_advert import get_ids
 
 advert_bp = Blueprint("advert_bp", __name__)
+delete_ad_bp = Blueprint("delete_ad_bp", __name__)
 
 
 @advert_bp.route("/advert/new", methods=["POST", "GET"])
@@ -105,7 +107,6 @@ def advert():
         cursor.execute(query, (lID, pID, kID, adID))
 
         connection.commit()
-        current_app.logger.info(f"MySQL status: {cursor.rowcount}")
 
         cursor.close()
         connection.close()
@@ -117,3 +118,43 @@ def advert():
             return render_template("property.html")
         else:
             return redirect("/")
+
+
+@delete_ad_bp.route("/advert/delete", methods=["POST", "GET"])
+def delete_ad():
+    """
+    The REST API deletes an advert based on the primary key (pkaID).
+
+    The arguments are first validated and the pkaID is used to return all keys.
+
+    These keys are each deleted and validated via helper functions.
+
+    Returns:
+        Response: HTTP response
+    """
+    if request.method == "POST":
+        if not session.get("uID") and auth_landlord(session.get("email")):
+            return jsonify({"error": "not logged in or unauthorised"})
+
+        data: list = request.get_json()
+        pkaID: int = data["pkaID"]
+
+        if not pkaID:
+            return jsonify({"error": "pkaID not provided"}), 400
+
+        data: list = get_ids(pkaID)
+
+        if data is None:
+            return jsonify({"error": "Advert records do not exist or pkaID is invalid"})
+
+        pID: int = data[0]["pID"]
+        kID: int = data[0]["kID"]
+        adID: int = data[0]["adID"]
+
+        if delete_advert(adID) and delete_keywords(kID) and delete_property(pID):
+            return jsonify({"message": "Advert was deleted successfully"}), 200
+        else:
+            return jsonify({"error": "There was a problem deleting the advert"}), 409
+
+    else:
+        return redirect("/")

@@ -104,9 +104,9 @@ def update_property(values: dict, pID: int) -> bool:
         values["town"],
         values["county"],
         values["postcode"],
-        pID
+        pID,
     )
-    
+
     connection: object = connect()
     cursor: object = connection.cursor()
 

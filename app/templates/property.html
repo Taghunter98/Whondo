@@ -33,6 +33,10 @@
             <button type="submit">Create Advert</button>
         </form>
     </div>
+    <br>
+    <h3>Delete advert</h3>
+    <input id="pkaID" type="text" value="pkaID" placeholder="pkaID">
+    <button id="deleteBtn" onclick="deleteProperty()">Delete</button>
 
     <style>
         #form {
@@ -100,6 +104,28 @@
         function updateKeywordsHidden() {
             document.getElementById('keywords-hidden').value = JSON.stringify(keywords);
         }
+
+        async function deleteProperty() {
+            const pkaID = document.getElementById("pkaID").value;
+
+            const response = await fetch("/advert/delete", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ pkaID: parseInt(pkaID) })
+            });
+
+            const result = await response.json();
+            console.log(result);
+
+            if (response.ok) {
+                alert(result.message || "Advert deleted successfully");
+            } else {
+                alert(result.error || "Failed to delete advert");
+            }
+        }
+
 
         document.getElementById('advert').addEventListener('submit', function(event) {
             const input = document.getElementById('keyword-input');
