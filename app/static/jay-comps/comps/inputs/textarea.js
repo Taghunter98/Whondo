@@ -40,6 +40,26 @@ class TextareaComp extends InputComp {
     
     }
 
+    createCSS() {
+
+        const areaInput = this.design.create({
+            class: "areaInput",
+            resize: "none",
+            height: "80px",
+            width: "100%",
+            border: "border",
+            borderRadius: 8,
+            boxSizing: "border-box",
+            padding: "8px 12px",
+            fontFamily: "Geist ",
+        });
+
+        return /* css */ `
+        ${areaInput}
+        `; 
+    
+    }
+
 }
 
 customElements.define("comp-textarea", TextareaComp);

@@ -362,6 +362,13 @@ class RegisterPageComp extends Comp {
     
     }
 
+    clearError(inputs){
+
+        const field = inputs.shadowRoot.querySelector(".inputValue");
+        field.classList.remove("error");
+
+    };
+
     hook(){
 
         const form         = this.shadowRoot.querySelector("form");
@@ -452,11 +459,25 @@ class RegisterPageComp extends Comp {
         });
 
         /**
-         * Event listener removes passsword entropy check
+         * Event listener removes password entropy check
          */
         password.addEventListener("input", () => {
             
             this.validatePasswords(password, confirmPass);
+
+        });
+
+        /**
+         * @brief clear all input field status with when user type in the box
+         * clean ui
+         */
+        [name, surname, email, confirmPass].forEach(input => {
+
+            input.addEventListener("input", () => {
+
+                this.clearError(input);
+
+            });
 
         });
 

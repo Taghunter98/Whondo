@@ -126,11 +126,6 @@ export class InputComp extends Comp {
             outline: "solid 2px var(--black100)"
         });
 
-        const StatusDarkRed = this.design.create({
-            class: "strength-very-weak",
-            borderBottom: "2px solid red"
-        });
-
         const statusRed = this.design.create({
             class: "error",
             borderBottom: "2px solid var(--red100)"
@@ -159,7 +154,6 @@ export class InputComp extends Comp {
         ${input}
         ${inputHover}
         ${inputActive}
-        ${StatusDarkRed}
         ${statusRed}
         ${statusYellow}
         ${statusGreen}
