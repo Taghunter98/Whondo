@@ -31,7 +31,7 @@ class FileComp extends InputComp {
                             </svg>
                         </span>
                         <span class="filePrompt">${this.prompt_}</span>
-                        <input class="inputValue fileInput" type="file" accept=".png" hidden>
+                        <input class="inputValue fileInput" type="file" accept="image/png, image/jpeg, image/jpg" hidden>
                         <comp-button class="reuploadBtn" hidden></comp-button>
                     </div>
                 </div>
@@ -41,7 +41,6 @@ class FileComp extends InputComp {
     }
 
     createCSS(){
-
        
         const fileStyle = this.design.create({
             class: "fileInput",
@@ -214,7 +213,7 @@ class FileComp extends InputComp {
         });
 
         // File selection logic
-        fileInput?.addEventListener("change", () => {
+        fileInput?.addEventListener("change", (e) => {
 
             const file = fileInput.files[0];
             if (file) {
@@ -227,6 +226,7 @@ class FileComp extends InputComp {
                     const reader  = new FileReader();
                     reader.onload = () => {
 
+                        e.stopPropagation();
                         preview.src = reader.result;
                         preview.removeAttribute("hidden");
                         this.shadowRoot.querySelector(".reuploadBtn")?.removeAttribute("hidden");

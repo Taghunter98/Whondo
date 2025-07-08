@@ -10,6 +10,7 @@ export class InputComp extends Comp {
         this.type_     = "text";
         this.prompt_   = "Enter text";
         this.required_ = false;
+        this.error_    = false;
 
         this.name_ = "Input";
         this.html_ = this.createHTML();
@@ -77,13 +78,6 @@ export class InputComp extends Comp {
     
     }
 
-    isEmpty(){
-
-        return !this.value?.trim();
-    
-    }
-
-
     createHTML() {
 
         return /* html */ `
@@ -138,18 +132,18 @@ export class InputComp extends Comp {
         });
 
         const statusRed = this.design.create({
-            class: "strength-red",
-            borderBottom: "2px solid red"
+            class: "error",
+            borderBottom: "2px solid var(--red100)"
         });
 
         const statusYellow = this.design.create({
-            class: "strength-yellow",
-            borderBottom: "2px solid orange",
+            class: "warning",
+            borderBottom: "2px solid var(--yellow100)",
         });
 
         const statusGreen = this.design.create({
-            class: "strength-green",
-            borderBottom: "2px solid green",
+            class: "success",
+            borderBottom: "2px solid var(--green100)",
         });
 
         const hint = this.design.create({
@@ -158,7 +152,6 @@ export class InputComp extends Comp {
             colour: "black",
             paddingTop: 4
         });
-
 
         return /* css */ `
         
@@ -172,6 +165,12 @@ export class InputComp extends Comp {
         ${statusGreen}
         ${hint}
         `;
+    
+    }
+
+    isEmpty(){
+
+        return !this.value.trim();
     
     }
 
