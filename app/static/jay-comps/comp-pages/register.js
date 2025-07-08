@@ -42,8 +42,8 @@ class RegisterPageComp extends Comp {
                                 </div>
                                 
                                 <comp-input id="email" name="email"></comp-input>
-                                <comp-input id="password" name="password"></comp-input>
-                                <comp-input id="confirm" name="confirm"></comp-input>
+                                <comp-password id="password" name="password"></comp-password>
+                                <comp-password id="confirm" name="confirm"></comp-password>
                             </div>
 
                             <div class="footer">
@@ -71,8 +71,8 @@ class RegisterPageComp extends Comp {
                             </div>
 
                             <div class="input">
-                                <comp-input id="bio" name="bio"></comp-input>
-                                <comp-input id="picture" name="picture"></comp-input>
+                                <comp-textarea id="bio" name="bio"></comp-textarea>
+                                <comp-file id="picture" name="picture"></comp-file>
                             </div>
 
                             <div class="footer">

@@ -79,7 +79,7 @@ export class InputComp extends Comp {
 
     isEmpty(){
 
-        return !this.value.trim();
+        return !this.value?.trim();
     
     }
 

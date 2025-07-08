@@ -278,3 +278,5 @@ class FileComp extends InputComp {
     }
 
 }
+
+customElements.define("comp-file", FileComp);
