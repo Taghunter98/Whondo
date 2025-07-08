@@ -6,7 +6,6 @@ class PasswordComp extends InputComp {
 
         super();
 
-        this.type_          = "password";
         this.enableEntropy_ = false; 
 
         this.name_ = "Password Comp",
@@ -17,13 +16,26 @@ class PasswordComp extends InputComp {
     
     }
 
+    set entropy(flag){
+
+        this.enableEntropy_ = flag;
+        this.update(this.createHTML(), this.css_);
+        
+    }
+
+    get entropy(){
+
+        return this.enableEntropy_;
+    
+    }
+
     createHTML(){
 
         return /* html */`
             <div class="inputContainer">
 
                 <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
-                <input class="inputValue" type="${this.type_}" placeholder="${this.prompt_}">
+                <input class="inputValue" type="password" placeholder="${this.prompt_}">
 
                 <div class="hint" style="display: none">
                     Hint: Use a mix of letters, numbers, and symbols
@@ -51,14 +63,14 @@ class PasswordComp extends InputComp {
         const input = this.shadowRoot.querySelector(".inputValue");
         const hint  = this.shadowRoot.querySelector(".hint");
 
-        if (this.type_ === "password" && this.enableEntropy_){
+        if (this.enableEntropy_){
 
             input.addEventListener("input", () => {
 
                 const entropy = this.calculateEntropy(input.value);
                 if(entropy < 20) {
 
-                    input.classList.add("strength-red");
+                    input.classList.add("strength-");
                     hint.style.display = "block";
                     hint.textContent   = "Too weak. Add more variety.";
             

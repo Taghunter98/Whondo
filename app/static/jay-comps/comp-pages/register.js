@@ -426,10 +426,8 @@ class RegisterPageComp extends Comp {
         email.type             = "email";
         password.label         = "Password";
         password.prompt        = "Password";
-        password.type          = "password";
         password.enableEntropy = true;
         confirmPass.label      = "Confirm Password";
-        confirmPass.type       = "password";
         confirmPass.prompt     = "Confirm password";
         name.label             = "Name";
         name.prompt            = "Enter name";
