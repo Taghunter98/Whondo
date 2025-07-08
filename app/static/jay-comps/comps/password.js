@@ -13,6 +13,7 @@ class PasswordComp extends InputComp {
         this.html_ = this.createHTML();
         this.css_ = this.createCSS(); 
 
+        this.render();
     
     }
 
@@ -22,12 +23,12 @@ class PasswordComp extends InputComp {
             <div class="inputContainer">
 
                 <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
-                <input class="inputValue" type="password" placeholder="${this.prompt_}">
+                <input class="inputValue" type="${this.type_}" placeholder="${this.prompt_}">
 
-            <div class="hint" style="display: none">
-                Hint: Use a mix of letters, numbers, and symbols
+                <div class="hint" style="display: none">
+                    Hint: Use a mix of letters, numbers, and symbols
+                </div>
             </div>
-        </div>
         
         `;
         
@@ -50,37 +51,40 @@ class PasswordComp extends InputComp {
         const input = this.shadowRoot.querySelector(".inputValue");
         const hint  = this.shadowRoot.querySelector(".hint");
 
-        input.addEventListener("input", () => {
+        if (this.type_ === "password" && this.enableEntropy_){
 
-            const entropy = this.calculateEntropy(input.value);
-            if(entropy < 20) {
+            input.addEventListener("input", () => {
 
-                input.classList.add("strength-red");
-                hint.style.display = "block";
-                hint.textContent   = "Too weak. Add more variety.";
+                const entropy = this.calculateEntropy(input.value);
+                if(entropy < 20) {
+
+                    input.classList.add("strength-red");
+                    hint.style.display = "block";
+                    hint.textContent   = "Too weak. Add more variety.";
             
-            } else if ( entropy < 60) {
+                } else if ( entropy < 60) {
 
-                input.classList.add("strength-red");
-                hint.style.display = "block";
-                hint.textContent   = "Weak: Try adding symbols, numbers or uppercase letters.";
+                    input.classList.add("strength-red");
+                    hint.style.display = "block";
+                    hint.textContent   = "Weak: Try adding symbols, numbers or uppercase letters.";
             
-            } else if (entropy < 78) {
+                } else if (entropy < 78) {
 
-                input.classList.add("strength-yellow");
-                hint.style.display = "block";
-                hint.textContent   = "Almost strong: Consider mixing symbols and length.";
+                    input.classList.add("strength-yellow");
+                    hint.style.display = "block";
+                    hint.textContent   = "Almost strong: Consider mixing symbols and length.";
             
-            } else {
+                } else {
 
-                input.classList.add("strength-green");
-                hint.style.display = "none";
+                    input.classList.add("strength-green");
+                    hint.style.display = "none";
             
-            }
+                }
         
-        });
+            });
 
-
+        }
+    
     }
 
 }
