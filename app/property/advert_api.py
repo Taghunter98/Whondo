@@ -126,7 +126,8 @@ def delete_ad():
         if not session.get("uID") and auth_landlord(session.get("email")):
             return jsonify({"error": "not logged in or unauthorised"})
 
-        pkaID: int = request.args.get("pkaID")
+        data: list = request.get_json()
+        pkaID: int = data["pkaID"]
         lID: int = auth_landlord(session.get("email"))
 
         if not pkaID:

@@ -108,10 +108,24 @@
         async function deleteProperty() {
             const pkaID = document.getElementById("pkaID").value;
 
-            fetch(`/advert/delete?id=${pkaID}`).then(resp => {
-                console.log(resp);
-            })
+            const response = await fetch("/advert/delete", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ pkaID: parseInt(pkaID) })
+            });
+
+            const result = await response.json();
+            console.log(result);
+
+            if (response.ok) {
+                alert(result.message || "Advert deleted successfully");
+            } else {
+                alert(result.error || "Failed to delete advert");
+            }
         }
+
 
         document.getElementById('advert').addEventListener('submit', function(event) {
             const input = document.getElementById('keyword-input');
