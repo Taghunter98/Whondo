@@ -12,7 +12,7 @@ class FileComp extends InputComp {
         this.html_ = this.createHTML();
         this.css_  = this.createCSS();
 
-        this.render();
+        requestAnimationFrame(() => this.hook());
     
     }
 
@@ -179,41 +179,21 @@ class FileComp extends InputComp {
 
     hook(){
 
+        if (this._hooked) return;
+        this._hooked = true;
+
         const fileInput  = this.shadowRoot.querySelector(".fileInput");
         const filePrompt = this.shadowRoot.querySelector(".filePrompt");
         const icon       = this.shadowRoot.querySelector(".icon");
         const preview    = this.shadowRoot.querySelector(".filePreview");
         const dropArea   = this.shadowRoot.querySelector(".fileBox");
 
+        
         // Clicking the fileBox opens the input
         dropArea?.addEventListener("click", () => fileInput?.click());
 
-        // Re-upload logic
-        customElements.whenDefined("comp-button").then(() => {
-
-            requestAnimationFrame(() => {
-
-                const reuploadBtn = this.shadowRoot.querySelector(".reuploadBtn");
-                if (reuploadBtn) {
-
-                    reuploadBtn.text    = "Upload another";
-                    reuploadBtn.variant = 2;
-                    reuploadBtn.addEventListener("click", (e) => {
-
-                        e.stopPropagation();
-                        fileInput.value = "";
-                        fileInput?.click();
-                    
-                    });
-                
-                }
-            
-            });
-        
-        });
-
         // File selection logic
-        fileInput?.addEventListener("change", (e) => {
+        fileInput?.addEventListener("change", () => {
 
             const file = fileInput.files[0];
             if (file) {
@@ -226,7 +206,6 @@ class FileComp extends InputComp {
                     const reader  = new FileReader();
                     reader.onload = () => {
 
-                        e.stopPropagation();
                         preview.src = reader.result;
                         preview.removeAttribute("hidden");
                         this.shadowRoot.querySelector(".reuploadBtn")?.removeAttribute("hidden");
@@ -245,6 +224,50 @@ class FileComp extends InputComp {
             }
         
         });
+
+        // Re-upload logic
+        customElements.whenDefined("comp-button").then(() => {
+
+            requestAnimationFrame(() => {
+
+                const reuploadBtn = this.shadowRoot.querySelector(".reuploadBtn");
+                if (reuploadBtn) {
+
+                    reuploadBtn.text    = "Upload another";
+                    reuploadBtn.variant = 2;
+
+                    let clicking = false;
+
+                    reuploadBtn.addEventListener("click", (e) => {
+
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        if (clicking) return;
+                        clicking = true;
+
+                        fileInput.value = "";
+
+                        setTimeout(() => {
+
+                            requestAnimationFrame(() => {
+
+                                fileInput.click();
+                                
+                                setTimeout(() => (clicking = false), 200);
+                            
+                            });
+                        
+                        }, 20);
+                    
+                    });
+                
+                }
+            
+            });
+
+        });
+
 
         // Drag-and-drop support
         dropArea?.addEventListener("dragover", (e) => {
@@ -274,6 +297,8 @@ class FileComp extends InputComp {
             }
         
         });
+
+        console.log("hello");
     
     }
 
