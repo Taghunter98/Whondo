@@ -171,7 +171,7 @@ class FileComp extends InputComp {
         `; 
     
     }
-    
+
     createInput = () => {
 
         const input     = document.createElement("input");
