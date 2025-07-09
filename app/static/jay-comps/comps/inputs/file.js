@@ -175,96 +175,90 @@ class FileComp extends InputComp {
     
     }
 
-    hook(){
+    hook() {
 
-        const fileInput  = this.shadowRoot.querySelector(".fileInput");
-        const filePrompt = this.shadowRoot.querySelector(".filePrompt");
-        const icon       = this.shadowRoot.querySelector(".icon");
-        const preview    = this.shadowRoot.querySelector(".filePreview");
-        const dropArea   = this.shadowRoot.querySelector(".fileBox");
+        const filePrompt  = this.shadowRoot.querySelector(".filePrompt");
+        const icon        = this.shadowRoot.querySelector(".icon");
+        const preview     = this.shadowRoot.querySelector(".filePreview");
+        const dropArea    = this.shadowRoot.querySelector(".fileBox");
+        const reuploadBtn = this.shadowRoot.querySelector(".reuploadBtn");
 
-        
-        // Clicking the fileBox opens the input
-        dropArea?.addEventListener("click", () => fileInput?.click());
+        reuploadBtn.text     = "Upload another";
+        reuploadBtn. variant = 2;
 
-        // File selection logic
-        fileInput?.addEventListener("change", () => {
+        const handleFile = (file) => {
 
-            const file = fileInput.files[0];
-            if (file) {
+            if (!file) return;
 
-                filePrompt.textContent = file.name;
-                icon.setAttribute("hidden", "");
+            // Show filename
+            filePrompt.textContent = file.name;
 
-                if (file.type.startsWith("image/")) {
+            // Show preview image if image type
+            if (file.type.startsWith("image/")) {
 
-                    const reader  = new FileReader();
-                    reader.onload = () => {
+                const reader  = new FileReader();
+                reader.onload = () => {
 
-                        preview.src = reader.result;
-                        preview.removeAttribute("hidden");
-                        this.shadowRoot.querySelector(".reuploadBtn")?.removeAttribute("hidden");
-                    
-                    };
-                    reader.readAsDataURL(file);
+                    preview.src = reader.result;
+                    preview.removeAttribute("hidden");
+                    icon.setAttribute("hidden", "");
+                    reuploadBtn?.removeAttribute("hidden");
                 
-                }
-            
-            } else {
-
-                filePrompt.textContent = this.prompt_;
-                preview?.setAttribute("hidden", "");
-                preview.src = "";
+                };
+                reader.readAsDataURL(file);
             
             }
         
-        });
+        };
 
-        // Re-upload logic
-        customElements.whenDefined("comp-button").then(() => {
+        const createInput = () => {
 
-            requestAnimationFrame(() => {
+            const input     = document.createElement("input");
+            input.type      = "file";
+            input.className = "inputValue fileInput";
+            input.accept    = "image/png, image/jpeg, image/jpg";
+            input.hidden    = true;
 
-                const reuploadBtn = this.shadowRoot.querySelector(".reuploadBtn");
-                if (reuploadBtn) {
+            input.addEventListener("change", () => {
 
-                    reuploadBtn.text    = "Upload another";
-                    reuploadBtn.variant = 2;
+                if (input.files?.[0]) {
 
-                    let clicking = false;
-
-                    reuploadBtn.addEventListener("click", (e) => {
-
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        if (clicking) return;
-                        clicking = true;
-
-                        fileInput.value = "";
-
-                        setTimeout(() => {
-
-                            requestAnimationFrame(() => {
-
-                                fileInput.click();
-                                
-                                setTimeout(() => (clicking = false), 200);
-                            
-                            });
-                        
-                        }, 20);
-                    
-                    });
+                    this._fileInput = input;
+                    handleFile(input.files[0]);
                 
                 }
             
             });
 
+            return input;
+        
+        };
+
+        // Initial input reference
+        this._fileInput = this.shadowRoot.querySelector(".fileInput");
+
+        if (this._fileInput) {
+
+            this._fileInput.addEventListener("change", () => {
+
+                if (this._fileInput.files?.[0]) {
+
+                    handleFile(this._fileInput.files[0]);
+                
+                }
+            
+            });
+
+        }
+
+        // 🔹 File box click = open picker
+        dropArea?.addEventListener("click", () => {
+
+            this._fileInput?.click();
+        
         });
 
-
-        // Drag-and-drop support
+        // 🔹 Drag-and-drop support
         dropArea?.addEventListener("dragover", (e) => {
 
             e.preventDefault();
@@ -283,19 +277,49 @@ class FileComp extends InputComp {
 
             e.preventDefault();
             dropArea.classList.remove("dragover");
-            const droppedFiles = e.dataTransfer.files;
-            if (droppedFiles.length > 0) {
 
-                fileInput.files = droppedFiles;
-                fileInput.dispatchEvent(new Event("change"));
+            const file = e.dataTransfer.files[0];
+            if (file) {
+
+                this._fileInput?.remove(); 
+                const input = createInput();
+                dropArea.appendChild(input);
+                this._fileInput = input;
+
+                // Simulate file selection
+                Object.defineProperty(input, 'files', {
+                    value: e.dataTransfer.files,
+                    writable: false
+                });
+                input.dispatchEvent(new Event("change"));
             
             }
         
         });
 
-        console.log("hello");
-    
+        // 🔹 Upload Another button logic
+        reuploadBtn?.addEventListener("click", (e) => {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Remove old input and preview
+            this._fileInput?.remove();
+
+            const newInput = createInput();
+            dropArea.appendChild(newInput);
+            this._fileInput = newInput;
+
+            // Wait before clicking to ensure DOM stability
+            setTimeout(() => newInput.click(), 10);
+        
+        });
+
+        console.log("hooked!");
+
     }
+
+
 
 }
 
