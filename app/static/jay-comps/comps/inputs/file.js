@@ -190,10 +190,8 @@ class FileComp extends InputComp {
 
             if (!file) return;
 
-            // Show filename
             filePrompt.textContent = file.name;
 
-            // Show preview image if image type
             if (file.type.startsWith("image/")) {
 
                 const reader  = new FileReader();
@@ -234,7 +232,6 @@ class FileComp extends InputComp {
         
         };
 
-        // Initial input reference
         this._fileInput = this.shadowRoot.querySelector(".fileInput");
 
         if (this._fileInput) {
@@ -251,14 +248,12 @@ class FileComp extends InputComp {
 
         }
 
-        // 🔹 File box click = open picker
         dropArea?.addEventListener("click", () => {
 
             this._fileInput?.click();
         
         });
 
-        // 🔹 Drag-and-drop support
         dropArea?.addEventListener("dragover", (e) => {
 
             e.preventDefault();
@@ -286,7 +281,6 @@ class FileComp extends InputComp {
                 dropArea.appendChild(input);
                 this._fileInput = input;
 
-                // Simulate file selection
                 Object.defineProperty(input, 'files', {
                     value: e.dataTransfer.files,
                     writable: false
@@ -297,29 +291,22 @@ class FileComp extends InputComp {
         
         });
 
-        // 🔹 Upload Another button logic
         reuploadBtn?.addEventListener("click", (e) => {
 
             e.preventDefault();
             e.stopPropagation();
 
-            // Remove old input and preview
             this._fileInput?.remove();
 
             const newInput = createInput();
             dropArea.appendChild(newInput);
             this._fileInput = newInput;
 
-            // Wait before clicking to ensure DOM stability
             setTimeout(() => newInput.click(), 10);
         
         });
 
-        console.log("hooked!");
-
     }
-
-
 
 }
 
