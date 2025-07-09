@@ -168,12 +168,33 @@ class FileComp extends InputComp {
             ${filePromptMob}
             ${reloadMob}
         }
-        
-
-
         `; 
     
     }
+    
+    createInput = () => {
+
+        const input     = document.createElement("input");
+        input.type      = "file";
+        input.className = "inputValue fileInput";
+        input.accept    = "image/png, image/jpeg, image/jpg";
+        input.hidden    = true;
+
+        input.addEventListener("change", () => {
+
+            if (input.files?.[0]) {
+
+                this._fileInput = input;
+                handleFile(input.files[0]);
+                
+            }
+            
+        });
+
+        return input;
+        
+    };
+
 
     hook() {
 
@@ -209,29 +230,7 @@ class FileComp extends InputComp {
         
         };
 
-        const createInput = () => {
-
-            const input     = document.createElement("input");
-            input.type      = "file";
-            input.className = "inputValue fileInput";
-            input.accept    = "image/png, image/jpeg, image/jpg";
-            input.hidden    = true;
-
-            input.addEventListener("change", () => {
-
-                if (input.files?.[0]) {
-
-                    this._fileInput = input;
-                    handleFile(input.files[0]);
-                
-                }
-            
-            });
-
-            return input;
         
-        };
-
         this._fileInput = this.shadowRoot.querySelector(".fileInput");
 
         if (this._fileInput) {
