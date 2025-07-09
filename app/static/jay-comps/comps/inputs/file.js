@@ -11,8 +11,6 @@ class FileComp extends InputComp {
         this.name_ = "File Comp";
         this.html_ = this.createHTML();
         this.css_  = this.createCSS();
-
-        requestAnimationFrame(() => this.hook());
     
     }
 
@@ -178,9 +176,6 @@ class FileComp extends InputComp {
     }
 
     hook(){
-
-        if (this._hooked) return;
-        this._hooked = true;
 
         const fileInput  = this.shadowRoot.querySelector(".fileInput");
         const filePrompt = this.shadowRoot.querySelector(".filePrompt");
