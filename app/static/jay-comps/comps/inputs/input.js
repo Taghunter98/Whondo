@@ -1,50 +1,40 @@
 import { Comp } from "jay-comp";
 
-export class InputComp extends Comp {
+export class Input extends Comp {
 
-    constructor() {
+    label_    = "Label";
+    type_     = "text";
+    prompt_   = "Enter text";
+    required_ = false;
+    error_    = false;
 
-        super();
-        
-        this.label_    = "Label";
-        this.type_     = "text";
-        this.prompt_   = "Enter text";
-        this.required_ = false;
-        this.error_    = false;
-
-        this.name_ = "Input";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-
-        this.render();
-    
-    }
+    name_ = "Input";
 
     set label(newLabel) {
 
         this.label_ = newLabel;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
     set type(newType) {
 
         this.type_ = newType;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
     set prompt(newPrompt) {
 
         this.prompt_ = newPrompt;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
     set required (flag){
 
         this.required_ = flag;
-        this.update(this.createHTML(), this.css_);
+        this.update();
 
     }
 
@@ -91,11 +81,11 @@ export class InputComp extends Comp {
 
     createCSS() {
 
-        const inputContainer = this.design.create({
+        const inputContainer = this.css({
             class: "inputContainer",
             display: "flex",
             flexDirection: "column",
-            width: "100%",
+            widthPercent: 100,
             maxWidth: "none",
             padding: 0,
             alignItems: "start",
@@ -103,45 +93,45 @@ export class InputComp extends Comp {
             background: "--white"
         });
 
-        const input = this.design.create({
+        const input = this.css({
             class: "inputValue",
             display: "block",
             fontSize: 16,
-            width: "100%",
-            padding: "8px 12px",
+            widthPercent: 100,
+            padding: [8, 12],
             border: "border",
             borderRadius: 8,
             boxSizing: "border-box"
         });
 
-        const inputHover = this.design.create({
+        const inputHover = this.css({
             class: "inputValue",
             pseudoClass: "hover",
-            outline: "solid 2px var(--black60)"
+            outline: ["solid", 2, "var(--black60)"]
         });
 
-        const inputActive = this.design.create({
+        const inputActive = this.css({
             class: "inputValue",
             pseudoClass: "focus",
-            outline: "solid 2px var(--black100)"
+            outline: ["solid", 2, "var(--black100)"]
         });
 
-        const statusRed = this.design.create({
+        const statusRed = this.css({
             class: "error",
-            borderBottom: "2px solid var(--red100)"
+            borderBottom: ["solid", 2, "var(--red100)"]
         });
 
-        const statusYellow = this.design.create({
+        const statusYellow = this.css({
             class: "warning",
-            borderBottom: "2px solid var(--yellow100)",
+            borderBottom: ["solid", 2, "var(--yellow100)"]
         });
 
-        const statusGreen = this.design.create({
+        const statusGreen = this.css({
             class: "success",
-            borderBottom: "2px solid var(--green100)",
+            borderBottom: ["solid", 2, "var(--green100)"],
         });
 
-        const hint = this.design.create({
+        const hint = this.css({
             class: "hint",
             fontSize: "0.75rem",
             colour: "black",
@@ -168,6 +158,11 @@ export class InputComp extends Comp {
     
     }
 
+    static {
+
+        Comp.register(this);
+
+    }
+
 }
 
-customElements.define("comp-input", InputComp);

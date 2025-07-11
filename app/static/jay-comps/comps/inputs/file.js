@@ -1,19 +1,11 @@
-import { InputComp } from './input.js';
-/** @extends {InputComp} */
-class FileComp extends InputComp {
+import { Comp } from 'jay-comp';
+import { Input } from './input.js';
 
-    constructor(){
-
-        super();
-
-        this.type_ = "file";
-        
-        this.name_ = "File Comp";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-    
-    }
-
+export class File extends Input {
+  
+    type_ = "file";
+    name_ = "File Comp";
+       
     createHTML(){
 
         return /* html */`
@@ -40,25 +32,25 @@ class FileComp extends InputComp {
 
     createCSS(){
        
-        const fileStyle = this.design.create({
+        const fileStyle = this.css({
             class: "fileInput",
             display: "none",
         });
 
-        const fileWrapper = this.design.create({
+        const fileWrapper = this.css({
             class: "fileWrapper",
-            width: "100%",
+            widthPercent: 100,
             cursor: "pointer"
         });
 
-        const fileBox = this.design.create({
+        const fileBox = this.css({
             class: "fileBox",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            maxWidth: "100%",
+            alignItems: "centre",
+            justifyContent: "centre",
+            widthPercent: 100,
+            maxWidthPercent: 100,
             padding: 20,
             border: "2px",
             borderRadius: "12px",
@@ -66,42 +58,42 @@ class FileComp extends InputComp {
             background: "white",
             gap: 8,
             boxSizing: "border-box",
-            textAlign: "center"
+            textAlign: "centre"
         });
 
-        const icon = this.design.create({
+        const icon = this.css({
             class: "icon",
             fontSize: "2rem",
             fontWeight: "bold",
             colour: "black80",
         });
 
-        const filePrompt = this.design.create({
+        const filePrompt = this.css({
             class: "filePrompt",
             fontSize: "0.9rem",
             colour: "black60",
 
         });
         
-        const fileHover = this.design.create({
+        const fileHover = this.css({
             class: "fileBox",
             pseudoClass: "hover",
-            outline: "solid 2px var(--black60)"
+            outline: ["solid", 2, "var(--black60)"]
         });
 
-        const fileActive = this.design.create({
+        const fileActive = this.css({
             class: "fileBox",
             pseudoClass: "focus",
-            outline: "solid 2px var(--black100)"
+            outline: ["solid", 2, "var(--black100)"]
         });
 
-        const filesBoxDrag = this.design.create({
+        const filesBoxDrag = this.css({
             class: "dragover",
-            outline: "solid 2px var(--black100)",
+            outline: ["solid", 2, "var(--black100)"],
             background: "back10",
         });
 
-        const filePreview = this.design.create({
+        const filePreview = this.css({
             class: "filePreview",
             width: "auto",             
             maxWidth: "150px",       
@@ -114,13 +106,13 @@ class FileComp extends InputComp {
             borderRadius: 6,
         });
 
-        const reuploadBtn = this.design.create({
+        const reuploadBtn = this.css({
             class: "reuploadBtn",
             width: "auto",
             marginTop: 12,
         });
 
-        const fileBoxMob = this.design.create({
+        const fileBoxMob = this.css({
             class: "filePreview",
             maxWidth: "100px",     
             maxHeight: "100px",
@@ -130,24 +122,24 @@ class FileComp extends InputComp {
 
         });
 
-        const filePreMob = this.design.create({
+        const filePreMob = this.css({
             class: "filePreview",
-            maxWidth: "100%",
+            maxWidthPercent: 100,
             height: "auto",
             objectFit: "cover",
             borderRadius: 6,
         });
 
-        const filePromptMob = this.design.create({
+        const filePromptMob = this.css({
             class: "filePrompt",
             fontSize: "0.8rem",
             wordWrap: "break-word",
             maxWidth: 120
         });
 
-        const reloadMob = this.design.create({
+        const reloadMob = this.css({
             marginTop:  8,
-            width: "100%",
+            widthPercent: 100,
         });
 
         return /* css */`
@@ -187,10 +179,8 @@ class FileComp extends InputComp {
 
             if (!file) return;
 
-            // Show filename
             filePrompt.textContent = file.name;
 
-            // Show preview image if image type
             if (file.type.startsWith("image/")) {
 
                 const reader  = new FileReader();
@@ -231,7 +221,6 @@ class FileComp extends InputComp {
         
         };
 
-        // Initial input reference
         this._fileInput = this.shadowRoot.querySelector(".fileInput");
 
         if (this._fileInput) {
@@ -248,14 +237,13 @@ class FileComp extends InputComp {
 
         }
 
-        // 🔹 File box click = open picker
+        
         dropArea?.addEventListener("click", () => {
 
             this._fileInput?.click();
         
         });
 
-        // 🔹 Drag-and-drop support
         dropArea?.addEventListener("dragover", (e) => {
 
             e.preventDefault();
@@ -294,7 +282,6 @@ class FileComp extends InputComp {
         
         });
 
-        // 🔹 Upload Another button logic
         reuploadBtn?.addEventListener("click", (e) => {
 
             e.preventDefault();
@@ -314,7 +301,12 @@ class FileComp extends InputComp {
 
 
     }
-    
+
+    static {
+
+        Comp.register(this);
+
+    }
+
 }
 
-customElements.define("comp-file", FileComp);

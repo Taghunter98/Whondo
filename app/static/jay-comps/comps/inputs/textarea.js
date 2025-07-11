@@ -1,25 +1,16 @@
-import { InputComp } from "./input.js";
+import { Comp } from "jay-comp";
+import { Input } from "./input.js";
 
-class TextareaComp extends InputComp {
-
-    constructor() {
-
-        super();
-        this.type_ = "textarea";
-        this.rows_ = 6;
-
-        this.name_ = "Textarea Input";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-        
-        this.render();
-    
-    }
+export class Textarea extends Input {
+   
+    type_ = "textarea";
+    rows_ = 6;
+    name_ = "Textarea Input";
 
     set rows(newRows) {
 
         this.rows_ = newRows;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -46,11 +37,11 @@ class TextareaComp extends InputComp {
             class: "areaInput",
             resize: "none",
             height: "80px",
-            width: "100%",
+            widthPercent: 100,
             border: "border",
             borderRadius: 8,
             boxSizing: "border-box",
-            padding: "8px 12px",
+            padding: [8, 12],
             fontFamily: "Geist ",
         });
 
@@ -60,6 +51,12 @@ class TextareaComp extends InputComp {
     
     }
 
+    static{
+
+        Comp.register(this);
+
+    }
+
 }
 
-customElements.define("comp-textarea", TextareaComp);
+

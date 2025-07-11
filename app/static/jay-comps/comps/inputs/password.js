@@ -1,6 +1,7 @@
-import { InputComp } from "./input.js";
+import { Comp } from "jay-comp";
+import { Input } from "./input.js";
 
-class PasswordComp extends InputComp {
+export class Password extends Input {
 
     constructor(){
 
@@ -19,7 +20,7 @@ class PasswordComp extends InputComp {
     set entropy(flag){
 
         this.enableEntropy_ = flag;
-        this.update(this.createHTML(), this.css_);
+        this.update();
         
     }
 
@@ -113,6 +114,11 @@ class PasswordComp extends InputComp {
     
     }
 
+    static {
+
+        Comp.register(this);
+
+    }
+
 }
 
-customElements.define("comp-password", PasswordComp);
