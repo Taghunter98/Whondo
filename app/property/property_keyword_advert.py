@@ -12,7 +12,7 @@ Description: Provides a helper function to return ID's from PropertyKeywordAdver
 from flask import jsonify
 from app.database.db_connect import connect
 from app.property.advert import update_advert
-from app.property.keywords import update_keywords
+from app.property.keywords import update_keywords, reset_keywords
 from app.property.property import update_property
 
 
@@ -47,13 +47,14 @@ def update_transaction(
     if not ids:
         return False
 
-    row = ids[0]
-    real_pID = row["pID"]
-    real_kID = row["kID"]
-    real_adID = row["adID"]
+    data = ids[0]
+    pID = data["pID"]
+    kID = data["kID"]
+    adID = data["adID"]
 
-    update_keywords(real_kID, keywords)
-    update_property(prop_data, real_pID)
-    update_advert(advert_data, image_paths, real_adID)
+    reset_keywords(kID)
+    update_keywords(kID, keywords)
+    update_property(prop_data, pID)
+    update_advert(advert_data, image_paths, adID)
 
     return True
