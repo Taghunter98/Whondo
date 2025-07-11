@@ -1,50 +1,37 @@
 import {Comp} from "jay-comp";
 
-class DialogComp extends Comp {
-
-    constructor() {
-
-        super();
-        
-        this.title_     = "Hello World";
-        this.paragraph_ = "This is a paragraph";
-        this.svgIcon_   = "";
-        this.text_      = "this is a button";
-
-        this.name_ = "Dialog";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-
-        this.render();    
-    
-    }
+export class Dialog extends Comp {
+     
+    title_     = "Hello World";
+    paragraph_ = "This is a paragraph";
+    svgIcon_   = "";
+    text_ = "This is a button";
 
     set title(newTitle){
 
         this.title_ = newTitle;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
-
 
     set paragraph(value){
 
         this.paragraph_ = value;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
     set svgIcon(value){
 
         this.svgIcon_ = value;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
     set text(value){
 
-        this.text_ = value;
-        this.update(this.createHTML(), this.css_);
+        this.text = value;
+        this.update();
     
     }
 
@@ -60,14 +47,13 @@ class DialogComp extends Comp {
     
     }
 
-
     get svgIcon() {
 
         return this.svgIcon_;
     
     }
 
-    get text() {
+    get text(){
 
         return this.text_;
     
@@ -95,7 +81,6 @@ class DialogComp extends Comp {
 
     }
 
-
     createHTML() {
 
         return /* html */ `
@@ -107,7 +92,6 @@ class DialogComp extends Comp {
                     <svg class="icon" ${this.svgIcon_}></svg>
                     <h3 class="head">${this.title_}</h3>
                     <p class="dialog">${this.paragraph_}</p>
-                    <comp-button class="btn">${this.text_}</comp-button>
 
                 </div>
 
@@ -118,26 +102,20 @@ class DialogComp extends Comp {
 
     createCSS() {
 
-        const background = this.design.create({
+        const background = this.css({
             class: "background",
             display: "flex",
             flexDirection: "column",
-            width: "100%",
+            widthPercent: 100,
             height: "100vh",
             alignItems: "centre",
             border: false,
             gap: 0,
             background: "black10",
-            justifyContent: "centre"
+            justifyContent: "centre",
         });
 
-        const backgroundMobile = this.design.create({
-            class: "background",
-            padding: 20,
-            width: "auto",
-        });
-
-        const container = this.design.create({
+        const container = this.css({
             class: "container",
             display: "flex",
             flexDirection: "column",
@@ -153,22 +131,29 @@ class DialogComp extends Comp {
             marginTop: 0,
         });
 
-        const head = this.design.create({
+        const head = this.css({
             class: "head",
             fontSize: 24,
             alignSelf: "center",
-            lineHeight: 30,
         });
 
-        const dialog = this.design.create({
+        const dialog = this.css({
             class: "dialog",
             fontSize: 16,
             textAlign: "start",
         });
 
-        const icon = this.design.create({
+        const icon = this.css({
             class: "icon",
             colour: "black80",
+        });
+
+        const media = this.css({
+            media: {
+                breakpoint: 600,
+                padding: 20,
+                width: 350
+            }
         });
 
         return /* css */ `
@@ -177,17 +162,17 @@ class DialogComp extends Comp {
             ${icon}
             ${head}
             ${dialog}
-
-            @media (max-width: 600px){
-                ${backgroundMobile}
-            }
-
+            ${media}
         `;
     
     }
 
+    static {
+
+        Comp.register(this);
+
+    }
 
 
 }
 
-customElements.define("dialog-box", DialogComp);

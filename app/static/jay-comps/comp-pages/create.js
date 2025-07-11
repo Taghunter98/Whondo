@@ -1,18 +1,8 @@
 import { Comp } from "jay-comp";
 
-class CreatePage extends Comp {
+export class Create extends Comp {
     
-    constructor() {
-
-        super();
-
-        this.name_ = "Verify Page";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-    
-        this.render();
-    
-    }
+    name_ = "Verify Page";
 
     createHTML() {
 
@@ -20,7 +10,7 @@ class CreatePage extends Comp {
         <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
-                <dialog-box id="describe"></dialog-box>
+                <comp-dialog id="describe"></comp-dialog>
             </div>
         </div>
         `;
@@ -32,7 +22,7 @@ class CreatePage extends Comp {
         const effect = this.effect.slideUp(20);
         const prop   = this.effect.prop("slideUp", .5);
 
-        const background = this.design.create({
+        const background = this.css({
             class: "background",
             display: "flex",
             flexDirection: "column",
@@ -44,7 +34,7 @@ class CreatePage extends Comp {
             overflow: "hidden",
         });
 
-        const container = this.design.create({
+        const container = this.css({
             class: "container",
             background: "white",
             animation: prop, 
@@ -62,13 +52,13 @@ class CreatePage extends Comp {
 
     hook() {
 
-        const dialogBox = this.shadowRoot.querySelector("#describe");
+        const dialogBox = this.shadowRoot.getElementById("describe");
 
-        customElements.whenDefined('dialog-box').then(() => {
+        customElements.whenDefined('comp-dialog').then(() => {
 
             requestAnimationFrame(() => {
 
-                dialogBox.hideButton();
+                dialogBox.showButton();
 
                 dialogBox.title     = "Email Verification";
                 dialogBox.paragraph = "We have sent you an email with a verification link.<br>If you do not receive an email, please check your spam.";
@@ -78,8 +68,15 @@ class CreatePage extends Comp {
         
         });
 
+        console.log(dialogBox.title);
+
+    }
+
+    static {
+
+        Comp.register(this);
+
     }
 
 }
 
-customElements.define('comp-create', CreatePage);
