@@ -29,7 +29,6 @@ from app.property.advert import create_advert, delete_advert
 from app.property.property_keyword_advert import get_ids
 
 advert_bp = Blueprint("advert_bp", __name__)
-delete_ad_bp = Blueprint("delete_ad_bp", __name__)
 
 
 @advert_bp.route("/advert/new", methods=["POST", "GET"])
@@ -120,7 +119,7 @@ def advert():
             return redirect("/")
 
 
-@delete_ad_bp.route("/advert/delete", methods=["POST", "GET"])
+@advert_bp.route("/advert/delete", methods=["POST", "GET"])
 def delete_ad():
     """
     The REST API deletes an advert based on the primary key (pkaID).
