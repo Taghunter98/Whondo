@@ -1,21 +1,10 @@
 import { Comp } from 'jay-comp';
 
-class Navbar extends Comp {
+export class Navbar extends Comp {
 
-    constructor() {
-
-        super();
-
-        this.lastScrollY = window.scrollY;
-
-        this.name_ = "Navbar";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-        
-        this.render();
+    lastScrollY = window.scrollY;
+    name_ = "Navbar";
     
-    }
-
     createHTML() {
 
         return /* html */ `
@@ -57,27 +46,31 @@ class Navbar extends Comp {
 
     createCSS() {
 
-        const container = this.design.create({
+        const container = this.css({
             class: "container",
             top: "0",
             zIndex: "1000",
             position: "fixed",
             display: "flex",
             alignItems: "centre",
-            width: "100%",
+            widthPercent: 100,
             background: "white",
             boxSizing: "border-box",
-            padding: "10px 20px",
+            padding: [10, 20],
             justifyContent: "space-between",
             transition: "top 0.4s"
         });
 
-        const logo = this.design.create({
+        const logo = this.css({
             class: "logo",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            media: {
+                breakpoint: 600,
+                fontSize: 28
+            }
         });
 
-        const links = this.design.create({
+        const links = this.css({
             class: "links",
             display: "flex",
             flexDirection: "row",
@@ -86,7 +79,7 @@ class Navbar extends Comp {
         });
 
         // Navbar links
-        const link = this.design.create({
+        const link = this.css({
             class: "link",
             colour: "black80",
             fontSize: 16,
@@ -98,7 +91,7 @@ class Navbar extends Comp {
             transition: "background 0.1s ease-in-out"
         });
 
-        const linkHover = this.design.create({
+        const linkHover = this.css({
             class: "link",
             colour: "black100",
             pseudoClass: "hover",
@@ -106,87 +99,94 @@ class Navbar extends Comp {
             background: "black10"
         });
 
-        const linkActive = this.design.create({
+        const linkActive = this.css({
             class: "link",
             pseudoClass: "active",
             background: "black20"
         });
 
-        const menu = this.design.create({
+        const menu = this.css({
             class: "menu",
             display: "None",
+            media: {
+                breakpoint: 600,
+                display: "block"
+            }
         });
 
-        const close = this.design.create({
+        const close = this.css({
             class: "close",
             display: "None",
+            media: {
+                breakpoint: 600,
+                display: "block"
+            }
         });
 
-        const buttons = this.design.create({
+        const buttons = this.css({
             class: "buttons",
             display: "flex",
             width: "auto",
-            gap: 20
+            gap: 20,
+            media: {
+                breakpoint: 600,
+                display: "none"
+            }
         });
 
-        const hideTray = this.design.create({
+        const hideTray = this.css({
             class: "tray",
             display: "None"
         });
 
         // Media quuery adjustments
-        const header = this.design.create({
-            class: "header",
-            display: "flex",
-            alignItems: "centre",
-            justifyContent: "space-between"
+        const header = this.css({
+            media: {
+                breakpoint: 600,
+                class: "header",
+                display: "flex",
+                alignItems: "centre",
+                justifyContent: "space-between"
+            }
         });
 
-        const logoMob = this.design.create({
-            class: "logo",
-            fontSize: 28
+        const linksMob = this.css({
+            media: {
+                breakpoint: 600,
+                class: "links",
+                display: "None"
+            }
+            
         });
 
-        const linksMob = this.design.create({
-            class: "links",
-            display: "None"
+        const tray = this.css({
+            media: {
+                breakpoint: 600,
+                class: "tray",
+                display: "flex",
+                bottom: "-500px",
+                position: "fixed",
+                zIndex: "1000",
+                boxSizing: "border-box",
+                flexDirection: "column",
+                widthPercent: 100,
+                background: "white",
+                padding: 20,
+                borderRadius: 14,
+                transition: "bottom 0.6s"
+            }
+            
         });
 
-        const buttonsMob = this.design.create({
-            class: "buttons",
-            display: "None"
-        });
-
-        const menuMob = this.design.create({
-            class: "menu",
-            display: "block",
-        });
-
-        const closeMob = this.design.create({
-            class: "close",
-            display: "block",
-        });
-
-        const tray = this.design.create({
-            class: "tray",
-            display: "flex",
-            bottom: "-500px",
-            position: "fixed",
-            zIndex: "1000",
-            boxSizing: "border-box",
-            flexDirection: "column",
-            width: "100%",
-            background: "white",
-            padding: 20,
-            borderRadius: 14,
-            transition: "bottom 0.6s"
-        });
-
-        const trayButtons = this.design.create({
-            class: "trayButtons",
-            display: "flex",
-            gap: 10,
-            paddingTop: 40
+        const trayButtons = this.css({
+            media: {
+                breakpoint: 600,
+                class: "trayButtons",
+                display: "flex",
+                gap: 10,
+                paddingTop: 40
+            }
+           
         });
 
         return /* css */`
@@ -207,17 +207,11 @@ class Navbar extends Comp {
         ${menu}
         ${buttons}
         ${hideTray}
+        ${header}
+        ${linksMob}
+        ${tray}
+        ${trayButtons}
 
-        @media (max-width: 600px) {
-            ${header}
-            ${logoMob}
-            ${linksMob}
-            ${buttonsMob}
-            ${menuMob}
-            ${closeMob}
-            ${tray}
-            ${trayButtons}
-        }
         `;
     
     }
@@ -281,6 +275,11 @@ class Navbar extends Comp {
     
     }
 
+    static {
+
+        Comp.register(this); 
+
+    }
+
 }
 
-customElements.define("comp-navbar", Navbar);
