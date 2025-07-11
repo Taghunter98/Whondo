@@ -15,7 +15,6 @@ from flask import (
     jsonify,
     session,
     redirect,
-    current_app,
     render_template,
 )
 import json
@@ -26,10 +25,9 @@ from app.users.images import convert_images
 from app.property.keywords import store_keywords, delete_keywords
 from app.property.property import create_property, delete_property
 from app.property.advert import create_advert, delete_advert
-from app.property.property_keyword_advert import get_ids
+from app.property.property_keyword_advert import get_ids, update_transaction
 
 advert_bp = Blueprint("advert_bp", __name__)
-delete_ad_bp = Blueprint("delete_ad_bp", __name__)
 
 
 @advert_bp.route("/advert/new", methods=["POST", "GET"])
@@ -120,7 +118,7 @@ def advert():
             return redirect("/")
 
 
-@delete_ad_bp.route("/advert/delete", methods=["POST", "GET"])
+@advert_bp.route("/advert/delete", methods=["POST", "GET"])
 def delete_ad():
     """
     The REST API deletes an advert based on the primary key (pkaID).
@@ -158,3 +156,73 @@ def delete_ad():
 
     else:
         return redirect("/")
+
+
+@advert_bp.route("/advert/update", methods=["POST", "GET"])
+def update_ad():
+    """
+    The REST API is responsible for updating an advert based on the primary key (pkaID).
+
+    The function follows the same logic as creation with an added change of the update functions
+    for the Property, Advert and Keyword tables
+
+    Returns:
+        Response: HTTP Response
+    """
+
+    if request.method == "POST":
+        if not session.get("email"):
+            redirect("/")
+
+        pkaID: int = request.form.get("pkaID")
+        title: str = request.form.get("title")
+        price: int = int(request.form.get("price"))
+        description: str = request.form.get("description")
+        keywords_raw: bytes = request.form.get("keywords")
+        tennants: int = int(request.form.get("tennants"))
+        images: list = request.files.getlist("images")
+
+        keywords: list = json.loads(keywords_raw)
+
+        if not title or not description or not keywords or not images:
+            return jsonify({"error": "Required fields are not provided"}), 400
+
+        email: str = session.get("email")
+
+        prop_data: dict = {
+            "propType": request.form.get("propType"),
+            "bedrooms": request.form.get("bedrooms"),
+            "bathrooms": request.form.get("bathrooms"),
+            "name": request.form.get("name"),
+            "street": request.form.get("street"),
+            "town": request.form.get("town"),
+            "county": request.form.get("county"),
+            "postcode": request.form.get("postcode"),
+        }
+
+        image_paths: list = convert_images(images, email)
+
+        advert_data: dict = {
+            "title": title,
+            "price": price,
+            "description": description,
+            "tennants": tennants,
+        }
+
+        if not pkaID:
+            return jsonify({"error": "pkaID not provided"}), 400
+
+        updated: bool = update_transaction(
+            pkaID, keywords, prop_data, advert_data, image_paths
+        )
+
+        if not updated:
+            return jsonify({"error": "Keyword, Property or Advert update failed"}), 400
+
+        return jsonify({"message": "Advert updated successfully"}), 201
+
+    else:
+        if session.get("uID") and auth_landlord(session.get("email")):
+            return render_template("update_advert.html")
+        else:
+            return redirect("/")

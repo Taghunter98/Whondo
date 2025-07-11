@@ -2,7 +2,12 @@ import unittest
 import os
 
 from app.property.property import create_property, update_property, delete_property
-from app.property.keywords import store_keywords, delete_keywords
+from app.property.keywords import (
+    store_keywords,
+    delete_keywords,
+    reset_keywords,
+    update_keywords,
+)
 from app.property.advert import create_advert, delete_advert
 
 
@@ -108,6 +113,18 @@ class TestKeywords(unittest.TestCase):
 
         kID: int = store_keywords(ALL_KEYWORDS)
         self.assertIsNotNone(kID, "Keywords were not stored")
+        self.assertTrue(reset_keywords(kID), "Keywords were not reset")
+        self.assertTrue(
+            update_keywords(
+                kID,
+                [
+                    "house",
+                    "flat",
+                    "bungalow",
+                ],
+            ),
+            "Keywords were not updated",
+        )
         self.assertTrue(delete_keywords(kID), "Keywords were not deleted")
 
 
