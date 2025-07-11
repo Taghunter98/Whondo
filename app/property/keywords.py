@@ -105,14 +105,13 @@ def update_keywords(kID: int, keywords: list) -> bool:
     connection: object = connect()
     cursor: object = connection.cursor()
     
-    query = f"UPDATE Keywords SET {', '.join(f'{field}=1' for field in fields)};"
+    query = f"UPDATE Keywords SET {', '.join(f'{field}=1' for field in fields)} WHERE kID={kID};"
 
     cursor.execute(query)
     connection.commit()
-
-    kID: int = cursor.lastrowid
+    updated: bool = cursor.rowcount == 1
 
     cursor.close()
     connection.close()
 
-    return kID
+    return updated
