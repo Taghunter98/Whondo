@@ -271,7 +271,7 @@ export class File extends Input {
                 dropArea.appendChild(input);
                 this._fileInput = input;
 
-                // Simulate file selection
+                
                 Object.defineProperty(input, 'files', {
                     value: e.dataTransfer.files,
                     writable: false
@@ -287,14 +287,12 @@ export class File extends Input {
             e.preventDefault();
             e.stopPropagation();
 
-            // Remove old input and preview
             this._fileInput?.remove();
 
             const newInput = createInput();
             dropArea.appendChild(newInput);
             this._fileInput = newInput;
 
-            // Wait before clicking to ensure DOM stability
             setTimeout(() => newInput.click(), 10);
         
         });
