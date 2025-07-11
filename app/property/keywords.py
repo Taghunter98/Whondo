@@ -96,23 +96,23 @@ def reset_keywords(kID: int) -> bool:
     return reset
 
 
-# def update_keywords(kID: int, keywords: list) -> bool:
+def update_keywords(kID: int, keywords: list) -> bool:
 
-#     fields = []
-#     for key in keywords:
-#         fields.append(key)
+    fields = []
+    for key in keywords:
+        fields.append(key)
 
-#     connection: object = connect()
-#     cursor: object = connection.cursor()
+    connection: object = connect()
+    cursor: object = connection.cursor()
     
-#     query = f"UPDATE Keywords SET {', '.join(f'{field}=1' for field in fields)};"
+    query = f"UPDATE Keywords SET {', '.join(f'{field}=1' for field in fields)};"
 
-#     cursor.execute(query)
-#     connection.commit()
+    cursor.execute(query)
+    connection.commit()
 
-#     kID: int = cursor.lastrowid
+    kID: int = cursor.lastrowid
 
-#     cursor.close()
-#     connection.close()
+    cursor.close()
+    connection.close()
 
-#     return kID
+    return kID
