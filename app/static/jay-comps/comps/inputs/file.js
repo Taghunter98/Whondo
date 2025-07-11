@@ -18,22 +18,22 @@ class FileComp extends InputComp {
 
         return /* html */`
            
-            <div class="inputContainer">
-                <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
-                <div class="fileWrapper">
-                    <div class="fileBox">
-                        <img class="filePreview" src="" hidden>
-                        <span class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-                                <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
-                            </svg>
-                        </span>
-                        <span class="filePrompt">${this.prompt_}</span>
-                        <input class="inputValue fileInput" type="file" accept="image/png, image/jpeg, image/jpg" hidden>
-                        <comp-button class="reuploadBtn" hidden></comp-button>
-                    </div>
+        <div class="inputContainer">
+            <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
+            <div class="fileWrapper">
+                <div class="fileBox">
+                    <img class="filePreview" src="" hidden/>
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                            <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
+                        </svg>
+                    </span>
+                    <span class="filePrompt">${this.prompt_}</span>
+                    <input class="inputValue fileInput" type="file" accept="image/png, image/jpeg, image/jpg" hidden />
+                    <comp-button class="reuploadBtn" hidden></comp-button>
                 </div>
             </div>
+        </div>
         `;
     
     }
@@ -168,33 +168,9 @@ class FileComp extends InputComp {
             ${filePromptMob}
             ${reloadMob}
         }
-        `; 
+         `; 
     
     }
-
-    createInput = () => {
-
-        const input     = document.createElement("input");
-        input.type      = "file";
-        input.className = "inputValue fileInput";
-        input.accept    = "image/png, image/jpeg, image/jpg";
-        input.hidden    = true;
-
-        input.addEventListener("change", () => {
-
-            if (input.files?.[0]) {
-
-                this._fileInput = input;
-                handleFile(input.files[0]);
-                
-            }
-            
-        });
-
-        return input;
-        
-    };
-
 
     hook() {
 
@@ -211,8 +187,10 @@ class FileComp extends InputComp {
 
             if (!file) return;
 
+            // Show filename
             filePrompt.textContent = file.name;
 
+            // Show preview image if image type
             if (file.type.startsWith("image/")) {
 
                 const reader  = new FileReader();
@@ -230,7 +208,30 @@ class FileComp extends InputComp {
         
         };
 
+        const createInput = () => {
+
+            const input     = document.createElement("input");
+            input.type      = "file";
+            input.className = "inputValue fileInput";
+            input.accept    = "image/png, image/jpeg, image/jpg";
+            input.hidden    = true;
+
+            input.addEventListener("change", () => {
+
+                if (input.files?.[0]) {
+
+                    this._fileInput = input;
+                    handleFile(input.files[0]);
+                
+                }
+            
+            });
+
+            return input;
         
+        };
+
+        // Initial input reference
         this._fileInput = this.shadowRoot.querySelector(".fileInput");
 
         if (this._fileInput) {
@@ -247,12 +248,14 @@ class FileComp extends InputComp {
 
         }
 
+        // 🔹 File box click = open picker
         dropArea?.addEventListener("click", () => {
 
             this._fileInput?.click();
         
         });
 
+        // 🔹 Drag-and-drop support
         dropArea?.addEventListener("dragover", (e) => {
 
             e.preventDefault();
@@ -280,6 +283,7 @@ class FileComp extends InputComp {
                 dropArea.appendChild(input);
                 this._fileInput = input;
 
+                // Simulate file selection
                 Object.defineProperty(input, 'files', {
                     value: e.dataTransfer.files,
                     writable: false
@@ -290,23 +294,27 @@ class FileComp extends InputComp {
         
         });
 
+        // 🔹 Upload Another button logic
         reuploadBtn?.addEventListener("click", (e) => {
 
             e.preventDefault();
             e.stopPropagation();
 
+            // Remove old input and preview
             this._fileInput?.remove();
 
             const newInput = createInput();
             dropArea.appendChild(newInput);
             this._fileInput = newInput;
 
+            // Wait before clicking to ensure DOM stability
             setTimeout(() => newInput.click(), 10);
         
         });
 
-    }
 
+    }
+    
 }
 
 customElements.define("comp-file", FileComp);

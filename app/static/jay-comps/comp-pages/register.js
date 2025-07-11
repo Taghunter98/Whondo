@@ -1,8 +1,19 @@
 import { Comp } from "jay-comp";
 
-export class Register extends Comp {
+class RegisterPageComp extends Comp {
 
-    name_ = "Register page";
+    constructor() {
+
+        super();
+
+        this.name_ = "Register page";
+        this.html_ = this.createHTML();
+        this.css_  = this.createCSS();
+
+        this.render();
+    
+    }
+    
 
     createHTML() {
 
@@ -86,59 +97,44 @@ export class Register extends Comp {
 
     createCSS(){
         
-        const background = this.css({
+        const background = this.design.create({
             class: "background",
             width: "100%",
             minHeight: "100vh",
             background: "black100",     
-            overflow: "hidden",
-            media: {
-                breakpoint: 600,
-                height: 1000
-            }      
+            overflow: "hidden"       
         });
 
-        const form = this.css({
+        const form = this.design.create({
             class: "formObj",
-            widthPercent: 100,
+            width: "100%"
         });
         
-        const container = this.css({
+        const container = this.design.create({
             class: "container",
             display: "flex",
-            media: {
-                breakpoint: 600,
-                flexDirection: "column",
-                alignItems: "centre"
-            }
         });
 
-        const backgroundImage = this.css({
+        const backgroundImage = this.design.create({
             class: "backgroundImage",
-            widthPercent: 100,
+            width: "100%",
             height: 1000,
             paddingLeft: 400,
-            media: {
-                breakpoint: 600,
-                height: "40vh",
-                margin: 0,
-                padding: 0
-            }
         });
 
-        const image = this.css({
+        const image = this.design.create({
             class: "image",
-            widthPercent: 100,
-            heightPercent: 100,
+            width: "100%",
+            height: "100%",
             objectFit: "cover"
         });
 
-        const modal = this.css({
+        const modal = this.design.create({
             class: "modal",
             display: "flex",
             flexDirection: "column",
             alignItems: "centre",
-            widthPercent: 100,
+            width: "100%",
             maxWidth: 500,  
             minWidth: 320,
             background: "white",
@@ -147,60 +143,43 @@ export class Register extends Comp {
             padding: 20,
             borderRadius: 14,
             marginLeft: 100,
-            marginTop: 150,
-            media: {
-                breakpoint: 600,
-                widthPercent: 100,
-                maxWidth: 350,
-                minWidth: 250,
-                margin: 0,
-                marginTop: 150,
-                boxSizing: "border-box"
-            }
+            marginTop: 150
         });
 
-        const input = this.css({
+        const input = this.design.create({
             class: "input",
             display: "flex",
             flexDirection: "column",
-            widthPercent: 100,
+            width: "100%",
             gap: 20,
-            padding: [20, 0, 40, 0],
-            media: {
-                breakpoint: 600,
-                padding: [10, 0, 20, 0],
-                gap: 15,
-            } 
+            paddingTop: 20,
+            paddingBottom: 40,
         });
 
-        const inputRow = this.css({
+        const inputRow = this.design.create({
             class: "inputRow",
             display: "flex",
             flexDirection: "row",
             gap: 15,
-            widthPercent: 100,
-            justifyContent: "space-between",
-            media: {
-                breakpoint: 600,
-                flexDirection: "column"
-            }
+            width: "100%",
+            justifyContent: "space-between"
         });
 
-        const btnRow = this.css({
+        const btnRow = this.design.create({
             class: "btnRow",
             display: "flex",
             flexDirection: "row",
             gap: 15,
-            widthPercent: 100,
+            width: "100%",
             justifyContent: "space-between"
         });
 
-        const title = this.css({
+        const title = this.design.create({
             class: "title",
             fontWeight: "bold"
         });
 
-        const link = this.css({
+        const link = this.design.create({
             class: "link",
             colour: "black80",
             fontWeight: "bold", 
@@ -208,21 +187,21 @@ export class Register extends Comp {
             cursor: "pointer",
         });
 
-        const linkHover = this.css({
+        const linkHover = this.design.create({
             class: "link",
             pseudoClass: "hover",
             colour: "black100",
         });
 
-        const textContainer = this.css({
+        const textContainer = this.design.create({
             class: "textContainer",
             display: "flex",
             flexDirection: "column",
-            widthPercent: 100,
+            width: "100%",
             gap: 5,
         });
 
-        const text = this.css({
+        const text = this.design.create({
             class: "text",
             colour: "black60",
             display: "flex",
@@ -230,20 +209,63 @@ export class Register extends Comp {
             
         });
 
-        const footer = this.css({
+        const footer = this.design.create({
             class: "footer",
             display: "flex",
             flexDirection: "column",
             alignItems: "centre",
-            widthPercent: 100,
+            width: "100%",
             gap: 10,
         });
 
-        const inputError = this.css({
+        const inputError = this.design.create({
             class: "input-error",
             colour: "red",
             fontSize: 12,
             marginTop: 4,
+        });
+
+        /**
+         * Media query content
+         */
+        const containerMob = this.design.create({
+            class: "container",
+            flexDirection: "column",
+            alignItems: "centre"
+        });
+
+        const backgroundMob = this.design.create({
+            class: "background",
+            height: 1000
+        });
+
+        const backgroundImageMob =  this.design.create({
+            class: "backgroundImage",
+            height: "40vh",
+            margin: 0,
+            padding: 0
+        });
+
+        const modalMob = this.design.create({
+            class: "modal",
+            width: "100%",
+            maxWidth: 350,
+            minWidth: 250,
+            margin: 0,
+            marginTop: 150,
+            boxSizing: "border-box"
+        });
+        
+        const inputMob = this.design.create({
+            class: "input",
+            paddingTop: 10,
+            paddingBottom: 20,
+            gap: 15,
+        });
+
+        const inputRowMob = this.design.create({
+            class: "inputRow",
+            flexDirection: "column",
         });
 
         return /* css */ `
@@ -264,6 +286,14 @@ export class Register extends Comp {
         ${text}
         ${footer}
         
+        @media (max-width: 600px){
+            ${containerMob}
+            ${backgroundImageMob}
+            ${backgroundMob}
+            ${modalMob}
+            ${inputMob}
+            ${inputRowMob}
+        }
         `;
 
     }
@@ -465,12 +495,6 @@ export class Register extends Comp {
     
     }
 
-    static {
-
-        Comp.register(this);
-
-    }
-
 }
 
-
+customElements.define("comp-register", RegisterPageComp);
