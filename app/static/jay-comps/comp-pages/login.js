@@ -1,19 +1,9 @@
 import { Comp } from "jay-comp";
 
-class LoginPageComp extends Comp {
+export class Login extends Comp {
 
-    constructor() {
-
-        super();
-
-        this.name_ = "Login Page";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-    
-        this.render();
-    
-    }
-
+    name_ = "Login Page";
+       
     createHTML() {
     
         return /* html */ `
@@ -55,34 +45,45 @@ class LoginPageComp extends Comp {
     createCSS() {   
 
         // Background and image styling
-        const background = this.design.create({
+        const background = this.css({
             class: "background",
-            width: "100%",
+            widthPercent: 100,
             background: "black100",
             height: "100vh",
         });
 
-        const itemContainer = this.design.create({
+        const itemContainer = this.css({
             class: "itemContainer",
             display: "flex",
+            media: {
+                breakpoint: 600,
+                flexDirection: "column",
+                alignItems: "centre"
+            }
         });
 
-        const imageBackground = this.design.create({
+        const imageBackground = this.css({
             class: "backgroundImage",
-            width: "100%",
+            widthPercent: 100,
             height: "100vh",
-            paddingLeft: 400
+            paddingLeft: 400,
+            media: {
+                breakpoint: 600,
+                height: "40vh",
+                margin: 0,
+                padding: 0
+            }
         });
 
-        const image = this.design.create({
+        const image = this.css({
             class: "image",
-            width: "100%",
-            height: "100%",
+            widthPercent: 100,
+            heightPercent: 100,
             objectFit: "cover"
         });
         
         // Login modal styling
-        const modal = this.design.create({
+        const modal = this.css({
             class: "modal",
             display: "flex",
             flexDirection: "column",
@@ -94,106 +95,81 @@ class LoginPageComp extends Comp {
             padding: 20,
             borderRadius: 14,
             marginLeft: 100,
-            marginTop: 100
+            marginTop: 100,
+            media: {
+                breakpoint: 600,
+                width: "auto",
+                margin: 0,
+                marginTop: 200
+            }
         });
 
-        const inputs = this.design.create({
+        const inputs = this.css({
             class: "inputs",
             display: "flex",
             flexDirection: "column",
-            width: "100%",
+            widthPercent: 100,
             gap: 10,
-            paddingTop: 20,
-            paddingBottom: 40
+            padding: [20, 0, 40, 0]
         });
 
         // Link
 
-        const link = this.design.create({
+        const link = this.css({
             class: "link",
             colour: "black80",
             textDecoration: "underline",
             cursor: "pointer"
         });
 
-        const linkHover = this.design.create({
+        const linkHover = this.css({
             class: "link",
             pseudoClass: "hover",
             colour: "black100"
         });
 
-        const textContainer = this.design.create({
+        const textContainer = this.css({
             class: "textContainer",
             display: "flex",
             flexDirection: "column",
-            width: "100%",
+            widthPercent: 100,
             gap: 5
         });
 
-        const title = this.design.create({
+        const title = this.css({
             class: "title",
             fontWeight: "bold"
         });
 
-        const text = this.design.create({
+        const text = this.css({
             class: "text",
             colour: "black60"
         });
         
-        const footer = this.design.create({
+        const footer = this.css({
             class: "footer",
             display: "flex",
             flexDirection: "column",
             alignItems: "centre",
-            width: "100%",
+            widthPercent: 100,
             gap: 10
         });
 
-        // Media query adjustments
-        const itemContainerMob = this.design.create({
-            class: "itemContainer",
-            flexDirection: "column",
-            alignItems: "centre"
-        });
-
-        const imageBackgroundMob = this.design.create({
-            class: "backgroundImage",
-            height: "40vh",
-            margin: 0,
-            padding: 0
-        });
-
-        const modalMob = this.design.create({
-            class: "modal",
-            width: "auto",
-            margin: 0,
-            marginTop: 200
-        });
     
         return /* css */ `
         ${background}
-
         ${itemContainer}
-
         ${imageBackground}
         ${image}
-
         ${modal}
         ${inputs}
         ${link}
         ${linkHover}
-
         ${textContainer}
         ${title}
         ${text}
-
         ${footer}
-        
-        @media (max-width: 600px) {
-           ${itemContainerMob}
-           ${imageBackgroundMob}
-           ${modalMob}
-        }
+
         `;
     
     }
@@ -236,7 +212,12 @@ class LoginPageComp extends Comp {
         });
     
     }
+
+    static {
+
+        Comp.register(this); 
+
+    }
   
 }
 
-customElements.define("comp-login", LoginPageComp);
