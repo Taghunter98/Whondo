@@ -210,9 +210,9 @@ def update_ad():
         kID: int = data[0]["kID"]
         adID: int = data[0]["adID"]
 
-        kID: bool = update_keywords(keywords)
-        pID: bool = update_property(prop_data)
-        adID: bool = update_advert(advert_data, image_paths)
+        kID: bool = update_keywords(kID, keywords)
+        pID: bool = update_property(prop_data, pID)
+        adID: bool = update_advert(advert_data, image_paths, adID)
 
         if not kID or not pID or not adID:
             return jsonify({"error": "Keyword, Property or Advert upload failed"}), 400
