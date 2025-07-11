@@ -43,14 +43,28 @@ def get_ids(pkaID: int) -> list:
 def update_transaction(
     pkaID: int, keywords: list, prop_data: dict, advert_data: dict, image_paths: list
 ) -> bool:
-    ids = get_ids(pkaID)
-    if not ids:
-        return False
+    """
+    Helper function that acts as a transaction for updating advert details.
 
-    data = ids[0]
-    pID = data["pID"]
-    kID = data["kID"]
-    adID = data["adID"]
+    Args:
+        pkaID (int): The PropertyKeywordAdvert primary key
+        keywords (list): List of keywords
+        prop_data (dict): Object holding the property data
+        advert_data (dict): Object holding the advert data
+        image_paths (list): List of image paths
+
+    Returns:
+        bool: Create
+    """
+    ids: list = get_ids(pkaID)
+
+    data: list = ids[0]
+    pID: int = data["pID"]
+    kID: int = data["kID"]
+    adID: int = data["adID"]
+
+    if not ids or not data:
+        return False
 
     reset_keywords(kID)
     update_keywords(kID, keywords)

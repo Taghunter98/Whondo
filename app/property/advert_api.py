@@ -167,7 +167,7 @@ def update_ad():
     for the Property, Advert and Keyword tables
 
     Returns:
-        _type_: _description_
+        Response: HTTP Response
     """
 
     if request.method == "POST":
