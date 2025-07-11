@@ -1,27 +1,24 @@
 import { Comp } from "jay-comp";
 
-class Icon extends Comp {
+export class Icon extends Comp {
+        
+    path_ = "";
+    name_ = "Icon";
 
     constructor() {
 
         super();
-        this.path_ = "";
-        
-        this.name_ = "Icon";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-        
-        this.render();
+        this.host({width: "auto"});
     
     }
-
+       
     set path(newPath) {
 
         this.path_ = newPath;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
-
+    
     get path() {
 
         return this.path_;
@@ -63,9 +60,6 @@ class Icon extends Comp {
         });
         
         return /* css */ `
-        :host {
-            width: auto
-        }
         ${icon}
         ${iconHover}
         ${iconActive}
@@ -73,6 +67,11 @@ class Icon extends Comp {
     
     }
 
+    static {
+
+        Comp.register(this);
+
+    }
+
 }
 
-customElements.define("comp-icon", Icon);

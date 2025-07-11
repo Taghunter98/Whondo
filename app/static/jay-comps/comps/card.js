@@ -11,26 +11,15 @@
 
 import { Comp } from "jay-comp";
 
-class CardComp extends Comp {
+export class Card extends Comp { 
 
-    constructor() {
-
-        super();
-
-        this.cardTitle_    = "Card header";
-        this.cardText_     = "Card text goes here.";
-        this.buttonText_   = "Card Action";
-        this.buttonAction_ = this.debug;
-        this.cardImage_    = "";
-
-        this.name_ = "Card";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-
-        this.render();
-    
-    }
-
+    cardTitle_    = "Card header";
+    cardText_     = "Card text goes here.";
+    buttonText_   = "Card Action";
+    buttonAction_ = this.debug;
+    cardImage_    = "";
+    name_ = "Card";
+       
     /**
      * @brief A setter method that sets the Comp's title.
      * 
@@ -39,7 +28,7 @@ class CardComp extends Comp {
     set cardTitle(newCardTitle) {
        
         this.cardTitle_ = newCardTitle;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -51,7 +40,7 @@ class CardComp extends Comp {
     set cardText(newCompText) {
 
         this.cardText_ = newCompText;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -63,7 +52,7 @@ class CardComp extends Comp {
     set buttonText(newButtonText) {
 
         this.buttonText_ = newButtonText;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -75,7 +64,7 @@ class CardComp extends Comp {
     set buttonAction(newButtonAction) {
 
         this.buttonAction_ = newButtonAction;
-        this.update(this.html_, this.css_);
+        this.update();
     
     }
 
@@ -87,7 +76,7 @@ class CardComp extends Comp {
     set cardImage(newCardImage) {
 
         this.cardImage_ = newCardImage;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -182,7 +171,7 @@ class CardComp extends Comp {
             display: "flex",
             flexDirection: "column",
             boxSizing: "border-box",
-            width: "100%", 
+            widthPercent: 100, 
             maxWidth: 500, 
             padding: 20,
             alignItems: "start",
@@ -195,7 +184,7 @@ class CardComp extends Comp {
         const textCardStyle = this.design.create({
             valueID: "textContainer",
             direction: "column", 
-            width: "100%",
+            widthPercent: 100,
             maxWidth: 500, 
             padding: 0, 
             alignItems: "start", 
@@ -228,13 +217,18 @@ class CardComp extends Comp {
      */
     hook() {
 
-        const cardButton         = this.shadowRoot.getElementById("button");
-        cardButton.buttonVarient = 2;
+        const cardButton   = this.shadowRoot.getElementById("button");
+        cardButton.variant = 2;
 
         cardButton.addEventListener("click", this.onButtonClick.bind(this));
     
     }
 
+    static {
+
+        Comp.register(this);
+
+    }
+
 }
 
-customElements.define("comp-card", CardComp);
