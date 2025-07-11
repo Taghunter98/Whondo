@@ -52,13 +52,8 @@ def update_transaction(
     real_kID = row["kID"]
     real_adID = row["adID"]
 
-    if not update_keywords(real_kID, keywords):
-        return False
-
-    if not update_property(prop_data, real_pID):
-        return False
-
-    if not update_advert(advert_data, image_paths, real_adID):
-        return False
+    update_keywords(real_kID, keywords)
+    update_property(prop_data, real_pID)
+    update_advert(advert_data, image_paths, real_adID)
 
     return True
