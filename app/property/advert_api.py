@@ -15,7 +15,6 @@ from flask import (
     jsonify,
     session,
     redirect,
-    current_app,
     render_template,
 )
 import json
@@ -23,9 +22,9 @@ import json
 from app.utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
 from app.users.images import convert_images
-from app.property.keywords import store_keywords, delete_keywords
-from app.property.property import create_property, delete_property
-from app.property.advert import create_advert, delete_advert
+from app.property.keywords import store_keywords, delete_keywords, update_keywords
+from app.property.property import create_property, delete_property, update_property
+from app.property.advert import create_advert, delete_advert, update_advert
 from app.property.property_keyword_advert import get_ids
 
 advert_bp = Blueprint("advert_bp", __name__)
@@ -157,3 +156,71 @@ def delete_ad():
 
     else:
         return redirect("/")
+
+@advert_bp.route("/advert/update", methods=["POST", "GET"])
+def update_ad():
+    if request.method == "POST":
+        if not session.get("email"):
+            redirect("/")
+
+        pkaID: int = request.form.get("pkaID")
+        title: str = request.form.get("title")
+        price: int = int(request.form.get("price"))
+        description: str = request.form.get("description")
+        keywords_raw: bytes = request.form.get("keywords")
+        tennants: int = int(request.form.get("tennants"))
+        images: list = request.files.getlist("images")
+
+        keywords: list = json.loads(keywords_raw)
+
+        if not title or not description or not keywords or not images:
+            return jsonify({"error": "Required fields are not provided"}), 400
+
+        email: str = session.get("email")
+    
+        prop_data: dict = {
+            "propType": request.form.get("propType"),
+            "bedrooms": request.form.get("bedrooms"),
+            "bathrooms": request.form.get("bathrooms"),
+            "name": request.form.get("name"),
+            "street": request.form.get("street"),
+            "town": request.form.get("town"),
+            "county": request.form.get("county"),
+            "postcode": request.form.get("postcode"),
+        }
+
+        image_paths: list = convert_images(images, email)
+
+        advert_data: dict = {
+            "title": title,
+            "price": price,
+            "description": description,
+            "tennants": tennants,
+        }
+
+        if not pkaID:
+            return jsonify({"error": "pkaID not provided"}), 400
+
+        data: list = get_ids(pkaID)
+
+        if data is None:
+            return jsonify({"error": "Advert records do not exist or pkaID is invalid"})
+
+        pID: int = data[0]["pID"]
+        kID: int = data[0]["kID"]
+        adID: int = data[0]["adID"]
+
+        kID: bool = update_keywords(keywords)
+        pID: bool = update_property(prop_data)
+        adID: bool = update_advert(advert_data, image_paths)
+
+        if not kID or not pID or not adID:
+            return jsonify({"error": "Keyword, Property or Advert upload failed"}), 400
+
+        return jsonify({"message": "Advert created successfully"}), 201
+
+    else:
+        if session.get("uID") and auth_landlord(session.get("email")):
+            return render_template("update_advert.html")
+        else:
+            return redirect("/")
