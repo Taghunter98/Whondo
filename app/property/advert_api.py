@@ -22,10 +22,10 @@ import json
 from app.utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
 from app.users.images import convert_images
-from app.property.keywords import store_keywords, delete_keywords, update_keywords
-from app.property.property import create_property, delete_property, update_property
-from app.property.advert import create_advert, delete_advert, update_advert
-from app.property.property_keyword_advert import get_ids
+from app.property.keywords import store_keywords, delete_keywords
+from app.property.property import create_property, delete_property
+from app.property.advert import create_advert, delete_advert
+from app.property.property_keyword_advert import get_ids, update_transaction
 
 advert_bp = Blueprint("advert_bp", __name__)
 
@@ -157,8 +157,19 @@ def delete_ad():
     else:
         return redirect("/")
 
+
 @advert_bp.route("/advert/update", methods=["POST", "GET"])
 def update_ad():
+    """
+    The REST API is responsible for updating an advert based on the primary key (pkaID).
+
+    The function follows the same logic as creation with an added change of the update functions
+    for the Property, Advert and Keyword tables
+
+    Returns:
+        _type_: _description_
+    """
+
     if request.method == "POST":
         if not session.get("email"):
             redirect("/")
@@ -177,7 +188,7 @@ def update_ad():
             return jsonify({"error": "Required fields are not provided"}), 400
 
         email: str = session.get("email")
-    
+
         prop_data: dict = {
             "propType": request.form.get("propType"),
             "bedrooms": request.form.get("bedrooms"),
@@ -201,23 +212,14 @@ def update_ad():
         if not pkaID:
             return jsonify({"error": "pkaID not provided"}), 400
 
-        data: list = get_ids(pkaID)
+        updated: bool = update_transaction(
+            pkaID, keywords, prop_data, advert_data, image_paths
+        )
 
-        if data is None:
-            return jsonify({"error": "Advert records do not exist or pkaID is invalid"})
+        if not updated:
+            return jsonify({"error": "Keyword, Property or Advert update failed"}), 400
 
-        pID: int = data[0]["pID"]
-        kID: int = data[0]["kID"]
-        adID: int = data[0]["adID"]
-
-        kID: bool = update_keywords(kID, keywords)
-        pID: bool = update_property(prop_data, pID)
-        adID: bool = update_advert(advert_data, image_paths, adID)
-
-        if not kID or not pID or not adID:
-            return jsonify({"error": "Keyword, Property or Advert upload failed"}), 400
-
-        return jsonify({"message": "Advert created successfully"}), 201
+        return jsonify({"message": "Advert updated successfully"}), 201
 
     else:
         if session.get("uID") and auth_landlord(session.get("email")):

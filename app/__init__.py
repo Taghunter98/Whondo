@@ -143,7 +143,7 @@ def create_app() -> Flask:
     app.register_blueprint(verify_bp)
     app.register_blueprint(gen_key_bp)
     app.register_blueprint(advert_bp)
-    
+
     @app.before_request
     def log_request():
         app.logger.info(

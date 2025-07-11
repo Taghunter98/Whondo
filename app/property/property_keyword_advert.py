@@ -9,7 +9,11 @@ Version:     1.0
 Description: Provides a helper function to return ID's from PropertyKeywordAdvert.
 """
 
+from flask import jsonify
 from app.database.db_connect import connect
+from app.property.advert import update_advert
+from app.property.keywords import update_keywords
+from app.property.property import update_property
 
 
 def get_ids(pkaID: int) -> list:
@@ -34,3 +38,27 @@ def get_ids(pkaID: int) -> list:
     connection.close()
 
     return data
+
+
+def update_transaction(
+    pkaID: int, keywords: list, prop_data: dict, advert_data: dict, image_paths: list
+) -> bool:
+    ids = get_ids(pkaID)
+    if not ids:
+        return False
+
+    row = ids[0]
+    real_pID = row["pID"]
+    real_kID = row["kID"]
+    real_adID = row["adID"]
+
+    if not update_keywords(real_kID, keywords):
+        return False
+
+    if not update_property(prop_data, real_pID):
+        return False
+
+    if not update_advert(advert_data, image_paths, real_adID):
+        return False
+
+    return True
