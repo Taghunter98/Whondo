@@ -11,22 +11,10 @@
 
 import { Comp } from "jay-comp";
 
-class ButtonComp extends Comp {
+export class Button extends Comp {
 
-    constructor() {
-
-        super();                                                    
-
-        this.text_    = "This is a button";
-        this.variant_ = 1;    
-        
-        this.name_ = "Button";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-
-        this.render();
-    
-    }
+    text_ = "This is a button";
+    variant_ = "1";   
 
     /**
      * @brief A setter method that sets the Comp's button text.
@@ -36,7 +24,7 @@ class ButtonComp extends Comp {
     set text(newText) {
 
         this.text_ = newText;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -48,7 +36,7 @@ class ButtonComp extends Comp {
     set variant(newVariant) {
 
         this.variant_ = newVariant;
-        this.update(this.html_, this.createCSS());
+        this.update();
     
     }
     
@@ -86,7 +74,7 @@ class ButtonComp extends Comp {
 
         let button, buttonHover, buttonActive;
 
-        const primary = this.design.create({
+        const primary = this.css({
             class: "button",
             colour: "white",
             width: "100%",
@@ -99,21 +87,21 @@ class ButtonComp extends Comp {
             transition: "background 0.1s ease-in-out"
         });
 
-        const primaryHover = this.design.create({
+        const primaryHover = this.css({
             class: "button",
             pseudoClass: "hover",
             border: "black",
             background: "black80",
         });
 
-        const primaryActive = this.design.create({
+        const primaryActive = this.css({
             class: "button",
             pseudoClass: "active",
             border: "black60",
             background: "black60"
         });
 
-        const secondary = this.design.create({
+        const secondary = this.css({
             class: "button",
             colour: "black100",
             background: "black10",
@@ -126,13 +114,13 @@ class ButtonComp extends Comp {
             transition: "background 0.1s ease-in-out"
         });
 
-        const secondaryHover = this.design.create({
+        const secondaryHover = this.css({
             class: "button",
             pseudoClass: "hover",
             background: "black20"
         });
 
-        const secondaryActive = this.design.create({
+        const secondaryActive = this.css({
             class: "button",
             pseudoClass: "active",
             background: "black40"
@@ -163,6 +151,11 @@ class ButtonComp extends Comp {
     
     }
 
+    static {
+
+        Comp.register(this); 
+
+    }
+
 }
 
-customElements.define("comp-button", ButtonComp);
