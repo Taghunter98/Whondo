@@ -80,7 +80,7 @@ def reset_keywords(kID: int) -> bool:
         "quiet_house", "wheelchair_accessible", "lift", "ground_floor", "bike_storage"
     ]
 
-    query = f"UPDATE Keywords SET {', '.join(f"{kw} = 0" for kw in ALL_KEYWORDS)} WHERE kID='{kID}';"
+    query = f"UPDATE Keywords SET {', '.join(f'{kw} = 0' for kw in ALL_KEYWORDS)} WHERE kID = {kID};"
 
     connection: object = connect()
     cursor: object = connection.cursor()
