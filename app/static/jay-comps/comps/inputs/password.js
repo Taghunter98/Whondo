@@ -3,20 +3,9 @@ import { Input } from "./input.js";
 
 export class Password extends Input {
 
-    constructor(){
-
-        super();
-
-        this.enableEntropy_ = false; 
-
-        this.name_ = "Password Comp",
-        this.html_ = this.createHTML();
-        this.css_ = this.createCSS(); 
-
-        this.render();
-    
-    }
-
+    enableEntropy_ = false; 
+    name_ = "Password Comp";
+      
     set entropy(flag){
 
         this.enableEntropy_ = flag;
@@ -50,7 +39,7 @@ export class Password extends Input {
     set enableEntropy(flag) {
 
         this.enableEntropy_ = flag;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 

@@ -72,6 +72,12 @@ export class File extends Input {
             class: "filePrompt",
             fontSize: "0.9rem",
             colour: "black60",
+            media: {
+                breakpoint: 600,
+                fontSize: "0.8rem",
+                wordWrap: "break-word",
+                maxWidth: 120
+            }
 
         });
         
@@ -104,42 +110,29 @@ export class File extends Input {
             marginLeft: "auto",        
             marginRight: "auto",
             borderRadius: 6,
+            media: {
+                breakpoint: 600,
+                maxWidth: "100px",     
+                maxHeight: "100px",
+                marginTop: 8,
+                marginLeft: "auto",
+                marginRight: "auto",
+                maxWidthPercent: 100,
+                height: "auto",
+                objectFit: "cover",
+                borderRadius: 6
+            }
         });
 
         const reuploadBtn = this.css({
             class: "reuploadBtn",
             width: "auto",
             marginTop: 12,
-        });
-
-        const fileBoxMob = this.css({
-            class: "filePreview",
-            maxWidth: "100px",     
-            maxHeight: "100px",
-            marginTop: 8,
-            marginLeft: "auto",
-            marginRight: "auto",
-
-        });
-
-        const filePreMob = this.css({
-            class: "filePreview",
-            maxWidthPercent: 100,
-            height: "auto",
-            objectFit: "cover",
-            borderRadius: 6,
-        });
-
-        const filePromptMob = this.css({
-            class: "filePrompt",
-            fontSize: "0.8rem",
-            wordWrap: "break-word",
-            maxWidth: 120
-        });
-
-        const reloadMob = this.css({
-            marginTop:  8,
-            widthPercent: 100,
+            media: {
+                breakpoint: 600,
+                marginTop:  8,
+                width: "auto",
+            }
         });
 
         return /* css */`
@@ -154,13 +147,7 @@ export class File extends Input {
         ${filePreview}
         ${reuploadBtn}
 
-        @media (max-width: 600px){
-            ${fileBoxMob}
-            ${filePreMob}
-            ${filePromptMob}
-            ${reloadMob}
-        }
-         `; 
+        `; 
     
     }
 
