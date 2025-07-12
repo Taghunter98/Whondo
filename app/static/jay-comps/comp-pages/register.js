@@ -339,6 +339,16 @@ export class Register extends Comp {
 
     };
 
+    async register(res){
+
+        const fd = new FormData();
+        
+        //Data that need to be send
+        fd.append(name, name.value);
+        fd.append(surname, surname.value);
+    
+    }
+
     hook(){
 
         const form         = this.shadowRoot.querySelector("form");
