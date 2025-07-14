@@ -351,8 +351,6 @@ export class Register extends Comp {
         const bio = this.shadowRoot.getElementById("bio");
         const picture = this.shadowRoot.getElementById("picture");
 
-       
-
         fd.append("name", name.value);
         fd.append("email", email.value);
         fd.append("password", password.value);
