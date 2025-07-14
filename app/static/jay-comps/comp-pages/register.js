@@ -339,7 +339,7 @@ export class Register extends Comp {
 
     };
 
-    async register(res){
+    async register(){
 
         const fd = new FormData();
 

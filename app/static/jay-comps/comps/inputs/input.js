@@ -58,7 +58,7 @@ export class Input extends Comp {
 
     get value() {
 
-        return this.shadowRoot.querySelector("input").value;
+        return this.shadowRoot.querySelector("input, textarea").value;
 
     }
 

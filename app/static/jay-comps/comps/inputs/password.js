@@ -1,4 +1,3 @@
-import { Comp } from "jay-comp";
 import { Input } from "./input.js";
 
 export class Password extends Input {
@@ -105,7 +104,7 @@ export class Password extends Input {
 
     static {
 
-        Comp.register(this);
+        super.register(this);
 
     }
 

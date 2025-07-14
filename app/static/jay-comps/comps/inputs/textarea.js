@@ -1,4 +1,3 @@
-import { Comp } from "jay-comp";
 import { Input } from "./input.js";
 
 export class Textarea extends Input {
@@ -53,7 +52,7 @@ export class Textarea extends Input {
 
     static{
 
-        Comp.register(this);
+        super.register(this);
 
     }
 

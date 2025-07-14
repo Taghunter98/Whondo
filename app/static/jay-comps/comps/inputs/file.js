@@ -1,4 +1,3 @@
-import { Comp } from 'jay-comp';
 import { Input } from './input.js';
 
 export class File extends Input {
@@ -293,7 +292,7 @@ export class File extends Input {
 
     static {
 
-        Comp.register(this);
+        super.register(this);
 
     }
 
