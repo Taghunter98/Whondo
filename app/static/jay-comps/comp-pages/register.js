@@ -351,18 +351,17 @@ export class Register extends Comp {
         const bio = this.shadowRoot.getElementById("bio");
         const picture = this.shadowRoot.getElementById("picture");
 
-        const getValue = (el) => el?.shadowRoot.querySelector(".inputValue")?.value || "";
+       
 
-        fd.append("name", getValue(name));
-        fd.append("email", getValue(email));
-        fd.append("password", getValue(password));
-        fd.append("age", getValue(age));
-        fd.append("occupation", getValue(occupation));
-        fd.append("bio", getValue(bio));
+        fd.append("name", name.value);
+        fd.append("email", email.value);
+        fd.append("password", password.value);
+        fd.append("age", age.value);
+        fd.append("occupation", occupation.value);
+        fd.append("bio", bio.value);
         
-        const fileInput = picture?.shadowRoot.querySelector(".fileInput");
-        if (fileInput?.files?.[0]) {
-            fd.append("file", fileInput.files[0], fileInput.files[0].name);
+        if (picture.value) {
+            fd.append("file", picture.value, picture.value.name);
         }
 
         const result = await this.submitForm("https://whondo.com/register", fd);

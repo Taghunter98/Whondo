@@ -151,6 +151,10 @@ export class File extends Input {
     
     }
 
+    get value() {
+        return this.fileInput?.files?.[0] || null ;
+    }
+
     hook() {
 
         const filePrompt  = this.shadowRoot.querySelector(".filePrompt");
