@@ -365,12 +365,17 @@ export class Register extends Comp {
         }
 
         const result = await this.submitForm("https://whondo.com/register", fd);
-        res.innerHTML = "Account created. response: " + result.status;
+        
+        if(result.ok) {
+            console.log(result.status);
+
+        } else {
+            console.log(result.error);
+        }
     }
 
     hook(){
 
-        const form         = this.shadowRoot.querySelector("form");
         const step1        = this.shadowRoot.getElementById("step1");
         const step2        = this.shadowRoot.getElementById("step2");
         const backButton   = this.shadowRoot.getElementById("backBtn");
