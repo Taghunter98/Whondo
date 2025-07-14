@@ -490,7 +490,10 @@ export class Register extends Comp {
         
         });
 
-        submitButton.addEventListener("click", () => form.submit());
+        submitButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.register();
+        } );
     
     }
 
