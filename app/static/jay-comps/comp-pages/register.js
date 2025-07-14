@@ -342,11 +342,31 @@ export class Register extends Comp {
     async register(res){
 
         const fd = new FormData();
+
+        const name = this.shadowRoot.getElementById("name");
+        const email = this.shadowRoot.getElementById("email");
+        const password = this.shadowRoot.getElementById("password");
+        const age = this.shadowRoot.getElementById("age");
+        const occupation  =this.shadowRoot.getElementById("occupation");
+        const bio = this.shadowRoot.getElementById("bio");
+        const picture = this.shadowRoot.getElementById("picture");
+
+        const getValue = (el) => el?.shadowRoot.querySelector(".inputValue")?.value || "";
+
+        fd.append("name", getValue(name));
+        fd.append("email", getValue(email));
+        fd.append("password", getValue(password));
+        fd.append("age", getValue(age));
+        fd.append("occupation", getValue(occupation));
+        fd.append("bio", getValue(bio));
         
-        //Data that need to be send
-        fd.append(name, name.value);
-        fd.append(surname, surname.value);
-    
+        const fileInput = picture?.shadowRoot.querySelector(".fileInput");
+        if (fileInput?.files?.[0]) {
+            fd.append("file", fileInput.files[0], fileInput.files[0].name);
+        }
+
+        const result = await this.submitForm("https://whondo.com/register", fd);
+        res.innerHTML = "Account created. response: " + result.status;
     }
 
     hook(){
