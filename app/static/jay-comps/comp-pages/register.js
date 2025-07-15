@@ -2,8 +2,6 @@ import { Comp } from "jay-comp";
 
 export class Register extends Comp {
 
-    name_ = "Register page";
-
     createHTML() {
 
         return /* html */ `
@@ -85,188 +83,157 @@ export class Register extends Comp {
     }
 
     createCSS(){
-        
-        const background = this.css({
-            class: "background",
-            width: "100%",
-            minHeight: "100vh",
-            background: "black100",     
-            overflow: "hidden",
-            media: {
-                breakpoint: 600,
-                height: 1000
-            }      
-        });
 
-        const form = this.css({
-            class: "formObj",
-            widthPercent: 100,
-        });
-        
-        const container = this.css({
-            class: "container",
-            display: "flex",
-            media: {
-                breakpoint: 600,
-                flexDirection: "column",
-                alignItems: "centre"
-            }
-        });
-
-        const backgroundImage = this.css({
-            class: "backgroundImage",
-            widthPercent: 100,
-            height: 1000,
-            paddingLeft: 400,
-            media: {
-                breakpoint: 600,
-                height: "40vh",
-                margin: 0,
-                padding: 0
-            }
-        });
-
-        const image = this.css({
-            class: "image",
-            widthPercent: 100,
-            heightPercent: 100,
-            objectFit: "cover"
-        });
-
-        const modal = this.css({
-            class: "modal",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "centre",
-            widthPercent: 100,
-            maxWidth: 500,  
-            minWidth: 320,
-            background: "white",
-            position: "absolute",
-            zIndex: 800,
-            padding: 20,
-            borderRadius: 14,
-            marginLeft: 100,
-            marginTop: 150,
-            media: {
-                breakpoint: 600,
+        return[
+            {
+                class: "background",
                 widthPercent: 100,
-                maxWidth: 350,
-                minWidth: 250,
-                margin: 0,
+                minHeightVh: 100,
+                backgroundVar: "black100",     
+                overflow: "hidden",
+                media: {
+                    breakpoint: 600,
+                    height: 1000
+                }      
+            },
+            {
+                class: "formObj",
+                widthPercent: 100,
+            },
+            {
+                class: "container",
+                display: "flex",
+                media: {
+                    breakpoint: 600,
+                    flexDirection: "column",
+                    alignItems: "centre"
+                }
+            },
+            {
+                class: "backgroundImage",
+                widthPercent: 100,
+                height: 1000,
+                paddingLeft: 400,
+                media: {
+                    breakpoint: 600,
+                    heightVh: 40,
+                    margin: 0,
+                    padding: 0
+                }
+            },
+            {
+                class: "image",
+                widthPercent: 100,
+                heightPercent: 100,
+                objectFit: "cover"
+            },
+            {
+                class: "modal",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "centre",
+                widthPercent: 100,
+                maxWidth: 500,  
+                minWidth: 320,
+                background: "white",
+                position: "absolute",
+                zIndex: 800,
+                padding: 20,
+                borderRadius: 14,
+                marginLeft: 100,
                 marginTop: 150,
-                boxSizing: "border-box"
-            }
-        });
-
-        const input = this.css({
-            class: "input",
-            display: "flex",
-            flexDirection: "column",
-            widthPercent: 100,
-            gap: 20,
-            padding: [20, 0, 40, 0],
-            media: {
-                breakpoint: 600,
-                padding: [10, 0, 20, 0],
+                media: {
+                    breakpoint: 600,
+                    widthPercent: 100,
+                    maxWidth: 350,
+                    minWidth: 250,
+                    margin: 0,
+                    marginTop: 150,
+                    boxSizing: "border-box"
+                }
+            },
+            {
+                class: "input",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                gap: 20,
+                padding: [20, 0, 40, 0],
+                media: {
+                    breakpoint: 600,
+                    padding: [10, 0, 20, 0],
+                    gap: 15,
+                } 
+            },
+            {
+                class: "inputRow",
+                display: "flex",
+                flexDirection: "row",
                 gap: 15,
-            } 
-        });
-
-        const inputRow = this.css({
-            class: "inputRow",
-            display: "flex",
-            flexDirection: "row",
-            gap: 15,
-            widthPercent: 100,
-            justifyContent: "space-between",
-            media: {
-                breakpoint: 600,
-                flexDirection: "column"
-            }
-        });
-
-        const btnRow = this.css({
-            class: "btnRow",
-            display: "flex",
-            flexDirection: "row",
-            gap: 15,
-            widthPercent: 100,
-            justifyContent: "space-between"
-        });
-
-        const title = this.css({
-            class: "title",
-            fontWeight: "bold"
-        });
-
-        const link = this.css({
-            class: "link",
-            colour: "black80",
-            fontWeight: "bold", 
-            textDecoration: "underline",
-            cursor: "pointer",
-        });
-
-        const linkHover = this.css({
-            class: "link",
-            pseudoClass: "hover",
-            colour: "black100",
-        });
-
-        const textContainer = this.css({
-            class: "textContainer",
-            display: "flex",
-            flexDirection: "column",
-            widthPercent: 100,
-            gap: 5,
-        });
-
-        const text = this.css({
-            class: "text",
-            colour: "black60",
-            display: "flex",
-            alignSelf: "start",
+                widthPercent: 100,
+                justifyContent: "space-between",
+                media: {
+                    breakpoint: 600,
+                    flexDirection: "column"
+                }
+            },
+            {
+                class: "btnRow",
+                display: "flex",
+                flexDirection: "row",
+                gap: 15,
+                widthPercent: 100,
+                justifyContent: "space-between"
+            },
+            {
+                class: "title",
+                fontWeight: "bold"
+            },
+            {
+                class: "link",
+                colourVar: "black80",
+                fontWeight: "bold", 
+                textDecoration: "underline",
+                cursor: "pointer",
+            },
+            {
+                class: "link",
+                pseudoClass: "hover",
+                colourVar: "black100",
+            },
+            {
+                class: "textContainer",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                gap: 5,
+            },
+            {
+                class: "text",
+                colourVar: "black60",
+                display: "flex",
+                alignSelf: "start",
             
-        });
-
-        const footer = this.css({
-            class: "footer",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "centre",
-            widthPercent: 100,
-            gap: 10,
-        });
-
-        const inputError = this.css({
-            class: "input-error",
-            colour: "red",
-            fontSize: 12,
-            marginTop: 4,
-        });
-
-        return /* css */ `
-        ${background}
-        ${container}
-        ${form}
-        ${backgroundImage}
-        ${image}
-        ${modal}
-        ${input}
-        ${inputRow}
-        ${btnRow}
-        ${link}
-        ${linkHover}
-        ${inputError}
-        ${textContainer}
-        ${title}
-        ${text}
-        ${footer}
+            },
+            {
+                class: "footer",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "centre",
+                widthPercent: 100,
+                gap: 10,
+            },
+            {
+                class: "input-error",
+                colour: "red",
+                fontSize: 12,
+                marginTop: 4,
+            },
+        ];   
         
-        `;
-
     }
+
+    //come back to test this later !!!!
 
     /**
      * Helper method validates password inputs.
@@ -343,13 +310,13 @@ export class Register extends Comp {
 
         const fd = new FormData();
 
-        const name = this.shadowRoot.getElementById("name");
-        const email = this.shadowRoot.getElementById("email");
-        const password = this.shadowRoot.getElementById("password");
-        const age = this.shadowRoot.getElementById("age");
-        const occupation  =this.shadowRoot.getElementById("occupation");
-        const bio = this.shadowRoot.getElementById("bio");
-        const picture = this.shadowRoot.getElementById("picture");
+        const name = this.getById("name");
+        const email = this.getById("email");
+        const password = this.getById("password");
+        const age = this.getById("age");
+        const occupation  =this.getById("occupation");
+        const bio = this.getById("bio");
+        const picture = this.getById("picture");
 
         fd.append("name", name.value);
         fd.append("email", email.value);
@@ -374,21 +341,21 @@ export class Register extends Comp {
 
     hook(){
 
-        const step1        = this.shadowRoot.getElementById("step1");
-        const step2        = this.shadowRoot.getElementById("step2");
-        const backButton   = this.shadowRoot.getElementById("backBtn");
-        const backBtn2     = this.shadowRoot.getElementById("backBtn2");
-        const nextButton   = this.shadowRoot.getElementById("nextBtn");
-        const submitButton = this.shadowRoot.getElementById("submit");
-        const email        = this.shadowRoot.getElementById("email");
-        const password     = this.shadowRoot.getElementById("password");
-        const confirmPass  = this.shadowRoot.getElementById("confirm");
-        const name         = this.shadowRoot.getElementById("name");
-        const surname      = this.shadowRoot.getElementById("surname");
-        const age          = this.shadowRoot.getElementById("age");
-        const occupation   = this.shadowRoot.getElementById("occupation");
-        const bio          = this.shadowRoot.getElementById("bio");
-        const picture      = this.shadowRoot.getElementById("picture");
+        const step1        = this.getById("step1");
+        const step2        = this.getById("step2");
+        const backButton   = this.getById("backBtn");
+        const backBtn2     = this.getById("backBtn2");
+        const nextButton   = this.getById("nextBtn");
+        const submitButton = this.getById("submit");
+        const email        = this.getById("email");
+        const password     = this.getById("password");
+        const confirmPass  = this.getById("confirm");
+        const name         = this.getById("name");
+        const surname      = this.getById("surname");
+        const age          = this.getById("age");
+        const occupation   = this.getById("occupation");
+        const bio          = this.getById("bio");
+        const picture      = this.getById("picture");
         
         backButton.text      = "Back";
         backButton.variant   = 2;

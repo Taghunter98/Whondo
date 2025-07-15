@@ -2,8 +2,6 @@ import { Comp } from 'jay-comp';
 
 export class Verified extends Comp {
 
-    name_ = "Verified";
-       
     createHTML() {
 
         return /* html */`
@@ -26,7 +24,7 @@ export class Verified extends Comp {
         const effect = this.effect.slideUp(20);
         const prop   = this.effect.prop("slideUp", .5);
 
-        const background = this.css({
+        const background = {
             class: "background",
             display: "flex",
             height: "100vh",
@@ -41,31 +39,26 @@ export class Verified extends Comp {
                 padding: 20,
                 width: "auto"
             }
-        });
+        };
 
-        const container = this.css({
+        const container = {
             class: "container",
             display: "flex",
             background: "white",
             animation: prop,
             width: "auto",
-        });
+        };
 
         
-        return /* css */`
-        ${effect}
-        ${background}
-        ${container}
-        
-        `;
+        return [effect, background, container];
         
     
     }
 
     hook() {
         
-        const describe = this.shadowRoot.getElementById("describe");
-        const btn      = this.shadowRoot.getElementById('btn');
+        const describe = this.getById("describe");
+        const btn      = this.getById('btn');
         const email    = this.getAttribute("email") || "User";
 
         const template  = `Welcome {{ email }}!<br>Your account has now been verified.`;
@@ -79,6 +72,6 @@ export class Verified extends Comp {
         
     } 
     
-    static {Comp.register(this);}
+    static { Comp.register(this); }
 
 }

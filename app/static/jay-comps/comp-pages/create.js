@@ -2,7 +2,6 @@ import { Comp } from "jay-comp";
 
 export class Create extends Comp {
     
-    name_ = "Verify Page";
 
     createHTML() {
 
@@ -22,7 +21,7 @@ export class Create extends Comp {
         const effect = this.effect.slideUp(20);
         const prop   = this.effect.prop("slideUp", .5);
 
-        const background = this.css({
+        const background = {
             class: "background",
             display: "flex",
             flexDirection: "column",
@@ -32,27 +31,23 @@ export class Create extends Comp {
             alignItems: "centre",
             background: "black10",
             overflow: "hidden",
-        });
+        };
 
-        const container = this.css({
+        const container = {
             class: "container",
             background: "white",
             animation: prop, 
             width: "auto",        
-        });
+        };
 
-        return /* css */ `
-       ${effect}
-       ${background}
-       ${container}
-        
-        `;
+        return [effect, background, container];
+         
     
     }
 
-    hook() {
+    afterRender() {
 
-        const dialogBox = this.shadowRoot.getElementById("describe");
+        const dialogBox = this.getById("describe");
 
         customElements.whenDefined('comp-dialog').then(() => {
 
@@ -72,11 +67,7 @@ export class Create extends Comp {
 
     }
 
-    static {
-
-        Comp.register(this);
-
-    }
+    static { Comp.register(this); }
 
 }
 
