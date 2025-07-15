@@ -202,7 +202,6 @@ export class File extends Input {
 
         }
 
-        
         dropArea?.addEventListener("click", () => {
 
             this._fileInput?.click();

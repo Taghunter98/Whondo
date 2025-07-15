@@ -30,9 +30,9 @@ export class Login extends Comp {
                     <p id="result"></p>
                 </div>
 
-            <div class="backgroundImage">
-                <img class="image" src="https://images.pexels.com/photos/4781426/pexels-photo-4781426.jpeg">
-            </div>
+                <div class="backgroundImage">
+                    <img class="image" src="https://images.pexels.com/photos/4781426/pexels-photo-4781426.jpeg">
+                </div>
             </div>
             
         </div>

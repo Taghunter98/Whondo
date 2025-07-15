@@ -25,11 +25,11 @@ export class Create extends Comp {
             class: "background",
             display: "flex",
             flexDirection: "column",
-            width: "100%",
-            height: "100vh",
+            widthPercent: 100,
+            heightVh: 100,
             justifyContent: "centre",
             alignItems: "centre",
-            background: "black10",
+            backgroundVar: "black10",
             overflow: "hidden",
         };
 
@@ -62,8 +62,6 @@ export class Create extends Comp {
             });
         
         });
-
-        console.log(dialogBox.title);
 
     }
 
