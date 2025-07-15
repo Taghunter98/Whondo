@@ -3,7 +3,6 @@ import { Input } from "./input.js";
 export class Password extends Input {
 
     enableEntropy_ = false; 
-    name_ = "Password Comp";
       
     set entropy(flag){
 
@@ -12,11 +11,18 @@ export class Password extends Input {
         
     }
 
-    get entropy(){
+    set enableEntropy(flag) {
 
-        return this.enableEntropy_;
+        this.enableEntropy_ = flag;
+        this.update();
     
     }
+
+    get enableEntropy() { return this.enableEntropy_; }
+
+    get entropy(){ return this.enableEntropy_; }
+
+    beforeRender(){ if (!this.enableEntropy_) this.enableEntropy_ = false; }
 
     createHTML(){
 
@@ -35,19 +41,7 @@ export class Password extends Input {
         
     }
 
-    set enableEntropy(flag) {
-
-        this.enableEntropy_ = flag;
-        this.update();
     
-    }
-
-    get enableEntropy() {
-
-        return this.enableEntropy_;
-    
-    }
-
     calculateEntropy(password){
 
         let poolSize = 0;
@@ -84,10 +78,10 @@ export class Password extends Input {
     
     }
 
-    hook(){
+    afterRender(){
 
-        const input = this.shadowRoot.querySelector(".inputValue");
-        const hint  = this.shadowRoot.querySelector(".hint");
+        const input = this.query(".inputValue");
+        const hint  = this.query(".hint");
 
         if (this.enableEntropy_){
 

@@ -2,13 +2,11 @@ import { Comp } from "jay-comp";
 
 export class Input extends Comp {
 
-    label_    = "Label";
-    type_     = "text";
-    prompt_   = "Enter text";
-    required_ = false;
-    error_    = false;
-
-    name_ = "Input";
+    label_ ;
+    type_;
+    prompt_;
+    required_ ;
+    error_;
 
     set label(newLabel) {
 
@@ -68,88 +66,78 @@ export class Input extends Comp {
     
     }
 
+    beforeRender(){
+        if (!this.label_) this.label_ = "Text";
+        if (!this. type_) this.type_ = "Label";
+        if (!this.prompt_) this.prompt_= "This is placeholder";
+        if (!this.required_) this.required_ = false;
+        if (!this.error_) this.error_ = false;
+    }
+
     createHTML() {
 
         return /* html */ `
         <div class="inputContainer">
-            <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
-            <input class="inputValue" type="${this.type_}" placeholder="${this.prompt_}">
+            <label style="color: var(--black80); font-size: 14px">${this.label}</label>
+            <input class="inputValue" type="${this.type}" placeholder="${this.prompt}">
         </div>
         `;
     
     }
 
     createCSS() {
-
-        const inputContainer = this.css({
-            class: "inputContainer",
-            display: "flex",
-            flexDirection: "column",
-            widthPercent: 100,
-            maxWidth: "none",
-            padding: 0,
-            alignItems: "start",
-            gap: 10,
-            background: "--white"
-        });
-
-        const input = this.css({
-            class: "inputValue",
-            display: "block",
-            fontSize: 16,
-            widthPercent: 100,
-            padding: [8, 12],
-            border: "border",
-            borderRadius: 8,
-            boxSizing: "border-box"
-        });
-
-        const inputHover = this.css({
-            class: "inputValue",
-            pseudoClass: "hover",
-            outline: ["solid", 2, "var(--black60)"]
-        });
-
-        const inputActive = this.css({
-            class: "inputValue",
-            pseudoClass: "focus",
-            outline: ["solid", 2, "var(--black100)"]
-        });
-
-        const statusRed = this.css({
-            class: "error",
-            borderBottom: ["solid", 2, "var(--red100)"]
-        });
-
-        const statusYellow = this.css({
-            class: "warning",
-            borderBottom: ["solid", 2, "var(--yellow100)"]
-        });
-
-        const statusGreen = this.css({
-            class: "success",
-            borderBottom: ["solid", 2, "var(--green100)"],
-        });
-
-        const hint = this.css({
-            class: "hint",
-            fontSize: "0.75rem",
-            colour: "black",
-            paddingTop: 4
-        });
-
-        return /* css */ `
         
-        ${inputContainer}
-        ${input}
-        ${inputHover}
-        ${inputActive}
-        ${statusRed}
-        ${statusYellow}
-        ${statusGreen}
-        ${hint}
-        `;
-    
+        return [
+            {
+                class: "inputContainer",
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                maxWidth: "none",
+                padding: 0,
+                alignItems: "start",
+                gap: 10,
+                background: "white"
+            },
+            {
+                class: "inputValue",
+                display: "block",
+                fontSize: 16,
+                width: "100%",
+                padding: [8, 12],
+                borderVar: "border",
+                borderRadius: 8,
+                boxSizing: "border-box"
+            },
+            {
+                class: "inputValue",
+                pseudoClass: "hover",
+                outline: ["solid", 2, "var(--black60)"]
+            },
+            {
+                class: "inputValue",
+                pseudoClass: "focus",
+                outline: ["solid", 2, "var(--black100)"]
+            },
+            {
+                class: "error",
+                borderBottom: ["solid", 2, "var(--red100)"]
+            },
+            {
+                class: "warning",
+                borderBottom: ["solid", 2, "var(--yellow100)"]
+            },
+            {
+                class: "success",
+                borderBottom: ["solid", 2, "var(--green100)"],
+            },
+            {
+                class: "hint",
+                fontSizeEm: 0.75,
+                colour: "black",
+                paddingTop: 4
+            }
+        ];
     }
 
     isEmpty(){

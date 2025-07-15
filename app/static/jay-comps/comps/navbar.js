@@ -3,8 +3,7 @@ import { Comp } from 'jay-comp';
 export class Navbar extends Comp {
 
     lastScrollY = window.scrollY;
-    name_ = "Navbar";
-    
+
     createHTML() {
 
         return /* html */ `
@@ -45,174 +44,139 @@ export class Navbar extends Comp {
     }
 
     createCSS() {
-
-        const container = this.css({
-            class: "container",
-            top: "0",
-            zIndex: "1000",
-            position: "fixed",
-            display: "flex",
-            alignItems: "centre",
-            widthPercent: 100,
-            background: "white",
-            boxSizing: "border-box",
-            padding: [10, 20],
-            justifyContent: "space-between",
-            transition: "top 0.4s"
-        });
-
-        const logo = this.css({
-            class: "logo",
-            fontWeight: "bold",
-            media: {
-                breakpoint: 600,
-                fontSize: 28
-            }
-        });
-
-        const links = this.css({
-            class: "links",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "centre",
-            gap: 20
-        });
-
-        // Navbar links
-        const link = this.css({
-            class: "link",
-            colour: "black80",
-            fontSize: 16,
-            padding: 10,
-            border: "borderDefault",
-            borderRadius: 8,
-            listStyleType: "None",
-            cursor: "pointer",
-            transition: "background 0.1s ease-in-out"
-        });
-
-        const linkHover = this.css({
-            class: "link",
-            colour: "black100",
-            pseudoClass: "hover",
-            border: "border",
-            background: "black10"
-        });
-
-        const linkActive = this.css({
-            class: "link",
-            pseudoClass: "active",
-            background: "black20"
-        });
-
-        const menu = this.css({
-            class: "menu",
-            display: "None",
-            media: {
-                breakpoint: 600,
-                display: "block"
-            }
-        });
-
-        const close = this.css({
-            class: "close",
-            display: "None",
-            media: {
-                breakpoint: 600,
-                display: "block"
-            }
-        });
-
-        const buttons = this.css({
-            class: "buttons",
-            display: "flex",
-            width: "auto",
-            gap: 20,
-            media: {
-                breakpoint: 600,
-                display: "none"
-            }
-        });
-
-        const hideTray = this.css({
-            class: "tray",
-            display: "None"
-        });
-
-        // Media quuery adjustments
-        const header = this.css({
-            media: {
-                breakpoint: 600,
-                class: "header",
+        
+        return [
+            {
+                class: "container",
+                top: "0",
+                zIndex: "1000",
+                position: "fixed",
                 display: "flex",
                 alignItems: "centre",
-                justifyContent: "space-between"
-            }
-        });
-
-        const linksMob = this.css({
-            media: {
-                breakpoint: 600,
-                class: "links",
-                display: "None"
-            }
-            
-        });
-
-        const tray = this.css({
-            media: {
-                breakpoint: 600,
-                class: "tray",
-                display: "flex",
-                bottom: "-500px",
-                position: "fixed",
-                zIndex: "1000",
-                boxSizing: "border-box",
-                flexDirection: "column",
                 widthPercent: 100,
                 background: "white",
-                padding: 20,
-                borderRadius: 14,
-                transition: "bottom 0.6s"
-            }
-            
-        });
-
-        const trayButtons = this.css({
-            media: {
-                breakpoint: 600,
-                class: "trayButtons",
+                boxSizing: "border-box",
+                padding: [10, 20],
+                justifyContent: "space-between",
+                transition: ["top",  "0.4s"]
+            },
+            {
+                class: "logo",
+                fontWeight: "bold",
+                media: {
+                    breakpoint: 600,
+                    fontSize: 28
+                }
+            },
+            {
+                class: "links",
                 display: "flex",
-                gap: 10,
-                paddingTop: 40
-            }
+                flexDirection: "row",
+                alignItems: "centre",
+                gap: 20
+            },
+            // Navbar links
+            {
+                class: "link",
+                colour: "black80",
+                fontSize: 16,
+                padding: 10,
+                border: "borderDefault",
+                borderRadius: 8,
+                listStyleType: "None",
+                cursor: "pointer",
+                transition: "background 0.1s ease-in-out"
+            },
+            {
+                class: "link",
+                colour: "black100",
+                pseudoClass: "hover",
+                border: "border",
+                background: "black10"
+            },
+            {
+                class: "link",
+                pseudoClass: "active",
+                background: "black20"
+            },
+            {
+                class: "menu",
+                display: "None",
+                media: {
+                    breakpoint: 600,
+                    display: "block"
+                }
+            },
+            {
+                class: "close",
+                display: "None",
+                media: {
+                    breakpoint: 600,
+                    display: "block"
+                }
+            },
+            {
+                class: "buttons",
+                display: "flex",
+                width: "auto",
+                gap: 20,
+                media: {
+                    breakpoint: 600,
+                    display: "none"
+                }
+            },
+            {
+                class: "tray",
+                display: "None"
+            },
+            // Media quuery adjustments
+            {
+                media: {
+                    breakpoint: 600,
+                    class: "header",
+                    display: "flex",
+                    alignItems: "centre",
+                    justifyContent: "space-between"
+                }
+            },
+            {
+                media: {
+                    breakpoint: 600,
+                    class: "links",
+                    display: "None"
+                }
+            
+            },
+            {
+                media: {
+                    breakpoint: 600,
+                    class: "tray",
+                    display: "flex",
+                    bottom: "-500px",
+                    position: "fixed",
+                    zIndex: "1000",
+                    boxSizing: "border-box",
+                    flexDirection: "column",
+                    widthPercent: 100,
+                    background: "white",
+                    padding: 20,
+                    borderRadius: 14,
+                    transition: "bottom 0.6s"
+                }
+            
+            },
+            {
+                media: {
+                    breakpoint: 600,
+                    class: "trayButtons",
+                    display: "flex",
+                    gap: 10,
+                    paddingTop: 40
+                }
            
-        });
+            }
 
-        return /* css */`
-        ${container}
-
-        ${logo}
-
-        ${links}
-        ${link}
-
-        /* Hide Icons */
-        ${menu}
-        ${close}
-
-        ${linkHover}
-        ${linkActive}
-
-        ${menu}
-        ${buttons}
-        ${hideTray}
-        ${header}
-        ${linksMob}
-        ${tray}
-        ${trayButtons}
-
-        `;
+        ];
     
     }
 
@@ -224,7 +188,7 @@ export class Navbar extends Comp {
      */
     navbarScroll() {
 
-        const navbar     = this.shadowRoot.getElementById("navbar");
+        const navbar     = this.getById("navbar");
         const currentPos = window.scrollY;
         
         if (currentPos > this.lastScrollY && currentPos > 20) navbar.style.top = "-80px";
@@ -236,19 +200,19 @@ export class Navbar extends Comp {
 
     openMenu(offset) {
 
-        const tray        = this.shadowRoot.getElementById("tray");
+        const tray        = this.getById("tray");
         tray.style.bottom = offset;
     
     }
 
-    hook() {
+    afterRender() {
         
-        const register    = this.shadowRoot.getElementById("register");
-        const login       = this.shadowRoot.getElementById("login");
-        const menu        = this.shadowRoot.getElementById("menu");
-        const close       = this.shadowRoot.getElementById("close");
-        const loginMob    = this.shadowRoot.getElementById("loginMob");
-        const registerMob = this.shadowRoot.getElementById("registerMob");
+        const register    = this.getById("register");
+        const login       = this.getById("login");
+        const menu        = this.getById("menu");
+        const close       = this.getById("close");
+        const loginMob    = this.getById("loginMob");
+        const registerMob = this.getById("registerMob");
         
         register.text       = "Register";
         register.variant    = 2;
@@ -273,13 +237,5 @@ export class Navbar extends Comp {
         
         });
     
-    }
-
-    static {
-
-        Comp.register(this); 
-
-    }
-
-}
+    } static { Comp.register(this); } }
 

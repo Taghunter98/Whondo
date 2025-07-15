@@ -2,9 +2,6 @@ import { Input } from './input.js';
 
 export class File extends Input {
   
-    type_ = "file";
-    name_ = "File Comp";
-       
     createHTML(){
 
         return /* html */`
@@ -30,131 +27,109 @@ export class File extends Input {
     }
 
     createCSS(){
-       
-        const fileStyle = this.css({
-            class: "fileInput",
-            display: "none",
-        });
-
-        const fileWrapper = this.css({
-            class: "fileWrapper",
-            widthPercent: 100,
-            cursor: "pointer"
-        });
-
-        const fileBox = this.css({
-            class: "fileBox",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "centre",
-            justifyContent: "centre",
-            widthPercent: 100,
-            maxWidthPercent: 100,
-            padding: 20,
-            border: "2px",
-            borderRadius: "12px",
-            borderStyle: "dotted",
-            background: "white",
-            gap: 8,
-            boxSizing: "border-box",
-            textAlign: "centre"
-        });
-
-        const icon = this.css({
-            class: "icon",
-            fontSize: "2rem",
-            fontWeight: "bold",
-            colour: "black80",
-        });
-
-        const filePrompt = this.css({
-            class: "filePrompt",
-            fontSize: "0.9rem",
-            colour: "black60",
-            media: {
-                breakpoint: 600,
-                fontSize: "0.8rem",
-                wordWrap: "break-word",
-                maxWidth: 120
-            }
-
-        });
         
-        const fileHover = this.css({
-            class: "fileBox",
-            pseudoClass: "hover",
-            outline: ["solid", 2, "var(--black60)"]
-        });
-
-        const fileActive = this.css({
-            class: "fileBox",
-            pseudoClass: "focus",
-            outline: ["solid", 2, "var(--black100)"]
-        });
-
-        const filesBoxDrag = this.css({
-            class: "dragover",
-            outline: ["solid", 2, "var(--black100)"],
-            background: "back10",
-        });
-
-        const filePreview = this.css({
-            class: "filePreview",
-            width: "auto",             
-            maxWidth: "150px",       
-            maxHeight: "150px",        
-            objectFit: "cover",
-            display: "block",
-            marginTop: 8,
-            marginLeft: "auto",        
-            marginRight: "auto",
-            borderRadius: 6,
-            media: {
-                breakpoint: 600,
-                maxWidth: "100px",     
-                maxHeight: "100px",
-                marginTop: 8,
-                marginLeft: "auto",
-                marginRight: "auto",
+        return [
+            {
+                class: "fileInput",
+                display: "none",
+            },
+            {
+                class: "fileWrapper",
+                widthPercent: 100,
+                cursor: "pointer"
+            },
+            {
+                class: "fileBox",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "centre",
+                justifyContent: "centre",
+                widthPercent: 100,
                 maxWidthPercent: 100,
-                height: "auto",
+                padding: 20,
+                border: 2,
+                borderRadius: 12,
+                borderStyle: "dotted",
+                background: "white",
+                gap: 8,
+                boxSizing: "border-box",
+                textAlign: "centre"
+            },
+            {
+                class: "icon",
+                fontSizeRem: 2,
+                fontWeight: "bold",
+                colourVar: "black80",
+            },
+            {
+                class: "filePrompt",
+                fontSizeRem: 0.9,
+                colourVar: "black60",
+                media: {
+                    breakpoint: 600,
+                    fontSizeRem: 0.8,
+                    wordWrap: "break-word",
+                    maxWidth: 120
+                }
+
+            },
+            {
+                class: "fileBox",
+                pseudoClass: "hover",
+                outline: ["solid", 2, "var(--black60)"]
+            },
+            {
+                class: "fileBox",
+                pseudoClass: "focus",
+                outline: ["solid", 2, "var(--black100)"]
+            },
+            {
+                class: "dragover",
+                outline: ["solid", 2, "var(--black100)"],
+                backgroundVar: "back10",
+            },
+            {
+                class: "filePreview",
+                width: "auto",             
+                maxWidth: 150,       
+                maxHeight: 150,        
                 objectFit: "cover",
-                borderRadius: 6
-            }
-        });
-
-        const reuploadBtn = this.css({
-            class: "reuploadBtn",
-            width: "auto",
-            marginTop: 12,
-            media: {
-                breakpoint: 600,
-                marginTop:  8,
+                display: "block",
+                marginTop: 8,
+                marginLeft: "auto",        
+                marginRight: "auto",
+                borderRadius: 6,
+                media: {
+                    breakpoint: 600,
+                    maxWidth: 100,     
+                    maxHeight: 100,
+                    marginTop: 8,
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    maxWidthPercent: 100,
+                    height: "auto",
+                    objectFit: "cover",
+                    borderRadius: 6
+                }
+            },
+            {
+                class: "reuploadBtn",
                 width: "auto",
+                marginTop: 12,
+                media: {
+                    breakpoint: 600,
+                    marginTop:  8,
+                    width: "auto",
+                }
             }
-        });
-
-        return /* css */`
-        ${fileWrapper}
-        ${fileBox}
-        ${icon}
-        ${filePrompt}
-        ${fileStyle}
-        ${fileHover}
-        ${fileActive}
-        ${filesBoxDrag}
-        ${filePreview}
-        ${reuploadBtn}
-
-        `; 
-    
+        ];
     }
 
     get value() {
         return this.fileInput?.files?.[0] || null ;
     }
 
-    hook() {
+    afterRender() {
 
         const filePrompt  = this.shadowRoot.querySelector(".filePrompt");
         const icon        = this.shadowRoot.querySelector(".icon");
@@ -290,11 +265,7 @@ export class File extends Input {
 
     }
 
-    static {
-
-        super.register(this);
-
-    }
+    static { super.register(this); }
 
 }
 

@@ -2,9 +2,7 @@ import { Input } from "./input.js";
 
 export class Textarea extends Input {
    
-    type_ = "textarea";
-    rows_ = 6;
-    name_ = "Textarea Input";
+    rows_;
 
     set rows(newRows) {
 
@@ -13,10 +11,10 @@ export class Textarea extends Input {
     
     }
 
-    get rows() {
+    get rows() { return this.rows_; }
 
-        return this.rows_;
-    
+    beforeRender(){
+        if (!this.rows_) this.rows_ = 6;
     }
 
     createHTML() {
@@ -31,30 +29,22 @@ export class Textarea extends Input {
     }
 
     createCSS() {
-
-        const areaInput = this.design.create({
-            class: "areaInput",
-            resize: "none",
-            height: "80px",
-            widthPercent: 100,
-            border: "border",
-            borderRadius: 8,
-            boxSizing: "border-box",
-            padding: [8, 12],
-            fontFamily: "Geist ",
-        });
-
-        return /* css */ `
-        ${areaInput}
-        `; 
-    
+        return [
+            {
+                class: "areaInput",
+                resize: "none",
+                height: 80,
+                widthPercent: 100,
+                borderVar: "border",
+                borderRadius: 8,
+                boxSizing: "border-box",
+                padding: [8, 12],
+                fontFamily: "Geist",
+            }
+        ];
     }
 
-    static{
-
-        super.register(this);
-
-    }
+    static{ super.register(this); }
 
 }
 

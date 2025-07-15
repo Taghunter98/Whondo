@@ -1,8 +1,6 @@
 import { Comp } from "jay-comp";
 
 export class Login extends Comp {
-
-    name_ = "Login Page";
        
     createHTML() {
     
@@ -45,133 +43,105 @@ export class Login extends Comp {
     createCSS() {   
 
         // Background and image styling
-        const background = this.css({
-            class: "background",
-            widthPercent: 100,
-            background: "black100",
-            height: "100vh",
-        });
-
-        const itemContainer = this.css({
-            class: "itemContainer",
-            display: "flex",
-            media: {
-                breakpoint: 600,
+        return[
+            {
+                class: "background",
+                widthPercent: 100,
+                backgroundVar: "black100",
+                heightVh: 100,
+            },
+            {
+                class: "itemContainer",
+                display: "flex",
+                media: {
+                    breakpoint: 600,
+                    flexDirection: "column",
+                    alignItems: "centre"
+                }
+            },
+            {
+                class: "backgroundImage",
+                widthPercent: 100,
+                heightVh: 100,
+                paddingLeft: 400,
+                media: {
+                    breakpoint: 600,
+                    height: "40vh",
+                    margin: 0,
+                    padding: 0
+                }
+            },
+            {
+                class: "image",
+                widthPercent: 100,
+                heightPercent: 100,
+                objectFit: "cover"
+            },
+            // Login modal styling
+            {
+                class: "modal",
+                display: "flex",
                 flexDirection: "column",
-                alignItems: "centre"
+                alignItems: "centre",
+                width: 500,
+                background: "white",
+                position: "absolute",
+                zIndex: 800,
+                padding: 20,
+                borderRadius: 14,
+                marginLeft: 100,
+                marginTop: 100,
+                media: {
+                    breakpoint: 600,
+                    width: "auto",
+                    margin: 0,
+                    marginTop: 200
+                }
+            },
+            {
+                class: "inputs",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                gap: 10,
+                padding: [20, 0, 40, 0]
+            },
+            // Link
+            {
+                class: "link",
+                colourVar: "black80",
+                textDecoration: "underline",
+                cursor: "pointer"
+            },
+            {
+                class: "link",
+                pseudoClass: "hover",
+                colourVar: "black100"
+            },
+            {
+                class: "textContainer",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                gap: 5
+            },
+            {
+                class: "title",
+                fontWeight: "bold"
+            },
+            {
+                class: "text",
+                colourVar: "black60"
+            },
+            {
+                class: "footer",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "centre",
+                widthPercent: 100,
+                gap: 10
             }
-        });
-
-        const imageBackground = this.css({
-            class: "backgroundImage",
-            widthPercent: 100,
-            height: "100vh",
-            paddingLeft: 400,
-            media: {
-                breakpoint: 600,
-                height: "40vh",
-                margin: 0,
-                padding: 0
-            }
-        });
-
-        const image = this.css({
-            class: "image",
-            widthPercent: 100,
-            heightPercent: 100,
-            objectFit: "cover"
-        });
-        
-        // Login modal styling
-        const modal = this.css({
-            class: "modal",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "centre",
-            width: 500,
-            background: "white",
-            position: "absolute",
-            zIndex: 800,
-            padding: 20,
-            borderRadius: 14,
-            marginLeft: 100,
-            marginTop: 100,
-            media: {
-                breakpoint: 600,
-                width: "auto",
-                margin: 0,
-                marginTop: 200
-            }
-        });
-
-        const inputs = this.css({
-            class: "inputs",
-            display: "flex",
-            flexDirection: "column",
-            widthPercent: 100,
-            gap: 10,
-            padding: [20, 0, 40, 0]
-        });
-
-        // Link
-
-        const link = this.css({
-            class: "link",
-            colour: "black80",
-            textDecoration: "underline",
-            cursor: "pointer"
-        });
-
-        const linkHover = this.css({
-            class: "link",
-            pseudoClass: "hover",
-            colour: "black100"
-        });
-
-        const textContainer = this.css({
-            class: "textContainer",
-            display: "flex",
-            flexDirection: "column",
-            widthPercent: 100,
-            gap: 5
-        });
-
-        const title = this.css({
-            class: "title",
-            fontWeight: "bold"
-        });
-
-        const text = this.css({
-            class: "text",
-            colour: "black60"
-        });
-        
-        const footer = this.css({
-            class: "footer",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "centre",
-            widthPercent: 100,
-            gap: 10
-        });
-
-    
-        return /* css */ `
-        ${background}
-        ${itemContainer}
-        ${imageBackground}
-        ${image}
-        ${modal}
-        ${inputs}
-        ${link}
-        ${linkHover}
-        ${textContainer}
-        ${title}
-        ${text}
-        ${footer}
-
-        `;
-    
+        ];
     }
 
     openWindow() {
@@ -188,12 +158,12 @@ export class Login extends Comp {
     
     }
 
-    hook() {
+    afterRender() {
 
-        const compButton = this.shadowRoot.getElementById("submit");
-        const result     = this.shadowRoot.getElementById("result");
-        const email      = this.shadowRoot.getElementById("email");
-        const pass       = this.shadowRoot.getElementById("password");
+        const compButton = this.getById("submit");
+        const result     = this.getById("result");
+        const email      = this.getById("email");
+        const pass       = this.getById("password");
         
         compButton.text = "Login";
         email.label     = "Email";
@@ -213,11 +183,7 @@ export class Login extends Comp {
     
     }
 
-    static {
-
-        Comp.register(this); 
-
-    }
+    static { Comp.register(this); }
   
 }
 
