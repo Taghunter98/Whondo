@@ -78,26 +78,26 @@ export class Navbar extends Comp {
             // Navbar links
             {
                 class: "link",
-                colour: "black80",
+                colourVar: "black80",
                 fontSize: 16,
                 padding: 10,
-                border: "borderDefault",
+                borderVar: "borderDefault",
                 borderRadius: 8,
                 listStyleType: "None",
                 cursor: "pointer",
-                transition: "background 0.1s ease-in-out"
+                transition: ["background", "0.1s", "ease-in-out"]
             },
             {
                 class: "link",
-                colour: "black100",
+                colourVar: "black100",
                 pseudoClass: "hover",
-                border: "border",
-                background: "black10"
+                borderVar: "border",
+                backgroundVar: "black10"
             },
             {
                 class: "link",
                 pseudoClass: "active",
-                background: "black20"
+                backgroundVar: "black20"
             },
             {
                 class: "menu",
@@ -161,7 +161,7 @@ export class Navbar extends Comp {
                     background: "white",
                     padding: 20,
                     borderRadius: 14,
-                    transition: "bottom 0.6s"
+                    transition: ["bottom", "0.6s"]
                 }
             
             },
