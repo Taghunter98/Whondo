@@ -149,9 +149,9 @@ export class Card extends Comp {
      */
     createHTML() {
 
-        let imageHTML = '';
+        imageHTML_;
 
-        if (this.cardImage_) imageHTML = /* html */`<img src="${this.cardImage_}">`;
+        if (this.cardImage_) imageHTML_ = /* html */`<img src="${this.cardImage_}">`;
 
         return /* html */ `
         <div class="cardContainer">
@@ -164,6 +164,17 @@ export class Card extends Comp {
         </div>
         `;
     
+    }
+
+    set imageHTML(v){
+        this.imageHTML_ = v;
+        this.update();
+    }
+
+    get innerHTML() { return this.imageHTML_; }
+
+    beforeRender() {
+        if (!this.imageHTML) this.imageHTML_ = "";
     }
 
     /**
