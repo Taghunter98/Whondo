@@ -131,11 +131,11 @@ export class File extends Input {
 
     afterRender() {
 
-        const filePrompt  = this.shadowRoot.querySelector(".filePrompt");
-        const icon        = this.shadowRoot.querySelector(".icon");
-        const preview     = this.shadowRoot.querySelector(".filePreview");
-        const dropArea    = this.shadowRoot.querySelector(".fileBox");
-        const reuploadBtn = this.shadowRoot.querySelector(".reuploadBtn");
+        const filePrompt  = this.query(".filePrompt");
+        const icon        = this.query(".icon");
+        const preview     = this.query(".filePreview");
+        const dropArea    = this.query(".fileBox");
+        const reuploadBtn = this.query(".reuploadBtn");
 
         reuploadBtn.text     = "Upload another";
         reuploadBtn. variant = 2;
@@ -186,7 +186,7 @@ export class File extends Input {
         
         };
 
-        this._fileInput = this.shadowRoot.querySelector(".fileInput");
+        this._fileInput = this.query(".fileInput");
 
         if (this._fileInput) {
 

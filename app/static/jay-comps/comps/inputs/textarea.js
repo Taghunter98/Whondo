@@ -13,9 +13,7 @@ export class Textarea extends Input {
 
     get rows() { return this.rows_; }
 
-    beforeRender(){
-        if (!this.rows_) this.rows_ = 6;
-    }
+    beforeRender() { if (!this.rows_) this.rows_ = 6; }
 
     createHTML() {
 

@@ -217,18 +217,14 @@ export class Card extends Comp {
      */
     hook() {
 
-        const cardButton   = this.shadowRoot.getElementById("button");
+        const cardButton   = this.getById("button");
         cardButton.variant = 2;
 
         cardButton.addEventListener("click", this.onButtonClick.bind(this));
     
     }
 
-    static {
-
-        Comp.register(this);
-
-    }
+    static { Comp.register(this); }
 
 }
 

@@ -223,12 +223,7 @@ export class Register extends Comp {
                 widthPercent: 100,
                 gap: 10,
             },
-            {
-                class: "input-error",
-                colour: "red",
-                fontSize: 12,
-                marginTop: 4,
-            },
+    
         ];   
         
     }
@@ -259,7 +254,7 @@ export class Register extends Comp {
 
             if(inputs[i].required && inputs[i].isEmpty()){
 
-                const inputField = inputs[i].shadowRoot.querySelector(".inputValue");
+                const inputField = inputs[i].query(".inputValue");
                 inputField.classList.add("error");
                 isValid = false;
 
@@ -280,8 +275,8 @@ export class Register extends Comp {
     validatePasswords(password, confirmPass) {
 
         if (confirmPass.value == '' || password.value == '') return;
-        else if (confirmPass.value === password.value) confirmPass.shadowRoot.querySelector(".inputValue").classList.add("success");
-        else confirmPass.shadowRoot.querySelector(".inputValue").classList.remove("success");
+        else if (confirmPass.value === password.value) confirmPass.query(".inputValue").classList.add("success");
+        else confirmPass.query(".inputValue").classList.remove("success");
     
     }
 
@@ -289,11 +284,11 @@ export class Register extends Comp {
 
         if (state) {
 
-            for (let i in inputs) inputs[i].shadowRoot.querySelector(".inputValue").classList.add("error");
+            for (let i in inputs) inputs[i].shadowRoot.query(".inputValue").classList.add("error");
         
         } else {
 
-            for (let i in inputs) inputs[i].shadowRoot.querySelector(".inputValue").classList.remove("error");
+            for (let i in inputs) inputs[i].shadowRoot.query(".inputValue").classList.remove("error");
         
         }
     
@@ -301,7 +296,7 @@ export class Register extends Comp {
 
     clearError(inputs){
 
-        const field = inputs.shadowRoot.querySelector(".inputValue");
+        const field = inputs.shadowRoot.query(".inputValue");
         field.classList.remove("error");
 
     };
@@ -314,7 +309,7 @@ export class Register extends Comp {
         const email = this.getById("email");
         const password = this.getById("password");
         const age = this.getById("age");
-        const occupation  =this.getById("occupation");
+        const occupation  = this.getById("occupation");
         const bio = this.getById("bio");
         const picture = this.getById("picture");
 
@@ -339,7 +334,7 @@ export class Register extends Comp {
         }
     }
 
-    hook(){
+    afterRender(){
 
         const step1        = this.getById("step1");
         const step2        = this.getById("step2");
