@@ -36,23 +36,11 @@ export class Input extends Comp {
 
     }
 
-    get label() {
+    get label() { return this.label_; }
 
-        return this.label_;
-    
-    }
+    get type() { return this.type_; }
 
-    get type() {
-
-        return this.type_;
-    
-    }
-
-    get prompt() {
-
-        return this.prompt_;
-    
-    }
+    get prompt() { return this.prompt_; }
 
     get value() {
 
@@ -60,11 +48,7 @@ export class Input extends Comp {
 
     }
 
-    get required(){
-
-        return this.required_;
-    
-    }
+    get required(){ return this.required_; }
 
     beforeRender(){
         if (!this.label_) this.label_ = "Text";
@@ -140,17 +124,9 @@ export class Input extends Comp {
         ];
     }
 
-    isEmpty(){
+    isEmpty(){ return !this.value.trim(); }
 
-        return !this.value.trim();
-    
-    }
-
-    static {
-
-        Comp.register(this);
-
-    }
+    static { Comp.register(this); }
 
 }
 

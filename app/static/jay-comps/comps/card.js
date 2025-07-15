@@ -13,12 +13,11 @@ import { Comp } from "jay-comp";
 
 export class Card extends Comp { 
 
-    cardTitle_    = "Card header";
-    cardText_     = "Card text goes here.";
-    buttonText_   = "Card Action";
-    buttonAction_ = this.debug;
-    cardImage_    = "";
-    name_ = "Card";
+    cardTitle_;
+    cardText_;
+    buttonText_;
+    buttonAction_;
+    cardImage_;
        
     /**
      * @brief A setter method that sets the Comp's title.
@@ -134,6 +133,14 @@ export class Card extends Comp {
         return this.cardImage_;
     
     }
+
+    beforeRender(){
+        if (!this.cardTitle_) this.cardTitle_ = "Card header";
+        if (!this.cardText_) this.cardText_ = "Card text goes here.";
+        if (!this.buttonText_) this.buttonText_ = "Card Action";
+        if (!this.buttonAction_) this.buttonAction_ = this.debug;
+        if (!this.cardImage_) this.cardImage_    = "";
+    }
     
     /**
      * @brief A method that builds the card's HTML.
@@ -165,37 +172,31 @@ export class Card extends Comp {
      * @returns {literal} CSS to be injected into Comp.
      */
     createCSS() {
-        
-        const cardStyle = this.design.create({
-            valueID: "cardContainer",
-            display: "flex",
-            flexDirection: "column",
-            boxSizing: "border-box",
-            widthPercent: 100, 
-            maxWidth: 500, 
-            padding: 20,
-            alignItems: "start",
-            border: true,
-            borderRadius: 15,
-            gap: 20,
-            background: "white"
-        });
-
-        const textCardStyle = this.design.create({
-            valueID: "textContainer",
-            direction: "column", 
-            widthPercent: 100,
-            maxWidth: 500, 
-            padding: 0, 
-            alignItems: "start", 
-            border: false
-        });
-
-        return `
-        ${cardStyle}
-        ${textCardStyle}
-        `;
-    
+        return [
+            {
+                valueID: "cardContainer",
+                display: "flex",
+                flexDirection: "column",
+                boxSizing: "border-box",
+                widthPercent: 100, 
+                maxWidth: 500, 
+                padding: 20,
+                alignItems: "start",
+                border: true,
+                borderRadius: 15,
+                gap: 20,
+                background: "white"
+            },
+            {
+                valueID: "textContainer",
+                direction: "column", 
+                widthPercent: 100,
+                maxWidth: 500, 
+                padding: 0, 
+                alignItems: "start", 
+                border: false
+            }
+        ];
     }
 
     /**
