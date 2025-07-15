@@ -2,8 +2,8 @@ import { Comp } from "jay-comp";
 
 export class Icon extends Comp {
         
-    path_ = "";
-    name_ = "Icon";
+    path_;
+    name_;
 
     constructor() {
 
@@ -25,6 +25,11 @@ export class Icon extends Comp {
     
     }
 
+    beforeRender(){
+        if (!this.path_) this.path_ = "";
+        if (!this.name_) this.name_ = "Icon";
+    }
+
     createHTML() {
 
         return /* html */ `
@@ -35,43 +40,35 @@ export class Icon extends Comp {
 
     createCSS() {
 
-        const icon = this.design.create({
-            class: "icon",
-            display: "flex",
-            border: "borderDefault",
-            borderRadius: 8,
-            width: "auto",
-            padding: 5,
-            cursor: "pointer",
-            transition: "background 0.1s ease-in-out"
-        });
+        return [
+            {
+                class: "icon",
+                display: "flex",
+                border: "borderDefault",
+                borderRadius: 8,
+                width: "auto",
+                padding: 5,
+                cursor: "pointer",
+                transition: ["background", "0.1s", "ease-in-out"]
+            },
+            {
+                class: "icon",
+                pseudoClass: "hover",
+                backgroundVar: "black10",
+                border: "border"
+            },
+            {
+                class: "icon",
+                pseudoClass: "active",
+                backgroundVar: "black20"
+            },
 
-        const iconHover = this.design.create({
-            class: "icon",
-            pseudoClass: "hover",
-            background: "black10",
-            border: "border"
-        });
-
-        const iconActive = this.design.create({
-            class: "icon",
-            pseudoClass: "active",
-            background: "black20"
-        });
-        
-        return /* css */ `
-        ${icon}
-        ${iconHover}
-        ${iconActive}
-        `;
+        ];
     
     }
 
-    static {
-
-        Comp.register(this);
-
-    }
-
+    static { Comp.register(this); }
+    
 }
+
 

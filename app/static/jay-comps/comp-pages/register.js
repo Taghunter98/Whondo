@@ -467,11 +467,7 @@ export class Register extends Comp {
     
     }
 
-    static {
-
-        Comp.register(this);
-
-    }
+    static {  Comp.register(this); }
 
 }
 

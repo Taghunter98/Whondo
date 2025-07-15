@@ -2,10 +2,10 @@ import {Comp} from "jay-comp";
 
 export class Dialog extends Comp {
      
-    title_     = "Hello World";
-    paragraph_ = "This is a paragraph";
-    svgIcon_   = "";
-    text_ = "This is a button";
+    title_;
+    paragraph_ ;
+    svgIcon_;
+    text_;
 
     set title(newTitle){
 
@@ -59,11 +59,18 @@ export class Dialog extends Comp {
     
     }
 
+    beforeRender(){
+        if (!this.title_) this.title_ = "Hello World";
+        if (!this.paragraph_) this.paragraph_ = "This is a paragraph";
+        if (!this.svgIcon_) this.svgIcon_  = "";
+        if (!this.text_) this.text_ = "This is a button";
+    }
+
     hideButton() {
 
         requestAnimationFrame(() => {
 
-            const btn = this.shadowRoot?.querySelector("comp-button");
+            const btn = this.query("comp-button");
             if (btn) btn.setAttribute("hidden", "");
         
         });
@@ -74,7 +81,7 @@ export class Dialog extends Comp {
 
         requestAnimationFrame(() => {
 
-            const btn = this.shadowRoot?.querySelector("comp-button");
+            const btn = this.query("comp-button");
             if (btn) btn.removeAttribute("hidden");
         
         });
@@ -101,77 +108,59 @@ export class Dialog extends Comp {
     }
 
     createCSS() {
-
-        const background = this.css({
-            class: "background",
-            display: "flex",
-            flexDirection: "column",
-            widthPercent: 100,
-            height: "100vh",
-            alignItems: "centre",
-            border: false,
-            gap: 0,
-            background: "black10",
-            justifyContent: "centre",
-        });
-
-        const container = this.css({
-            class: "container",
-            display: "flex",
-            flexDirection: "column",
-            width: "auto",
-            maxWidth: 500,
-            padding: 20,
-            alignItems: "centre",
-            border: "border",
-            borderRadius: 16,
-            gap: 10,
-            background: "white",
-            textAlign: "start",
-            marginTop: 0,
-        });
-
-        const head = this.css({
-            class: "head",
-            fontSize: 24,
-            alignSelf: "center",
-        });
-
-        const dialog = this.css({
-            class: "dialog",
-            fontSize: 16,
-            textAlign: "start",
-        });
-
-        const icon = this.css({
-            class: "icon",
-            colour: "black80",
-        });
-
-        const media = this.css({
-            media: {
-                breakpoint: 600,
+        return [
+            {
+                class: "background",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                heightVh: "100",
+                alignItems: "centre",
+                border: false,
+                gap: 0,
+                backgroundVar: "black10",
+                justifyContent: "centre",
+            },
+            {
+                class: "container",
+                display: "flex",
+                flexDirection: "column",
+                width: "auto",
+                maxWidth: 500,
                 padding: 20,
-                width: 350
-            }
-        });
-
-        return /* css */ `
-            ${background}
-            ${container}
-            ${icon}
-            ${head}
-            ${dialog}
-            ${media}
-        `;
-    
+                alignItems: "centre",
+                borderVar: "border",
+                borderRadius: 16,
+                gap: 10,
+                background: "white",
+                textAlign: "start",
+                marginTop: 0,
+            },
+            {
+                class: "head",
+                fontSize: 24,
+                alignSelf: "center",
+            },
+            {
+                class: "dialog",
+                fontSize: 16,
+                textAlign: "start",
+            },
+            {
+                class: "icon",
+                colourVar: "black80",
+            },
+            {
+                media: {
+                    breakpoint: 600,
+                    padding: 20,
+                    width: 350
+                }
+            },
+        ];
     }
 
-    static {
-
-        Comp.register(this);
-
-    }
+    static { Comp.register(this); }
 
 
 }
