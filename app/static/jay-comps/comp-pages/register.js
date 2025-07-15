@@ -284,11 +284,11 @@ export class Register extends Comp {
 
         if (state) {
 
-            for (let i in inputs) inputs[i].shadowRoot.query(".inputValue").classList.add("error");
+            for (let i in inputs) inputs[i].query(".inputValue").classList.add("error");
         
         } else {
 
-            for (let i in inputs) inputs[i].shadowRoot.query(".inputValue").classList.remove("error");
+            for (let i in inputs) inputs[i].query(".inputValue").classList.remove("error");
         
         }
     
@@ -296,7 +296,7 @@ export class Register extends Comp {
 
     clearError(inputs){
 
-        const field = inputs.shadowRoot.query(".inputValue");
+        const field = inputs.query(".inputValue");
         field.classList.remove("error");
 
     };

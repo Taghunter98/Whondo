@@ -126,7 +126,7 @@ export class File extends Input {
     }
 
     get value() {
-        return this.fileInput?.files?.[0] || null ;
+        return this._selectedFile || this.fileInput?.files?.[0] || null ;
     }
 
     afterRender() {
@@ -145,6 +145,8 @@ export class File extends Input {
             if (!file) return;
 
             filePrompt.textContent = file.name;
+
+            this._selectedFile = file;
 
             if (file.type.startsWith("image/")) {
 
@@ -234,14 +236,8 @@ export class File extends Input {
                 const input = createInput();
                 dropArea.appendChild(input);
                 this._fileInput = input;
-
                 
-                Object.defineProperty(input, 'files', {
-                    value: e.dataTransfer.files,
-                    writable: false
-                });
-                input.dispatchEvent(new Event("change"));
-            
+                handleFile(file);
             }
         
         });
