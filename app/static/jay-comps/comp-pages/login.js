@@ -66,7 +66,7 @@ export class Login extends Comp {
                 paddingLeft: 400,
                 media: {
                     maxWidthBp: 600,
-                    height: "40vh",
+                    heightVh: 40,
                     margin: 0,
                     padding: 0
                 }
@@ -171,7 +171,7 @@ export class Login extends Comp {
         pass.label      = "Password";
         pass.type       = "password";
         pass.prompt     = "Enter password";
-
+        
         compButton.addEventListener("click", () => {
             
             let cookie   = "true";

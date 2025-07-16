@@ -34,7 +34,6 @@ export class Create extends Comp {
             media: {
                 maxWidthBp: 600,
                 padding: 20,
-                fontSize: 2,
                 width: "auto"
             }
         };
