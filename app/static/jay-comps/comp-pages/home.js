@@ -21,8 +21,8 @@ export class Home extends Comp {
         <div class="container">
             <textarea name="" id="prompt" placeholder="${this.prompt}"></textarea>
 
-            <div class="icon">
-                <img class="img" src="app\static\icons\arrow_forward.png">
+            <div class="wrapper">
+                <comp-icon class="icon" id="icon"></comp-icon>
             </div>
         </div>
 
@@ -30,13 +30,25 @@ export class Home extends Comp {
     }
 
     createCSS(){
+        return [
+            {
+                class: "container",
+                display: "flex",
+                
 
+            }
+        ]
     }
 
     afterRender(){
+        const holder = this.getById("prompt");
+        const icon = this.query("comp-icon");
 
+
+        holder.prompt = "e.g I want to live in a flat in London that is £2000 a month, has two bedrooms and one bathroom...";
+        icon.path = "arrow_forward.png";
     }
 
-     static  { Comp.register(this); }
+     static { Comp.register(this); }
 
 }

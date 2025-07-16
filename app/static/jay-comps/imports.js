@@ -22,3 +22,5 @@ import './comp-pages/verified.js';
 
 import './comp-pages/create.js';
 
+import './comp-pages/home.js';
+
