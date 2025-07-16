@@ -12,7 +12,7 @@ export class Home extends Comp {
     get text() { return this.text_; }
 
     beforeRender(){
-        if (!this.text_) this.text_ = "This is a placeholder"
+        if (!this.text_) this.text_ = "e.g I want to live in a flat in London that is £2000 a month, has two bedrooms and one bathroom..."
     }
 
     createHTML(){
@@ -25,7 +25,7 @@ export class Home extends Comp {
                         <h2 class="head">Describe your perfect home</h2>
                     </div>
                     <div class="prompt-wrapper">
-                        <textarea name="" id="prompt" class="prompt" placeholder="${this.text}"></textarea>
+                        <textarea name="" id="prompt" class="prompt" placeholder="${this.text_}"></textarea>
 
                         <div class="icon">
                             <comp-icon class="img" id="img"></comp-icon>
@@ -76,7 +76,10 @@ export class Home extends Comp {
                 colourVar: "black100",
                 textAlign: "centre",
                 widthPercent: 100,
+                whiteSpace: "normal",
+                margin: 0,
                 fontWeight: "bold",
+                lineHeight: "normal",
                 media: {
                     maxWidthBp: 600,
                     fontSize: 32,
@@ -89,8 +92,8 @@ export class Home extends Comp {
                 alignItems: "centre",
                 gap: 20,
                 widthPercent: 100,
-                height: 74,
-                maxWidth: 800,
+                maxWidth: 860,
+                minHeight: 74,
                 padding: 15,
                 backgroundVar: "black10",
                 borderVar: "border",
@@ -110,9 +113,11 @@ export class Home extends Comp {
                 border: "none",
                 fontSize: 16,
                 resize: "none",
-                overflow: "hidden",
                 lineHeight: 1.5,
                 outline: "none",
+                fontFamily: "Geist",
+                minHeight: 44,
+                maxHeight: 300,
                 media: {
                 maxWidthBp: 600,
                 fontSize: 16
@@ -140,17 +145,37 @@ export class Home extends Comp {
                 fontSize: 14,
                 cursor: "pointer",
                 colourVar: "black100"
+            },
+            {
+                class: "text",
+                widthPercent: 100,
+                display: "flex",
+                justifyContent: "centre",
+                textAlign: "centre"
             }
         ];
     }
 
+     autoResize(el) {
+        el.style.height = 'auto';
+        el.style.height = `${el.scrollHeight}px`;
+    }
+
     afterRender(){
-        const holder = this.query("textarea");
+        
         const icon = this.query("comp-icon");
+        const textarea = this.query(".prompt");
 
-
-        holder.text = "e.g I want to live in a flat in London that is £2000 a month, has two bedrooms and one bathroom...";
         icon.path = "arrow_forward.png";
+
+        textarea.value = "";
+        textarea.placeholder= this.text_;
+
+        this.autoResize(textarea);
+
+        textarea.addEventListener("input", () => {
+            this.autoResize(textarea);
+        });
     }
 
      static { Comp.register(this); }
