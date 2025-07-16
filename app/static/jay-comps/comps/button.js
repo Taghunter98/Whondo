@@ -111,7 +111,7 @@ export class Button extends Comp {
             colourVar: "black100",
             backgroundVar: "black10",
             widthPercent: 100,
-            border: "border",
+            borderVar: "border",
             padding: [12, 28],
             borderRadius: 8,
             fontSize: 16,

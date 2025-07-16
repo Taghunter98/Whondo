@@ -145,17 +145,14 @@ export class Dialog extends Comp {
                 class: "dialog",
                 fontSize: 16,
                 textAlign: "start",
+                media: {
+                    maxWidthBp: 600,
+                    fontSize: 16
+                }
             },
             {
                 class: "icon",
                 colourVar: "black80",
-            },
-            {
-                media: {
-                    breakpoint: 600,
-                    padding: 20,
-                    width: 350
-                }
             },
         ];
     }

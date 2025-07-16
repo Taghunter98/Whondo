@@ -54,7 +54,7 @@ export class Login extends Comp {
                 class: "itemContainer",
                 display: "flex",
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     flexDirection: "column",
                     alignItems: "centre"
                 }
@@ -65,7 +65,7 @@ export class Login extends Comp {
                 heightVh: 100,
                 paddingLeft: 400,
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     height: "40vh",
                     margin: 0,
                     padding: 0
@@ -92,7 +92,7 @@ export class Login extends Comp {
                 marginLeft: 100,
                 marginTop: 100,
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     width: "auto",
                     margin: 0,
                     marginTop: 200

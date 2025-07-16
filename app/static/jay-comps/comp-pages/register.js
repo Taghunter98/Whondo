@@ -92,7 +92,7 @@ export class Register extends Comp {
                 backgroundVar: "black100",     
                 overflow: "hidden",
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     height: 1000
                 }      
             },
@@ -104,7 +104,7 @@ export class Register extends Comp {
                 class: "container",
                 display: "flex",
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     flexDirection: "column",
                     alignItems: "centre"
                 }
@@ -115,7 +115,7 @@ export class Register extends Comp {
                 height: 1000,
                 paddingLeft: 400,
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     heightVh: 40,
                     margin: 0,
                     padding: 0
@@ -143,7 +143,7 @@ export class Register extends Comp {
                 marginLeft: 100,
                 marginTop: 150,
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     widthPercent: 100,
                     maxWidth: 350,
                     minWidth: 250,
@@ -160,7 +160,7 @@ export class Register extends Comp {
                 gap: 20,
                 padding: [20, 0, 40, 0],
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     padding: [10, 0, 20, 0],
                     gap: 15,
                 } 
@@ -173,7 +173,7 @@ export class Register extends Comp {
                 widthPercent: 100,
                 justifyContent: "space-between",
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     flexDirection: "column"
                 }
             },

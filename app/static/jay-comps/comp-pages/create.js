@@ -31,6 +31,12 @@ export class Create extends Comp {
             alignItems: "centre",
             backgroundVar: "black10",
             overflow: "hidden",
+            media: {
+                maxWidthBp: 600,
+                padding: 20,
+                fontSize: 2,
+                width: "auto"
+            }
         };
 
         const container = {

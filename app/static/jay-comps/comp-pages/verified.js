@@ -31,7 +31,7 @@ export class Verified extends Comp {
             justifyContent: "centre",
             overflow: "hidden",
             media: {
-                breakpoint: 600,
+                maxWidthBp: 600,
                 padding: 20,
                 width: "auto"
             }

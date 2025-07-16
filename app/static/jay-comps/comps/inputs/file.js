@@ -66,7 +66,7 @@ export class File extends Input {
                 fontSizeRem: 0.9,
                 colourVar: "black60",
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     fontSizeRem: 0.8,
                     wordWrap: "break-word",
                     maxWidth: 120
@@ -100,7 +100,7 @@ export class File extends Input {
                 marginRight: "auto",
                 borderRadius: 6,
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     maxWidth: 100,     
                     maxHeight: 100,
                     marginTop: 8,
@@ -117,7 +117,7 @@ export class File extends Input {
                 width: "auto",
                 marginTop: 12,
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     marginTop:  8,
                     width: "auto",
                 }

@@ -64,7 +64,7 @@ export class Navbar extends Comp {
                 class: "logo",
                 fontWeight: "bold",
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     fontSize: 28
                 }
             },
@@ -103,7 +103,7 @@ export class Navbar extends Comp {
                 class: "menu",
                 display: "None",
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     display: "block"
                 }
             },
@@ -111,7 +111,7 @@ export class Navbar extends Comp {
                 class: "close",
                 display: "None",
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     display: "block"
                 }
             },
@@ -121,7 +121,7 @@ export class Navbar extends Comp {
                 width: "auto",
                 gap: 20,
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     display: "none"
                 }
             },
@@ -132,7 +132,7 @@ export class Navbar extends Comp {
             // Media quuery adjustments
             {
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     class: "header",
                     display: "flex",
                     alignItems: "centre",
@@ -141,7 +141,7 @@ export class Navbar extends Comp {
             },
             {
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     class: "links",
                     display: "None"
                 }
@@ -149,7 +149,7 @@ export class Navbar extends Comp {
             },
             {
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     class: "tray",
                     display: "flex",
                     bottom: "-500px",
@@ -167,7 +167,7 @@ export class Navbar extends Comp {
             },
             {
                 media: {
-                    breakpoint: 600,
+                    maxWidthBp: 600,
                     class: "trayButtons",
                     display: "flex",
                     gap: 10,
