@@ -12,7 +12,12 @@ export class Home extends Comp {
     get text() { return this.text_; }
 
     beforeRender(){
-        if (!this.text_) this.text_ = "e.g I want to live in a flat in London that is £2000 a month, has two bedrooms and one bathroom..."
+        if (!this.text_) {
+            const longText = "e.g I want to live in a flat in London that is £2000 a month, has two bedrooms and one bathroom...";
+            const shortText = "e.g I want a flat in London (£2000)..."
+            
+            this.text_ = window.innerWidth <= 600 ? shortText : longText
+        }
     }
 
     createHTML(){
@@ -118,6 +123,7 @@ export class Home extends Comp {
                 fontFamily: "Geist",
                 minHeight: 44,
                 maxHeight: 300,
+                whiteSpace: "pre-wrap",
                 media: {
                 maxWidthBp: 600,
                 fontSize: 16
