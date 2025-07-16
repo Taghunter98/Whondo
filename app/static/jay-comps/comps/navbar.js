@@ -237,5 +237,9 @@ export class Navbar extends Comp {
         
         });
     
-    } static { Comp.register(this); } }
+    } 
+    
+    static { Comp.register(this); } 
+
+}
 
