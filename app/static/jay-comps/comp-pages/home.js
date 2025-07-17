@@ -109,10 +109,6 @@ export class Home extends Comp {
                 borderVar: "border",
                 borderRadius: 15,
                 boxSizing: "border-box",
-                media:{
-                    maxWidthBp: 600,
-                    flexDirection: "row",
-                }
             },
             {
                 class: "prompt",
