@@ -151,8 +151,10 @@ export class Home extends Comp {
     }
 
     afterRender(){
-        
+        const icon = this.query(".icon");
         const textarea = this.query(".prompt");
+
+        icon.path = "forward_arrow.svg"
 
         textarea.value = "";
         textarea.placeholder= this.text_;
