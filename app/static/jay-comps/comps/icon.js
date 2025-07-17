@@ -44,7 +44,7 @@ export class Icon extends Comp {
             {
                 class: "icon",
                 display: "flex",
-                border: "borderDefault",
+                borderVar: "borderDefault",
                 borderRadius: 8,
                 width: "auto",
                 padding: 5,
@@ -55,7 +55,7 @@ export class Icon extends Comp {
                 class: "icon",
                 pseudoClass: "hover",
                 backgroundVar: "black10",
-                border: "border"
+                borderVar: "border"
             },
             {
                 class: "icon",

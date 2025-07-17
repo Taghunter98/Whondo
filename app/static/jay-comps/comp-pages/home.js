@@ -32,8 +32,10 @@ export class Home extends Comp {
                     <div class="prompt-wrapper">
                         <textarea name="" id="prompt" class="prompt" placeholder="${this.text_}"></textarea>
 
-                        <div class="icon">
-                            <comp-ibutton class="miniBtn" id="sendBtn"></comp-ibutton>
+                        <div class="iconBtn">
+                            <comp-ibutton class="miniBtn" id="sendBtn">
+                                <comp-icon class="icon"></comp-icon>
+                            </comp-ibutton>
                         </div>
                     </div>
                     <p><a href="#" class="help">Prompting Help</a></p>
@@ -45,8 +47,14 @@ export class Home extends Comp {
 
     createCSS(){
 
+        const placeholder = {
+            class: "prompt",
+            pseudoClass: ":placeholder",
+            fontFamily: "Geist, sans-serif",
+            fontSize: 16
+        };
 
-        return [
+        return [ placeholder,
             {
                 class: "background",
                 display: "flex",
@@ -71,7 +79,7 @@ export class Home extends Comp {
                 alignItems: "centre",
                 gap: 40,
                 widthPercent: 100,
-                maxWidth: 800,
+                maxWidth: 900,
                 padding: 20,
                 boxSizing: "border-box"
             },
@@ -97,7 +105,7 @@ export class Home extends Comp {
                 alignItems: "centre",
                 gap: 20,
                 widthPercent: 100,
-                maxWidth: 860,
+                maxWidth: 900,
                 minHeight: 74,
                 padding: 15,
                 backgroundVar: "black10",
@@ -126,16 +134,16 @@ export class Home extends Comp {
                 whiteSpace: "pre-wrap",
                 media: {
                 maxWidthBp: 600,
-                fontSize: 16
-            }
+                fontSize: 16,
+                }
             },
+
             {
-                class: "icon",
+                class: "iconBtn",
                 display: "flex",
                 justifyContent: "centre",
-                padding: 10,
                 borderRadius: 8,
-                flexShrink: 0
+                flexShrink: 0,
             },
             {
                 class: "help",
@@ -157,18 +165,18 @@ export class Home extends Comp {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: 0,
-                width: "auto",
-                height: 44,
-                minWidth: 44,
-                minHeight: 44,
-                maxWidth: 44,
-                maxHeight: 44,
-                borderRadius: 8,
-                fontSize: 0,
                 borderVar: "black100",
                 cursor: "pointer",
-                transition: ["background", "0.1s", "ease-in-out"]
+            },
+            {
+                class: "icon",
+                display: "flex",
+                alignItems: "centre",
+                justifyContent: "centre",
+                alignItems: "centre",
+                borderVar: "black100",
+                border: "none",
+                padding: 10
             }
         ];
     }
@@ -182,9 +190,6 @@ export class Home extends Comp {
         
         const icon = this.query("comp-icon");
         const textarea = this.query(".prompt");
-        const btnText = this.getById("sendBtn")
-        
-        btnText.text = `<img src=app\static\icons\arrow_forward.png />`;
 
         textarea.value = "";
         textarea.placeholder= this.text_;
