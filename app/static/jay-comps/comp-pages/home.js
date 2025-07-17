@@ -21,8 +21,8 @@ export class Home extends Comp {
     }
 
     createHTML(){
-        return /* html */`
         
+        return /* html */`
         <div class="background">
             <div class="container">
                 <div class="modal">
