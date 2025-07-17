@@ -1,28 +1,36 @@
-import { Button } from "./button.js";
+import { Icon } from "./icon.js";
 
-export class Ibutton extends Button {
-    
-    createCSS(){
-        const base = super.createCSS();
+export class Ibutton extends Icon {
 
-        const css = {
-            class: "button",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 0,
-            minWidth: 44,
-            minHeight: 44,
-            width: 44,
-            height: 44,
-            borderRadius: 8,
-            padding: [12, 2],
-            transition: ["background", "0.1s", "ease-in-out"]
-        } 
+    createHTML() {
+        return /* html */`
+            <div class="icon-wrapper">
+                <img class="icon-img" src="/static/icons/${this.path_}">
+            </div>
+        `;
+    }
 
-        return [base, css]
+    createCSS() {
+        return [
+            {
+                class: "icon-wrapper",
+                display: "flex",
+                alignItems: "centre",
+                justifyContent: "centre",
+                width: 44,
+                height: 44,
+                backgroundVar: "black100",
+                borderRadius: 8,
+                cursor: "pointer",
+                transition: ["background", "0.2s", "ease-in-out"]
+            },
+            {
+                class: "icon-wrapper",
+                pseudoClass: "hover",
+                backgroundVar: "black80"  
+            },
+        ];
     }
 
     static { super.register(this); }
-
 }

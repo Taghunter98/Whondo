@@ -33,7 +33,7 @@ export class Home extends Comp {
                         <textarea name="" id="prompt" class="prompt" placeholder="${this.text_}"></textarea>
 
                         <div class="iconBtn">
-                            <comp-ibutton class="miniBtn" id="sendBtn"></comp-ibutton>
+                            <comp-ibutton class="icon"></comp-ibutton>
                         </div>
                     </div>
                     <p><a href="#" class="help">Prompting Help</a></p>
@@ -45,14 +45,7 @@ export class Home extends Comp {
 
     createCSS(){
 
-        const placeholder = {
-            class: "prompt",
-            pseudoClass: ":placeholder",
-            fontFamily: "Geist, sans-serif",
-            fontSize: 16
-        };
-
-        return [ placeholder,
+        return [ 
             {
                 class: "background",
                 display: "flex",
@@ -129,13 +122,6 @@ export class Home extends Comp {
                 }
             },
             {
-                class: "iconBtn",
-                display: "flex",
-                justifyContent: "centre",
-                borderRadius: 8,
-                flexShrink: 0,
-            },
-            {
                 class: "help",
                 display: "flex",
                 justifyContent: "centre",
@@ -151,21 +137,10 @@ export class Home extends Comp {
                 textAlign: "centre"
             },
             {
-                class: "miniBtn",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-            },
-            {
-                class: "icon",
-                display: "flex",
-                alignItems: "centre",
-                justifyContent: "centre",
-                alignItems: "centre",
-                borderVar: "black100",
-                border: "none",
-                padding: 10
+                class: "prompt",
+                pseudoClass: ":placeholder",
+                fontFamily: "Geist, sans-serif",
+                fontSize: 16
             }
         ];
     }
@@ -178,9 +153,6 @@ export class Home extends Comp {
     afterRender(){
         
         const textarea = this.query(".prompt");
-        const btn = this.query(".miniBtn")
-
-        btn.text = `<img src="app\static\icons\arrow_forward2.png">`;
 
         textarea.value = "";
         textarea.placeholder= this.text_;
