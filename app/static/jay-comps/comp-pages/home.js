@@ -33,9 +33,7 @@ export class Home extends Comp {
                         <textarea name="" id="prompt" class="prompt" placeholder="${this.text_}"></textarea>
 
                         <div class="iconBtn">
-                            <comp-ibutton class="miniBtn" id="sendBtn">
-                                <comp-icon class="icon"></comp-icon>
-                            </comp-ibutton>
+                            <comp-ibutton class="miniBtn" id="sendBtn"></comp-ibutton>
                         </div>
                     </div>
                     <p><a href="#" class="help">Prompting Help</a></p>
@@ -165,7 +163,6 @@ export class Home extends Comp {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                borderVar: "black100",
                 cursor: "pointer",
             },
             {
@@ -188,8 +185,10 @@ export class Home extends Comp {
 
     afterRender(){
         
-        const icon = this.query("comp-icon");
         const textarea = this.query(".prompt");
+        const btn = this.query(".miniBtn")
+
+        btn.text = `<img src="app\static\icons\arrow_forward2.png">`;
 
         textarea.value = "";
         textarea.placeholder= this.text_;

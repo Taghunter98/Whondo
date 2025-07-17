@@ -2,14 +2,6 @@ import { Button } from "./button.js";
 
 export class Ibutton extends Button {
     
-    
-    createHTML() {
-
-        return /* html */ `
-            <button class="button"><slot></slot></button>`;
-    
-    }
-    
     createCSS(){
         const base = super.createCSS();
 
@@ -24,7 +16,6 @@ export class Ibutton extends Button {
             width: 44,
             height: 44,
             borderRadius: 8,
-            fontSize: 0,
             padding: [12, 2],
             transition: ["background", "0.1s", "ease-in-out"]
         } 
