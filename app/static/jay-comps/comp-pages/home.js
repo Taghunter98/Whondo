@@ -123,7 +123,7 @@ export class Home extends Comp {
                 outline: "none",
                 fontFamily: "Geist",
                 minHeight: 44,
-                maxHeight: 300,
+                maxHeight: 150,
                 whiteSpace: "pre-wrap",
                 media: {
                 maxWidthBp: 600,
