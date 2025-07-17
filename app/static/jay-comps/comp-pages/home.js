@@ -157,7 +157,7 @@ export class Home extends Comp {
         icon.path = "forward_arrow.svg"
 
         textarea.value = "";
-        textarea.placeholder= this.text_;
+        textarea.text = this.text_;
 
         this.autoResize(textarea);
 
