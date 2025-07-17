@@ -10,6 +10,9 @@ Description: Provides a library for tokenisation.
 """
 
 import re
+from rapidfuzz import process, fuzz
+
+from dictionaries import SIFT_LIST, TOWNS, KEYWORDS, SYNONYMS
 
 
 class Token:
@@ -19,6 +22,7 @@ class Token:
         self.context: float = 0
         self.is_number: bool = False
         self.is_city: bool = False
+        self.is_price: bool = False
         self.next: Token = None
         self.prev: Token = None
 
@@ -32,270 +36,33 @@ class Token:
         )
 
 
-class Tokens:
-    def __init__(self, tokens: list[Token]):
-        self.tokens = tokens
-
-    def push(self, token: Token):
-        self.tokens.append(token)
-
-    def get(self, pos: int) -> Token:
-        return self.tokens[pos]
-
-    def update(self, pos: int):
-        self.tokens[pos].position = pos
-
-    def length(self) -> int:
-        return self.tokens.__len__()
-
-    def traverse(self):
-        cur = self.tokens[0]
-        while cur.next != None:
-            cur.printToken()
-            cur = cur.next
-
-
 class Parser:
     def __init__(self, prompt: str):
         self.prompt: str = prompt.lower()
-        self.SIFT_LIST = [
-            # pronouns & helpers
-            "i",
-            "me",
-            "my",
-            "mine",
-            "we",
-            "us",
-            "our",
-            "ours",
-            "you",
-            "your",
-            "yours",
-            "he",
-            "him",
-            "his",
-            "she",
-            "her",
-            "hers",
-            "it",
-            "its",
-            "they",
-            "them",
-            "their",
-            "theirs",
-            # verbs & auxiliaries
-            "am",
-            "is",
-            "are",
-            "was",
-            "were",
-            "be",
-            "being",
-            "been",
-            "have",
-            "has",
-            "had",
-            "do",
-            "does",
-            "did",
-            "will",
-            "would",
-            "shall",
-            "should",
-            "may",
-            "might",
-            "must",
-            "can",
-            "could",
-            "want",
-            "live",
-            # articles & conjunctions
-            "a",
-            "an",
-            "the",
-            "and",
-            "but",
-            "or",
-            "if",
-            "then",
-            "else",
-            "when",
-            "where",
-            "while",
-            "that",
-            # prepositions & particles
-            "in",
-            "on",
-            "at",
-            "by",
-            "for",
-            "with",
-            "about",
-            "against",
-            "between",
-            "into",
-            "through",
-            "during",
-            "before",
-            "after",
-            "above",
-            "below",
-            "to",
-            "from",
-            "up",
-            "down",
-            "out",
-            "over",
-            "under",
-            "again",
-            "further",
-            "here",
-            "there",
-            "why",
-            "how",
-            # quantifiers & modifiers
-            "all",
-            "any",
-            "both",
-            "each",
-            "few",
-            "more",
-            "most",
-            "other",
-            "some",
-            "such",
-            "only",
-            "own",
-            "same",
-            "so",
-            "than",
-            "too",
-            "very",
-            "just",
-            "also",
-            "really",
-            "actually",
-            "basically",
-        ]
-
-        self.TOWNS = [
-            # England Cities
-            "bath",
-            "birmingham",
-            "bradford",
-            "brighton & hove",
-            "bristol",
-            "cambridge",
-            "canterbury",
-            "carlisle",
-            "chelmsford",
-            "chester",
-            "chichester",
-            "colchester",
-            "coventry",
-            "derby",
-            "doncaster",
-            "durham",
-            "ely",
-            "exeter",
-            "gloucester",
-            "hereford",
-            "kingston upon hull",
-            "lancaster",
-            "leeds",
-            "leicester",
-            "lichfield",
-            "lincoln",
-            "liverpool",
-            "london",
-            "manchester",
-            "milton keynes",
-            "newcastle upon tyne",
-            "norwich",
-            "nottingham",
-            "oxford",
-            "peterborough",
-            "plymouth",
-            "portsmouth",
-            "preston",
-            "ripon",
-            "salford",
-            "salisbury",
-            "sheffield",
-            "southampton",
-            "southend-on-sea",
-            "st albans",
-            "stoke-on-trent",
-            "sunderland",
-            "truro",
-            "wakefield",
-            "wells",
-            "westminster",
-            "winchester",
-            "wolverhampton",
-            "worcester",
-            "york",
-            # Northern Ireland Cities
-            "armagh",
-            "bangor",
-            "belfast",
-            "lisburn",
-            "londonderry",
-            "newry",
-            # Scotland Cities
-            "aberdeen",
-            "dundee",
-            "dunfermline",
-            "edinburgh",
-            "glasgow",
-            "inverness",
-            "perth",
-            "stirling",
-            # Wales Cities
-            "bangor",
-            "cardiff",
-            "newport",
-            "st asaph",
-            "st davids",
-            "swansea",
-            "wrexham",
-            # English Towns
-            "reading",
-            "luton",
-            "northampton",
-            "slough",
-            "swindon",
-            "wigan",
-            "stockport",
-            "warrington",
-            "bolton",
-            "blackpool",
-            "crawley",
-            "basildon",
-            "ashford",
-            "tunbridge wells",
-            "maidstone",
-        ]
 
     def isTown(self, w: str) -> bool:
-        return w in self.TOWNS
+        return w in TOWNS
 
-    def isNumber(self, w: str) -> bool:
-        w = re.sub("\£", "", w)
-        return w.isdigit()
+    def isNumber(self, token: Token, w: str) -> bool:
+        cleaned = re.sub(r"£", "", w).strip()
+        cleaned = cleaned.replace(",", "")
+
+        if cleaned.isdigit():
+            token.is_number = True
+            token.name = cleaned
+            return True
+        return False
 
     def tokenise(self) -> list[Token]:
         tokens: list[Token] = []
 
-        words = [
-            w for w in self.prompt.split() if w not in self.SIFT_LIST or w in self.TOWNS
-        ]
+        words = [w for w in self.prompt.split() if w not in SIFT_LIST or w in TOWNS]
 
         for pos, w in enumerate(words):
             t = Token(w)
             t.position = pos
             t.is_city = self.isTown(w)
-            t.is_number = self.isNumber(w)
+            t.is_number = self.isNumber(t, w)
 
             if tokens:
                 prev = tokens[-1]
@@ -305,3 +72,49 @@ class Parser:
             tokens.append(t)
 
         return tokens
+
+    def canonical_field(self, token_name: str) -> str | None:
+        name = token_name.lower().strip()
+
+        if name in KEYWORDS:
+            return name
+
+        if name in SYNONYMS:
+            return SYNONYMS[name]
+
+        match, score, _ = process.extractOne(
+            name, KEYWORDS, scorer=fuzz.partial_ratio, score_cutoff=80
+        ) or (None, 0, None)
+        return match
+
+    def contextParser(self, tokens: list[Token]) -> tuple[list[Token], list]:
+        location = None
+        price = None
+
+        seen_fields = set()
+        context = []
+
+        for t in tokens:
+            next = t.next.name if t.next else None
+            prev = t.prev.is_city if t.prev else False
+
+            if t.is_number:
+                # Only treat this as a price if next is a time unit or prev was a city
+                if next in ("month", "week") or prev:
+                    t.is_price = True
+                    price = float(t.name)
+                    continue
+                else:
+                    continue
+
+            if t.is_city:
+                location = t.name
+                continue
+
+            field = self.canonical_field(t.name)
+            if field and field not in seen_fields:
+                seen_fields.add(field)
+                t.name = field
+                context.append(t)
+
+        return context, [location, price]

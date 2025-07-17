@@ -1,5 +1,5 @@
 import unittest
-from tokenisation import Token, Tokens, Parser
+from tokenisation import Token, Parser
 
 
 class TestSearchEngine(unittest.TestCase):
@@ -10,24 +10,12 @@ class TestSearchEngine(unittest.TestCase):
         tokens: list[Token] = parser.tokenise()
         return tokens, parser
 
-    def testTokenLib(self):
-        t1: Token = Token("Token One")
-        t2: Token = Token("Token Two")
-
-        tokens = Tokens([t1, t2])
-        tokens.push(t1)
-        tokens.push(t2)
-
-        self.assertEqual(type(t1), Token)
-        self.assertEqual(tokens.get(0).name, "Token One")
-        self.assertEqual(tokens.length(), 4, f"Returning {tokens.length()}")
-
     def testParser(self):
         tokens, parser = self.setUp()
         names = [t.name for t in tokens]
 
         self.assertEqual(
-            names, ["canterbury", "flat", "£1000", "month"], f"Returning: {names}"
+            names, ["canterbury", "flat", "1000", "month"], f"Returning: {names}"
         )
         self.assertTrue(
             parser.isTown("canterbury"), f"Returning {parser.isTown('canterbury')}"
@@ -36,8 +24,14 @@ class TestSearchEngine(unittest.TestCase):
         self.assertTrue(tokens[2].is_number)
 
     def testTokens(self):
-        tokens, parser = self.setUp()
+        prompt: str = "I want to rent a flat in Canterbury that's £2000 a month, allows a pet and near the university of Kent"
 
-        t: Tokens = Tokens(tokens)
+        parser: Parser = Parser(prompt)
+        tokens: list[Token] = parser.tokenise()
 
-        t.traverse()
+        context, [location, price] = parser.contextParser(tokens)
+
+        for t in context:
+            print(t.name)
+
+        print(f"Location: {location} Price: {price}")
