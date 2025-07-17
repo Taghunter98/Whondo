@@ -87,8 +87,6 @@ export class Home extends Comp {
                 colourVar: "black100",
                 textAlign: "centre",
                 widthPercent: 100,
-                whiteSpace: "normal",
-                margin: 0,
                 fontWeight: "bold",
                 lineHeight: "normal",
                 media: {
