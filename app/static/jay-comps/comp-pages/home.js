@@ -95,7 +95,6 @@ export class Home extends Comp {
                     maxWidthBp: 600,
                     fontSize: 32,
                 }
-
             },
             {
                 class: "prompt-wrapper",
@@ -135,7 +134,6 @@ export class Home extends Comp {
                 fontSize: 16,
                 }
             },
-
             {
                 class: "iconBtn",
                 display: "flex",
