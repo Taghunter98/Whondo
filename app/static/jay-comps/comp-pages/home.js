@@ -33,7 +33,7 @@ export class Home extends Comp {
                         <textarea name="" id="prompt" class="prompt" placeholder="${this.text_}"></textarea>
 
                         <div class="icon">
-                            <comp-icon class="img" id="img"></comp-icon>
+                            <comp-ibutton class="miniBtn" id="sendBtn"></comp-ibutton>
                         </div>
                     </div>
                     <p><a href="#" class="help">Prompting Help</a></p>
@@ -134,15 +134,8 @@ export class Home extends Comp {
                 display: "flex",
                 justifyContent: "centre",
                 padding: 10,
-                backgroundVar: "black100",
                 borderRadius: 8,
                 flexShrink: 0
-            },
-            {
-                class: "img",
-                width: 24,
-                height: 24,
-                display: "block"
             },
             {
                 class: "help",
@@ -158,6 +151,24 @@ export class Home extends Comp {
                 display: "flex",
                 justifyContent: "centre",
                 textAlign: "centre"
+            },
+            {
+                class: "miniBtn",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 0,
+                width: "auto",
+                height: 44,
+                minWidth: 44,
+                minHeight: 44,
+                maxWidth: 44,
+                maxHeight: 44,
+                borderRadius: 8,
+                fontSize: 0,
+                borderVar: "black100",
+                cursor: "pointer",
+                transition: ["background", "0.1s", "ease-in-out"]
             }
         ];
     }
@@ -171,8 +182,9 @@ export class Home extends Comp {
         
         const icon = this.query("comp-icon");
         const textarea = this.query(".prompt");
-
-        icon.path = "arrow_forward.png";
+        const btnText = this.getById("sendBtn")
+        
+        btnText.text = `<img src=app\static\icons\arrow_forward.png />`;
 
         textarea.value = "";
         textarea.placeholder= this.text_;
