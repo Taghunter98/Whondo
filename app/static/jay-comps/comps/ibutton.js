@@ -29,6 +29,15 @@ export class Ibutton extends Icon {
                 pseudoClass: "hover",
                 backgroundVar: "black80"  
             },
+            {
+             class: "icon-wrapper",
+                pseudoClass: "active",
+                backgroundVar: "black20"
+            },
+            {
+                class: "icon-img",
+                alignItems: "centre"
+            }
         ];
     }
 
