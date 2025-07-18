@@ -5,7 +5,6 @@ export class Dialog extends Comp {
     title_;
     paragraph_ ;
     svgIcon_;
-    text_;
 
     set title(newTitle){
 
@@ -28,13 +27,6 @@ export class Dialog extends Comp {
     
     }
 
-    set text(value){
-
-        this.text = value;
-        this.update();
-    
-    }
-
     get paragraph() {
 
         return this.paragraph_;
@@ -53,39 +45,10 @@ export class Dialog extends Comp {
     
     }
 
-    get text(){
-
-        return this.text_;
-    
-    }
-
     beforeRender(){
         if (!this.title_) this.title_ = "Hello World";
         if (!this.paragraph_) this.paragraph_ = "This is a paragraph";
         if (!this.svgIcon_) this.svgIcon_  = "";
-        if (!this.text_) this.text_ = "This is a button";
-    }
-
-    hideButton() {
-
-        requestAnimationFrame(() => {
-
-            const btn = this.query("comp-button");
-            if (btn) btn.setAttribute("hidden", "");
-        
-        });
-
-    }
-
-    showButton() {
-
-        requestAnimationFrame(() => {
-
-            const btn = this.query("comp-button");
-            if (btn) btn.removeAttribute("hidden");
-        
-        });
-
     }
 
     createHTML() {
@@ -99,7 +62,6 @@ export class Dialog extends Comp {
                     <svg class="icon" ${this.svgIcon_}></svg>
                     <h3 class="head">${this.title_}</h3>
                     <p class="dialog">${this.paragraph_}</p>
-
                 </div>
 
             </div>
