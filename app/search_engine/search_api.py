@@ -12,7 +12,7 @@ Description: Provides a REST API for searching and returning properties.
 from flask import Blueprint, request, redirect, jsonify
 
 from app.database.db_connect import connect
-from app.search_engine.tokenisation import Token, Parser
+from .tokenisation import Token, Parser
 from .query_builder import build_query
 
 search_bp = Blueprint("search_bp", __name__)
