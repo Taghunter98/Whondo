@@ -2,6 +2,12 @@ import { Comp } from 'jay-comp';
 
 export class Verified extends Comp {
 
+    openWindow() {
+
+        window.location.assign("/index");
+    
+    }
+
     createHTML() {
 
         return /* html */`
@@ -66,6 +72,10 @@ export class Verified extends Comp {
             
         const btn = describe.query("comp-button");
         btn.text = "continue"
+
+        btn.addEventListener("click", () =>  {
+            this.openWindow();
+        })
     }
     
     static { Comp.register(this); }
