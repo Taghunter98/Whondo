@@ -12,7 +12,7 @@ Description: Provides a library for tokenising prompts.
 import re
 from rapidfuzz import process, fuzz
 
-from dictionaries import SIFT_LIST, TOWNS, KEYWORDS, SYNONYMS, PROTECTD, ZONE_MAP
+from .dictionaries import SIFT_LIST, TOWNS, KEYWORDS, SYNONYMS, PROTECTD, ZONE_MAP
 
 
 class Token:
