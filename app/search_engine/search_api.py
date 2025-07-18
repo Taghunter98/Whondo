@@ -1,0 +1,56 @@
+"""
+Copyright (c) 2025 Josh Bassett, whondo.com
+
+Filename:    search_api.py
+Author:      Josh Bassett
+Date:        18/07/2025
+Version:     1.0
+
+Description: Provides a REST API for searching and returning properties.
+"""
+
+from flask import Blueprint, request, redirect, jsonify
+
+from app.database.db_connect import connect
+from app.search_engine.tokenisation import Token, Parser
+from app.search_engine.query_builder import build_query
+
+search_bp = Blueprint("search_bp", __name__)
+
+
+@search_bp.route("/search", methods=["POST", "GET"])
+def search():
+    if request.method == "POST":
+        data: object = request.get_json()
+        prompt: str = data.get("prompt")
+
+        if not prompt:
+            return jsonify({"error": "Prompt not provided"}), 400
+
+        parser: Parser = Parser(prompt)
+        tokens: list[Token] = parser.tokenise()
+        keywords, [location, price, bedrooms, bathrooms] = parser.contextParser(tokens)
+
+        if not location:
+            return jsonify({"error": "No location provided"}), 400
+
+        connection: object = connect()
+        cursor: object = connection.cursor()
+
+        sql, params = build_query(
+            keywords=[t.name for t in keywords],
+            location=location,
+            price=price,
+            bedrooms=bedrooms,
+            bathrooms=bathrooms,
+        )
+
+        cursor.execute(sql, params)
+        rows = cursor.fetchall()
+        cursor.close()
+        connection.close()
+
+        return jsonify({"results": rows})
+
+    else:
+        return redirect("/")

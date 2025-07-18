@@ -355,9 +355,4 @@ SYNONYMS = {
 
 ZONE_MAP = {"1": "zone_1", "2": "zone_2", "3": "zone_3", "4": "zone_4"}
 
-PROTECTD = [
-    "included",
-    "include",
-    "allow",
-    "allows"
-]
+PROTECTD = ["included", "include", "allow", "allows"]
