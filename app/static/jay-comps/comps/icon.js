@@ -62,9 +62,7 @@ export class Icon extends Comp {
                 pseudoClass: "active",
                 backgroundVar: "black20"
             },
-
         ];
-    
     }
 
     static { Comp.register(this); }
