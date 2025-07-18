@@ -11,22 +11,10 @@
 
 import { Comp } from "jay-comp";
 
-class ButtonComp extends Comp {
+export class Button extends Comp {
 
-    constructor() {
-
-        super();                                                    
-
-        this.text_    = "This is a button";
-        this.varient_ = 1;    
-        
-        this.name_ = "Button";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-
-        this.render();
-    
-    }
+    text_;
+    variant_;   
 
     /**
      * @brief A setter method that sets the Comp's button text.
@@ -36,19 +24,19 @@ class ButtonComp extends Comp {
     set text(newText) {
 
         this.text_ = newText;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
     /**
-     * @brief A setter method that sets the Comp's button varient (1, 2, 3).
+     * @brief A setter method that sets the Comp's button variant (1, 2, 3).
      * 
-     * @param {string} newVarient
+     * @param {string} newVariant
      */
-    set varient(newVarient) {
+    set variant(newVariant) {
 
-        this.varient_ = newVarient;
-        this.update(this.html_, this.createCSS());
+        this.variant_ = newVariant;
+        this.update();
     
     }
     
@@ -64,19 +52,26 @@ class ButtonComp extends Comp {
     }
 
     /**
-     * @brief A getter method that returns the Comp's button varient.
+     * @brief A getter method that returns the Comp's button variant.
      * 
-     * @returns {number} Comp's button varient. 
+     * @returns {number} Comp's button variant. 
      */
-    get varient() {
+    get variant() {
 
-        return this.varient_;
+        return this.variant_;
     
+    }
+
+    beforeRender(){
+        if (!this.text_) this.text_ = "this is button";
+        if (!this.variant_) this.variant_ = 1;
     }
     
     createHTML() {
 
-        return /* html */ `<button id="button" class="button">${this.text_}</button>`;
+        
+        return /* html */ `
+            <button class="button">${this.text}</button>`;
     
     }
 
@@ -84,66 +79,67 @@ class ButtonComp extends Comp {
 
         let button, buttonHover, buttonActive;
 
-        const primary = this.design.create({
+        const primary = {
             class: "button",
             colour: "white",
-            width: "100%",
-            background: "black100",
-            padding: "12px 28px",
-            border: "black100",
+            widthPercent: 100,
+            backgroundVar: "black100",
+            padding: [12, 28],
+            borderVar: "black100",
             borderRadius: 8,
             fontSize: 16,
             cursor: "pointer",
-            transition: "background 0.1s ease-in-out"
-        });
+            transition: ["background", "0.1s", "ease-in-out"]
+        };
 
-        const primaryHover = this.design.create({
+        const primaryHover = {
             class: "button",
             pseudoClass: "hover",
             border: "black",
-            background: "black80",
-        });
+            backgroundVar: "black80",
+        };
 
-        const primaryActive = this.design.create({
+        const primaryActive = {
             class: "button",
             pseudoClass: "active",
-            border: "black60",
-            background: "black60"
-        });
+            borderVar: "black60",
+            backgroundVar: "black60"
+        };
 
-        const secondary = this.design.create({
+        const secondary = {
             class: "button",
-            colour: "black100",
-            background: "black10",
-            width: "100%",
-            border: "border",
-            padding: "12px 28px",
+            colourVar: "black100",
+            backgroundVar: "black10",
+            widthPercent: 100,
+            borderVar: "border",
+            padding: [12, 28],
             borderRadius: 8,
             fontSize: 16,
             cursor: "pointer",
-            transition: "background 0.1s ease-in-out"
-        });
+            transition: ["background", "0.1s", "ease-in-out"]
+        };
 
-        const secondaryHover = this.design.create({
+        const secondaryHover = ({
             class: "button",
             pseudoClass: "hover",
-            background: "black20"
+            backgroundVar: "black20"
         });
 
-        const secondaryActive = this.design.create({
+        const secondaryActive = ({
             class: "button",
             pseudoClass: "active",
-            background: "black40"
+            backgroundVar: "black40"
         });
         
-        if (this.varient_ == 1) {
+        if (this.variant_ == 1) {
 
             button       = primary;
             buttonHover  = primaryHover;
             buttonActive = primaryActive;
         
         }
-        else if (this.varient_ == 2) {
+        
+        else if (this.variant_ == 2) {
 
             button       = secondary;
             buttonHover  = secondaryHover;
@@ -151,14 +147,10 @@ class ButtonComp extends Comp {
         
         }
 
-        return `
-        ${button}
-        ${buttonHover}
-        ${buttonActive}
-        `;
-    
+        return [button, buttonHover, buttonActive];
+
     }
 
-}
+    static { Comp.register(this); }
 
-customElements.define("comp-button", ButtonComp);
+}

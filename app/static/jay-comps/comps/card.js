@@ -11,26 +11,14 @@
 
 import { Comp } from "jay-comp";
 
-class CardComp extends Comp {
+export class Card extends Comp { 
 
-    constructor() {
-
-        super();
-
-        this.cardTitle_    = "Card header";
-        this.cardText_     = "Card text goes here.";
-        this.buttonText_   = "Card Action";
-        this.buttonAction_ = this.debug;
-        this.cardImage_    = "";
-
-        this.name_ = "Card";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-
-        this.render();
-    
-    }
-
+    cardTitle_;
+    cardText_;
+    buttonText_;
+    buttonAction_;
+    cardImage_;
+       
     /**
      * @brief A setter method that sets the Comp's title.
      * 
@@ -39,7 +27,7 @@ class CardComp extends Comp {
     set cardTitle(newCardTitle) {
        
         this.cardTitle_ = newCardTitle;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -51,7 +39,7 @@ class CardComp extends Comp {
     set cardText(newCompText) {
 
         this.cardText_ = newCompText;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -63,7 +51,7 @@ class CardComp extends Comp {
     set buttonText(newButtonText) {
 
         this.buttonText_ = newButtonText;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -75,7 +63,7 @@ class CardComp extends Comp {
     set buttonAction(newButtonAction) {
 
         this.buttonAction_ = newButtonAction;
-        this.update(this.html_, this.css_);
+        this.update();
     
     }
 
@@ -87,7 +75,7 @@ class CardComp extends Comp {
     set cardImage(newCardImage) {
 
         this.cardImage_ = newCardImage;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
 
@@ -145,6 +133,14 @@ class CardComp extends Comp {
         return this.cardImage_;
     
     }
+
+    beforeRender(){
+        if (!this.cardTitle_) this.cardTitle_ = "Card header";
+        if (!this.cardText_) this.cardText_ = "Card text goes here.";
+        if (!this.buttonText_) this.buttonText_ = "Card Action";
+        if (!this.buttonAction_) this.buttonAction_ = this.debug;
+        if (!this.cardImage_) this.cardImage_    = "";
+    }
     
     /**
      * @brief A method that builds the card's HTML.
@@ -153,9 +149,9 @@ class CardComp extends Comp {
      */
     createHTML() {
 
-        let imageHTML = '';
+        imageHTML_;
 
-        if (this.cardImage_) imageHTML = /* html */`<img src="${this.cardImage_}">`;
+        if (this.cardImage_) imageHTML_ = /* html */`<img src="${this.cardImage_}">`;
 
         return /* html */ `
         <div class="cardContainer">
@@ -170,43 +166,48 @@ class CardComp extends Comp {
     
     }
 
+    set imageHTML(v){
+        this.imageHTML_ = v;
+        this.update();
+    }
+
+    get innerHTML() { return this.imageHTML_; }
+
+    beforeRender() {
+        if (!this.imageHTML) this.imageHTML_ = "";
+    }
+
     /**
      * @brief A method that builds the card's CSS.
      * 
      * @returns {literal} CSS to be injected into Comp.
      */
     createCSS() {
-        
-        const cardStyle = this.design.create({
-            valueID: "cardContainer",
-            display: "flex",
-            flexDirection: "column",
-            boxSizing: "border-box",
-            width: "100%", 
-            maxWidth: 500, 
-            padding: 20,
-            alignItems: "start",
-            border: true,
-            borderRadius: 15,
-            gap: 20,
-            background: "white"
-        });
-
-        const textCardStyle = this.design.create({
-            valueID: "textContainer",
-            direction: "column", 
-            width: "100%",
-            maxWidth: 500, 
-            padding: 0, 
-            alignItems: "start", 
-            border: false
-        });
-
-        return `
-        ${cardStyle}
-        ${textCardStyle}
-        `;
-    
+        return [
+            {
+                valueID: "cardContainer",
+                display: "flex",
+                flexDirection: "column",
+                boxSizing: "border-box",
+                widthPercent: 100, 
+                maxWidth: 500, 
+                padding: 20,
+                alignItems: "start",
+                border: true,
+                borderRadius: 15,
+                gap: 20,
+                background: "white"
+            },
+            {
+                valueID: "textContainer",
+                direction: "column", 
+                widthPercent: 100,
+                maxWidth: 500, 
+                padding: 0, 
+                alignItems: "start", 
+                border: false
+            }
+        ];
     }
 
     /**
@@ -228,13 +229,13 @@ class CardComp extends Comp {
      */
     hook() {
 
-        const cardButton         = this.shadowRoot.getElementById("button");
-        cardButton.buttonVarient = 2;
+        const cardButton   = this.getById("button");
+        cardButton.variant = 2;
 
         cardButton.addEventListener("click", this.onButtonClick.bind(this));
     
     }
 
-}
+    static { Comp.register(this); }
 
-customElements.define("comp-card", CardComp);
+}

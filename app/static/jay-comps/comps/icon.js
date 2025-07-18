@@ -1,31 +1,33 @@
 import { Comp } from "jay-comp";
 
-class Icon extends Comp {
+export class Icon extends Comp {
+        
+    path_;
+    name_;
 
     constructor() {
 
         super();
-        this.path_ = "";
-        
-        this.name_ = "Icon";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-        
-        this.render();
+        this.host({width: "auto"});
     
     }
-
+       
     set path(newPath) {
 
         this.path_ = newPath;
-        this.update(this.createHTML(), this.css_);
+        this.update();
     
     }
-
+    
     get path() {
 
         return this.path_;
     
+    }
+
+    beforeRender(){
+        if (!this.path_) this.path_ = "";
+        if (!this.name_) this.name_ = "Icon";
     }
 
     createHTML() {
@@ -38,41 +40,33 @@ class Icon extends Comp {
 
     createCSS() {
 
-        const icon = this.design.create({
-            class: "icon",
-            display: "flex",
-            border: "borderDefault",
-            borderRadius: 8,
-            width: "auto",
-            padding: 5,
-            cursor: "pointer",
-            transition: "background 0.1s ease-in-out"
-        });
+        return [
+            {
+                class: "icon",
+                display: "flex",
+                borderVar: "borderDefault",
+                borderRadius: 8,
+                width: "auto",
+                padding: 5,
+                cursor: "pointer",
+                transition: ["background", "0.1s", "ease-in-out"]
+            },
+            {
+                class: "icon",
+                pseudoClass: "hover",
+                backgroundVar: "black10",
+                borderVar: "border"
+            },
+            {
+                class: "icon",
+                pseudoClass: "active",
+                backgroundVar: "black20"
+            },
 
-        const iconHover = this.design.create({
-            class: "icon",
-            pseudoClass: "hover",
-            background: "black10",
-            border: "border"
-        });
-
-        const iconActive = this.design.create({
-            class: "icon",
-            pseudoClass: "active",
-            background: "black20"
-        });
-        
-        return /* css */ `
-        :host {
-            width: auto
-        }
-        ${icon}
-        ${iconHover}
-        ${iconActive}
-        `;
+        ];
     
     }
 
+    static { Comp.register(this); }
+    
 }
-
-customElements.define("comp-icon", Icon);
