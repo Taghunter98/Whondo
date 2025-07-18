@@ -88,7 +88,7 @@ export class Register extends Comp {
             {
                 class: "background",
                 widthPercent: 100,
-                minHeightVh: 100,
+                heightVh: 100,
                 backgroundVar: "black100",     
                 overflow: "hidden",
                 media: {
@@ -112,7 +112,7 @@ export class Register extends Comp {
             {
                 class: "backgroundImage",
                 widthPercent: 100,
-                height: 1000,
+                heightVh: 100,
                 paddingLeft: 400,
                 media: {
                     maxWidthBp: 600,
