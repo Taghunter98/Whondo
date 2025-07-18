@@ -9,6 +9,7 @@ import './comps/input.js';
 import './comps/dialog.js';
 import './comps/icon.js';
 import './comps/navbar.js';
+import './comps/ibutton.js';
 
 
 // Pages
