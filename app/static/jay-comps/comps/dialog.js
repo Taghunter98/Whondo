@@ -70,7 +70,7 @@ export class Dialog extends Comp {
                     <svg class="icon" ${this.svgIcon_}></svg>
                     <h3 class="head">${this.title_}</h3>
                     <p class="dialog">${this.paragraph_}</p>
-                        <comp-button class="nextBtn">${this.text_}</comp-button>
+                    <comp-button class="nextBtn">${this.text_}</comp-button>
                 </div>
 
             </div>
