@@ -52,16 +52,29 @@ class Parser:
             token.name = cleaned
             return True
         return False
+    
+    def extract_towns(self):
+        matches = []
+        for city in sorted(TOWNS, key=lambda c: -len(c)):
+            if re.search(rf"\b{re.escape(city)}\b", self.prompt):
+                matches.append(city)
+                self.prompt = re.sub(rf"\b{re.escape(city)}\b", city.replace(" ", "_"), self.prompt)
+        return matches
 
     def tokenise(self) -> list[Token]:
-        tokens: list[Token] = []
+        self.extract_towns()
 
-        words = [w for w in self.prompt.split() if w not in SIFT_LIST or w in TOWNS]
+        raw_words = []
+        for w in self.prompt.split():
+            clean = re.sub(r"[^\w\s]", "", w)
+            if clean and clean not in SIFT_LIST:
+                raw_words.append(clean.replace("_", " "))
 
-        for pos, w in enumerate(words):
+        tokens = []
+        for pos, w in enumerate(raw_words):
             t = Token(w)
             t.position = pos
-            t.is_city = self.isTown(w)
+            t.is_city  = self.isTown(w)
             t.is_number = self.isNumber(t, w)
 
             if tokens:
@@ -70,7 +83,6 @@ class Parser:
                 prev.next = t
 
             tokens.append(t)
-
         return tokens
 
     def canonical_field(self, token_name: str) -> str | None:
@@ -83,8 +95,11 @@ class Parser:
             return SYNONYMS[name]
 
         match, score, _ = process.extractOne(
-            name, KEYWORDS, scorer=fuzz.partial_ratio, score_cutoff=80
+            name, KEYWORDS,
+            scorer=fuzz.ratio,
+            score_cutoff=70
         ) or (None, 0, None)
+
         return match
 
     def contextParser(self, tokens: list[Token]) -> tuple[list[Token], list]:
@@ -99,7 +114,6 @@ class Parser:
             prev = t.prev.is_city if t.prev else False
 
             if t.is_number:
-                # Only treat this as a price if next is a time unit or prev was a city
                 if next in ("month", "week") or prev:
                     t.is_price = True
                     price = float(t.name)
