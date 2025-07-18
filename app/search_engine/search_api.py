@@ -12,7 +12,7 @@ Description: Provides a REST API for searching and returning properties.
 from flask import Blueprint, request, redirect, jsonify
 
 from app.database.db_connect import connect
-from .tokenisation import Token, Parser
+from .tokenisation import Parser
 from .query_builder import build_query
 
 search_bp = Blueprint("search_bp", __name__)
@@ -27,8 +27,8 @@ def search():
         if not prompt:
             return jsonify({"error": "Prompt not provided"}), 400
 
-        parser: Parser = Parser(prompt)
-        tokens: list[Token] = parser.tokenise()
+        parser = Parser(prompt)
+        tokens = parser.tokenise()
         keywords, [location, price, bedrooms, bathrooms] = parser.contextParser(tokens)
 
         if not location:
