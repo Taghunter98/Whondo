@@ -10,6 +10,7 @@ Description: Provides a library for tokenising prompts.
 """
 
 import re
+from typing import Optional
 from rapidfuzz import process, fuzz
 
 from .dictionaries import SIFT_LIST, TOWNS, KEYWORDS, SYNONYMS, PROTECTD, ZONE_MAP
@@ -139,7 +140,7 @@ class Parser:
             tokens.append(t)
         return tokens
 
-    def mapField(self, token_name: str) -> str | None:
+    def mapField(self, token_name: str) -> Optional[str]:
         """
         Method maps Tokens to database fields.
 

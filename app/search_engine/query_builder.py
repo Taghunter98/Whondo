@@ -1,9 +1,12 @@
+
+from typing import Optional
+
 def build_query(
     keywords: list[str],
     location: str,
-    price: float | None = None,
-    bedrooms: int | None = None,
-    bathrooms: int | None = None,
+    price: Optional[float] = None,
+    bedrooms: Optional[int] = None,
+    bathrooms: Optional[int] = None,
 ) -> tuple[str, list]:
     """
     The function returns a SQL tempalte and parameters ready for execution.
