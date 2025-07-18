@@ -38,7 +38,9 @@ export class Textarea extends Input {
                 boxSizing: "border-box",
                 padding: [8, 12],
                 fontFamily: "Geist",
-            }
+                fontSize: 16,
+                
+            },
         ];
     }
 

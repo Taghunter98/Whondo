@@ -51,8 +51,8 @@ export class Input extends Comp {
     get required(){ return this.required_; }
 
     beforeRender(){
-        if (!this.label_) this.label_ = "Text";
-        if (!this. type_) this.type_ = "Label";
+        if (!this.label_) this.label_ = "Label";
+        if (!this. type_) this.type_ = "text";
         if (!this.prompt_) this.prompt_= "This is placeholder";
         if (!this.required_) this.required_ = false;
         if (!this.error_) this.error_ = false;
@@ -120,7 +120,7 @@ export class Input extends Comp {
                 fontSizeEm: 0.75,
                 colour: "black",
                 paddingTop: 4
-            }
+            },
         ];
     }
 

@@ -14,7 +14,7 @@ export class Landlord extends Comp {
                     <form class="formObj" action="", method="POST">
 
                         <!-- Personal information -->
-                        <div id="step1">
+                        <div id="step1" hidden>
                             <div class="textContainer">
                                 <p class="text">Step 1/3</p>
                                 <h4 class="title">Property Details</h4> 
@@ -26,7 +26,10 @@ export class Landlord extends Comp {
                                 
                                 <comp-input id="address" name="address"></comp-input>
                                 <comp-input id="title" name="title"></comp-input>
-                                <comp-input id="rent" name="rent"></comp-input>
+                                <div class="wrapper">
+                                    <comp-input id="rent" name="rent"></comp-input>
+                                    <p class="unit">p/m</p>
+                                </div>
                                 <comp-textarea id="description" name="description"></comp-textarea>
                             
                             </div>
@@ -42,7 +45,7 @@ export class Landlord extends Comp {
                         </div>
 
                         <!-- User personalisation  -->
-                        <div id="step2" hidden>
+                        <div id="step2" >
 
                             <div class="textContainer">
                                 <p class="text">Step 2/3</p>
@@ -53,6 +56,8 @@ export class Landlord extends Comp {
 
                              <div class="inputRow">
                                 <!-- new file comp for prop go here -->
+                                 <comp-file-card></comp-file-card>
+                                 <comp-file-card></comp-file-card>
                             </div>
 
                             <div class="footer">
@@ -176,7 +181,7 @@ export class Landlord extends Comp {
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 20,
-                padding: [20, 0, 40, 0],
+                padding: [20, 0, 20, 0],
                 media: {
                     maxWidthBp: 600,
                     padding: [10, 0, 20, 0],
@@ -241,14 +246,45 @@ export class Landlord extends Comp {
                 widthPercent: 100,
                 gap: 10,
             },
-    
+            {
+                class: "wrapper",
+                position: "relative",
+                widthPercent: 100,
+            },
+            {
+                class: "unit",
+                position: "absolute",
+                right: 14,
+                top: "50%",
+                fontSize: 14,
+                colourVar: "black60",
+                pointerEvents: "none",
+            }
         ];   
         
     }
 
     afterRender(){
         //Step 1
-        
+        const address = this.getById("address");
+        const title = this.getById("title");
+        const rent = this.getById("rent");
+        const description = this.getById("description");
+        const backBtn = this.getById("backBtn");
+        const nextBtn = this.getById("nextBtn");
+
+        address.label = "Address";
+        address.prompt = "Start typing your address";
+        title.label = "Title";
+        title.prompt = "10 Downing Street...";
+        rent.label = "Rent";
+        rent.prompt = "Enter a price...";
+        description.label = "Property description";
+        description.prompt = "Tell us about your home, be descriptive!";
+        backBtn.text = "back";
+        backBtn.variant = 2;
+        nextBtn.text = "next";
+
     }
 
     static {

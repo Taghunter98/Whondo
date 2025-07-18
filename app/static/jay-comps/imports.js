@@ -12,6 +12,7 @@ import './comps/navbar.js';
 import './comps/inputs/password.js';
 import './comps/inputs/file.js';
 import './comps/inputs/textarea.js';
+import './comps/inputs/filecard.js';
 
 // Pages
 import './comp-pages/login.js';
