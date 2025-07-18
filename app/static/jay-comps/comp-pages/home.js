@@ -1,127 +1,171 @@
 import { Comp } from "jay-comp";
-class HomePage extends Comp {
 
-    constructor(){
+export class Home extends Comp {
 
-        super();
+    text_;
 
-        this.name  = "Home page";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
+    set text(v){
+        this.text_ = v;
+        this.update();
+    }
 
-        this.render();
-    
+    get text() { return this.text_; }
+
+    beforeRender(){
+        if (!this.text_) {
+            const longText = "e.g I want to live in a flat in London that is £2000 a month, has two bedrooms and one bathroom...";
+            const shortText = "e.g I want a flat in London (£2000)..."
+            
+            this.text_ = window.innerWidth <= 600 ? shortText : longText
+        }
     }
 
     createHTML(){
-
+        
         return /* html */`
-            <div class="background">
-                <div class="container">
-                    <div class="modal">
-                        <div class="text">
-                            <h2 id="head">Describe your perfect home</h2>
-                        </div>
-                        <div class="prompt">
-                            <comp-input id="search"></comp-input>
-                            <comp-button id="searchBtn"></comp-button>
-                        </div>
-                        <p><a href="#" class="help">Prompting Help</a></p>
+        <div class="background">
+            <div class="container">
+                <div class="modal">
+                    <div class="text">
+                        <h2 class="head">Describe your perfect home</h2>
                     </div>
+                    <div class="prompt-wrapper">
+                        <textarea name="" id="prompt" class="prompt" placeholder="${this.text_}"></textarea>
+
+                        <div class="iconBtn">
+                            <comp-ibutton class="icon"></comp-ibutton>
+                        </div>
+                    </div>
+                    <p><a href="#" class="help">Prompting Help</a></p>
                 </div>
             </div>
+        </div>
         `;
-    
     }
 
     createCSS(){
 
-        const background = this.design.create({
-            class: "background",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "centre",
-            alignItems: "centre",
-            width: "100%",
-            minHeight: "100vh",
-            background: "white",
-        });
-
-        const container = this.design.create({
-            class: "container",
-            display: "flex",
-        });
-
-        const modal = this.design.create({
-            class: "modal",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "centre",
-            justifyContent: "centre",
-            gap: 40,
-            width: "100%",
-            maxWidth: 900,
-            padding: 20,
-        });
-
-        const head = this.design.create({
-            class: "head",
-            fontSize: 48,
-            fontWeight: "bold",
-            colour: "black100"
-        });
-
-        const prompt = this.design.create({
-            const: "prompt",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "centre",
-            justifyContent: "centre",
-            width: "100%",
-            maxWidth: 860,
-            borderRadius: 15,
-            border: 2,
-            overflow: "hidden",
-            gap: 20,
-            padding: 15,
-            background: "black40"
-        });
-
-        const help = this.design.create({
-            class: "help",
-            fontSize: 14,
-            TextDecoder: "underline",
-            marginTop: 10,
-            cursor: "pointer"
-        });
-
-
-
-
-        return /* css */`
-            ${background}
-            ${container}
-            ${modal}
-            ${head}
-            ${prompt}
-            ${help}
-        `;
-    
+        return [ 
+            {
+                class: "background",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "centre",
+                alignItems: "centre",
+                widthPercent: 100,
+                heightVh: 100,
+                background: "white"
+            },
+            {
+                class: "container",
+                display: "flex",
+                widthPercent: 100,
+                justifyContent: "centre"
+            },
+            {
+                class: "modal",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "centre",
+                alignItems: "centre",
+                gap: 40,
+                widthPercent: 100,
+                maxWidth: 900,
+                padding: 20,
+                boxSizing: "border-box"
+            },
+            {
+                class: "head",
+                fontSize: 48,
+                colourVar: "black100",
+                textAlign: "centre",
+                widthPercent: 100,
+                fontWeight: "bold",
+                lineHeight: "normal",
+                media: {
+                    maxWidthBp: 600,
+                    fontSize: 32,
+                }
+            },
+            {
+                class: "prompt-wrapper",
+                display: "flex",
+                alignItems: "centre",
+                gap: 20,
+                widthPercent: 100,
+                maxWidth: 900,
+                minHeight: 74,
+                padding: 15,
+                backgroundVar: "black10",
+                borderVar: "border",
+                borderRadius: 15,
+                boxSizing: "border-box",
+            },
+            {
+                class: "prompt",
+                flexGrow: 1,
+                flexShrink: 1,
+                widthPercent: 100,
+                backgroundVar: "black10",
+                border: "none",
+                fontSize: 16,
+                resize: "none",
+                lineHeight: 1.5,
+                outline: "none",
+                fontFamily: "Geist",
+                minHeight: 44,
+                maxHeight: 150,
+                whiteSpace: "pre-wrap",
+                media: {
+                maxWidthBp: 600,
+                fontSize: 16,
+                }
+            },
+            {
+                class: "help",
+                display: "flex",
+                justifyContent: "centre",
+                fontSize: 14,
+                cursor: "pointer",
+                colourVar: "black100"
+            },
+            {
+                class: "text",
+                widthPercent: 100,
+                display: "flex",
+                justifyContent: "centre",
+                textAlign: "centre"
+            },
+            {
+                class: "prompt",
+                pseudoClass: ":placeholder",
+                fontFamily: "Geist, sans-serif",
+                fontSize: 16
+            }
+        ];
     }
 
-    hook(){
-
-        const prompt = this.shadowRoot.querySelector("#search"); 
-        const btn    = this.shadowRoot.querySelector("#searchBtn");
-
-        prompt.type   = "text";
-        prompt.prompt = "e.g I want to live in a flat in London that is £2000 a month, has two bedrooms and one bathroom..."; 
-
-        btn.text = "enter";
-
-    
+     autoResize(el) {
+        el.style.height = 'auto';
+        el.style.height = `${el.scrollHeight}px`;
     }
+
+    afterRender(){
+        const icon = this.query(".icon");
+        const textarea = this.query(".prompt");
+
+        icon.path = "forward_arrow.svg"
+
+        textarea.value = "";
+        textarea.text = this.text_;
+
+        this.autoResize(textarea);
+
+        textarea.addEventListener("input", () => {
+            this.autoResize(textarea);
+        });
+    }
+
+     static { Comp.register(this); }
 
 }
-
-customElements.define("comp-home", HomePage);

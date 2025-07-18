@@ -1,20 +1,8 @@
 import { Comp } from 'jay-comp';
 
-class Navbar extends Comp {
+export class Navbar extends Comp {
 
-    constructor() {
-
-        super();
-
-        this.lastScrollY = window.scrollY;
-
-        this.name_ = "Navbar";
-        this.html_ = this.createHTML();
-        this.css_  = this.createCSS();
-        
-        this.render();
-    
-    }
+    lastScrollY = window.scrollY;
 
     createHTML() {
 
@@ -56,169 +44,139 @@ class Navbar extends Comp {
     }
 
     createCSS() {
+        
+        return [
+            {
+                class: "container",
+                top: "0",
+                zIndex: "1000",
+                position: "fixed",
+                display: "flex",
+                alignItems: "centre",
+                widthPercent: 100,
+                background: "white",
+                boxSizing: "border-box",
+                padding: [10, 20],
+                justifyContent: "space-between",
+                transition: ["top",  "0.4s"]
+            },
+            {
+                class: "logo",
+                fontWeight: "bold",
+                media: {
+                    maxWidthBp: 600,
+                    fontSize: 28
+                }
+            },
+            {
+                class: "links",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "centre",
+                gap: 20
+            },
+            // Navbar links
+            {
+                class: "link",
+                colourVar: "black80",
+                fontSize: 16,
+                padding: 10,
+                borderVar: "borderDefault",
+                borderRadius: 8,
+                listStyleType: "None",
+                cursor: "pointer",
+                transition: ["background", "0.1s", "ease-in-out"]
+            },
+            {
+                class: "link",
+                colourVar: "black100",
+                pseudoClass: "hover",
+                borderVar: "border",
+                backgroundVar: "black10"
+            },
+            {
+                class: "link",
+                pseudoClass: "active",
+                backgroundVar: "black20"
+            },
+            {
+                class: "menu",
+                display: "None",
+                media: {
+                    maxWidthBp: 600,
+                    display: "block"
+                }
+            },
+            {
+                class: "close",
+                display: "None",
+                media: {
+                    maxWidthBp: 600,
+                    display: "block"
+                }
+            },
+            {
+                class: "buttons",
+                display: "flex",
+                width: "auto",
+                gap: 20,
+                media: {
+                    maxWidthBp: 600,
+                    display: "none"
+                }
+            },
+            {
+                class: "tray",
+                display: "None"
+            },
+            // Media quuery adjustments
+            {
+                media: {
+                    maxWidthBp: 600,
+                    class: "header",
+                    display: "flex",
+                    alignItems: "centre",
+                    justifyContent: "space-between"
+                }
+            },
+            {
+                media: {
+                    maxWidthBp: 600,
+                    class: "links",
+                    display: "None"
+                }
+            
+            },
+            {
+                media: {
+                    maxWidthBp: 600,
+                    class: "tray",
+                    display: "flex",
+                    bottom: "-500px",
+                    position: "fixed",
+                    zIndex: "1000",
+                    boxSizing: "border-box",
+                    flexDirection: "column",
+                    widthPercent: 100,
+                    background: "white",
+                    padding: 20,
+                    borderRadius: 14,
+                    transition: ["bottom", "0.6s"]
+                }
+            
+            },
+            {
+                media: {
+                    maxWidthBp: 600,
+                    class: "trayButtons",
+                    display: "flex",
+                    gap: 10,
+                    paddingTop: 40
+                }
+           
+            }
 
-        const container = this.design.create({
-            class: "container",
-            top: "0",
-            zIndex: "1000",
-            position: "fixed",
-            display: "flex",
-            alignItems: "centre",
-            width: "100%",
-            background: "white",
-            boxSizing: "border-box",
-            padding: "10px 20px",
-            justifyContent: "space-between",
-            transition: "top 0.4s"
-        });
-
-        const logo = this.design.create({
-            class: "logo",
-            fontWeight: "bold"
-        });
-
-        const links = this.design.create({
-            class: "links",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "centre",
-            gap: 20
-        });
-
-        // Navbar links
-        const link = this.design.create({
-            class: "link",
-            colour: "black80",
-            fontSize: 16,
-            padding: 10,
-            border: "borderDefault",
-            borderRadius: 8,
-            listStyleType: "None",
-            cursor: "pointer",
-            transition: "background 0.1s ease-in-out"
-        });
-
-        const linkHover = this.design.create({
-            class: "link",
-            colour: "black100",
-            pseudoClass: "hover",
-            border: "border",
-            background: "black10"
-        });
-
-        const linkActive = this.design.create({
-            class: "link",
-            pseudoClass: "active",
-            background: "black20"
-        });
-
-        const menu = this.design.create({
-            class: "menu",
-            display: "None",
-        });
-
-        const close = this.design.create({
-            class: "close",
-            display: "None",
-        });
-
-        const buttons = this.design.create({
-            class: "buttons",
-            display: "flex",
-            width: "auto",
-            gap: 20
-        });
-
-        const hideTray = this.design.create({
-            class: "tray",
-            display: "None"
-        });
-
-        // Media quuery adjustments
-        const header = this.design.create({
-            class: "header",
-            display: "flex",
-            alignItems: "centre",
-            justifyContent: "space-between"
-        });
-
-        const logoMob = this.design.create({
-            class: "logo",
-            fontSize: 28
-        });
-
-        const linksMob = this.design.create({
-            class: "links",
-            display: "None"
-        });
-
-        const buttonsMob = this.design.create({
-            class: "buttons",
-            display: "None"
-        });
-
-        const menuMob = this.design.create({
-            class: "menu",
-            display: "block",
-        });
-
-        const closeMob = this.design.create({
-            class: "close",
-            display: "block",
-        });
-
-        const tray = this.design.create({
-            class: "tray",
-            display: "flex",
-            bottom: "-500px",
-            position: "fixed",
-            zIndex: "1000",
-            boxSizing: "border-box",
-            flexDirection: "column",
-            width: "100%",
-            background: "white",
-            padding: 20,
-            borderRadius: 14,
-            transition: "bottom 0.6s"
-        });
-
-        const trayButtons = this.design.create({
-            class: "trayButtons",
-            display: "flex",
-            gap: 10,
-            paddingTop: 40
-        });
-
-        return /* css */`
-        ${container}
-
-        ${logo}
-
-        ${links}
-        ${link}
-
-        /* Hide Icons */
-        ${menu}
-        ${close}
-
-        ${linkHover}
-        ${linkActive}
-
-        ${menu}
-        ${buttons}
-        ${hideTray}
-
-        @media (max-width: 600px) {
-            ${header}
-            ${logoMob}
-            ${linksMob}
-            ${buttonsMob}
-            ${menuMob}
-            ${closeMob}
-            ${tray}
-            ${trayButtons}
-        }
-        `;
+        ];
     
     }
 
@@ -230,7 +188,7 @@ class Navbar extends Comp {
      */
     navbarScroll() {
 
-        const navbar     = this.shadowRoot.getElementById("navbar");
+        const navbar     = this.getById("navbar");
         const currentPos = window.scrollY;
         
         if (currentPos > this.lastScrollY && currentPos > 20) navbar.style.top = "-80px";
@@ -242,28 +200,28 @@ class Navbar extends Comp {
 
     openMenu(offset) {
 
-        const tray        = this.shadowRoot.getElementById("tray");
+        const tray        = this.getById("tray");
         tray.style.bottom = offset;
     
     }
 
-    hook() {
+    afterRender() {
         
-        const register    = this.shadowRoot.getElementById("register");
-        const login       = this.shadowRoot.getElementById("login");
-        const menu        = this.shadowRoot.getElementById("menu");
-        const close       = this.shadowRoot.getElementById("close");
-        const loginMob    = this.shadowRoot.getElementById("loginMob");
-        const registerMob = this.shadowRoot.getElementById("registerMob");
+        const register    = this.getById("register");
+        const login       = this.getById("login");
+        const menu        = this.getById("menu");
+        const close       = this.getById("close");
+        const loginMob    = this.getById("loginMob");
+        const registerMob = this.getById("registerMob");
         
         register.text       = "Register";
-        register.varient    = 2;
+        register.variant    = 2;
         login.text          = "login";
         menu.path           = "menu.svg";
         close.path          = "close.svg";
         loginMob.text       = "Login";
         registerMob.text    = "Register";
-        registerMob.varient = 2;
+        registerMob.variant = 2;
 
         window.addEventListener("scroll", this.navbarScroll.bind(this));
 
@@ -279,8 +237,8 @@ class Navbar extends Comp {
         
         });
     
-    }
+    } 
+    
+    static { Comp.register(this); } 
 
 }
-
-customElements.define("comp-navbar", Navbar);
