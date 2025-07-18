@@ -1,4 +1,4 @@
-from tokenisation import Parser, Token
+from .tokenisation import Parser, Token
 
 
 def build_query(
