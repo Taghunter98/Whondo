@@ -134,6 +134,7 @@ def create_app() -> Flask:
     from .users.verify import verify_bp
     from .utilities.key_gen import gen_key_bp
     from .property.advert_api import advert_bp
+    from .search_engine.search_api import search_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
@@ -143,6 +144,7 @@ def create_app() -> Flask:
     app.register_blueprint(verify_bp)
     app.register_blueprint(gen_key_bp)
     app.register_blueprint(advert_bp)
+    app.register_blueprint(search_bp)
 
     @app.before_request
     def log_request():
