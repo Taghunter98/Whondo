@@ -6,13 +6,13 @@ Author:      Josh Bassett
 Date:        17/07/2025
 Version:     1.0
 
-Description: Provides a library for tokenisation.
+Description: Provides a library for tokenising prompts.
 """
 
 import re
 from rapidfuzz import process, fuzz
 
-from dictionaries import SIFT_LIST, TOWNS, KEYWORDS, SYNONYMS
+from dictionaries import SIFT_LIST, TOWNS, KEYWORDS, SYNONYMS, PROTECTD, ZONE_MAP
 
 
 class Token:
@@ -38,7 +38,7 @@ class Token:
 
 class Parser:
     def __init__(self, prompt: str):
-        self.prompt: str = prompt.lower()
+        self.prompt: str = prompt.replace("-", " ").replace("_", " ").lower()
 
     def isTown(self, w: str) -> bool:
         return w in TOWNS
@@ -52,13 +52,15 @@ class Parser:
             token.name = cleaned
             return True
         return False
-    
+
     def extract_towns(self):
         matches = []
         for city in sorted(TOWNS, key=lambda c: -len(c)):
             if re.search(rf"\b{re.escape(city)}\b", self.prompt):
                 matches.append(city)
-                self.prompt = re.sub(rf"\b{re.escape(city)}\b", city.replace(" ", "_"), self.prompt)
+                self.prompt = re.sub(
+                    rf"\b{re.escape(city)}\b", city.replace(" ", "_"), self.prompt
+                )
         return matches
 
     def tokenise(self) -> list[Token]:
@@ -66,15 +68,15 @@ class Parser:
 
         raw_words = []
         for w in self.prompt.split():
-            clean = re.sub(r"[^\w\s]", "", w)
+            clean = re.sub(r"[^\w\s]", "", w)  # Cleans unwanted chars
             if clean and clean not in SIFT_LIST:
-                raw_words.append(clean.replace("_", " "))
+                raw_words.append(clean)
 
         tokens = []
         for pos, w in enumerate(raw_words):
             t = Token(w)
             t.position = pos
-            t.is_city  = self.isTown(w)
+            t.is_city = self.isTown(w)
             t.is_number = self.isNumber(t, w)
 
             if tokens:
@@ -85,8 +87,11 @@ class Parser:
             tokens.append(t)
         return tokens
 
-    def canonical_field(self, token_name: str) -> str | None:
+    def mapField(self, token_name: str) -> str | None:
         name = token_name.lower().strip()
+       
+        if name in PROTECTD:
+            return None
 
         if name in KEYWORDS:
             return name
@@ -95,9 +100,7 @@ class Parser:
             return SYNONYMS[name]
 
         match, score, _ = process.extractOne(
-            name, KEYWORDS,
-            scorer=fuzz.ratio,
-            score_cutoff=70
+            name, KEYWORDS, scorer=fuzz.ratio, score_cutoff=70
         ) or (None, 0, None)
 
         return match
@@ -111,21 +114,28 @@ class Parser:
 
         for t in tokens:
             next = t.next.name if t.next else None
-            prev = t.prev.is_city if t.prev else False
+            prev = t.prev.name if t.prev else False
 
             if t.is_number:
-                if next in ("month", "week") or prev:
+                # pricing detection
+                if next in ("month", "week", "per") or prev:
                     t.is_price = True
                     price = float(t.name)
                     continue
-                else:
-                    continue
 
+            # zoning detection
+            if t.name == "zone":
+                zone_field = ZONE_MAP.get(t.next.name)
+                if zone_field:
+                    t.name = zone_field
+
+            # city detection
             if t.is_city:
                 location = t.name
                 continue
-
-            field = self.canonical_field(t.name)
+            
+            # database field token matching
+            field = self.mapField(t.name)
             if field and field not in seen_fields:
                 seen_fields.add(field)
                 t.name = field

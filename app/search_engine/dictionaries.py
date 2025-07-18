@@ -49,6 +49,14 @@ SIFT_LIST = [
     "could",
     "want",
     "live",
+    "friendly",
+    "let",
+    "term",
+    "looking",
+    "need",
+    "searching",
+    "costing",
+    "per",
     # articles & conjunctions
     "a",
     "an",
@@ -215,7 +223,7 @@ TOWNS = [
     "basildon",
     "ashford",
     "tunbridge wells",
-    "maidstone"
+    "maidstone",
 ]
 
 KEYWORDS = [
@@ -245,7 +253,6 @@ KEYWORDS = [
     "long_let",
     "no_deposit",
     "low_deposit",
-    "zero_deposit",
     "dss_accepted",
     "guarantor_required",
     "no_guarantor",
@@ -288,30 +295,36 @@ SYNONYMS = {
     "fully furnished": "furnished",
     "un-furnished": "unfurnished",
     "bills included": "bills_included",
+    "bills": "bills_included",
     "utilities included": "utilities_included",
     "all inclusive": "all_inclusive",
     "deposit free": "no_deposit",
+    "zero deposit": "no_deposit",
     "dss accepted": "dss_accepted",
     "housing benefit": "dss_accepted",
-    "guarantor": "guarantor_required",
-    "guarantor friendly": "guarantor_required",
+    "guarantor required": "guarantor_required",
     "no guarantor": "no_guarantor",
     "pet": "pets_allowed",
     "pets": "pets_allowed",
     "allow pets": "pets_allowed",
-    "pet friendly": "pets_allowed",
     "wi-fi": "wifi_included",
+    "wifi included": "wifi_included",
     "wifi": "wifi_included",
     "internet": "wifi_included",
     "car park": "parking",
     "bike friendly": "cycle_friendly",
     "cycle friendly": "cycle_friendly",
+    "cycle": "cycle_friendly",
     "bicycle storage": "bike_storage",
     "bike storage": "bike_storage",
     "lgbtq friendly": "lgbtq_friendly",
+    "lgbtq": "lgbtq_friendly",
     "wheelchair accessible": "wheelchair_accessible",
+    "wheelchair": "wheelchair_accessible",
     "elevator": "lift",
     "gf": "ground_floor",
+    "social": "social_house",
+    "social house": "social_house",
     "ground floor": "ground_floor",
     "bus route": "bus_route",
     "station": "close_to_station",
@@ -319,6 +332,8 @@ SYNONYMS = {
     "tube": "close_to_station",
     "near station": "close_to_station",
     "near university": "near_university",
+    "university": "near_university",
+    "uni": "near_university",
     "downtown": "city_centre",
     "city centre": "city_centre",
     # zone variants:
@@ -331,8 +346,18 @@ SYNONYMS = {
     "zone4": "zone_4",
     "zone 4": "zone_4",
     # let variants:
-    "short term": "short_let",
+    "short": "short_let",
+    "short_let": "short_let",
+    "short_term": "short_let",
     "short-term": "short_let",
-    "long term": "long_let",
-    "long-term": "long_let",
+    "long": "long_let",
 }
+
+ZONE_MAP = {"1": "zone_1", "2": "zone_2", "3": "zone_3", "4": "zone_4"}
+
+PROTECTD = [
+    "included",
+    "include",
+    "allow",
+    "allows"
+]
