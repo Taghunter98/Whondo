@@ -246,10 +246,6 @@ export class Landlord extends Comp {
         
     }
 
-    afterRender(){
-
-    }
-
     static {
 
         Comp.register(this); 
