@@ -22,10 +22,10 @@ export class Home extends Comp {
         return /* html */`
         <div class="background">
             <div class="container">
+                
+                <h2 class="head">Describe your perfect home</h2>
+                    
                 <div class="modal">
-                    <div class="text">
-                        <h2 class="head">Describe your perfect home</h2>
-                    </div>
                     <div class="prompt-wrapper">
                         <textarea name="" id="prompt" class="prompt" placeholder="${this.text_}"></textarea>
 
@@ -48,12 +48,16 @@ export class Home extends Comp {
                 justifyContent: "centre",
                 widthPercent: 100,
                 heightVh: 100,
-                background: "white"
+                background: "white",
+                media: {maxWidthBp: 600, justifyContent: "end" }
             },
             { class: "container",
                 display: "flex",
+                flexDirection: "column",
+                alignItems: "centre",
                 widthPercent: 100,
-                justifyContent: "centre"
+                justifyContent: "centre",
+                media: {maxWidthBp: 600, justifyContent: "space-between"}
             },
             { class: "modal",
                 display: "flex",
@@ -64,16 +68,15 @@ export class Home extends Comp {
                 widthPercent: 100,
                 maxWidth: 900,
                 padding: 20,
-                boxSizing: "border-box"
+                boxSizing: "border-box",
+                media: {maxWidthBp: 600, heightVh: 50}
             },
             { class: "head",
-                fontSize: 48,
                 colourVar: "black100",
                 textAlign: "centre",
-                widthPercent: 100,
                 fontWeight: "bold",
-                lineHeight: "normal",
-                media: { maxWidthBp: 600, fontSize: 24 }
+                paddingBottom: 20,
+                media: { maxWidthBp: 600, fontSize: 24, paddingBottom: 0}
             },
             { class: "prompt-wrapper",
                 display: "flex",
@@ -85,7 +88,7 @@ export class Home extends Comp {
                 backgroundVar: "black10",
                 borderVar: "border",
                 borderRadius: 15,
-                boxSizing: "border-box",
+                boxSizing: "border-box"
             },
             { class: "prompt",
                 flexGrow: 1,
@@ -109,12 +112,6 @@ export class Home extends Comp {
                 fontSize: 14,
                 cursor: "pointer",
                 colourVar: "black100"
-            },
-            { class: "text",
-                widthPercent: 100,
-                display: "flex",
-                justifyContent: "centre",
-                textAlign: "centre"
             },
             { class: "prompt",
                 pseudoClass: ":placeholder",
