@@ -3,6 +3,7 @@ import os
 
 from app.property.property import create_property, update_property, delete_property
 
+
 @unittest.skipIf(
     os.environ.get("CI") == "true",
     "Skipping test in CI pipeline: This test needs DB access",
