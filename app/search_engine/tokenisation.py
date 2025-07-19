@@ -202,10 +202,10 @@ class Parser:
                     t.is_price = True
                     price = float(t.name)
                     continue
-                elif next in ("bedrooms", "bedroom"):
+                elif next in ("bedrooms", "bedroom", "bed"):
                     bedrooms = int(t.name)
                     continue
-                elif next in ("bathroom", "bathrooms"):
+                elif next in ("bathroom", "bathrooms", "bath"):
                     bathrooms = int(t.name)
                     continue
 
