@@ -12,16 +12,13 @@ export class Home extends Comp {
     get text() { return this.text_; }
 
     beforeRender(){
-        if (!this.text_) {
-            const longText = "e.g I want to live in a flat in London that is £2000 a month, has two bedrooms and one bathroom...";
-            const shortText = "e.g I want a flat in London (£2000)..."
-            
-            this.text_ = window.innerWidth <= 600 ? shortText : longText
-        }
+        if (!this.text_) 
+            this.text_ = window.innerWidth <= 600 ?
+                "I want to rent a flat in London that's £2000 a month..." :
+                "I want to rent a flat in London that's £2000 a month, has two bedrooms and one bathroom and near a tube station..."
     }
 
     createHTML(){
-        
         return /* html */`
         <div class="background">
             <div class="container">
@@ -33,7 +30,7 @@ export class Home extends Comp {
                         <textarea name="" id="prompt" class="prompt" placeholder="${this.text_}"></textarea>
 
                         <div class="iconBtn">
-                            <comp-ibutton class="icon"></comp-ibutton>
+                            <comp-prompt-icon class="icon"></comp-prompt-icon>
                         </div>
                     </div>
                     <p><a href="#" class="help">Prompting Help</a></p>
@@ -44,26 +41,21 @@ export class Home extends Comp {
     }
 
     createCSS(){
-
         return [ 
-            {
-                class: "background",
+            { class: "background",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "centre",
-                alignItems: "centre",
                 widthPercent: 100,
                 heightVh: 100,
                 background: "white"
             },
-            {
-                class: "container",
+            { class: "container",
                 display: "flex",
                 widthPercent: 100,
                 justifyContent: "centre"
             },
-            {
-                class: "modal",
+            { class: "modal",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "centre",
@@ -74,23 +66,17 @@ export class Home extends Comp {
                 padding: 20,
                 boxSizing: "border-box"
             },
-            {
-                class: "head",
+            { class: "head",
                 fontSize: 48,
                 colourVar: "black100",
                 textAlign: "centre",
                 widthPercent: 100,
                 fontWeight: "bold",
                 lineHeight: "normal",
-                media: {
-                    maxWidthBp: 600,
-                    fontSize: 32,
-                }
+                media: { maxWidthBp: 600, fontSize: 24 }
             },
-            {
-                class: "prompt-wrapper",
+            { class: "prompt-wrapper",
                 display: "flex",
-                alignItems: "centre",
                 gap: 20,
                 widthPercent: 100,
                 maxWidth: 900,
@@ -101,8 +87,7 @@ export class Home extends Comp {
                 borderRadius: 15,
                 boxSizing: "border-box",
             },
-            {
-                class: "prompt",
+            { class: "prompt",
                 flexGrow: 1,
                 flexShrink: 1,
                 widthPercent: 100,
@@ -116,28 +101,22 @@ export class Home extends Comp {
                 minHeight: 44,
                 maxHeight: 150,
                 whiteSpace: "pre-wrap",
-                media: {
-                maxWidthBp: 600,
-                fontSize: 16,
-                }
+                media: { maxWidthBp: 600, fontSize: 16 }
             },
-            {
-                class: "help",
+            { class: "help",
                 display: "flex",
                 justifyContent: "centre",
                 fontSize: 14,
                 cursor: "pointer",
                 colourVar: "black100"
             },
-            {
-                class: "text",
+            { class: "text",
                 widthPercent: 100,
                 display: "flex",
                 justifyContent: "centre",
                 textAlign: "centre"
             },
-            {
-                class: "prompt",
+            { class: "prompt",
                 pseudoClass: ":placeholder",
                 fontFamily: "Geist, sans-serif",
                 fontSize: 16
@@ -145,7 +124,11 @@ export class Home extends Comp {
         ];
     }
 
-     autoResize(el) {
+    /**
+     * Method auto resizes the prompt bar element
+     * @param {HTMLElement} el 
+     */
+    autoResize(el) {
         el.style.height = 'auto';
         el.style.height = `${el.scrollHeight}px`;
     }
@@ -156,16 +139,13 @@ export class Home extends Comp {
 
         icon.path = "forward_arrow.svg"
 
-        textarea.value = "";
         textarea.text = this.text_;
 
         this.autoResize(textarea);
 
-        textarea.addEventListener("input", () => {
-            this.autoResize(textarea);
-        });
+        textarea.addEventListener("input", () => this.autoResize(textarea));
     }
 
-     static { Comp.register(this); }
+    static { Comp.register(this); }
 
 }

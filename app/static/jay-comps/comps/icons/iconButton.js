@@ -1,6 +1,6 @@
 import { Icon } from "./icon.js";
 
-export class Ibutton extends Icon {
+export class PromptIcon extends Icon {
 
     createHTML() {
         return /* html */`
