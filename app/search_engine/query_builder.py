@@ -23,7 +23,6 @@ def build_query(
       p.street,
       p.town,
       p.county,
-      
       GROUP_CONCAT(k.kID)       AS matched_kIDs,
       GROUP_CONCAT(k.name)      AS matched_keywords
       
