@@ -67,7 +67,8 @@ export class Home extends Comp {
                 widthPercent: 100,
                 maxWidth: 900,
                 padding: 20,
-                boxSizing: "border-box"
+                boxSizing: "border-box",
+                media: {maxWidthBp: 600, gap: 10}
             },
             { class: "head",
                 colourVar: "black100",
