@@ -137,8 +137,7 @@ export class Home extends Comp {
         const icon = this.query(".icon");
         const textarea = this.query(".prompt");
 
-        icon.path = "forward_arrow.svg"
-        
+        icon.path = "arrow_forward.svg"
 
         textarea.text = this.text_;
 

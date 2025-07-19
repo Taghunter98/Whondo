@@ -21,10 +21,8 @@ export class Icon extends Comp {
     }
 
     createCSS() {
-
         return [
-            {
-                class: "icon",
+            { class: "icon",
                 display: "flex",
                 borderVar: "borderDefault",
                 borderRadius: 8,
@@ -33,14 +31,12 @@ export class Icon extends Comp {
                 cursor: "pointer",
                 transition: ["background", "0.1s", "ease-in-out"]
             },
-            {
-                class: "icon",
+            { class: "icon",
                 pseudoClass: "hover",
                 backgroundVar: "black10",
                 borderVar: "border"
             },
-            {
-                class: "icon",
+            { class: "icon",
                 pseudoClass: "active",
                 backgroundVar: "black20"
             },
