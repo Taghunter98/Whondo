@@ -1,6 +1,6 @@
 import { Comp } from 'jay-comp';
 
-export class Landlord extends Comp {
+export class CreateProp extends Comp {
 
     createHTML() {
 
@@ -17,7 +17,7 @@ export class Landlord extends Comp {
                         <div id="step1" hidden>
                             <div class="textContainer">
                                 <p class="text">Step 1/3</p>
-                                <h4 class="title">Property Details</h4> 
+                                <h4 class="title">Property Details</h4>
                             </div>
 
                             <p class="text">Let’s create a beautiful advert, tell us about your home!</p>
@@ -50,9 +50,8 @@ export class Landlord extends Comp {
                             <div class="textContainer">
                                 <p class="text">Step 2/3</p>
                                 <h4 class="title">Add Images</h4> 
+                                <p class="text">The best adverts have great pictures, we recommend at least 8 to properly show off your home! Be mindful our users mostly use mobile! So we advise taking pictures in profile.</p>
                             </div>
-
-                            <p class="text">The best adverts have great pictures, we recommend at least 8 to properly show off your home! Be mindful our users mostly use mobile! So we advise taking pictures in profile.</p>
 
                              <div class="inputRow">
                                 <!-- new file comp for prop go here -->
@@ -192,7 +191,8 @@ export class Landlord extends Comp {
                 class: "inputRow",
                 display: "flex",
                 flexDirection: "row",
-                gap: 15,
+                gap: 10,
+                padding: [20, 0, 20, 0],
                 widthPercent: 100,
                 justifyContent: "space-between",
                 media: {
@@ -204,7 +204,7 @@ export class Landlord extends Comp {
                 class: "btnRow",
                 display: "flex",
                 flexDirection: "row",
-                gap: 15,
+                gap: 20,
                 widthPercent: 100,
                 justifyContent: "space-between"
             },
@@ -229,13 +229,14 @@ export class Landlord extends Comp {
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
-                gap: 5,
+                gap: 10,
             },
             {
                 class: "text",
                 colourVar: "black60",
                 display: "flex",
                 alignSelf: "start",
+                lineHeight: "normal"
             
             },
             {
@@ -244,7 +245,7 @@ export class Landlord extends Comp {
                 flexDirection: "column",
                 alignItems: "centre",
                 widthPercent: 100,
-                gap: 10,
+                gap: 20,
             },
             {
                 class: "wrapper",

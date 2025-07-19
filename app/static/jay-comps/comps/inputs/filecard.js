@@ -7,7 +7,6 @@ export class FileCard extends File {
         return /* html */`
            
         <div class="inputContainer">
-            <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
             <div class="fileWrapper">
                 <div class="fileBox">
                     <img class="filePreview" src="" hidden/>
@@ -50,7 +49,7 @@ export class FileCard extends File {
         const previewBox = {
             
             class: "filePreview",
-            width: "auto",             
+            widthPercent: 100,             
             maxWidth: 218,       
             maxHeight: 387,        
             objectFit: "cover",
@@ -72,34 +71,8 @@ export class FileCard extends File {
                 borderRadius: 6
             }
         };
-
-        const preview = {
-            
-            class: "filePreview",
-            width: "auto",             
-            maxWidth: 150,       
-            maxHeight: 150,        
-            objectFit: "cover",
-            display: "block",
-            marginTop: 8,
-            marginLeft: "auto",        
-            marginRight: "auto",
-            borderRadius: 6,
-            media: {
-                maxWidthBp: 600,
-                maxWidth: 100,     
-                maxHeight: 100,
-                marginTop: 8,
-                marginLeft: "auto",
-                marginRight: "auto",
-                maxWidthPercent: 100,
-                height: "auto",
-                objectFit: "cover",
-                borderRadius: 6  
-            }
-        };
     
-        return [base, previewBox, preview, fileBox,];
+        return [base, previewBox, fileBox];
     
     }
 
