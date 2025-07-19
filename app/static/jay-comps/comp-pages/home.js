@@ -42,7 +42,11 @@ export class Home extends Comp {
     }
 
     createCSS(){
+        const slideUp = this.effect.slideUp(20)
+        const prop1 = this.effect.prop("slideUp", .6, "ease-in-out")
+        const prop2 = this.effect.prop("slideUp", 1, "ease-in-out")
         return [ 
+            slideUp,
             { class: "background",
                 display: "flex",
                 flexDirection: "column",
@@ -57,7 +61,7 @@ export class Home extends Comp {
                 flexDirection: "column",
                 alignItems: "centre",
                 widthPercent: 100,
-                justifyContent: "centre"
+                justifyContent: "centre",
             },
             { class: "modal",
                 display: "flex",
@@ -76,6 +80,7 @@ export class Home extends Comp {
                 textAlign: "centre",
                 fontWeight: "bold",
                 paddingBottom: 20,
+                animation: prop1,
                 media: { maxWidthBp: 600, fontSize: 24, paddingBottom: 0}
             },
             { class: "prompt-wrapper",
@@ -88,7 +93,8 @@ export class Home extends Comp {
                 backgroundVar: "black10",
                 borderVar: "border",
                 borderRadius: 15,
-                boxSizing: "border-box"
+                boxSizing: "border-box",
+                animation: prop2,
             },
             { class: "prompt",
                 flexGrow: 1,

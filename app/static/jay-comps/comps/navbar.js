@@ -46,8 +46,7 @@ export class Navbar extends Comp {
     createCSS() {
         
         return [
-            {
-                class: "container",
+            { class: "container",
                 top: "0",
                 zIndex: "1000",
                 position: "fixed",
@@ -60,24 +59,17 @@ export class Navbar extends Comp {
                 justifyContent: "space-between",
                 transition: ["top",  "0.4s"]
             },
-            {
-                class: "logo",
+            { class: "logo",
                 fontWeight: "bold",
-                media: {
-                    maxWidthBp: 600,
-                    fontSize: 28
-                }
+                media: { maxWidthBp: 600, fontSize: 28 }
             },
-            {
-                class: "links",
+            { class: "links",
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "centre",
                 gap: 20
             },
-            // Navbar links
-            {
-                class: "link",
+            { class: "link",
                 colourVar: "black80",
                 fontSize: 16,
                 padding: 10,
@@ -87,70 +79,45 @@ export class Navbar extends Comp {
                 cursor: "pointer",
                 transition: ["background", "0.1s", "ease-in-out"]
             },
-            {
-                class: "link",
+            { class: "link", pseudoClass: "hover",
                 colourVar: "black100",
-                pseudoClass: "hover",
                 borderVar: "border",
                 backgroundVar: "black10"
             },
-            {
-                class: "link",
-                pseudoClass: "active",
+            { class: "link", pseudoClass: "active",
                 backgroundVar: "black20"
             },
-            {
-                class: "menu",
+            { class: "menu",
                 display: "None",
-                media: {
-                    maxWidthBp: 600,
-                    display: "block"
-                }
+                media: { maxWidthBp: 600, display: "block" }
             },
-            {
-                class: "close",
+            { class: "close",
                 display: "None",
-                media: {
-                    maxWidthBp: 600,
-                    display: "block"
-                }
+                media: { maxWidthBp: 600, display: "block" }
             },
-            {
-                class: "buttons",
+            { class: "buttons",
                 display: "flex",
                 width: "auto",
                 gap: 20,
-                media: {
-                    maxWidthBp: 600,
-                    display: "none"
-                }
+                media: { maxWidthBp: 600, display: "none" }
             },
-            {
-                class: "tray",
+            { class: "tray",
                 display: "None"
             },
-            // Media quuery adjustments
             {
-                media: {
-                    maxWidthBp: 600,
-                    class: "header",
+                media: { maxWidthBp: 600, class: "header",
                     display: "flex",
                     alignItems: "centre",
                     justifyContent: "space-between"
                 }
             },
             {
-                media: {
-                    maxWidthBp: 600,
-                    class: "links",
+                media: { maxWidthBp: 600, class: "links",
                     display: "None"
                 }
-            
             },
             {
-                media: {
-                    maxWidthBp: 600,
-                    class: "tray",
+                media: { maxWidthBp: 600, class: "tray",
                     display: "flex",
                     bottom: "-500px",
                     position: "fixed",
@@ -166,18 +133,13 @@ export class Navbar extends Comp {
             
             },
             {
-                media: {
-                    maxWidthBp: 600,
-                    class: "trayButtons",
+                media: { maxWidthBp: 600, class: "trayButtons",
                     display: "flex",
                     gap: 10,
                     paddingTop: 40
                 }
-           
             }
-
         ];
-    
     }
 
     /**
@@ -207,36 +169,25 @@ export class Navbar extends Comp {
 
     afterRender() {
         
-        const register    = this.getById("register");
-        const login       = this.getById("login");
-        const menu        = this.getById("menu");
-        const close       = this.getById("close");
-        const loginMob    = this.getById("loginMob");
+        const register = this.getById("register");
+        const login = this.getById("login");
+        const menu = this.getById("menu");
+        const close = this.getById("close");
+        const loginMob = this.getById("loginMob");
         const registerMob = this.getById("registerMob");
         
-        register.text       = "Register";
-        register.variant    = 2;
-        login.text          = "login";
-        menu.path           = "menu.svg";
-        close.path          = "close.svg";
-        loginMob.text       = "Login";
-        registerMob.text    = "Register";
+        register.text = "Register";
+        register.variant = 2;
+        login.text = "login";
+        menu.path = "menu.svg";
+        close.path = "close.svg";
+        loginMob.text = "Login";
+        registerMob.text = "Register";
         registerMob.variant = 2;
 
         window.addEventListener("scroll", this.navbarScroll.bind(this));
-
-        menu.addEventListener("click", () => {
-
-            this.openMenu("0");
-        
-        });
-
-        close.addEventListener("click", () => {
-
-            this.openMenu("-500px");
-        
-        });
-    
+        menu.addEventListener("click", () => this.openMenu("0"));
+        close.addEventListener("click", () => this.openMenu("-500px"));
     } 
     
     static { Comp.register(this); } 

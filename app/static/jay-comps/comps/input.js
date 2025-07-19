@@ -7,14 +7,17 @@ export class Input extends Comp {
         this.label_ = newLabel;
         this.update();
     }
+
     set type(newType) {
         this.type_ = newType;
         this.update();
     }
+
     set prompt(newPrompt) {
         this.prompt_ = newPrompt;
         this.update();
     }
+    
     set required (flag){
         this.required_ = flag;
         this.update();
@@ -45,8 +48,7 @@ export class Input extends Comp {
     
     createCSS() {
         return [
-            {
-                class: "inputContainer",
+            { class: "inputContainer",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
@@ -56,8 +58,7 @@ export class Input extends Comp {
                 gap: 10,
                 background: "white"
             },
-            {
-                class: "inputValue",
+            { class: "inputValue",
                 display: "block",
                 fontSize: 16,
                 widthPercent: 100,
@@ -66,32 +67,34 @@ export class Input extends Comp {
                 borderRadius: 8,
                 boxSizing: "border-box"
             },
-            {
-                class: "inputValue",
-                pseudoClass: "hover",
-                outline: ["solid", 2, "var(--black60)"]
+            { class: "inputValue", pseudoClass: "hover",
+                outline: [
+                    "solid", 2, "var(--black60)"
+                ]
             },
-            {
-                class: "inputValue",
-                pseudoClass: "focus",
-                outline: ["solid", 2, "var(--black100)"]
+            { class: "inputValue", pseudoClass: "focus",
+                outline: [
+                    "solid", 2, "var(--black100)"
+                ]
             },
-            {
-                class: "error",
-                borderBottom: ["solid", 2, "var(--red100)"]
+            { class: "error",
+                borderBottom: [
+                    "solid", 2, "var(--red100)"
+                ]
             },
-            {
-                class: "warning",
-                borderBottom: ["solid", 2, "var(--yellow100)"]
+            { class: "warning",
+                borderBottom: [
+                    "solid", 2, "var(--yellow100)"
+                ]
             },
-            {
-                class: "success",
-                borderBottom: ["solid", 2, "var(--green100)"],
+            { class: "success",
+                borderBottom: [
+                    "solid", 2, "var(--green100)"
+                ],
             },
-            {
-                class: "hint",
+            { class: "hint",
                 fontSizeEm: 0.75,
-                colour: "black",
+                colourVar: "black100",
                 paddingTop: 4
             }
         ];
