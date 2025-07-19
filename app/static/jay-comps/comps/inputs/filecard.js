@@ -11,7 +11,7 @@ export class FileCard extends File {
                 <div class="fileBox">
                     <img class="filePreview" src="" hidden/>
                     <span class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="currentColor">
                             <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
                         </svg>
                     </span>
@@ -34,30 +34,37 @@ export class FileCard extends File {
             flexDirection: "column",
             alignItems: "centre",
             justifyContent: "centre",
+            position: "relative",
             widthPercent: 100,
             maxWidthPercent: 100,
-            padding: 20,
+            padding: 0,
             border: 2,
-            borderRadius: 12,
+            borderRadius: 8,
             borderStyle: "dotted",
             background: "white",
             gap: 8,
             boxSizing: "border-box",
-            textAlign: "centre"
+            textAlign: "centre",
+            overflow: "hidden",
+            height: 387,
+            media: {
+                maxWidthBp: 600
+            }
         };
 
         const previewBox = {
             
             class: "filePreview",
-            widthPercent: 100,             
+            widthPercent: 100,    
+            position: "absolute",         
             maxWidth: 218,       
-            maxHeight: 387,        
+            maxHeight: 387,
+            top: 0,
+            left: 0,        
             objectFit: "cover",
             display: "block",
-            marginTop: 8,
-            marginLeft: "auto",        
-            marginRight: "auto",
-            borderRadius: 6,
+            margin: 0,
+            borderRadius: 12,
             media: {
                 maxWidthBp: 600,
                 maxWidth: 100,     
@@ -87,7 +94,7 @@ export class FileCard extends File {
 
             if (!file) return;
 
-            filePrompt.textContent = file.name;
+            filePrompt.setAttribute("hidden", "");
 
             this._selectedFile = file;
 
@@ -99,7 +106,6 @@ export class FileCard extends File {
                     preview.src = reader.result;
                     preview.removeAttribute("hidden");
                     icon.setAttribute("hidden", "");
-                    reuploadBtn?.removeAttribute("hidden");
                 
                 };
                 reader.readAsDataURL(file);

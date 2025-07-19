@@ -53,7 +53,7 @@ export class CreateProp extends Comp {
                                 <p class="text">The best adverts have great pictures, we recommend at least 8 to properly show off your home! Be mindful our users mostly use mobile! So we advise taking pictures in profile.</p>
                             </div>
 
-                             <div class="inputRow">
+                             <div class="inputRowFile">
                                 <!-- new file comp for prop go here -->
                                  <comp-file-card></comp-file-card>
                                  <comp-file-card></comp-file-card>
@@ -195,6 +195,20 @@ export class CreateProp extends Comp {
                 padding: [20, 0, 20, 0],
                 widthPercent: 100,
                 justifyContent: "space-between",
+                media: {
+                    maxWidthBp: 600,
+                    flexDirection: "column"
+                }
+            },
+            {
+                class: "inputRowFile",
+                display: "flex",
+                flexDirection: "row",
+                gap: 10,
+                padding: [20, 0, 20, 0],
+                widthPercent: 100,
+                justifyContent: "space-between",
+                height: 387,
                 media: {
                     maxWidthBp: 600,
                     flexDirection: "column"
