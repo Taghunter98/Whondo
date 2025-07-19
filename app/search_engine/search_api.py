@@ -15,6 +15,7 @@ from app.database.db_connect import connect
 from .tokenisation import Parser
 from .query_builder import build_query
 from .dictionaries import KEYWORDS
+from ..utilities.get_landlord import get_landlord_info
 
 search_bp = Blueprint("search_bp", __name__)
 
@@ -83,7 +84,8 @@ def search():
             r["images"] = [img for img in images if img] 
             results.append(r)
 
-        
+            r["landlord_info"] = get_landlord_info(r.get("lID"))
+            results.append(r)
 
         return jsonify(results=results)
 
