@@ -10,17 +10,16 @@ def build_query(
 ) -> Tuple[str, List]:
     sql = """
     SELECT
-      	a.adID,
-      	a.title,
-      	a.description,
-      	a.price,
-      	p.pID            AS propertyID,
-      	p.name           AS propertyName,
-      	p.street,
-      	p.town,
-      	p.county,
-        GROUP_CONCAT(DISTINCT k.name ORDER BY k.name SEPARATOR ',')
-          	AS matched_keywords
+		a.adID,
+		a.title,
+		a.description,
+		a.price,
+		p.pID            AS propertyID,
+		p.name           AS propertyName,
+		p.street,
+		p.town,
+		p.county,
+		k.*  
     FROM PropertyKeywordAdvert pka
       	JOIN Property p   ON p.pID   = pka.pID
       	JOIN Adverts a    ON a.adID  = pka.adID
@@ -30,16 +29,16 @@ def build_query(
     where_clauses: List[str] = []
     params:        List     = []
 
-    # 1) Keyword flags
+    # Keyword flags
     if keywords:
         or_parts = [f"k.{kw} = 1" for kw in keywords]
         where_clauses.append("(" + " OR ".join(or_parts) + ")")
 
-    # 2) Town
+    # Town
     where_clauses.append("p.town = %s")
     params.append(location)
 
-    # 3) Price / beds / baths
+    # Price / beds / baths
     if price is not None:
         where_clauses.append("a.price <= %s")
         params.append(price)
@@ -50,7 +49,7 @@ def build_query(
         where_clauses.append("p.bathrooms >= %s")
         params.append(bathrooms)
 
-    # 4) Stitch WHERE…GROUP BY
+    # Stitch WHERE…GROUP BY
     sql += "\nWHERE " + "\n  AND ".join(where_clauses)
     sql += """
     GROUP BY
@@ -65,6 +64,4 @@ def build_query(
       p.county;
     """
 
-    # Log the final SQL & params for troubleshooting
-    current_app.logger.debug("Search SQL:\n%s\nParams: %s", sql, params)
     return sql, params

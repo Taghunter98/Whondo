@@ -8,11 +8,7 @@ SELECT
   p.street,
   p.town,
   p.county,
-
-  GROUP_CONCAT(DISTINCT k.name 
-               ORDER BY k.name 
-               SEPARATOR ',')
-    AS matched_keywords
+  k.*
 
 FROM PropertyKeywordAdvert pka
 JOIN Property p   ON p.pID   = pka.pID
@@ -22,7 +18,7 @@ JOIN Keywords k   ON k.kID   = pka.kID
 WHERE
   p.town      = 'Canterbury'
   AND (k.house  = 1 OR k.flat = 1)
-  AND a.price  <= 1200
+  AND a.price  <= 2000
   AND p.bedrooms >= 2
 
 GROUP BY

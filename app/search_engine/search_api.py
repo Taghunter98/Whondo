@@ -14,6 +14,7 @@ from flask import Blueprint, request, redirect, jsonify, current_app
 from app.database.db_connect import connect
 from .tokenisation import Parser
 from .query_builder import build_query
+from .dictionaries import KEYWORDS
 
 search_bp = Blueprint("search_bp", __name__)
 
@@ -47,10 +48,22 @@ def search():
 
         cursor.execute(sql, params)
         rows = cursor.fetchall()
+
         cursor.close()
         connection.close()
 
-        return jsonify({"results": rows})
+        cols = [c[0] for c in cursor.description]
+        dict_rows = [dict(zip(cols, row)) for row in rows]
+
+        results = []
+        for r in dict_rows:
+            matched = [kw for kw in KEYWORDS if r.get(kw)]
+            for kw in KEYWORDS:
+                r.pop(kw, None)
+            r["matched_keywords"] = matched
+            results.append(r)
+
+        return jsonify({"results": results})
 
     else:
         return redirect("/")
