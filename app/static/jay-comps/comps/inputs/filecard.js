@@ -58,7 +58,7 @@ export class FileCard extends File {
             widthPercent: 100,    
             position: "absolute",         
             maxWidthPercent: 100,       
-            maxHeight: 387,
+            heightPercent: 100,
             top: 0,
             left: 0,        
             objectFit: "cover",
