@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Update Advert Test</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    form { display: flex; flex-direction: column; gap: 10px; max-width: 500px; }
+    #keywords-list span {
+      display: inline-block;
+      background: #e0e0e0;
+      padding: 3px 8px;
+      margin: 2px;
+      border-radius: 12px;
+    }
+    #keywords-list button {
+      background: none; border: none; color: red;
+      margin-left: 6px; cursor: pointer; font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>Update Advert</h2>
+
+  <form 
+    id="update-advert-form"
+    action="/advert/update"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <!-- 1) Primary key of the record you’re updating -->
+    <input
+      type="number"
+      name="pkaID"
+      placeholder="pkaID (required)"
+      required
+    />
+
+    <!-- 2) Standard advert fields -->
+    <input type="text" name="title" placeholder="Title" required />
+    <textarea name="description" placeholder="Description" required></textarea>
+    <input type="number" name="price" placeholder="Price" required />
+    <input type="number" name="tennants" placeholder="Tennants" required />
+
+    <!-- 3) Address / property data -->
+    <input type="text" name="propType" placeholder="Property Type" required />
+    <input type="number" name="bedrooms" placeholder="Bedrooms" required />
+    <input type="number" name="bathrooms" placeholder="Bathrooms" required />
+    <input type="text" name="name" placeholder="Property Name" required />
+    <input type="text" name="street" placeholder="Street" required />
+    <input type="text" name="town" placeholder="Town" required />
+    <input type="text" name="county" placeholder="County" required />
+    <input type="text" name="postcode" placeholder="Postcode" required />
+
+    <!-- 4) Images -->
+    <label>Upload Images:</label>
+    <input type="file" name="images" multiple />
+
+    <!-- 5) Dynamic Keywords -->
+    <label>Add Keywords:</label>
+    <div id="keywords-list"></div>
+    <input type="text" id="keyword-input" placeholder="New keyword"/>
+    <button type="button" onclick="addKeyword()">Add Keyword</button>
+    <input type="hidden" name="keywords" id="keywords-hidden" />
+
+    <button type="submit">Submit Update</button>
+  </form>
+
+  <script>
+    let keywords = [];
+
+    function addKeyword() {
+      const input = document.getElementById('keyword-input');
+      const kw = input.value.trim();
+      if (!kw || keywords.includes(kw)) return;
+      keywords.push(kw);
+      input.value = '';
+      renderKeywords();
+      syncHidden();
+    }
+
+    function renderKeywords() {
+      const container = document.getElementById('keywords-list');
+      container.innerHTML = '';
+      keywords.forEach((kw, i) => {
+        const span = document.createElement('span');
+        span.textContent = kw;
+        const del = document.createElement('button');
+        del.textContent = '×';
+        del.onclick = () => {
+          keywords.splice(i, 1);
+          renderKeywords();
+          syncHidden();
+        };
+        span.appendChild(del);
+        container.appendChild(span);
+      });
+    }
+
+    function syncHidden() {
+      document.getElementById('keywords-hidden').value = JSON.stringify(keywords);
+    }
+
+    // Ensure last keyword is captured on form submit
+    document.getElementById('update-advert-form')
+      .addEventListener('submit', () => {
+        const buf = document.getElementById('keyword-input').value.trim();
+        if (buf && !keywords.includes(buf)) {
+          keywords.push(buf);
+        }
+        syncHidden();
+      });
+  </script>
+</body>
+</html>

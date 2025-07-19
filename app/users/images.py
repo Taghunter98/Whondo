@@ -106,6 +106,15 @@ def upload_file(file: object, email: str) -> str:
 
 @image_bp.route("/static/icons/<path:filename>")
 def serve_icon(filename):
+    """
+    The REST API serves static icons from nginx.
+
+    Args:
+        filename (str): Filename e.g home.svg
+
+    Returns:
+        Response: HTTP response
+    """
     icons_dir = os.path.join(current_app.root_path, "static", "icons")
     return send_from_directory(icons_dir, filename)
 

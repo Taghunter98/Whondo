@@ -12,55 +12,19 @@
 import { Comp } from "jay-comp";
 
 export class Button extends Comp {
+    text_; variant_;   
 
-    text_;
-    variant_;   
-
-    /**
-     * @brief A setter method that sets the Comp's button text.
-     * 
-     * @param {string} newText
-     */
-    set text(newText) {
-
-        this.text_ = newText;
+    set text(v) {
+        this.text_ = v;
         this.update();
-    
     }
-
-    /**
-     * @brief A setter method that sets the Comp's button variant (1, 2, 3).
-     * 
-     * @param {string} newVariant
-     */
-    set variant(newVariant) {
-
-        this.variant_ = newVariant;
+    set variant(v) {
+        this.variant_ = v;
         this.update();
-    
-    }
-    
-    /**
-     * @brief A getter method that returns the Comp's button text.
-     * 
-     * @returns {string} Comp's button text. 
-     */
-    get text() {
-
-        return this.text_;
-    
     }
 
-    /**
-     * @brief A getter method that returns the Comp's button variant.
-     * 
-     * @returns {number} Comp's button variant. 
-     */
-    get variant() {
-
-        return this.variant_;
-    
-    }
+    get text()    { return this.text_;}
+    get variant() { return this.variant_; }
 
     beforeRender(){
         if (!this.text_) this.text_ = "this is button";
@@ -68,15 +32,10 @@ export class Button extends Comp {
     }
     
     createHTML() {
-
-        
-        return /* html */ `
-            <button class="button">${this.text}</button>`;
-    
+        return /* html */ `<button class="button">${this.text}</button>`;
     }
 
     createCSS() {
-
         let button, buttonHover, buttonActive;
 
         const primary = {
@@ -132,25 +91,19 @@ export class Button extends Comp {
         });
         
         if (this.variant_ == 1) {
-
-            button       = primary;
+            button = primary;
             buttonHover  = primaryHover;
             buttonActive = primaryActive;
-        
         }
         
         else if (this.variant_ == 2) {
-
-            button       = secondary;
+            button  = secondary;
             buttonHover  = secondaryHover;
             buttonActive = secondaryActive;
-        
         }
 
         return [button, buttonHover, buttonActive];
-
     }
 
     static { Comp.register(this); }
-
 }

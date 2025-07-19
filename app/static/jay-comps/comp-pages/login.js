@@ -3,15 +3,10 @@ import { Comp } from "jay-comp";
 export class Login extends Comp {
        
     createHTML() {
-    
         return /* html */ `
-        
         <div class="background">
-
             <div class="itemContainer">
-
                 <div class="modal">
-
                     <div class="textContainer">
                         <h3 class="title">Login</h3>
                         <p class="text">Welcome back! Let's find you a new home.</p>
@@ -22,14 +17,12 @@ export class Login extends Comp {
                         <comp-input id="password" 
                         name="password"></comp-input>
                     </div>
-
                     <div class="footer">
                         <comp-button id="submit">Refresh Card</comp-button>
                         <p class="link"><a>Forgot password?</a></p>
                     </div>
                     <p id="result"></p>
                 </div>
-
                 <div class="backgroundImage">
                     <img class="image" src="https://images.pexels.com/photos/4781426/pexels-photo-4781426.jpeg">
                 </div>
@@ -37,21 +30,16 @@ export class Login extends Comp {
             
         </div>
         `;
-    
     }
 
     createCSS() {   
-
-        // Background and image styling
         return[
-            {
-                class: "background",
+            { class: "background",
                 widthPercent: 100,
                 backgroundVar: "black100",
                 heightVh: 100,
             },
-            {
-                class: "itemContainer",
+            { class: "itemContainer",
                 display: "flex",
                 media: {
                     maxWidthBp: 600,
@@ -59,8 +47,7 @@ export class Login extends Comp {
                     alignItems: "centre"
                 }
             },
-            {
-                class: "backgroundImage",
+            { class: "backgroundImage",
                 widthPercent: 100,
                 heightVh: 100,
                 paddingLeft: 400,
@@ -71,15 +58,12 @@ export class Login extends Comp {
                     padding: 0
                 }
             },
-            {
-                class: "image",
+            { class: "image",
                 widthPercent: 100,
                 heightPercent: 100,
                 objectFit: "cover"
             },
-            // Login modal styling
-            {
-                class: "modal",
+            { class: "modal",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -98,43 +82,34 @@ export class Login extends Comp {
                     marginTop: 200
                 }
             },
-            {
-                class: "inputs",
+            { class: "inputs",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 10,
                 padding: [20, 0, 40, 0]
             },
-            // Link
-            {
-                class: "link",
+            { class: "link",
                 colourVar: "black80",
                 textDecoration: "underline",
                 cursor: "pointer"
             },
-            {
-                class: "link",
-                pseudoClass: "hover",
+            { class: "link", pseudoClass: "hover",
                 colourVar: "black100"
             },
-            {
-                class: "textContainer",
+            { class: "textContainer",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 5
             },
-            {
-                class: "title",
+            { class: "title",
                 fontWeight: "bold"
             },
-            {
-                class: "text",
+            { class: "text",
                 colourVar: "black60"
             },
-            {
-                class: "footer",
+            { class: "footer",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -144,45 +119,33 @@ export class Login extends Comp {
         ];
     }
 
-    openWindow() {
-
-        window.location.assign("/register");
-    
-    }
+    openWindow() { window.location.assign("/register"); }
 
     async login(result, json) {
-
-        let data = await this.api.request("/login", "POST", json);
-        
-        (data.status) ? result.innerHTML = data.message : result.innerHTML = data.error;
-    
+        let resp = await this.request("/login", "POST", json);
+        (resp.ok) ? result.innerHTML = resp.data.message : result.innerHTML = resp.error;
     }
 
     afterRender() {
-
         const compButton = this.getById("submit");
-        const result     = this.getById("result");
-        const email      = this.getById("email");
-        const pass       = this.getById("password");
+        const result = this.getById("result");
+        const email = this.getById("email");
+        const pass = this.getById("password");
         
         compButton.text = "Login";
-        email.label     = "Email";
-        email.prompt    = "Enter email";
-        pass.label      = "Password";
-        pass.type       = "password";
-        pass.prompt     = "Enter password";
+        email.label = "Email";
+        email.prompt = "Enter email";
+        pass.label = "Password";
+        pass.type = "password";
+        pass.prompt = "Enter password";
         
         compButton.addEventListener("click", () => {
-            
-            let cookie   = "true";
+            let cookie = "true";
             let jsonData = {email : email.value, password : pass.value, consent: cookie};
 
             this.login(result, jsonData);
-        
         });
-    
     }
 
     static { Comp.register(this); }
-  
 }

@@ -13,126 +13,39 @@ import { Comp } from "jay-comp";
 
 export class Card extends Comp { 
 
-    cardTitle_;
-    cardText_;
-    buttonText_;
-    buttonAction_;
-    cardImage_;
+    cardTitle_; cardText_; buttonText_; buttonAction_; cardImage_; imageHTML_;
        
-    /**
-     * @brief A setter method that sets the Comp's title.
-     * 
-     * @param {string} newCardTitle
-     */
-    set cardTitle(newCardTitle) {
-       
-        this.cardTitle_ = newCardTitle;
+    set cardTitle(v) {
+        this.cardTitle_ = v;
         this.update();
-    
     }
-
-    /**
-     * @brief A setter method that sets the Comp's text.
-     * 
-     * @param {string} newCompText
-     */
-    set cardText(newCompText) {
-
-        this.cardText_ = newCompText;
+    set cardText(v) {
+        this.cardText_ = v;
         this.update();
-    
     }
-
-    /**
-     * @brief A setter method that sets the Comp's button text.
-     * 
-     * @param {string} newButtonText
-     */
-    set buttonText(newButtonText) {
-
-        this.buttonText_ = newButtonText;
+    set buttonText(v) {
+        this.buttonText_ = v;
         this.update();
-    
     }
-
-    /**
-     * @brief A setter method that sets the Comp's button link.
-     * 
-     * @param {string} newButtonAction
-     */
-    set buttonAction(newButtonAction) {
-
-        this.buttonAction_ = newButtonAction;
+    set buttonAction(v) {
+        this.buttonAction_ = v;
         this.update();
-    
     }
-
-    /**
-     * @brief A setter method that sets the Comp's image link.
-     * 
-     * @param {string} newCardImage
-     */
-    set cardImage(newCardImage) {
-
-        this.cardImage_ = newCardImage;
+    set cardImage(v) {
+        this.cardImage_ = v;
         this.update();
-    
+    }
+    set imageHTML(v){
+        this.imageHTML_ = v;
+        this.update();
     }
 
-    /**
-     * @brief A getter method that returns the Comp's title.
-     * 
-     * @returns {string} Comp's title. 
-     */
-    get cardTitle() {
-
-        return this.cardTitle_;
-    
-    }
-
-    /**
-     * @brief A getter method that returns the Comp's text.
-     * 
-     * @returns {string} Comp's text. 
-     */
-    get cardText() {
-
-        return this.cardText_;
-    
-    }
-
-    /**
-     * @brief A getter method that returns the Comp's button text.
-     * 
-     * @returns {string} Comp's button text. 
-     */
-    get buttonText() {
-
-        return this.buttonText_;
-    
-    }
-
-    /**
-     * @brief A getter method that returns the Comp's button link.
-     * 
-     * @returns {string} Comp's button link. 
-     */
-    get buttonAction() {
-        
-        return this.buttonAction_;
-    
-    }
-
-    /**
-     * @brief A getter method that returns the Comp's card image.
-     * 
-     * @returns {string} Comp's card image. 
-     */
-    get cardImage() {
-
-        return this.cardImage_;
-    
-    }
+    get cardTitle()    { return this.cardTitle_; }
+    get cardText()     { return this.cardText_; }
+    get buttonText()   { return this.buttonText_; }
+    get buttonAction() { return this.buttonAction_; }
+    get cardImage()    { return this.cardImage_; }
+    get innerHTML() { return this.imageHTML_; }
 
     beforeRender(){
         if (!this.cardTitle_) this.cardTitle_ = "Card header";
@@ -142,16 +55,10 @@ export class Card extends Comp {
         if (!this.cardImage_) this.cardImage_    = "";
     }
     
-    /**
-     * @brief A method that builds the card's HTML.
-     * 
-     * @returns {literal} HTML to be injected into Comp. 
-     */
     createHTML() {
-
         imageHTML_;
 
-        if (this.cardImage_) imageHTML_ = /* html */`<img src="${this.cardImage_}">`;
+        if (this.cardImage_) this.imageHTML_ = /* html */`<img src="${this.cardImage_}">`;
 
         return /* html */ `
         <div class="cardContainer">
@@ -163,18 +70,6 @@ export class Card extends Comp {
             <comp-button id="button"></comp-button>
         </div>
         `;
-    
-    }
-
-    set imageHTML(v){
-        this.imageHTML_ = v;
-        this.update();
-    }
-
-    get innerHTML() { return this.imageHTML_; }
-
-    beforeRender() {
-        if (!this.imageHTML) this.imageHTML_ = "";
     }
 
     /**

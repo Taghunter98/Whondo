@@ -138,33 +138,33 @@ export class Navbar extends Comp {
                     gap: 10,
                     paddingTop: 40
                 }
-            }
-        ];
+            }];
     }
 
     /**
-     * @brief Function hides/shows the navbar on scroll.
+     * Function hides/shows the navbar on scroll.
      * 
      * The function takes the current Y position of the navbar and checks if the current pixel difference is greater than 20px.
      * If so then the top is increased to hide the element then the last Y position is updated to reflect the change.
      */
     navbarScroll() {
-
-        const navbar     = this.getById("navbar");
+        const navbar = this.getById("navbar");
         const currentPos = window.scrollY;
         
         if (currentPos > this.lastScrollY && currentPos > 20) navbar.style.top = "-80px";
         else navbar.style.top = "0";
         
         this.lastScrollY = currentPos;
-    
     }
 
+    /**
+     * Method offsets tray element by specified px.
+     * 
+     * @param {string} offset 
+     */
     openMenu(offset) {
-
-        const tray        = this.getById("tray");
+        const tray = this.getById("tray");
         tray.style.bottom = offset;
-    
     }
 
     afterRender() {
@@ -191,5 +191,4 @@ export class Navbar extends Comp {
     } 
     
     static { Comp.register(this); } 
-
 }
