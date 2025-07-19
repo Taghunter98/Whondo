@@ -3,7 +3,6 @@ import { Comp } from "jay-comp";
 export class Icon extends Comp {
         
     path_;
-    name_;
 
     constructor() {
         super();
@@ -16,11 +15,6 @@ export class Icon extends Comp {
     }
     
     get path() { return this.path_;}
-
-    beforeRender(){
-        if (!this.path_) this.path_ = "";
-        if (!this.name_) this.name_ = "Icon";
-    }
 
     createHTML() {
        return /* html */`<img class="icon" src="/static/icons/${this.path}">`;
