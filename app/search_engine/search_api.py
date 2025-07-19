@@ -67,10 +67,15 @@ def search():
         cols: list = [c[0] for c in cursor.description]
         dict_rows: dict = [dict(zip(cols, row)) for row in rows]
 
-        for row in dict_rows:
-            row["matched_keywords"] = matched_keys
+        results = []
+        for r in dict_rows:
+            matched = [kw for kw in KEYWORDS if r.get(kw)]
+            for kw in KEYWORDS:
+                r.pop(kw, None)
+            r["matched_keywords"] = matched
+            results.append(r)
 
-        return jsonify({"results": dict_rows})
+        return jsonify(results=results)
 
     else:
         return redirect("/")
