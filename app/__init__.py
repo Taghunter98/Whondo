@@ -9,7 +9,7 @@ Version:     1.0
 Description: Creates a Flask app instance and sets up logging.
 """
 
-from flask import Flask, session, has_request_context, request
+from flask import Flask, session, has_request_context, request, render_template
 from flask_cors import CORS
 from flask_session import Session
 from flask.logging import default_handler
@@ -159,11 +159,7 @@ def create_app() -> Flask:
 
     @app.route("/")
     def hello():
-        if session.get("uID"):
-            session_id = session.get("uID")
-            return f"Hello, World!\nUser logged in id: {session_id}"
-        else:
-            return "Hello World!"
+        return render_template("index.html")
 
     return app
 
