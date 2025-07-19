@@ -33,7 +33,7 @@ export class Icon extends Comp {
     createHTML() {
 
         return /* html */ `
-        <img class="icon" src="/static/icons/${this.path_}">
+        <img class="icon" src=".../../../icons/${this.path_}">
         `;
     
     }
