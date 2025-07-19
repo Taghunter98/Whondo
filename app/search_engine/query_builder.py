@@ -12,6 +12,7 @@ def build_query(
     sql = """
     SELECT
 		a.adID,
+        a.lID,
 		a.title,
 		a.description,
 		a.price,
@@ -33,11 +34,16 @@ def build_query(
 		a.image8,
 		a.image9,
 		a.image10,
+        u.name,
+        u.surname,
+        u.email,
 		k.*  
     FROM PropertyKeywordAdvert pka
       	JOIN Property p   ON p.pID   = pka.pID
       	JOIN Adverts a    ON a.adID  = pka.adID
       	JOIN Keywords k   ON k.kID   = pka.kID
+        JOIN Landlords l  ON l.lID   = pka.lID
+        JOIN Users u	  ON u.uID   = l.uID
     """
 
     where_clauses: List[str] = []
@@ -68,6 +74,7 @@ def build_query(
     sql += """
     GROUP BY
 		a.adID,
+        a.lID,
 		a.title,
 		a.description,
 		a.price,
@@ -88,7 +95,10 @@ def build_query(
 		a.image7,
 		a.image8,
 		a.image9,
-		a.image10;
+		a.image10,
+        u.name,
+        u.surname,
+        u.email;
     """
 
     return sql, params
