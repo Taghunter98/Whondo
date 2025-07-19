@@ -69,7 +69,7 @@ export class Home extends Comp {
                 maxWidth: 900,
                 padding: 20,
                 boxSizing: "border-box",
-                media: {maxWidthBp: 600, gap: 10}
+                media: {maxWidthBp: 700, gap: 10}
             },
             { class: "head",
                 colourVar: "black100",
