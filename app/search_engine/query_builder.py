@@ -12,20 +12,21 @@ def build_query(
     one row per ad/property instead of one per keyword.
     """
 
-    sql = """
+    sql: str = """
     SELECT
       a.adID,
       a.title,
+      a.description,
       a.price,
       p.pID            AS propertyID,
       p.name           AS propertyName,
       p.street,
       p.town,
       p.county
-      /* -- if you also want a list of which fields matched, uncomment:
-      , GROUP_CONCAT(k.kID)       AS matched_kIDs
-      , GROUP_CONCAT(k.name)      AS matched_keywords
-      */
+      
+      GROUP_CONCAT(k.kID)       AS matched_kIDs
+      GROUP_CONCAT(k.name)      AS matched_keywords
+      
     FROM PropertyKeywordAdvert pka
       JOIN Property p   ON p.pID   = pka.pID
       JOIN Adverts a    ON a.adID  = pka.adID

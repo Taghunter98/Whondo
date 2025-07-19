@@ -7,7 +7,7 @@ class TestSearchEngine(unittest.TestCase):
     def runPrompt(self, prompt: str):
         parser: Parser = Parser(prompt)
         tokens: list[Token] = parser.tokenise()
-        print(f"TOKEN GEN: {' '.join([t.name for t in tokens])}")
+        #print(f"TOKEN GEN: {' '.join([t.name for t in tokens])}")
         context, [location, price, bedrooms, bathrooms] = parser.contextParser(tokens)
 
         return context, [location, price, bedrooms, bathrooms]
