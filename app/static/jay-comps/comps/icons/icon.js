@@ -26,14 +26,13 @@ export class Icon extends Comp {
     }
 
     beforeRender(){
-        if (!this.path_) this.path_ = "";
         if (!this.name_) this.name_ = "Icon";
     }
 
     createHTML() {
 
         return /* html */ `
-        <img class="icon" src=".../../../icons/${this.path_}">
+        <img class="icon" src="/static/icons/${this.path_}">
         `;
     
     }
