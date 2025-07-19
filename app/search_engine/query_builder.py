@@ -47,7 +47,7 @@ def build_query(
     # Keyword flags
     if keywords:
         or_parts = [f"k.{kw} = 1" for kw in keywords]
-        where_clauses.append("(" + " OR ".join(or_parts) + ")")
+        where_clauses.append("(" + " AND ".join(or_parts) + ")")
 
     # Town
     where_clauses.append("p.town = %s")

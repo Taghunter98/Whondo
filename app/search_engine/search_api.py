@@ -28,7 +28,8 @@ def search():
     The request data is validated and the prompt is tokenised and run throught
     the context parser.
 
-    The query is built with the build_query() function and result is returned.
+    The query is built with the build_query() function and the result is formatted and 
+    returned.
 
     Returns:
         Response: Response of successs or appropriate error message
@@ -43,7 +44,6 @@ def search():
         parser = Parser(prompt)
         tokens = parser.tokenise()
         keywords, [location, price, bedrooms, bathrooms] = parser.contextParser(tokens)
-        matched_keys: list[str] = [k.name for k in keywords]
 
         if not location:
             return jsonify({"error": "No location provided"}), 400
@@ -80,8 +80,8 @@ def search():
             results.append(r)
 
             images = [r.pop(f, None) for f in image_fields]
-            
-            r["images"] = [img for img in images if img] 
+
+            r["images"] = [img for img in images if img]
             results.append(r)
 
             r["landlord_info"] = get_landlord_info(r.get("lID"))

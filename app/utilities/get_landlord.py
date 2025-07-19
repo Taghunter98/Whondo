@@ -13,8 +13,17 @@ from typing import Optional
 
 from app.database.db_connect import connect
 
-def get_landlord_info(lID: int) -> Optional[dict[str, any]]:
 
+def get_landlord_info(lID: int) -> Optional[dict[str, any]]:
+    """
+    The function returns landlord information based on the landlord ID.
+
+    Args:
+        lID (int): The landlord ID
+
+    Returns:
+        Optional[dict[str, any]]: Dictionary of landlord info
+    """    
     try:
         connection: object = connect()
         cursor: object = connection.cursor()
@@ -31,7 +40,7 @@ def get_landlord_info(lID: int) -> Optional[dict[str, any]]:
 
         if not row:
             return None
-        
+
         cols: dict[str, any] = [col[0] for col in cursor.description]
         return dict(zip(cols, row))
 
