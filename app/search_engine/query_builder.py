@@ -22,7 +22,7 @@ def build_query(
       p.name           AS propertyName,
       p.street,
       p.town,
-      p.county
+      p.county,
       
       GROUP_CONCAT(k.kID)       AS matched_kIDs
       GROUP_CONCAT(k.name)      AS matched_keywords
