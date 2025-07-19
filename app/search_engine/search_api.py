@@ -78,12 +78,10 @@ def search():
                 r.pop(kw, None)
 
             r["matched_keywords"] = matched
-            results.append(r)
 
             images = [r.pop(f, None) for f in image_fields]
 
             r["images"] = [img for img in images if img]
-            results.append(r)
 
             r["landlord_info"] = get_landlord_info(r.get("lID"))
             results.append(r)
