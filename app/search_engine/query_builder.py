@@ -29,8 +29,7 @@ def build_query(
 		a.image7,
 		a.image8,
 		a.image9,
-		a.image10,
-		k.*  
+		a.image10
     FROM PropertyKeywordAdvert pka
       	JOIN Property p   ON p.pID   = pka.pID
       	JOIN Adverts a    ON a.adID  = pka.adID
