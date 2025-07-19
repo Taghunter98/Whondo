@@ -9,7 +9,7 @@ Version:     1.0
 Description: Provides a REST API for searching and returning properties.
 """
 
-from flask import Blueprint, request, redirect, jsonify
+from flask import Blueprint, request, redirect, jsonify, current_app
 
 from app.database.db_connect import connect
 from .tokenisation import Parser
