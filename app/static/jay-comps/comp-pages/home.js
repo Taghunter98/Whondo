@@ -48,9 +48,9 @@ export class Home extends Comp {
                 flexDirection: "column",
                 justifyContent: "centre",
                 widthPercent: 100,
-                heightVh: 100,
+                height: 800,
                 background: "white",
-                media: {maxWidthBp: 600, justifyContent: "end" }
+                media: {maxWidthBp: 600, justifyContent: "end", height: 600}
             },
             { class: "container",
                 display: "flex",
