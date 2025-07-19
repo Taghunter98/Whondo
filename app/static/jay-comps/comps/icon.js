@@ -17,7 +17,7 @@ export class Icon extends Comp {
     get path() { return this.path_;}
 
     createHTML() {
-       return /* html */`<img class="icon" src="/static/icons/${this.path}">`;
+       return /* html */`<img class="icon" src="/static/icons/${this.path_}">`;
     }
 
     createCSS() {
