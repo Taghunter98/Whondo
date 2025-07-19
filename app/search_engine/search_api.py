@@ -66,13 +66,19 @@ def search():
 
         cols: list = [c[0] for c in cursor.description]
         dict_rows: dict = [dict(zip(cols, row)) for row in rows]
-
+        image_fields = [f"image{i}" for i in range(1, 11)]
+        
         results = []
         for r in dict_rows:
             matched = [kw for kw in KEYWORDS if r.get(kw)]
             for kw in KEYWORDS:
                 r.pop(kw, None)
             r["matched_keywords"] = matched
+            results.append(r)
+
+            images = [r.pop(f, None) for f in image_fields]
+            r["images"] = [img for img in images if img] 
+
             results.append(r)
 
         return jsonify(results=results)
