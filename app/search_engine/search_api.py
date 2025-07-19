@@ -21,6 +21,17 @@ search_bp = Blueprint("search_bp", __name__)
 
 @search_bp.route("/search", methods=["POST", "GET"])
 def search():
+    """
+    The REST API returns adverts based on a prompt.
+
+    The request data is validated and the prompt is tokenised and run throught
+    the context parser.
+
+    The query is built with the build_query() function and result is returned.
+
+    Returns:
+        Response: Response of successs or appropriate error message
+    """
     if request.method == "POST":
         data: object = request.get_json()
         prompt: str = data.get("prompt")
@@ -47,17 +58,17 @@ def search():
         )
 
         cursor.execute(sql, params)
-        rows = cursor.fetchall()
+        rows: tuple = cursor.fetchall()
 
         cursor.close()
         connection.close()
 
-        cols = [c[0] for c in cursor.description]
-        dict_rows = [dict(zip(cols, row)) for row in rows]
+        cols: list = [c[0] for c in cursor.description]
+        dict_rows: dict = [dict(zip(cols, row)) for row in rows]
 
-        results = []
+        results: list[str] = []
         for r in dict_rows:
-            matched = [kw for kw in KEYWORDS if r.get(kw)]
+            matched: str = [kw for kw in KEYWORDS if r.get(kw)]
             for kw in KEYWORDS:
                 r.pop(kw, None)
             r["matched_keywords"] = matched

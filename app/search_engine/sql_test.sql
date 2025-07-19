@@ -8,6 +8,16 @@ SELECT
   p.street,
   p.town,
   p.county,
+  a.image1,
+  a.image2,
+  a.image3,
+  a.image4,
+  a.image5,
+  a.image6,
+  a.image7,
+  a.image8,
+  a.image9,
+  a.image10,
   k.*
 
 FROM PropertyKeywordAdvert pka
@@ -30,4 +40,14 @@ GROUP BY
   p.name,
   p.street,
   p.town,
-  p.county;
+  p.county,
+  a.image1,
+  a.image2,
+  a.image3,
+  a.image4,
+  a.image5,
+  a.image6,
+  a.image7,
+  a.image8,
+  a.image9,
+  a.image10;

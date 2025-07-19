@@ -1,10 +1,11 @@
 from typing import Optional, List, Tuple
 from flask import current_app
 
+
 def build_query(
     keywords: List[str],
     location: str,
-    price: Optional[float]  = None,
+    price: Optional[float] = None,
     bedrooms: Optional[int] = None,
     bathrooms: Optional[int] = None,
 ) -> Tuple[str, List]:
@@ -19,6 +20,16 @@ def build_query(
 		p.street,
 		p.town,
 		p.county,
+        a.image1,
+		a.image2,
+		a.image3,
+		a.image4,
+		a.image5,
+		a.image6,
+		a.image7,
+		a.image8,
+		a.image9,
+		a.image10,
 		k.*  
     FROM PropertyKeywordAdvert pka
       	JOIN Property p   ON p.pID   = pka.pID
@@ -27,7 +38,7 @@ def build_query(
     """
 
     where_clauses: List[str] = []
-    params:        List     = []
+    params: List = []
 
     # Keyword flags
     if keywords:
@@ -53,15 +64,25 @@ def build_query(
     sql += "\nWHERE " + "\n  AND ".join(where_clauses)
     sql += """
     GROUP BY
-      a.adID,
-      a.title,
-      a.description,
-      a.price,
-      p.pID,
-      p.name,
-      p.street,
-      p.town,
-      p.county;
+		a.adID,
+		a.title,
+		a.description,
+		a.price,
+		p.pID,
+		p.name,
+		p.street,
+		p.town,
+		p.county,
+		a.image1,
+		a.image2,
+		a.image3,
+		a.image4,
+		a.image5,
+		a.image6,
+		a.image7,
+		a.image8,
+		a.image9,
+		a.image10;
     """
 
     return sql, params
