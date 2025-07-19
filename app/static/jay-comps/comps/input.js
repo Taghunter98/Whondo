@@ -1,244 +1,103 @@
-import { Comp } from 'jay-comp';
+import { Comp } from "jay-comp";
 
-export class Navbar extends Comp {
-
-    lastScrollY = window.scrollY;
-
-    createHTML() {
-
-        return /* html */ `
-        <div id="navbar" class="container">
-            <a><h3 class="logo">Whondo</h3></a>
-            <ul class="links">
-                <li class="link">About</li>
-                <li class="link">Landlord Portal</li>
-                <li class="link">GitHub</li>
-            </ul>
-            <comp-icon class="menu" id="menu"></comp-icon>
-            <div class="buttons">
-                <comp-button id="register"></comp-button>
-                <comp-button id="login"></comp-button>
-            </div>
-        </div>
-
-        <div id="tray" class="tray">
-            <div class="header">
-                <a><h3 class="logo">Whondo</h3></a>
-                <comp-icon class="close" id="close"></comp-icon>
-            </div>
-
-            <ul class="linksTray">
-                <li class="link">About</li>
-                <li class="link">Landlord Portal</li>
-                <li class="link">GitHub</li>
-            </ul>
-
-            <div class="trayButtons">
-                <comp-button id="registerMob"></comp-button>
-                <comp-button id="loginMob"></comp-button>
-            </div>
-        </div>
-        
-        `;
+export class Input extends Comp {
+    label_ ; type_; prompt_; required_; error_;
     
+    set label(newLabel) {
+        this.label_ = newLabel;
+        this.update();
+    }
+    set type(newType) {
+        this.type_ = newType;
+        this.update();
+    }
+    set prompt(newPrompt) {
+        this.prompt_ = newPrompt;
+        this.update();
+    }
+    set required (flag){
+        this.required_ = flag;
+        this.update();
     }
 
+    get label()    { return this.label_; }
+    get type()     { return this.type_; }
+    get prompt()   { return this.prompt_; }
+    get value()    { return this.shadowRoot.querySelector("input, textarea").value;}
+    get required() { return this.required_; }
+    
+    beforeRender(){
+        if (!this.label_) this.label_ = "Text";
+        if (!this. type_) this.type_ = "Label";
+        if (!this.prompt_) this.prompt_= "This is placeholder";
+        if (!this.required_) this.required_ = false;
+        if (!this.error_) this.error_ = false;
+    }
+   
+    createHTML() {
+        return /* html */ `
+        <div class="inputContainer">
+            <label style="color: var(--black80); font-size: 14px">${this.label}</label>
+            <input class="inputValue" type="${this.type}" placeholder="${this.prompt}">
+        </div>
+        `;
+    }
+    
     createCSS() {
-        
         return [
             {
-                class: "container",
-                top: "0",
-                zIndex: "1000",
-                position: "fixed",
+                class: "inputContainer",
                 display: "flex",
-                alignItems: "centre",
+                flexDirection: "column",
                 widthPercent: 100,
-                background: "white",
-                boxSizing: "border-box",
-                padding: [10, 20],
-                justifyContent: "space-between",
-                transition: ["top",  "0.4s"]
+                maxWidth: "none",
+                padding: 0,
+                alignItems: "start",
+                gap: 10,
+                background: "white"
             },
             {
-                class: "logo",
-                fontWeight: "bold",
-                media: {
-                    maxWidthBp: 600,
-                    fontSize: 28
-                }
-            },
-            {
-                class: "links",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "centre",
-                gap: 20
-            },
-            // Navbar links
-            {
-                class: "link",
-                colourVar: "black80",
+                class: "inputValue",
+                display: "block",
                 fontSize: 16,
-                padding: 10,
-                borderVar: "borderDefault",
-                borderRadius: 8,
-                listStyleType: "None",
-                cursor: "pointer",
-                transition: ["background", "0.1s", "ease-in-out"]
-            },
-            {
-                class: "link",
-                colourVar: "black100",
-                pseudoClass: "hover",
+                widthPercent: 100,
+                padding: [8, 12],
                 borderVar: "border",
-                backgroundVar: "black10"
+                borderRadius: 8,
+                boxSizing: "border-box"
             },
             {
-                class: "link",
-                pseudoClass: "active",
-                backgroundVar: "black20"
+                class: "inputValue",
+                pseudoClass: "hover",
+                outline: ["solid", 2, "var(--black60)"]
             },
             {
-                class: "menu",
-                display: "None",
-                media: {
-                    maxWidthBp: 600,
-                    display: "block"
-                }
+                class: "inputValue",
+                pseudoClass: "focus",
+                outline: ["solid", 2, "var(--black100)"]
             },
             {
-                class: "close",
-                display: "None",
-                media: {
-                    maxWidthBp: 600,
-                    display: "block"
-                }
+                class: "error",
+                borderBottom: ["solid", 2, "var(--red100)"]
             },
             {
-                class: "buttons",
-                display: "flex",
-                width: "auto",
-                gap: 20,
-                media: {
-                    maxWidthBp: 600,
-                    display: "none"
-                }
+                class: "warning",
+                borderBottom: ["solid", 2, "var(--yellow100)"]
             },
             {
-                class: "tray",
-                display: "None"
-            },
-            // Media quuery adjustments
-            {
-                media: {
-                    maxWidthBp: 600,
-                    class: "header",
-                    display: "flex",
-                    alignItems: "centre",
-                    justifyContent: "space-between"
-                }
+                class: "success",
+                borderBottom: ["solid", 2, "var(--green100)"],
             },
             {
-                media: {
-                    maxWidthBp: 600,
-                    class: "links",
-                    display: "None"
-                }
-            
-            },
-            {
-                media: {
-                    maxWidthBp: 600,
-                    class: "tray",
-                    display: "flex",
-                    bottom: "-500px",
-                    position: "fixed",
-                    zIndex: "1000",
-                    boxSizing: "border-box",
-                    flexDirection: "column",
-                    widthPercent: 100,
-                    background: "white",
-                    padding: 20,
-                    borderRadius: 14,
-                    transition: ["bottom", "0.6s"]
-                }
-            
-            },
-            {
-                media: {
-                    maxWidthBp: 600,
-                    class: "trayButtons",
-                    display: "flex",
-                    gap: 10,
-                    paddingTop: 40
-                }
-           
+                class: "hint",
+                fontSizeEm: 0.75,
+                colour: "black",
+                paddingTop: 4
             }
-
         ];
-    
     }
 
-    /**
-     * @brief Function hides/shows the navbar on scroll.
-     * 
-     * The function takes the current Y position of the navbar and checks if the current pixel difference is greater than 20px.
-     * If so then the top is increased to hide the element then the last Y position is updated to reflect the change.
-     */
-    navbarScroll() {
+    isEmpty(){ return !this.value.trim(); }
 
-        const navbar     = this.getById("navbar");
-        const currentPos = window.scrollY;
-        
-        if (currentPos > this.lastScrollY && currentPos > 20) navbar.style.top = "-80px";
-        else navbar.style.top = "0";
-        
-        this.lastScrollY = currentPos;
-    
-    }
-
-    openMenu(offset) {
-
-        const tray        = this.getById("tray");
-        tray.style.bottom = offset;
-    
-    }
-
-    afterRender() {
-        
-        const register    = this.getById("register");
-        const login       = this.getById("login");
-        const menu        = this.getById("menu");
-        const close       = this.getById("close");
-        const loginMob    = this.getById("loginMob");
-        const registerMob = this.getById("registerMob");
-        
-        register.text       = "Register";
-        register.variant    = 2;
-        login.text          = "login";
-        menu.path           = "menu.svg";
-        close.path          = "close.svg";
-        loginMob.text       = "Login";
-        registerMob.text    = "Register";
-        registerMob.variant = 2;
-
-        window.addEventListener("scroll", this.navbarScroll.bind(this));
-
-        menu.addEventListener("click", () => {
-
-            this.openMenu("0");
-        
-        });
-
-        close.addEventListener("click", () => {
-
-            this.openMenu("-500px");
-        
-        });
-    
-    } 
-    
-    static { Comp.register(this); } 
-
+    static { Comp.register(this); }
 }
