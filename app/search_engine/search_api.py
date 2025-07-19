@@ -42,6 +42,7 @@ def search():
         parser = Parser(prompt)
         tokens = parser.tokenise()
         keywords, [location, price, bedrooms, bathrooms] = parser.contextParser(tokens)
+        matched_keys: list[str] = [k.name for k in keywords]
 
         if not location:
             return jsonify({"error": "No location provided"}), 400
@@ -65,7 +66,6 @@ def search():
 
         cols: list = [c[0] for c in cursor.description]
         dict_rows: dict = [dict(zip(cols, row)) for row in rows]
-        matched_keys: list[str] = [k.name for k in keywords]
 
         for row in dict_rows:
             row["matched_keywords"] = matched_keys
