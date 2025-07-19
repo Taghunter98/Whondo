@@ -72,6 +72,7 @@ def search():
         results = []
         for r in dict_rows:
             matched = [kw for kw in KEYWORDS if r.get(kw)]
+            r["score"] = len(matched)
 
             for kw in KEYWORDS:
                 r.pop(kw, None)
@@ -86,6 +87,8 @@ def search():
 
             r["landlord_info"] = get_landlord_info(r.get("lID"))
             results.append(r)
+
+        results.sort(key=lambda row: (row["score"], -row["price"]))
 
         return jsonify(results=results)
 
