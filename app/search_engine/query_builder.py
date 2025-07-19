@@ -7,16 +7,11 @@ def build_query(
     bedrooms: Optional[int] = None,
     bathrooms: Optional[int] = None,
 ) -> Tuple[str, List]:
-    """
-    Returns (sql, params), grouping by each advert so you get
-    one row per ad/property instead of one per keyword.
-    """
-
     sql = """
     SELECT
       a.adID,
       a.title,
-      ANY_VALUE(a.description)   AS description,
+      a.description              AS description,
       a.price,
       p.pID                      AS propertyID,
       p.name                     AS propertyName,
@@ -34,26 +29,24 @@ def build_query(
     where_clauses: List[str] = []
     params: List = []
 
-    # Keywords OR block
+    # Keywords OR-block
     if keywords:
         or_parts = [f"k.{kw} = 1" for kw in keywords]
         where_clauses.append("(" + " OR ".join(or_parts) + ")")
 
-    # Town
+    # Location
     where_clauses.append("p.town = %s")
     params.append(location)
 
-    # Price
+    # Price, Bedrooms, Bathrooms
     if price is not None:
         where_clauses.append("a.price <= %s")
         params.append(price)
 
-    # Bedrooms
     if bedrooms is not None:
         where_clauses.append("p.bedrooms >= %s")
         params.append(bedrooms)
 
-    # Bathrooms
     if bathrooms is not None:
         where_clauses.append("p.bathrooms >= %s")
         params.append(bathrooms)
@@ -61,10 +54,12 @@ def build_query(
     # Stitch WHERE together
     sql += "\nWHERE " + "\n  AND ".join(where_clauses)
 
+    # GROUP BY on everything
     sql += """
     GROUP BY
       a.adID,
       a.title,
+      a.description,
       a.price,
       p.pID,
       p.name,
