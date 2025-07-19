@@ -50,7 +50,7 @@ export class Home extends Comp {
                 widthPercent: 100,
                 height: 800,
                 background: "white",
-                media: {maxWidthBp: 600, justifyContent: "end", height: 600}
+                media: {maxWidthBp: 600, justifyContent: "end", height: 650}
             },
             { class: "container",
                 display: "flex",
@@ -69,7 +69,7 @@ export class Home extends Comp {
                 maxWidth: 900,
                 padding: 20,
                 boxSizing: "border-box",
-                media: {maxWidthBp: 700, gap: 10}
+                media: {maxWidthBp: 600, gap: 10}
             },
             { class: "head",
                 colourVar: "black100",
