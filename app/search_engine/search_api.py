@@ -69,7 +69,7 @@ def search():
 
         results = []
         for r in dict_rows:
-            matched = [kw for kw in KEYWORDS if r.get(kw)]
+            matched = [kw.lower() for kw in KEYWORDS if r.get(kw)]
             for kw in KEYWORDS:
                 r.pop(kw, None)
             r["matched_keywords"] = matched
