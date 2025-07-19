@@ -56,8 +56,7 @@ export class Home extends Comp {
                 flexDirection: "column",
                 alignItems: "centre",
                 widthPercent: 100,
-                justifyContent: "centre",
-                media: {maxWidthBp: 600, justifyContent: "space-between"}
+                justifyContent: "centre"
             },
             { class: "modal",
                 display: "flex",
@@ -68,8 +67,7 @@ export class Home extends Comp {
                 widthPercent: 100,
                 maxWidth: 900,
                 padding: 20,
-                boxSizing: "border-box",
-                media: {maxWidthBp: 600, heightVh: 50}
+                boxSizing: "border-box"
             },
             { class: "head",
                 colourVar: "black100",
