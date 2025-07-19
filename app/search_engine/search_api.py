@@ -86,7 +86,7 @@ def search():
             r["landlord_info"] = get_landlord_info(r.get("lID"))
             results.append(r)
 
-        results.sort(key=lambda row: (row["score"], -row["price"]))
+        results.sort(key=lambda row: (row["score"], -row["price"]), reverse=True)
 
         return jsonify(results=results)
 
