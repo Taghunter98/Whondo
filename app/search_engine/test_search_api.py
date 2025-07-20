@@ -1,7 +1,49 @@
 import unittest
 import requests
 
-class TestSearchAPI(unittest.TestCase):
-    def testResult(self):
-        prompt = "I want to live in Canterbury in a 2 bed flat"
-        data = requests.post(url="https://whondo.com/search", json={"prompt": prompt})
+from tokenisation import Parser  # temp
+
+
+class TestSearchEngine(unittest.TestCase):
+    @classmethod
+    def runPrompt(self, prompt: str):
+        parser = Parser(prompt)
+        tokens = parser.tokenise()
+        print(f"TOKEN GEN: {' '.join([t.name for t in tokens])}")
+        context, [location, price, bedrooms, bathrooms] = parser.contextParser(tokens)
+
+        return context, [location, price, bedrooms, bathrooms]
+
+    def testCurrenyFormatting(self):
+        prompt: str = "I need a flat in London for up to £1,250."
+
+        context, (location, price, bedrooms, bathrooms) = self.runPrompt(prompt)
+        names = [t.name for t in context]
+
+        self.assertEqual(location, "london")
+        self.assertEqual(price, 1250)
+        self.assertEqual(names, ["flat"], f"Returning: {context}")
+
+    def testWordToNum(self):
+        self.assertEqual(Parser.wordToNum(self, "twenty"), 20)
+        self.assertEqual(Parser.wordToNum(self, "twenty five"), 25)
+        self.assertEqual(Parser.wordToNum(self, "fifteen"), 15)
+        self.assertEqual(Parser.wordToNum(self, "one hundred"), 100)
+        self.assertEqual(Parser.wordToNum(self, "two hundred"), 200)
+        self.assertEqual(Parser.wordToNum(self, "two thousand"), 2000)
+        self.assertEqual(
+            Parser.wordToNum(self, "two thousand")
+            + Parser.wordToNum(self, "three hundred"),
+            2300,
+        )
+        self.assertEqual(Parser.wordToNum(self, "twenty flat"), 20)
+
+    def testCurrenyFormattingWords(self):
+        prompt: str = "I need a flat in London for up to two thousand a month."
+
+        context, (location, price, bedrooms, bathrooms) = self.runPrompt(prompt)
+        names = [t.name for t in context]
+
+        self.assertEqual(location, "london")
+        self.assertEqual(price, 2000)
+        self.assertEqual(names, ["flat"], f"Returning: {context}")

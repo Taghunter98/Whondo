@@ -13,16 +13,29 @@ import re
 from typing import Optional
 from rapidfuzz import process, fuzz
 
-from .dictionaries import SIFT_LIST, TOWNS, KEYWORDS, SYNONYMS, PROTECTD, ZONE_MAP
+# change to relative in PROD
+from dictionaries import (
+    SIFT_LIST,
+    TOWNS,
+    KEYWORDS,
+    SYNONYMS,
+    PROTECTD,
+    ZONE_MAP,
+    PRICE_PREDICTION,
+    UNITS,
+    TENS,
+)
 
 
 class Token:
     def __init__(self, name: str):
         self.name: str = name
         self.position: int = 0
+        self.raw: str = name
         self.is_number: bool = False
         self.is_city: bool = False
         self.is_price: bool = False
+        self.consumed: bool = False
         self.next: Token = None
         self.prev: Token = None
 
@@ -30,12 +43,14 @@ class Token:
         """
         Simple debug method for printing a Token object
         """
+
+        nxt = self.next.name if self.next else "<NONE>"
+        prev = self.prev.name if self.prev else "<NONE>"
         print(
-            f"Name: {self.name:<10}  "
-            f"Pos: {self.position:<3}  "
-            f"Con: {self.context:<6.2f}  "
-            f"Num: {str(self.is_number):<5}  "
-            f"City: {str(self.is_city):<5}"
+            f"Name: {self.name:<6} Raw: {self.raw:<10} "
+            f"Pos: {self.position:<2} Num: {self.is_number} "
+            f"City: {self.is_city} Next: {nxt} "
+            f"Prev: {prev}"
         )
 
 
@@ -61,9 +76,58 @@ class Parser:
         """
         return w in TOWNS
 
+    def wordToNum(self, word: str) -> Optional[int]:
+        w = word.strip()
+        parts: list[str] = re.split(r"[-\s]+", w)
+        total: int = 0
+
+        for p in parts:
+            if p in UNITS:
+                if p in ("hundred", "thousand"):
+                    total = total * UNITS[p] if total > 1 else UNITS[p]
+                else:
+                    total += UNITS[p]
+            elif p in TENS:
+                total += TENS[p]
+            elif total > 0:
+                return total
+            else:
+                return None
+
+        return total
+
+    def calculateValue(self, token: Token) -> None:
+        raw = token.raw.strip()
+        if raw.startswith("£"):
+            token.is_price = True
+            raw = raw[1:].strip()
+        raw = raw.replace(",", "")
+
+        if re.fullmatch(r"\d+(?:\.\d+)?", raw):
+            val = float(raw) if "." in raw else int(raw)
+
+        else:
+            val = self.wordToNum(raw)
+
+        if val is None:
+            return
+
+        nxt = token.next
+        if nxt and not nxt.consumed and not nxt.is_city:
+            combo_val = self.wordToNum(f"{token.raw} {nxt.raw}")
+            if combo_val is not None:
+                val = combo_val
+                nxt.consumed = True
+                token.next = nxt.next
+                if nxt.next:
+                    nxt.next.prev = token
+
+        token.is_number = True
+        token.name = str(val)
+
     def isNumber(self, token: Token, w: str) -> bool:
         """
-        Method checks if word is a number.
+        Method checks if word is a number, or price given a leading £.
 
         Args:
             token (Token): Token object
@@ -72,13 +136,19 @@ class Parser:
         Returns:
             bool: Number status
         """
-        cleaned = re.sub(r"£", "", w).strip()
-        cleaned = cleaned.replace(",", "")
+
+        cleaned: str = w.replace(",", "")
+        is_price = re.search(r"^£", cleaned)
+
+        if is_price:
+            cleaned = cleaned.replace("£", "")
+            token.is_price = True
 
         if cleaned.isdigit():
             token.is_number = True
             token.name = cleaned
             return True
+
         return False
 
     def extractTowns(self) -> list[str]:
@@ -121,7 +191,7 @@ class Parser:
 
         raw_words: list[str] = []
         for w in self.prompt.split():
-            clean: str = re.sub(r"[^\w\s]", "", w)  # Cleans unwanted chars
+            clean: str = re.sub(r"[^\w\s£]", "", w)  # Cleans unwanted chars
             if clean and clean not in SIFT_LIST:
                 raw_words.append(clean)
 
@@ -193,12 +263,20 @@ class Parser:
         context: list[Token] = []
 
         for t in tokens:
+            if t.consumed:
+                continue
+
+            self.calculateValue(t)
+
             next: str = t.next.name if t.next else None
             prev: str = t.prev.name if t.prev else False
 
             if t.is_number:
                 # pricing detection
-                if next in ("month", "week"):
+                if t.is_price:
+                    price = float(t.name)
+                    continue
+                elif next in PRICE_PREDICTION:
                     t.is_price = True
                     price = float(t.name)
                     continue

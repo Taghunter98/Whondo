@@ -28,7 +28,7 @@ def search():
     The request data is validated and the prompt is tokenised and run throught
     the context parser.
 
-    The query is built with the build_query() function and the result is formatted and 
+    The query is built with the build_query() function and the result is formatted and
     returned.
 
     Returns:
