@@ -13,8 +13,7 @@ import re
 from typing import Optional
 from rapidfuzz import process, fuzz
 
-# change to relative in PROD
-from dictionaries import (
+from .dictionaries import (
     SIFT_LIST,
     TOWNS,
     KEYWORDS,
@@ -132,25 +131,25 @@ class Parser:
 
         raw = raw.replace(",", "")
 
-        # Try parsing as a digit literal
+        # Handle parsing digit literal
         if re.fullmatch(r"\d+(?:\.\d+)?", raw):
             val = float(raw) if "." in raw else int(raw)
         else:
             # Build a sliding window phrase across this token and look-aheads:
-            phrase = raw
-            val = self.phraseToNum(phrase)
+            phrase: str = raw
+            val: int = self.phraseToNum(phrase)
 
-            nxt = token.next
-            while val is not None and nxt and not nxt.is_city and not nxt.consumed:
-                # extend the phrase
-                phrase = f"{phrase} {nxt.raw}"
-                candidate = self.phraseToNum(phrase)
+            next: Token = token.next
+            while val is not None and next and not next.is_city and not next.consumed:
+                
+                phrase = f"{phrase} {next.raw}"
+                candidate: int = self.phraseToNum(phrase)
                 if candidate is None:
                     break
-                # accept the longer match
-                val = candidate
-                nxt.consumed = True
-                nxt = nxt.next
+              
+                val: int = candidate
+                next.consumed = True
+                next = next.next
 
         if val is None:
             return
