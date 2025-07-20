@@ -104,6 +104,21 @@ def upload_file(file: object, email: str) -> str:
             return None
 
 
+@image_bp.route("/static/icons/<path:filename>")
+def serve_icon(filename):
+    """
+    The REST API serves static icons from nginx.
+
+    Args:
+        filename (str): Filename e.g home.svg
+
+    Returns:
+        Response: HTTP response
+    """
+    icons_dir = os.path.join(current_app.root_path, "static", "icons")
+    return send_from_directory(icons_dir, filename)
+
+
 @image_purge_bp.route("/images/purge")
 def purge():
     """
@@ -136,3 +151,17 @@ def purge():
     connection.close()
 
     return jsonify({"emails": emails})
+
+def convert_images(images: list, email: str) -> list:
+    uploaded_files: list = []
+    for file in images:
+        uploaded_files.append(upload_file(file, email))
+
+    image_paths: list = []
+    for i in range(10):
+        if i < len(uploaded_files):
+            image_paths.append(uploaded_files[i])
+        else:
+            image_paths.append(None)
+
+    return image_paths
