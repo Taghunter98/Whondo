@@ -9,7 +9,9 @@ export class FileCard extends File {
         <div class="inputContainer">
             <div class="fileWrapper">
                 <div class="fileBox">
-                    <img class="filePreview" src="" hidden/>
+                    <div class="imageContainer">
+                        <img class="filePreview" src="" hidden/>
+                    </div>
                     <span class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="currentColor">
                             <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
@@ -58,7 +60,7 @@ export class FileCard extends File {
             widthPercent: 100,    
             position: "absolute",         
             maxWidthPercent: 100,       
-            heightPercent: 100,
+            maxHeightPercent: 100,
             top: 0,
             left: 0,        
             objectFit: "cover",
@@ -79,6 +81,7 @@ export class FileCard extends File {
                 objectFit: "cover",
                 borderRadius: 6
             }
+    
         };
     
         return [base, previewBox, fileBox];
