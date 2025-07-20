@@ -24,6 +24,7 @@ from dictionaries import (
     PRICE_PREDICTION,
     UNITS,
     TENS,
+    SCALES
 )
 
 
@@ -76,54 +77,94 @@ class Parser:
         """
         return w in TOWNS
 
-    def wordToNum(self, word: str) -> Optional[int]:
-        w = word.strip()
-        parts: list[str] = re.split(r"[-\s]+", w)
-        total: int = 0
+    def phraseToNum(self, phrase: str) -> Optional[int]:
+        """
+        Method converts a string phrase to valid integer.
 
-        for p in parts:
-            if p in UNITS:
-                if p in ("hundred", "thousand"):
-                    total = total * UNITS[p] if total > 1 else UNITS[p]
-                else:
-                    total += UNITS[p]
-            elif p in TENS:
-                total += TENS[p]
-            elif total > 0:
-                return total
+        "two thousand five hundred" -> 2500
+
+        Args:
+            word (str): Word e.g "twenty two"
+
+        Returns:
+            Optional[int]: Integer version e.g 22
+        """
+        words = re.split(r"[\s-]+", phrase.lower().strip())
+        total = 0
+        current = 0
+
+        for w in words:
+            if w in UNITS:
+                current += UNITS[w]
+            elif w in TENS:
+                current += TENS[w]
+            elif w in SCALES:
+                scale = SCALES[w]
+                # if no unit before "hundred", treat as 1 hundred
+                current = (current or 1) * scale
+
+                # for scales ≥ 1000, push into total and reset
+                if scale >= 1000:
+                    total += current
+                    current = 0
             else:
                 return None
 
-        return total
+        return total + current
 
-    def calculateValue(self, token: Token) -> None:
+    def calculateValue(self, token: Token):
+        """
+        Method calculates value of string based integer (one, two three...).
+
+        The raw Token value is used to first caluclate the value then if the next value
+        is a number, it is added to the previous, then the node is unlinked.
+
+        There are additonal checks for integer based values and if it's price/rent.
+
+        Args:
+            token (Token): Current Token
+        """
         raw = token.raw.strip()
+
         if raw.startswith("£"):
             token.is_price = True
             raw = raw[1:].strip()
+
         raw = raw.replace(",", "")
 
+        # Try parsing as a digit literal
         if re.fullmatch(r"\d+(?:\.\d+)?", raw):
             val = float(raw) if "." in raw else int(raw)
-
         else:
-            val = self.wordToNum(raw)
+            # Build a sliding window phrase across this token and look-aheads:
+            phrase = raw
+            val = self.phraseToNum(phrase)
+
+            nxt = token.next
+            while val is not None and nxt and not nxt.is_city and not nxt.consumed:
+                # extend the phrase
+                phrase = f"{phrase} {nxt.raw}"
+                candidate = self.phraseToNum(phrase)
+                if candidate is None:
+                    break
+                # accept the longer match
+                val = candidate
+                nxt.consumed = True
+                nxt = nxt.next
 
         if val is None:
             return
 
-        nxt = token.next
-        if nxt and not nxt.consumed and not nxt.is_city:
-            combo_val = self.wordToNum(f"{token.raw} {nxt.raw}")
-            if combo_val is not None:
-                val = combo_val
-                nxt.consumed = True
-                token.next = nxt.next
-                if nxt.next:
-                    nxt.next.prev = token
-
         token.is_number = True
         token.name = str(val)
+
+        next: Token = token.next
+        while next and next.consumed:
+            next = next.next
+        
+        if next and next.raw.lower() in PRICE_PREDICTION:
+            token.is_price = True
+
 
     def isNumber(self, token: Token, w: str) -> bool:
         """
@@ -275,16 +316,6 @@ class Parser:
                 # pricing detection
                 if t.is_price:
                     price = float(t.name)
-                    continue
-                elif next in PRICE_PREDICTION:
-                    t.is_price = True
-                    price = float(t.name)
-                    continue
-                elif next in ("bedrooms", "bedroom", "bed"):
-                    bedrooms = int(t.name)
-                    continue
-                elif next in ("bathroom", "bathrooms", "bath"):
-                    bathrooms = int(t.name)
                     continue
 
             # zoning detection

@@ -379,9 +379,7 @@ UNITS = {
     "sixteen": 16,
     "seventeen": 17,
     "eighteen": 18,
-    "nineteen": 19,
-    "hundred": 100,
-    "thousand": 1000,
+    "nineteen": 19
 }
 
 TENS = {
@@ -393,4 +391,11 @@ TENS = {
     "seventy": 70,
     "eighty": 80,
     "ninety": 90,
+}
+
+SCALES = {
+    "hundred":100,
+    "thousand":1_000,
+    "million":1_000_000,
+    "billion":1_000_000_000,
 }

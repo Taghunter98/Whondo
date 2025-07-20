@@ -25,18 +25,19 @@ class TestSearchEngine(unittest.TestCase):
         self.assertEqual(names, ["flat"], f"Returning: {context}")
 
     def testWordToNum(self):
-        self.assertEqual(Parser.wordToNum(self, "twenty"), 20)
-        self.assertEqual(Parser.wordToNum(self, "twenty five"), 25)
-        self.assertEqual(Parser.wordToNum(self, "fifteen"), 15)
-        self.assertEqual(Parser.wordToNum(self, "one hundred"), 100)
-        self.assertEqual(Parser.wordToNum(self, "two hundred"), 200)
-        self.assertEqual(Parser.wordToNum(self, "two thousand"), 2000)
+        self.assertEqual(Parser.phraseToNum(self, "twenty"), 20)
+        self.assertEqual(Parser.phraseToNum(self, "twenty five"), 25)
+        self.assertEqual(Parser.phraseToNum(self, "fifteen"), 15)
+        self.assertEqual(Parser.phraseToNum(self, "one hundred"), 100)
+        self.assertEqual(Parser.phraseToNum(self, "two hundred"), 200)
+        self.assertEqual(Parser.phraseToNum(self, "two thousand"), 2000)
+        self.assertEqual(Parser.phraseToNum(self, "two thousand five hundred"), 2500)
         self.assertEqual(
-            Parser.wordToNum(self, "two thousand")
-            + Parser.wordToNum(self, "three hundred"),
+            Parser.phraseToNum(self, "two thousand")
+            + Parser.phraseToNum(self, "three hundred"),
             2300,
         )
-        self.assertEqual(Parser.wordToNum(self, "twenty flat"), 20)
+        self.assertEqual(Parser.phraseToNum(self, "twenty flat"), None)
 
     def testCurrenyFormattingWords(self):
         prompt: str = "I need a flat in London for up to two thousand a month."
