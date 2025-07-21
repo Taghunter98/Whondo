@@ -177,7 +177,6 @@ class Parser:
 
         cleaned: str = w.replace(",", "")
         is_price = re.search(r"^£", cleaned)
-        print("Cleaned word: " + cleaned)
 
         if is_price:
             cleaned = cleaned.replace("£", "")
@@ -284,16 +283,13 @@ class Parser:
 
         return match
 
-    def score(self, keywords: list[str], comparable: list[str]) -> float:
-        score: float = 0
+    # in Parser:
+    def score(self, user_keywords: list[str], matched_keywords: list[str]) -> float:
+        if not user_keywords:
+            return 0.0
 
-        for k in comparable:
-            if k in keywords:
-                score += 1
-        
-        score = score / len(keywords) * 100
-
-        return score
+        hits = sum(1 for kw in matched_keywords if kw in user_keywords)
+        return hits / len(user_keywords) * 100
         
 
     def contextParser(self, tokens: list[Token]) -> tuple[list[Token], list]:
@@ -331,6 +327,10 @@ class Parser:
                 if t.is_price:
                     price = float(t.name)
                     continue
+                elif next in ("bedrooms", "bed"):
+                    bedrooms = int(next)
+                elif next in ("bathrooms", "bath"):
+                    bathrooms = int(next)
 
             # zoning detection
             if t.name == "zone":
