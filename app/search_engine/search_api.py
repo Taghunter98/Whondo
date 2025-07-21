@@ -44,6 +44,7 @@ def search():
         parser = Parser(prompt)
         tokens = parser.tokenise()
         keywords, [location, price, bedrooms, bathrooms] = parser.contextParser(tokens)
+        user_keywords: list[str] = [tok.name for tok in keywords]
 
         if not location:
             return jsonify({"error": "No location provided"}), 400
@@ -72,7 +73,7 @@ def search():
         results = []
         for r in dict_rows:
             matched = [kw for kw in KEYWORDS if r.get(kw)]
-            r["score"] = parser.score(keywords, matched)
+            r["score"] = parser.score(user_keywords, matched)
 
             for kw in KEYWORDS:
                 r.pop(kw, None)
