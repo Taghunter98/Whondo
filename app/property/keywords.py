@@ -96,7 +96,6 @@ def reset_keywords(kID: int) -> bool:
         "long_let",
         "no_deposit",
         "low_deposit",
-        "zero_deposit",
         "dss_accepted",
         "guarantor_required",
         "no_guarantor",
