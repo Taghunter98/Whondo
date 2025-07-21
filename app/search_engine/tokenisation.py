@@ -327,9 +327,9 @@ class Parser:
                 if t.is_price:
                     price = float(t.name)
                     continue
-                elif next in ("bedrooms", "bed"):
+                elif next in ("bedrooms", "bedroom", "bed"):
                     bedrooms = int(float(t.name))
-                elif next in ("bathrooms", "bath"):
+                elif next in ("bathrooms", "bathroom", "bath"):
                     bathrooms = int(float(t.name))
 
             # zoning detection
