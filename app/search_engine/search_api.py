@@ -72,13 +72,16 @@ def search():
 
         results = []
         for r in dict_rows:
-            matched = [kw for kw in user_keywords if r.get(kw)]
+            matched: list[str] = [kw for kw in user_keywords if r.get(kw)]
+            all_kw: list[str] = [kw for kw in KEYWORDS if r.get(kw)]
+
             r["score"] = parser.score(user_keywords, matched)
 
             for kw in KEYWORDS:
                 r.pop(kw, None)
 
             r["matched_keywords"] = matched
+            r["all_keywords"] = all_kw
 
             images = [r.pop(f, None) for f in image_fields]
 
