@@ -10,6 +10,7 @@ import './comps/dialog.js';
 import './comps/icons/icon.js';
 import './comps/navbar.js';
 import './comps/icons/iconButton.js';
+import './comps/landlord-nav.js';
 
 
 // Pages
