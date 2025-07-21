@@ -24,6 +24,7 @@ from .dictionaries import (
     UNITS,
     TENS,
     SCALES,
+    PHRASE_CONTEXT,
 )
 
 
@@ -76,6 +77,54 @@ class Parser:
         """
         return w in TOWNS
 
+    def extractTowns(self) -> list[str]:
+        """
+        Method extracts town names and replaces spaces with - for normalisation.
+
+        Sorts by decending length, using regex to enforce word boundries avoiding
+        matching other substrings.
+
+        Subs the prompt city with underscores: stoke on trent -> stoke-on-trent
+        This ensures that city won't be broken into tokens later.
+
+        Returns:
+            list[str]: City matches
+        """
+        matches = []
+        for city in sorted(TOWNS, key=lambda c: -len(c)):
+            if re.search(rf"\b{re.escape(city)}\b", self.prompt):
+                matches.append(city)
+                self.prompt = re.sub(
+                    rf"\b{re.escape(city)}\b", city.replace(" ", "_"), self.prompt
+                )
+        return matches
+
+    def isNumber(self, token: Token, w: str) -> bool:
+        """
+        Method checks if word is a number, or price given a leading £.
+
+        Args:
+            token (Token): Token object
+            w (str): Word from prompt
+
+        Returns:
+            bool: Number status
+        """
+
+        cleaned: str = w.replace(",", "")
+        is_price = re.search(r"^£", cleaned)
+
+        if is_price:
+            cleaned = cleaned.replace("£", "")
+            token.is_price = True
+
+        if cleaned.isdigit():
+            token.is_number = True
+            token.name = cleaned
+            return True
+
+        return False
+
     def phraseToNum(self, phrase: str) -> Optional[float]:
         """
         Method converts a string phrase to valid integer.
@@ -126,6 +175,11 @@ class Parser:
         """
         raw: str = token.raw.strip()
 
+        for p in PRICE_PREDICTION:
+            if raw.endswith(p):
+                token.is_price
+                raw = re.sub(p, "", raw)
+
         if raw.startswith("£"):
             token.is_price = True
             raw = raw[1:].strip()
@@ -163,53 +217,52 @@ class Parser:
         if next and next.raw.lower() in PRICE_PREDICTION:
             token.is_price = True
 
-    def isNumber(self, token: Token, w: str) -> bool:
+    def phraseContext(self, tokens: list[Token]) -> list[Token]:
         """
-        Method checks if word is a number, or price given a leading £.
+        Method provides a phrase context model that takes into account subsequent
+        token values and builds context based on a phrase.
+
+        "close to a station" will be interpreted as "close_to_station".
+        "zero deposit" will be interpreted as "no_deposit".
 
         Args:
-            token (Token): Token object
-            w (str): Word from prompt
+            tokens (list[Token]): _description_
 
         Returns:
-            bool: Number status
+            list[Token]: _description_
         """
+        PHRASE_KEYS = sorted(PHRASE_CONTEXT.keys(), key=lambda k: -len(k))
 
-        cleaned: str = w.replace(",", "")
-        is_price = re.search(r"^£", cleaned)
+        matched: list[Token] = []
 
-        if is_price:
-            cleaned = cleaned.replace("£", "")
-            token.is_price = True
+        for i in range(len(tokens)):
+            t: Token = tokens[i]
 
-        if cleaned.isdigit():
-            token.is_number = True
-            token.name = cleaned
-            return True
+            if t.consumed or t.is_city:
+                continue
 
-        return False
+            for phrase in PHRASE_KEYS:
+                phrase_len: int = len(phrase)
 
-    def extractTowns(self) -> list[str]:
-        """
-        Method extracts town names and replaces spaces with - for normalisation.
+                if i + phrase_len > len(tokens):
+                    continue
 
-        Sorts by decending length, using regex to enforce word boundries avoiding
-        matching other substrings.
+                span: list[Token] = tokens[i : i + phrase_len]
+                if all(
+                    span[j].raw == phrase[j]
+                    and not span[j].is_city
+                    and not span[j].consumed
+                    for j in range(phrase_len)
+                ):
+                    t.name = PHRASE_CONTEXT[phrase]
+                    matched.append(t)
 
-        Subs the prompt city with underscores: stoke on trent -> stoke-on-trent
-        This ensures that city won't be broken into tokens later.
+                    # Consume rest
+                    for tok in span[1:]:
+                        tok.consumed = True
+                    break
 
-        Returns:
-            list[str]: City matches
-        """
-        matches = []
-        for city in sorted(TOWNS, key=lambda c: -len(c)):
-            if re.search(rf"\b{re.escape(city)}\b", self.prompt):
-                matches.append(city)
-                self.prompt = re.sub(
-                    rf"\b{re.escape(city)}\b", city.replace(" ", "_"), self.prompt
-                )
-        return matches
+        return matched
 
     def tokenise(self) -> list[Token]:
         """
@@ -283,14 +336,22 @@ class Parser:
 
         return match
 
-    # in Parser:
     def score(self, user_keywords: list[str], matched_keywords: list[str]) -> float:
+        """
+        Method scores the advert based on matched keywords and returns percentage.
+
+        Args:
+            user_keywords (list[str]): Prompt keywords
+            matched_keywords (list[str]): Matched keywords
+
+        Returns:
+            float: Percentage acuracy
+        """
         if not user_keywords:
             return 0.0
 
         hits = sum(1 for kw in matched_keywords if kw in user_keywords)
         return hits / len(user_keywords) * 100
-        
 
     def contextParser(self, tokens: list[Token]) -> tuple[list[Token], list]:
         """
@@ -298,6 +359,13 @@ class Parser:
 
         The location and price are found for query data and the tokens are run
         through checks to build context and find the closest fields.
+
+        The context model takes into account factors such as:
+            - numbers including decimals as digits or text
+            - price, bed, bath, location validation from context
+            - implicit checks for dup names like 'Bath' if prev is a number
+            - london zoning rules
+            - dup field aware context built in a hash set
 
         Args:
             tokens (list[Token]): Token list
@@ -310,8 +378,11 @@ class Parser:
         bedrooms: int = None
         bathrooms: int = None
 
-        seen_fields: set = set()
-        context: list[Token] = []
+        seen_fields: set[str] = set()
+        context: list[Token] = self.phraseContext(tokens)
+
+        for f in context:
+            seen_fields.add(f.name)
 
         for t in tokens:
             if t.consumed:
@@ -323,27 +394,26 @@ class Parser:
             prev: str = t.prev.name if t.prev else False
 
             if t.is_number:
-                # pricing detection
                 if t.is_price:
                     price = float(t.name)
                     continue
                 elif next in ("bedrooms", "bedroom", "bed"):
                     bedrooms = int(float(t.name))
                 elif next in ("bathrooms", "bathroom", "bath"):
+                    if t.next.is_city:
+                        t.next.is_city = False
+
                     bathrooms = int(float(t.name))
 
-            # zoning detection
             if t.name == "zone":
                 zone_field: str = ZONE_MAP.get(t.next.name)
                 if zone_field:
                     t.name = zone_field
 
-            # city detection
             if t.is_city:
                 location = t.name
                 continue
 
-            # database field token matching
             field = self.mapField(t.name)
             if field and field not in seen_fields:
                 seen_fields.add(field)
