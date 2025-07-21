@@ -133,6 +133,7 @@ TOWNS = [
     "birmingham",
     "bradford",
     "brighton & hove",
+    "brighton",
     "bristol",
     "cambridge",
     "canterbury",
@@ -357,7 +358,19 @@ ZONE_MAP = {"1": "zone_1", "2": "zone_2", "3": "zone_3", "4": "zone_4"}
 
 PROTECTD = ["included", "include", "allow", "allows"]
 
-PRICE_PREDICTION = ["month", "week", "year", "day", "pcm", "pcy"]
+PRICE_PREDICTION = [
+    "month",
+    "week",
+    "year",
+    "day",
+    "pcm",
+    "pcy",
+    "pw",
+    "per",
+    "for",
+    "budget",
+    "pounds",
+]
 
 UNITS = {
     "zero": 0,
@@ -379,7 +392,7 @@ UNITS = {
     "sixteen": 16,
     "seventeen": 17,
     "eighteen": 18,
-    "nineteen": 19
+    "nineteen": 19,
 }
 
 TENS = {
@@ -394,8 +407,8 @@ TENS = {
 }
 
 SCALES = {
-    "hundred":100,
-    "thousand":1_000,
-    "million":1_000_000,
-    "billion":1_000_000_000,
+    "hundred": 100,
+    "thousand": 1_000,
+    "million": 1_000_000,
+    "billion": 1_000_000_000,
 }

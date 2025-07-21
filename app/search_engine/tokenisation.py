@@ -23,7 +23,7 @@ from .dictionaries import (
     PRICE_PREDICTION,
     UNITS,
     TENS,
-    SCALES
+    SCALES,
 )
 
 
@@ -76,7 +76,7 @@ class Parser:
         """
         return w in TOWNS
 
-    def phraseToNum(self, phrase: str) -> Optional[int]:
+    def phraseToNum(self, phrase: str) -> Optional[float]:
         """
         Method converts a string phrase to valid integer.
 
@@ -88,9 +88,12 @@ class Parser:
         Returns:
             Optional[int]: Integer version e.g 22
         """
-        words = re.split(r"[\s-]+", phrase.lower().strip())
-        total = 0
-        current = 0
+        if re.fullmatch(r"\d+(?:\.\d+)?", phrase):
+            return float(phrase)
+
+        words: list[str] = re.split(r"[\s-]+", phrase.lower().strip())
+        total: float = 0
+        current: float = 0
 
         for w in words:
             if w in UNITS:
@@ -99,10 +102,8 @@ class Parser:
                 current += TENS[w]
             elif w in SCALES:
                 scale = SCALES[w]
-                # if no unit before "hundred", treat as 1 hundred
                 current = (current or 1) * scale
 
-                # for scales ≥ 1000, push into total and reset
                 if scale >= 1000:
                     total += current
                     current = 0
@@ -123,31 +124,29 @@ class Parser:
         Args:
             token (Token): Current Token
         """
-        raw = token.raw.strip()
+        raw: str = token.raw.strip()
 
         if raw.startswith("£"):
             token.is_price = True
             raw = raw[1:].strip()
 
-        raw = raw.replace(",", "")
+        raw.replace(",", "")
 
-        # Handle parsing digit literal
         if re.fullmatch(r"\d+(?:\.\d+)?", raw):
-            val = float(raw) if "." in raw else int(raw)
+            val = float(raw)
         else:
-            # Build a sliding window phrase across this token and look-aheads:
             phrase: str = raw
-            val: int = self.phraseToNum(phrase)
-
+            val: float = self.phraseToNum(phrase)
             next: Token = token.next
+
             while val is not None and next and not next.is_city and not next.consumed:
-                
                 phrase = f"{phrase} {next.raw}"
-                candidate: int = self.phraseToNum(phrase)
+
+                candidate: float = self.phraseToNum(phrase)
                 if candidate is None:
                     break
-              
-                val: int = candidate
+
+                val = candidate
                 next.consumed = True
                 next = next.next
 
@@ -157,13 +156,12 @@ class Parser:
         token.is_number = True
         token.name = str(val)
 
-        next: Token = token.next
+        next = token.next
         while next and next.consumed:
             next = next.next
-        
+
         if next and next.raw.lower() in PRICE_PREDICTION:
             token.is_price = True
-
 
     def isNumber(self, token: Token, w: str) -> bool:
         """
@@ -179,6 +177,7 @@ class Parser:
 
         cleaned: str = w.replace(",", "")
         is_price = re.search(r"^£", cleaned)
+        print("Cleaned word: " + cleaned)
 
         if is_price:
             cleaned = cleaned.replace("£", "")
@@ -224,6 +223,8 @@ class Parser:
 
         The token list is then returned.
 
+        Regex settings: keeps [words, £, full stops in words], cleans everything else.
+
         Returns:
             list[Token]: Token list
         """
@@ -231,7 +232,9 @@ class Parser:
 
         raw_words: list[str] = []
         for w in self.prompt.split():
-            clean: str = re.sub(r"[^\w\s£]", "", w)  # Cleans unwanted chars
+            clean: str = re.sub(r"[^\w\s£.]", "", w)
+            clean = re.sub(r"\b\.$", "", clean)
+
             if clean and clean not in SIFT_LIST:
                 raw_words.append(clean)
 
@@ -280,6 +283,18 @@ class Parser:
         ) or (None, 0, None)
 
         return match
+
+    def score(self, keywords: list[str], comparable: list[str]) -> float:
+        score: float = 0
+
+        for k in comparable:
+            if k in keywords:
+                score += 1
+        
+        score = score / len(keywords) * 100
+
+        return score
+        
 
     def contextParser(self, tokens: list[Token]) -> tuple[list[Token], list]:
         """

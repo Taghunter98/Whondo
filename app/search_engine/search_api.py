@@ -72,7 +72,7 @@ def search():
         results = []
         for r in dict_rows:
             matched = [kw for kw in KEYWORDS if r.get(kw)]
-            r["score"] = len(matched)
+            r["score"] = parser.score(keywords, matched)
 
             for kw in KEYWORDS:
                 r.pop(kw, None)
