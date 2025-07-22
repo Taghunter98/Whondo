@@ -89,7 +89,7 @@ export class Carousel extends Comp {
 
      slide(direction) {
         const newIndex = this.index + direction;
-        if (newIndex < 0 || newIndex > this.items.length - 2) return;
+        if (newIndex < 0 || newIndex >= this.items.length) return;
 
         this.index = newIndex;
         this.updateView();
@@ -98,7 +98,7 @@ export class Carousel extends Comp {
     updateView() {
         const offset = this.items[this.index]?.offsetLeft || 0;
         this.track.style.transform = `translateX(-${offset}px)`;
-        this.counter.textContent = `${this.index + 1} / ${this.items.length}`;
+        this.counter.textContent = `${Math.min(this.index + 1, this.items.length)} / ${this.items.length}`;
     }
 
     afterRender() {
