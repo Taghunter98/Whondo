@@ -9,7 +9,7 @@ export class FileCard extends File {
         <div class="inputContainer">
             <div class="fileWrapper">
                 <div class="fileBox">
-                    <div class="imageContainer">
+                    <div class="imageContainer" hidden>
                         <img class="filePreview" src="" hidden/>
                     </div>
                     <span class="icon">
@@ -57,16 +57,11 @@ export class FileCard extends File {
         const previewBox = {
             
             class: "filePreview",
-            widthPercent: 100,    
-            position: "absolute",         
-            maxWidthPercent: 100,       
+            maxWidthPercent: 100,               
             maxHeightPercent: 100,
-            top: 0,
-            left: 0,        
             objectFit: "cover",
             display: "block",
             objectPosition: "centre",
-            imageRendering: "auto",
             margin: 0,
             borderRadius: 12,
             media: {
@@ -83,8 +78,14 @@ export class FileCard extends File {
             }
     
         };
+
+        const imageContainer = {
+        class: "imageContainer",
+        widthPercent: 100,
+        position: "relative",
+    };
     
-        return [base, previewBox, fileBox];
+        return [base, previewBox, fileBox, imageContainer,];
     
     }
 
@@ -94,6 +95,7 @@ export class FileCard extends File {
         const icon       = this.query(".icon");
         const preview    = this.query(".filePreview");
         const dropArea   = this.query(".fileBox");
+        const container  = this.query(".imageContainer");
 
         const handleFile = (file) => {
 
@@ -109,6 +111,7 @@ export class FileCard extends File {
                 reader.onload = () => {
 
                     preview.src = reader.result;
+                    container.removeAttribute("hidden");
                     preview.removeAttribute("hidden");
                     icon.setAttribute("hidden", "");
                 

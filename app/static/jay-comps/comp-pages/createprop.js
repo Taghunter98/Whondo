@@ -14,7 +14,7 @@ export class CreateProp extends Comp {
                     <form class="formObj" action="", method="POST">
 
                         <!-- Personal information -->
-                        <div id="step1">
+                        <div id="step1" hidden>
                             <div class="textContainer">
                                 <p class="text">Step 1/3</p>
                                 <h4 class="title">Property Details</h4>
@@ -45,7 +45,7 @@ export class CreateProp extends Comp {
                         </div>
 
                         <!-- User personalisation  -->
-                        <div id="step2"  hidden>
+                        <div id="step2" >
 
                             <div class="textContainer">
                                 <p class="text">Step 2/3</p>
