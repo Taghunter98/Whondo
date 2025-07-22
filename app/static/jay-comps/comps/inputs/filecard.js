@@ -80,10 +80,10 @@ export class FileCard extends File {
         };
 
         const imageContainer = {
-        class: "imageContainer",
-        widthPercent: 100,
-        position: "relative",
-    };
+            class: "imageContainer",
+            widthPercent: 100,
+            position: "relative",
+        };
     
         return [base, previewBox, fileBox, imageContainer,];
     

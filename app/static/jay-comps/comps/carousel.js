@@ -28,7 +28,7 @@ export class Carousel extends Comp {
                 widthPercent: 100,
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
+                alignItems: "centre",
                 gap: 8,
             },
             {
@@ -36,7 +36,7 @@ export class Carousel extends Comp {
                 position: "relative",
                 widthPercent: 100,
                 display: "flex",
-                alignItems: "center",
+                alignItems: "centre",
                 height: 387,
             },
             {
@@ -55,7 +55,7 @@ export class Carousel extends Comp {
             },
             {
                 class: "carousel-track ::slotted(*)",
-                flex: "0 0 50%", 
+                minWidthPercent: 50,
                 boxSizing: "border-box",
             },
             {
@@ -67,8 +67,8 @@ export class Carousel extends Comp {
                 width: 32,
                 height: 32,
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                alignItems: "centre",
+                justifyContent: "centre",
                 cursor: "pointer",
             },
             {
@@ -96,10 +96,15 @@ export class Carousel extends Comp {
     }
 
     updateView() {
-        const offset = this.items[this.index]?.offsetLeft || 0;
-        this.track.style.transform = `translateX(-${offset}px)`;
+        const scrollBox = this.query(".carousel-scroll");
+        const item = this.items[this.index];
+        if (!item || !scrollBox) return;
+
+        const scrollOffset = item.offsetLeft - this.offsetLeft;
+        this.track.style.transform = `translateX(-${scrollOffset}px)`;
         this.counter.textContent = `${Math.min(this.index + 1, this.items.length)} / ${this.items.length}`;
     }
+
 
     afterRender() {
         this.track = this.query(".carousel-track");
