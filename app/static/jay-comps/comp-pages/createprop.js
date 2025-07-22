@@ -14,7 +14,7 @@ export class CreateProp extends Comp {
                     <form class="formObj" action="", method="POST">
 
                         <!-- Personal information -->
-                        <div id="step1" hidden>
+                        <div id="step1">
                             <div class="textContainer">
                                 <p class="text">Step 1/3</p>
                                 <h4 class="title">Property Details</h4>
@@ -63,14 +63,14 @@ export class CreateProp extends Comp {
                                 <p id="count" class="count">1/10</p>
                                 <div class="btnRow">
                                     <comp-button class="back" id="backBtn2" type="button"></comp-button>
-                                    <comp-button class="next" id="nextBtn" type="button"></comp-button>
+                                    <comp-button class="next" id="nextBtn2" type="button"></comp-button>
                                 </div>
         
                             </div>
 
                         </div>
 
-                        <div id="step3" >
+                        <div id="step3" hidden>
 
                             <div class="textContainer">
                                 <p class="text">Step 3/3</p>
@@ -280,7 +280,9 @@ export class CreateProp extends Comp {
     }
 
     afterRender(){
-        //Step 1
+        const step1 = this.getById("step1");
+        const step2 = this.getById("step2");
+        const step3 = this.getById("step3")
         const address = this.getById("address");
         const title = this.getById("title");
         const rent = this.getById("rent");
@@ -290,7 +292,8 @@ export class CreateProp extends Comp {
         const backBtn2 = this.getById("backBtn2");
         const backBtn3 = this.getById("backBtn3");
         const nextBtn = this.getById("nextBtn");
-        
+        const nextBtn2 = this.getById("nextBtn2");
+        const submit = this.getById("submit");
 
         address.label = "Address";
         address.prompt = "Start typing your address";
@@ -309,13 +312,36 @@ export class CreateProp extends Comp {
         backBtn3.text = "Back"
         backBtn3.variant = 2;
         nextBtn.text = "Next";
+        nextBtn2.text = "Next";
+        submit.text = "Finish";
+        
+
+        nextBtn.addEventListener("click", ()=> {
+            step1.setAttribute("hidden", "");
+            step3.setAttribute("hidden", "");
+            step2.removeAttribute("hidden")
+        })
+
+        nextBtn2.addEventListener("click", ()=> {
+            step1.setAttribute("hidden", "");
+            step2.setAttribute("hidden", "");
+            step3.removeAttribute("hidden")
+        })
+
+         backBtn2.addEventListener("click", () => {
+            step2.setAttribute("hidden", "");
+            step3.setAttribute("hidden", "");
+            step1.removeAttribute("hidden")
+        })
+
+         backBtn3.addEventListener("click", () => {
+            step3.setAttribute("hidden", "");
+            step1.setAttribute("hidden", "");
+            step2.removeAttribute("hidden")
+        })
 
     }
 
-    static {
-
-        Comp.register(this); 
-
-    }
+    static { Comp.register(this); }
 
 }

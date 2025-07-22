@@ -76,17 +76,24 @@ export class Keywords extends Input {
 
         const tagEl = document.createElement("div");
         tagEl.className = "tag";
-        tagEl.innerHTML = `
-            ${text}
-            <span class="remove-btn" title="Remove">x</span>
-        `;
+        tagEl.textContent = text;
 
-        tagEl.querySelector(".remove-btn").addEventListener("click", () => {
+        const removeBtn = document.createElement("span");
+        removeBtn.className = "remove-btn";
+        removeBtn.title = "remove"
+
+        const iconEl = document.createElement("comp-icon");
+        iconEl.path = "close-black.svg"
+
+        removeBtn.appendChild(iconEl);
+        tagEl.appendChild(removeBtn);
+
+        removeBtn.addEventListener("click", () => {
             this.tags_ = this.tags_.filter(tag => tag !== text );
             this.tagsEl.removeChild(tagEl);
         });
 
-        this.tagsEl.appendChild(tagEl);
+       this.tagsEl.appendChild(tagEl);
     }
     
     afterRender(){
