@@ -55,7 +55,7 @@ export class Carousel extends Comp {
             },
             {
                 class: "carousel-track ::slotted(*)",
-                minWidthPercent: 50,
+                flex: "0 0 50%",
                 boxSizing: "border-box",
             },
             {
