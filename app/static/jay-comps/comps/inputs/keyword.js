@@ -7,15 +7,19 @@ export class Keywords extends Input {
         return this.tags_
     }
 
+    beforeRender(){
+        super.beforeRender();
+    }
+
     createHTML() {
          return /* html */ `
         <div class="inputContainer">
             
-                <label style="color: var(--black80); font-size: 14px">${this.label}</label>
-                <input class="inputValue input-tags" type="${this.type}" placeholder="${this.prompt}">
+            <label style="color: var(--black80); font-size: 14px">${this.label}</label>
+            <input class="inputValue input-tags" type="${this.type}" placeholder="${this.prompt}">
             
             <div class="keywords">
-                <label style="color: var(--black80); font-size: 14px">test</label>
+                <label style="color: var(--black80); font-size: 14px">My Keywords</label>
                 <div class="tags"></div>
             </div>
         </div>
@@ -29,29 +33,32 @@ export class Keywords extends Input {
             { class: "keywords",
                  display: "flex",
                 flexDirection: "column",
-                widthPercent: 100,
-                maxWidth: "none",
+                maxWidth: 460,
+                maxHeight: 168,
                 padding: 0,
                 alignItems: "start",
                 gap: 10,
                 marginTop: 10,
                 background: "white"
+                
 
             },
             { class: "tags",
                 display: "flex",
                 flexWrap: "wrap",
-                gap: 8
+                widthPercent: 100,
+                gap: 10
             },
             { class: "tag",
                 display: "flex",
                 alignItems: "center",
-                backgroundVar: "black10",
-                padding: [8, 12, 8, 12],
+                background: "white",
+                padding: [8, 12],
                 fontSize: 14,
                 borderVar: "border",
                 borderRadius: 8,
                 gap: 10,
+                boxSizing: "border-box"
             },
             { class: "remove-btn",
                 cursor: "pointer",
@@ -60,10 +67,6 @@ export class Keywords extends Input {
                 padding: 2,
             }
         ];
-    }
-
-    isEmpty(){
-        return this.tags_.length === 0;
     }
 
     addTag(text){

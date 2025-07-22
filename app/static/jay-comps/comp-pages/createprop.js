@@ -63,7 +63,7 @@ export class CreateProp extends Comp {
                                 <p id="count" class="count">1/10</p>
                                 <div class="btnRow">
                                     <comp-button class="back" id="backBtn2" type="button"></comp-button>
-                                    <comp-button class="submit" id="submit" type="submit"></comp-button>
+                                    <comp-button class="next" id="nextBtn" type="button"></comp-button>
                                 </div>
         
                             </div>
@@ -80,13 +80,13 @@ export class CreateProp extends Comp {
                             <p class="text">Whondo works with a prompting system that uses keywords to help your property be noticed. We want to show your advert to as many people as possible, so add some keywords!</p>
 
                              <div class="input">
-                                <comp-keywords></comp-keywords>
+                                <comp-keywords class="keywords" id="keywords" name="keywords" ></comp-keywords>
                             </div>
 
                             <div class="footer">
 
                                 <div class="btnRow">
-                                    <comp-button class="back" id="backBtn2" type="button"></comp-button>
+                                    <comp-button class="back" id="backBtn3" type="button"></comp-button>
                                     <comp-button class="submit" id="submit" type="submit"></comp-button>
                                 </div>
         
@@ -285,8 +285,12 @@ export class CreateProp extends Comp {
         const title = this.getById("title");
         const rent = this.getById("rent");
         const description = this.getById("description");
+        const keyword = this.getById("keywords");
         const backBtn = this.getById("backBtn");
+        const backBtn2 = this.getById("backBtn2");
+        const backBtn3 = this.getById("backBtn3");
         const nextBtn = this.getById("nextBtn");
+        
 
         address.label = "Address";
         address.prompt = "Start typing your address";
@@ -296,9 +300,15 @@ export class CreateProp extends Comp {
         rent.prompt = "Enter a price...";
         description.label = "Property description";
         description.prompt = "Tell us about your home, be descriptive!";
-        backBtn.text = "back";
+        keyword.label = "Add keyword";
+        keyword.prompt = "Choose 10 keywords..."
+        backBtn.text = "Back";
         backBtn.variant = 2;
-        nextBtn.text = "next";
+        backBtn2.text = "Back";
+        backBtn2.variant = 2;
+        backBtn3.text = "Back"
+        backBtn3.variant = 2;
+        nextBtn.text = "Next";
 
     }
 
