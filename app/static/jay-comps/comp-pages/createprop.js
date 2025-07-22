@@ -45,7 +45,7 @@ export class CreateProp extends Comp {
                         </div>
 
                         <!-- User personalisation  -->
-                        <div id="step2" >
+                        <div id="step2"  hidden>
 
                             <div class="textContainer">
                                 <p class="text">Step 2/3</p>
@@ -70,7 +70,7 @@ export class CreateProp extends Comp {
 
                         </div>
 
-                        <div id="step3" hidden>
+                        <div id="step3" >
 
                             <div class="textContainer">
                                 <p class="text">Step 3/3</p>
@@ -80,11 +80,11 @@ export class CreateProp extends Comp {
                             <p class="text">Whondo works with a prompting system that uses keywords to help your property be noticed. We want to show your advert to as many people as possible, so add some keywords!</p>
 
                              <div class="input">
-                                <comp-input id="keyword" name="keyword"></comp-input>
+                                <comp-keywords></comp-keywords>
                             </div>
 
                             <div class="footer">
-                                <p id="count" class="count">1/10</p>
+
                                 <div class="btnRow">
                                     <comp-button class="back" id="backBtn2" type="button"></comp-button>
                                     <comp-button class="submit" id="submit" type="submit"></comp-button>
