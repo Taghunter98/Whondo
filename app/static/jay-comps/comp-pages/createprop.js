@@ -54,13 +54,23 @@ export class CreateProp extends Comp {
                             </div>
 
                              <div class="inputRowFile">
-                                <!-- new file comp for prop go here -->
-                                 <comp-file-card></comp-file-card>
-                                 <comp-file-card></comp-file-card>
-                            </div>
+                                    
+                                        <comp-carousel>
+                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card></comp-file-card>
+                                        </comp-carousel>
+                                    
+                                </div>
 
                             <div class="footer">
-                                <p id="count" class="count">1/10</p>
                                 <div class="btnRow">
                                     <comp-button class="back" id="backBtn2" type="button"></comp-button>
                                     <comp-button class="next" id="nextBtn2" type="button"></comp-button>
@@ -208,7 +218,6 @@ export class CreateProp extends Comp {
                 padding: [20, 0, 20, 0],
                 widthPercent: 100,
                 justifyContent: "space-between",
-                height: 387,
                 media: {
                     maxWidthBp: 600,
                     flexDirection: "column"

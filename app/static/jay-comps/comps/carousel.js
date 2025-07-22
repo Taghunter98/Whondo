@@ -109,8 +109,8 @@ export class Carousel extends Comp {
         const rightBtn = this.query(".arrow.right");
         const slot = this.query("slot");
         
-        leftBtn.path = "";
-        rightBtn.path = "f";
+        leftBtn.path = "arrow_back.svg";
+        rightBtn.path = "arrow_forward.svg";
 
         const updateItems = () => {
             this.items = slot.assignedElements() || [];
