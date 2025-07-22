@@ -75,7 +75,7 @@ export class Keywords extends Input {
         tagEl.className = "tag";
         tagEl.innerHTML = `
             ${text}
-            <span class="remove-btn" title="Remove">&times;</span>
+            <span class="remove-btn" title="Remove">x</span>
         `;
 
         tagEl.querySelector(".remove-btn").addEventListener("click", () => {
