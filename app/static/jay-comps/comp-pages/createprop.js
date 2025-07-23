@@ -56,16 +56,16 @@ export class CreateProp extends Comp {
                              <div class="inputRowFile">
                                     
                                         <comp-carousel>
-                                            <comp-file-card></comp-file-card>
-                                            <comp-file-card></comp-file-card>
-                                            <comp-file-card></comp-file-card>
-                                            <comp-file-card></comp-file-card>
-                                            <comp-file-card></comp-file-card>
-                                            <comp-file-card></comp-file-card>
-                                            <comp-file-card></comp-file-card>
-                                            <comp-file-card></comp-file-card>
-                                            <comp-file-card></comp-file-card>
-                                            <comp-file-card></comp-file-card>
+                                            <comp-file-card class="cover" id="cover"></comp-file-card>
+                                            <comp-file-card class="pic"></comp-file-card>
+                                            <comp-file-card class="pic">></comp-file-card>
+                                            <comp-file-card class="pic">></comp-file-card>
+                                            <comp-file-card class="pic">></comp-file-card>
+                                            <comp-file-card class="pic">></comp-file-card>
+                                            <comp-file-card class="pic">></comp-file-card>
+                                            <comp-file-card class="pic">></comp-file-card>
+                                            <comp-file-card class="pic">></comp-file-card>
+                                            <comp-file-card class="pic">></comp-file-card>
                                         </comp-carousel>
                                     
                                 </div>
@@ -283,6 +283,11 @@ export class CreateProp extends Comp {
                 fontSize: 14,
                 colourVar: "black60",
                 pointerEvents: "none",
+            },
+            {
+                class: "cover",
+                borderRadius: 8,
+                borderVar: "borderBlack",
             }
         ];   
         
@@ -303,6 +308,8 @@ export class CreateProp extends Comp {
         const nextBtn = this.getById("nextBtn");
         const nextBtn2 = this.getById("nextBtn2");
         const submit = this.getById("submit");
+        const cover = this.getById("cover");
+        const pic = this.queryAll(".pic")
 
         address.label = "Address";
         address.prompt = "Start typing your address";
@@ -323,7 +330,11 @@ export class CreateProp extends Comp {
         nextBtn.text = "Next";
         nextBtn2.text = "Next";
         submit.text = "Finish";
-        
+        cover.prompt = "Add Cover";
+
+       pic.forEach((el) => {
+            el.prompt = "Add Photo";
+        })
 
         nextBtn.addEventListener("click", ()=> {
             step1.setAttribute("hidden", "");
