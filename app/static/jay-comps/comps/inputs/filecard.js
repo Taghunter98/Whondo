@@ -64,6 +64,7 @@ export class FileCard extends File {
             objectPosition: "centre",
             margin: 0,
             borderRadius: 12,
+            height: 387,
             media: {
                 maxWidthBp: 600,
                 maxWidth: 100,     
