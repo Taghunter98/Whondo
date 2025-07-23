@@ -114,6 +114,10 @@ export class FileCard extends File {
                     container.removeAttribute("hidden");
                     preview.removeAttribute("hidden");
                     icon.setAttribute("hidden", "");
+
+                    this.dispatchEvent(new CustomEvent("photo-uploaded", {
+                        bubbles: true, 
+                    }));
                 
                 };
                 reader.readAsDataURL(file);

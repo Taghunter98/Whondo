@@ -57,6 +57,7 @@ export class Carousel extends Comp {
                 class: "carousel-track ::slotted(*)",
                 flex: "0 0 50%",
                 boxSizing: "border-box",
+                display: "none",
             },
             {
                 class: "arrow",
@@ -88,8 +89,9 @@ export class Carousel extends Comp {
     }
 
      slide(direction) {
+        const visibleItems = this.items.filter(el => el.style.display !== "none");
         const newIndex = this.index + direction;
-        if (newIndex < 0 || newIndex >= this.items.length) return;
+        if (newIndex < 0 || newIndex >= visibleItems.length) return;
 
         this.index = newIndex;
         this.updateView();
@@ -97,15 +99,15 @@ export class Carousel extends Comp {
 
     updateView() {
         const scrollBox = this.query(".carousel-scroll");
-        const item = this.items[this.index];
+        const visibleItems = this.items.filter(el => el.style.display !== "none");
+        const item = visibleItems[this.index];
         if (!item || !scrollBox) return;
 
         const scrollOffset = item.offsetLeft - this.offsetLeft;
         this.track.style.transform = `translateX(-${scrollOffset}px)`;
-        this.counter.textContent = `${Math.min(this.index + 1, this.items.length)} / ${this.items.length}`;
+        this.counter.textContent = `${Math.min(this.index + 1, visibleItems.length)} / ${visibleItems.length}`;
     }
-
-
+    
     afterRender() {
         this.track = this.query(".carousel-track");
         this.counter = this.query(".carousel-counter");
@@ -120,8 +122,21 @@ export class Carousel extends Comp {
         const updateItems = () => {
             this.items = slot.assignedElements() || [];
             this.index = 0;
+
+            this.items.forEach((el, i) => {
+                el.style.display = i === 0 ? "block" : "none";
+            });
+
             this.updateView();
         };
+
+        this.track.addEventListener("photo-uploaded", () => {
+            const next = this.items.find(el => el.style.display === "none" || getComputedStyle(el).display === "none");
+            if (next) {
+                next.style.display = "block";
+                this.updateView();
+            }
+        })
 
         slot.addEventListener("slotchange", updateItems);
         updateItems();
