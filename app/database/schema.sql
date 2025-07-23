@@ -77,7 +77,6 @@ CREATE TABLE Keywords (
     balcony BOOLEAN DEFAULT 0,
     garden BOOLEAN DEFAULT 0,
     parking BOOLEAN DEFAULT 0,
-    pets_allowed BOOLEAN DEFAULT 0,
     pet_friendly BOOLEAN DEFAULT 0,
     wifi_included BOOLEAN DEFAULT 0,
     utilities_included BOOLEAN DEFAULT 0,

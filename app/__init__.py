@@ -9,7 +9,7 @@ Version:     1.0
 Description: Creates a Flask app instance and sets up logging.
 """
 
-from flask import Flask, session, has_request_context, request, render_template
+from flask import Flask, session, has_request_context, request
 from flask_cors import CORS
 from flask_session import Session
 from flask.logging import default_handler
@@ -124,7 +124,6 @@ def create_app() -> Flask:
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
     app.config["MAX_CONTENT_LENGTH"] = 16 * 1000 * 1000
-    app.config.from_mapping(DEBUG=True)
     # app.config["SESSION_COOKIE_SAMESITE"] = True
 
     Session(app)
@@ -135,6 +134,7 @@ def create_app() -> Flask:
     from .users.verify import verify_bp
     from .utilities.key_gen import gen_key_bp
     from .property.advert_api import advert_bp
+    from .search_engine.search_api import search_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
@@ -144,6 +144,7 @@ def create_app() -> Flask:
     app.register_blueprint(verify_bp)
     app.register_blueprint(gen_key_bp)
     app.register_blueprint(advert_bp)
+    app.register_blueprint(search_bp)
 
     @app.before_request
     def log_request():
@@ -160,7 +161,11 @@ def create_app() -> Flask:
 
     @app.route("/")
     def hello():
-        return render_template("index.html")
+        if session.get("uID"):
+            session_id = session.get("uID")
+            return f"Hello, World!\nUser logged in id: {session_id}"
+        else:
+            return "Hello World!"
 
     return app
 
