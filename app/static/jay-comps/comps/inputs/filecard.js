@@ -37,7 +37,6 @@ export class FileCard extends File {
             alignItems: "centre",
             justifyContent: "centre",
             position: "relative",
-            widthPercent: 100,
             maxWidthPercent: 100,
             padding: 0,
             border: 2,
@@ -50,7 +49,8 @@ export class FileCard extends File {
             overflow: "hidden",
             height: 387,
             media: {
-                maxWidthBp: 600
+                maxWidthBp: 600,
+                width: 218,
             }
         };
 
@@ -65,15 +65,13 @@ export class FileCard extends File {
             margin: 0,
             borderRadius: 12,
             height: 387,
+            widthPercent: 100,
             media: {
                 maxWidthBp: 600,
-                maxWidth: 100,     
-                maxHeight: 100,
                 marginTop: 8,
-                marginLeft: "auto",
-                marginRight: "auto",
                 maxWidthPercent: 100,
-                height: "auto",
+                height: 387,
+                widthPercent: 100,
                 objectFit: "cover",
                 borderRadius: 6
             }
