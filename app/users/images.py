@@ -10,6 +10,7 @@ Description: Provides functions for image validation and storage.
 """
 
 from flask import Blueprint, send_from_directory, request, abort, current_app, jsonify
+from flask import current_app
 from datetime import datetime
 import os
 
@@ -103,6 +104,21 @@ def upload_file(file: object, email: str) -> str:
             return None
 
 
+@image_bp.route("/static/icons/<path:filename>")
+def serve_icon(filename):
+    """
+    The REST API serves static icons from nginx.
+
+    Args:
+        filename (str): Filename e.g home.svg
+
+    Returns:
+        Response: HTTP response
+    """
+    icons_dir = os.path.join(current_app.root_path, "static", "icons")
+    return send_from_directory(icons_dir, filename)
+
+
 @image_purge_bp.route("/images/purge")
 def purge():
     """
@@ -135,7 +151,6 @@ def purge():
     connection.close()
 
     return jsonify({"emails": emails})
-
 
 def convert_images(images: list, email: str) -> list:
     uploaded_files: list = []

@@ -7,9 +7,12 @@ import './comps/button.js';
 import './comps/card.js';
 import './comps/input.js';
 import './comps/dialog.js';
-import './comps/icon.js';
+import './comps/icons/icon.js';
 import './comps/navbar.js';
-import './comps/cookie.js';
+import './comps/icons/iconButton.js';
+
+
 // Pages
 import './comp-pages/login.js';
 import './comp-pages/create.js';
+import './comp-pages/home.js';
