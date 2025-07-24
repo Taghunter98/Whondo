@@ -53,12 +53,12 @@ def verify_user():
     query: str = "SELECT * FROM Users WHERE uID = %s"
 
     cursor.execute(query, (session.get("uID"),))
-    data: tuple = cursor.fetchone()
+    data: dict = cursor.fetchone()
 
     cursor.close()
     connection.close()
 
     if data is None:
         return jsonify({"error": "User data not found"}), 404
-    else:
-        return jsonify({data}), 200
+    
+    return jsonify(data), 200
