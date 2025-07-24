@@ -48,12 +48,12 @@ def verify_user():
         return jsonify({"error": "User not logged in"}), 401
 
     connection: object = connect()
-    cursor: object = connection.cursor()
+    cursor: object = connection.cursor(DictCursor)
 
     query: str = "SELECT * FROM Users WHERE uID = %s"
 
     cursor.execute(query, (session.get("uID"),))
-    data: tuple = cursor.fetchall()
+    data: tuple = cursor.fetchone()
 
     cursor.close()
     connection.close()
@@ -61,13 +61,4 @@ def verify_user():
     if data is None:
         return jsonify({"error": "User data not found"}), 404
     else:
-        return jsonify(
-            {
-                "id": data[0],
-                "email": data[1],
-                "profilePicture": data[2],
-                "name": data[3],
-                "surname": data[4],
-                "age": data[5],
-            }
-        ), 200
+        return jsonify({data}), 200
