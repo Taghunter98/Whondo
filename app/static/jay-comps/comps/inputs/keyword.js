@@ -16,7 +16,11 @@ export class Keywords extends Input {
         <div class="inputContainer">
             
             <label style="color: var(--black80); font-size: 14px">${this.label}</label>
-            <input class="inputValue input-tags" type="${this.type}" placeholder="${this.prompt}">
+           
+            <div class="input-dropdown-wrapper">
+                <input class="inputValue input-tags" type="${this.type}" placeholder="${this.prompt}">
+                <comp-dropdown></comp-dropdown>
+            </div> 
             
             <div class="keywords">
                 <label style="color: var(--black80); font-size: 14px">My Keywords</label>
@@ -34,14 +38,11 @@ export class Keywords extends Input {
                  display: "flex",
                 flexDirection: "column",
                 maxWidth: 460,
-                maxHeight: 168,
                 padding: 0,
                 alignItems: "start",
                 gap: 10,
                 marginTop: 10,
                 background: "white"
-                
-
             },
             { class: "tags",
                 display: "flex",
@@ -58,13 +59,17 @@ export class Keywords extends Input {
                 borderVar: "border",
                 borderRadius: 8,
                 gap: 10,
-                boxSizing: "border-box"
+                boxSizing: "border-box",
+                heighPercent: 100,
             },
             { class: "remove-btn",
                 cursor: "pointer",
                 fontSize: 16,
                 colourVar: "black60",
                 padding: 2,
+            },
+            { class: "input-dropdown-wrapper",
+                widthPercent: 100,
             }
         ];
     }
@@ -98,16 +103,41 @@ export class Keywords extends Input {
     
     afterRender(){
 
-        this.inputEl = this.query(".inputValue");
-        this.tagsEl = this.query(".tags");
+    this.inputEl = this.query(".inputValue");
+    this.tagsEl = this.query(".tags");
+        
+    const dropdown = this.query("comp-dropdown");
 
-        this.inputEl.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" && this.inputEl.value.trim()){
-                e.preventDefault();
-                this.addTag(this.inputEl.value.trim());
-                this.inputEl.value = "";
-            }
-        });
+    dropdown.attachToInput(this.inputEl);
+
+    dropdown.setOptions([
+        "Modern",
+        "Quiet",
+        "Pet friendly",
+        "Balcony",
+        "Spacious",
+        "Garden",
+        "Furnished",
+        "Riverside",
+    ]);
+
+    this.inputEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && this.inputEl.value.trim()){
+            e.preventDefault();
+            this.addTag(this.inputEl.value.trim());
+            this.inputEl.value = "";
+        }
+    });
+
+    
+    dropdown.addEventListener("option-selected", (e) => {
+        const text = e.detail.text;
+        if (text) {
+            this.addTag(text);
+            this.inputEl.value = "";
+        }
+    });
+        
     }
 
    
