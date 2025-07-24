@@ -48,7 +48,7 @@ def verify_user():
         return jsonify({"error": "User not logged in"}), 401
 
     connection: object = connect()
-    cursor: object = connection.cursor(DictCursor)
+    cursor: object = connection.cursor(dictionary=True)
 
     query: str = "SELECT * FROM Users WHERE uID = %s"
 
