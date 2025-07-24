@@ -44,6 +44,12 @@ def verify():
 
 @verify_bp.route("/verify/me")
 def verify_user():
+    """
+    The REST API returns the user information based on the session cookie data.
+
+    Returns:
+        Response: HTTP Response
+    """
     if not session.get("uID"):
         return jsonify({"error": "User not logged in"}), 401
 

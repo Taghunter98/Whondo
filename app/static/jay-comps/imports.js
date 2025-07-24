@@ -8,9 +8,9 @@ import './comps/card.js';
 import './comps/input.js';
 import './comps/dialog.js';
 import './comps/icons/icon.js';
-import './comps/navbar.js';
+import './comps/navbar/navbar.js';
+import './comps/navbar/profile.js';
 import './comps/icons/iconButton.js';
-
 
 // Pages
 import './comp-pages/login.js';

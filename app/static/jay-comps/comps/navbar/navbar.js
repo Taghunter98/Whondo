@@ -18,6 +18,7 @@ export class Navbar extends Comp {
             <div class="buttons">
                 <comp-button id="register"></comp-button>
                 <comp-button id="login"></comp-button>
+                
             </div>
         </div>
 
@@ -47,8 +48,8 @@ export class Navbar extends Comp {
         
         return [
             { class: "container",
-                top: "0",
-                zIndex: "1000",
+                top: 0,
+                zIndex: 1000,
                 position: "fixed",
                 display: "flex",
                 alignItems: "centre",
