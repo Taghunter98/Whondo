@@ -9,7 +9,7 @@ Version:     1.0
 Description: Serves a Blueprint API for verifying users.
 """
 
-from flask import Blueprint, request, abort, render_template
+from flask import Blueprint, request, abort, render_template, session, jsonify
 
 from app.database.db_connect import connect
 from app.utilities.authid import authenticate
@@ -40,3 +40,21 @@ def verify():
         return render_template("verified.html", email=email)
     else:
         abort(404, "uID not found")
+
+@verify_bp.route("/verify/me")
+def verify_user():
+    if not session.get("uID"):
+        return jsonify({"error": "User not logged in"}), 401
+
+    connection: object = connect()
+    cursor: object = connection.cursor()
+
+    query: str = "SELECT * FROM Users WHERE uID = %s"
+
+    cursor.execute(query, (session.get("uID"),))
+    data: tuple = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return jsonify({"data": data}), 200
