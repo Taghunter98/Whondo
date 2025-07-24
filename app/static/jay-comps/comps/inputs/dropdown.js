@@ -62,6 +62,16 @@ export class Dropdown extends Comp {
         this.dropdownEl.setAttribute("hidden", "");
     }
 
+    /**
+     * 
+     * @param {HTMLElement} input 
+     * This method attaches the dropdown to an input element.
+     * @example
+     * const input = this.query(".inputValue");
+     * const dropdown = this.query("comp-dropdown");
+     * dropdown.attachToInput(input);
+     * 
+     */
     attachToInput(input) {
         this.inputEl = input;
 
@@ -75,18 +85,6 @@ export class Dropdown extends Comp {
     afterRender() {
         this.dropdownEl = this.query(".dropdown-list");
 
-        
-        const attrOptions = this.getAttribute("options");
-        if (attrOptions) {
-            try {
-                const parsed = JSON.parse(attrOptions);
-                this.setOptions(parsed);
-            } catch {
-                console.warn("Invalid JSON in dropdown options attribute");
-            }
-        }
-
-        
         this.dropdownEl.addEventListener("click", (e) => {
             const item = e.target.closest(".dropdown-item");
             if (!item) return;
