@@ -38,6 +38,8 @@ export class Navbar extends Comp {
                 <comp-button id="registerMob"></comp-button>
                 <comp-button id="loginMob"></comp-button>
             </div>
+
+            <comp-profile></comp-profile>
         </div>
         
         `;
