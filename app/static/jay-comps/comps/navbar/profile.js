@@ -16,7 +16,7 @@ export class Profile extends Comp {
     async getProfile() {
         const {ok, data} = await this.request("/verify/me", "GET");
         return ok && data.profilePicture ?
-            `/uploads?path=${data.profilePicture}` : "static/icons/Profile.png";
+            `https://whondo.com/uploads?path=${data.profilePicture}` : "static/icons/Profile.png";
     }
   
     createHTML() {
