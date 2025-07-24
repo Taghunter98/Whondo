@@ -100,6 +100,8 @@ export class FileCard extends File {
 
             if (!file) return;
 
+            const isFirstUpload = !this._uploadedOnce;
+
             filePrompt.setAttribute("hidden", "");
 
             this._selectedFile = file;
@@ -114,10 +116,13 @@ export class FileCard extends File {
                     preview.removeAttribute("hidden");
                     icon.setAttribute("hidden", "");
 
-                    this.dispatchEvent(new CustomEvent("photo-uploaded", {
-                        bubbles: true, 
-                    }));
-                
+                    if (isFirstUpload){
+                        this._uploadedOnce = true;
+                        
+                        this.dispatchEvent(new CustomEvent("photo-uploaded", {
+                            bubbles: true, 
+                        }));
+                    }
                 };
                 reader.readAsDataURL(file);
             
