@@ -90,7 +90,6 @@ export class Dropdown extends Comp {
             if (!item) return;
 
             const text = item.dataset.value;
-            this.inputEl.value = text;
 
             this.dispatchEvent(new CustomEvent("option-selected", {
                 detail: { text },
