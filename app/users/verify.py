@@ -50,7 +50,7 @@ def verify_user():
     connection: object = connect()
     cursor: object = connection.cursor(dictionary=True)
 
-    query: str = "SELECT * FROM Users WHERE uID = %s"
+    query: str = "SELECT name, surname, email, profilePicture FROM Users WHERE uID = %s"
 
     cursor.execute(query, (session.get("uID"),))
     data: dict = cursor.fetchone()
