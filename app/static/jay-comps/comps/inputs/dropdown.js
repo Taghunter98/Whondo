@@ -75,7 +75,7 @@ export class Dropdown extends Comp {
     afterRender() {
         this.dropdownEl = this.query(".dropdown-list");
 
-        // If options are passed via attribute
+        
         const attrOptions = this.getAttribute("options");
         if (attrOptions) {
             try {
@@ -86,7 +86,7 @@ export class Dropdown extends Comp {
             }
         }
 
-        // Handle click on dropdown item
+        
         this.dropdownEl.addEventListener("click", (e) => {
             const item = e.target.closest(".dropdown-item");
             if (!item) return;
