@@ -11,7 +11,6 @@ from app.property.keywords import (
 from app.property.advert import create_advert, delete_advert
 
 
-
 @unittest.skipIf(
     os.environ.get("CI") == "true",
     "Skipping test in CI pipeline: This test needs DB access",

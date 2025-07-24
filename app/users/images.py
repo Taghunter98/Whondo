@@ -152,6 +152,7 @@ def purge():
 
     return jsonify({"emails": emails})
 
+
 def convert_images(images: list, email: str) -> list:
     uploaded_files: list = []
     for file in images:

@@ -41,6 +41,7 @@ def verify():
     else:
         abort(404, "uID not found")
 
+
 @verify_bp.route("/verify/me")
 def verify_user():
     if not session.get("uID"):
@@ -57,4 +58,16 @@ def verify_user():
     cursor.close()
     connection.close()
 
-    return jsonify({"data": data}), 200
+    if data is None:
+        return jsonify({"error": "User data not found"}), 404
+    else:
+        return jsonify(
+            {
+                "id": data[0],
+                "email": data[1],
+                "profilePicture": data[2],
+                "name": data[3],
+                "surname": data[4],
+                "age": data[5],
+            }
+        ), 200
