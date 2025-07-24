@@ -111,14 +111,15 @@ export class Keywords extends Input {
     dropdown.attachToInput(this.inputEl);
 
     dropdown.setOptions([
-        "Modern",
-        "Quiet",
+        "Flat",
         "Pet friendly",
-        "Balcony",
-        "Spacious",
-        "Garden",
         "Furnished",
-        "Riverside",
+        "Bills included",
+        "Town centre",
+        "Near station",
+        "Near university",
+        "LGBTQ+ friendly",
+        "Vegan",
     ]);
 
     this.inputEl.addEventListener("keydown", (e) => {
