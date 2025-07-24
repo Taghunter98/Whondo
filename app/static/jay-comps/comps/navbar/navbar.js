@@ -18,7 +18,7 @@ export class Navbar extends Comp {
             <div class="buttons">
                 <comp-button id="register"></comp-button>
                 <comp-button id="login"></comp-button>
-                
+                <comp-profile></comp-profile>
             </div>
         </div>
 
@@ -38,8 +38,6 @@ export class Navbar extends Comp {
                 <comp-button id="registerMob"></comp-button>
                 <comp-button id="loginMob"></comp-button>
             </div>
-
-            <comp-profile></comp-profile>
         </div>
         
         `;
