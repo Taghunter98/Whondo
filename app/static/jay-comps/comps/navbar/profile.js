@@ -16,7 +16,7 @@ export class Profile extends Comp {
     async getProfile() {
         const {ok, data} = await this.request("/verify/me", "GET");
         return ok && data.profilePicture ?
-            data.profilePicture : "static/icons/Profile.png";
+            `/uploads?path=${data.profilePicture}` : "static/icons/Profile.png";
     }
   
     createHTML() {
