@@ -59,7 +59,7 @@ export class Dropdown extends Comp {
 
     filterOptions(query){
         const lower = query.trim().toLowerCase();
-        this.filtered_ = this.options_.filter(opt => opt.toLowerCase().startsWith(lower));
+        this.filtered_ = this.options_.filter(opt => opt.toLowerCase().includes(lower));
         this.renderList();
         this.showDropdown();
     }
