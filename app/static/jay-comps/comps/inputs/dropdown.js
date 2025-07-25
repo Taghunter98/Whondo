@@ -3,6 +3,7 @@ import { Comp } from "jay-comp";
 export class Dropdown extends Comp {
 
     options_ = [];
+    filtered_ = [];
 
     createHTML() {
         return /* html */ `
@@ -22,9 +23,10 @@ export class Dropdown extends Comp {
                 widthPercent: 100,
                 background: "white",
                 borderRadius: 8,
-                borderVar: "border",
+                border: "none",
                 overflowY: "auto",
                 maxHeight: 160,
+                boxShadow: [0, 4, 23, 0, "rgba(0, 0, 0, 0.12)"],
                 media: {
                     maxWidthBp: 600,
                     maxHeight: 120,
@@ -45,11 +47,25 @@ export class Dropdown extends Comp {
 
     setOptions(options) {
         this.options_ = options || [];
+        this.filtered_ = [...this.options_]
         this.renderList();
     }
 
+    resetDropdown() {
+        this.filtered_ = [...this.options_] 
+        this.renderList();
+        this.showDropdown();
+    }
+
+    filterOptions(query){
+        const lower = query.trim().toLowerCase();
+        this.filtered_ = this.options_.filter(opt => opt.toLowerCase().startsWith(lower));
+        this.renderList();
+        this.showDropdown();
+    }
+
     renderList() {
-        this.dropdownEl.innerHTML = this.options_
+        this.dropdownEl.innerHTML = this.filtered_
             .map(opt => `<div class="dropdown-item" data-value="${opt}">${opt}</div>`)
             .join("");
     }
@@ -75,8 +91,9 @@ export class Dropdown extends Comp {
     attachToInput(input) {
         this.inputEl = input;
 
-        this.inputEl.addEventListener("focus", () => this.showDropdown());
-        this.inputEl.addEventListener("click", () => this.showDropdown());
+        this.inputEl.addEventListener("focus", () => this.resetDropdown());
+        this.inputEl.addEventListener("click", () => this.resetDropdown());
+        this.inputEl.addEventListener("input", () => this.filterOptions(this.inputEl.value));
         this.inputEl.addEventListener("blur", () => {
             setTimeout(() => this.hideDropdown(), 150);
         });

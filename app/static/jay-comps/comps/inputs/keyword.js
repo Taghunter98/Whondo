@@ -2,6 +2,7 @@ import { Input } from "./input.js";
 
 export class Keywords extends Input {
     tags_ = [];
+    validOptions_ = [];
 
     get value(){
         return this.tags_
@@ -75,7 +76,7 @@ export class Keywords extends Input {
     }
 
     addTag(text){
-        if (this.tags_.length >= 10 || this.tags_.includes(text)) return;
+        if (this.tags_.length >= 10 || this.tags_.includes(text) || !this.validOptions_.includes(text)) return;
 
         this.tags_.push(text);
 
@@ -108,11 +109,9 @@ export class Keywords extends Input {
         
     const dropdown = this.query("comp-dropdown");
 
-    dropdown.attachToInput(this.inputEl);
-
-    dropdown.setOptions([
+    const options = ([
         "Flat",
-        "Pet friendly",
+        "Pet allow",
         "Furnished",
         "Bills included",
         "Town centre",
@@ -121,6 +120,10 @@ export class Keywords extends Input {
         "LGBTQ+ friendly",
         "Vegan",
     ]);
+
+    this.validOptions_ = options;
+    dropdown.setOptions(options)
+    dropdown.attachToInput(this.inputEl);
 
     this.inputEl.addEventListener("keydown", (e) => {
         if (e.key === "Enter" && this.inputEl.value.trim()){
