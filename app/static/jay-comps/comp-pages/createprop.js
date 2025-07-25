@@ -117,8 +117,7 @@ export class CreateProp extends Comp {
     createCSS(){
 
         return[
-            {
-                class: "background",
+            { class: "background",
                 widthPercent: 100,
                 heightVh: 100,
                 backgroundVar: "black100",     
@@ -128,12 +127,10 @@ export class CreateProp extends Comp {
                     height: 1000
                 }      
             },
-            {
-                class: "formObj",
+            { class: "formObj",
                 widthPercent: 100,
             },
-            {
-                class: "container",
+            { class: "container",
                 display: "flex",
                 media: {
                     maxWidthBp: 600,
@@ -141,8 +138,7 @@ export class CreateProp extends Comp {
                     alignItems: "centre"
                 }
             },
-            {
-                class: "backgroundImage",
+            { class: "backgroundImage",
                 widthPercent: 100,
                 heightVh: 100,
                 paddingLeft: 400,
@@ -153,14 +149,12 @@ export class CreateProp extends Comp {
                     padding: 0
                 }
             },
-            {
-                class: "image",
+            { class: "image",
                 widthPercent: 100,
                 heightPercent: 100,
                 objectFit: "cover"
             },
-            {
-                class: "modal",
+            { class: "modal",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -184,8 +178,7 @@ export class CreateProp extends Comp {
                     boxSizing: "border-box"
                 }
             },
-            {
-                class: "input",
+            { class: "input",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
@@ -197,8 +190,7 @@ export class CreateProp extends Comp {
                     gap: 15,
                 } 
             },
-            {
-                class: "inputRow",
+            { class: "inputRow",
                 display: "flex",
                 flexDirection: "row",
                 gap: 10,
@@ -210,8 +202,7 @@ export class CreateProp extends Comp {
                     flexDirection: "column"
                 }
             },
-            {
-                class: "inputRowFile",
+            { class: "inputRowFile",
                 display: "flex",
                 flexDirection: "row",
                 gap: 10,
@@ -223,60 +214,51 @@ export class CreateProp extends Comp {
                     flexDirection: "column"
                 }
             },
-            {
-                class: "btnRow",
+            { class: "btnRow",
                 display: "flex",
                 flexDirection: "row",
                 gap: 20,
                 widthPercent: 100,
                 justifyContent: "space-between"
             },
-            {
-                class: "title",
+            { class: "title",
                 fontWeight: "bold"
             },
-            {
-                class: "link",
+            { class: "link",
                 colourVar: "black80",
                 fontWeight: "bold", 
                 textDecoration: "underline",
                 cursor: "pointer",
             },
-            {
-                class: "link",
+            { class: "link",
                 pseudoClass: "hover",
                 colourVar: "black100",
             },
-            {
-                class: "textContainer",
+            { class: "textContainer",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 10,
             },
-            {
-                class: "text",
+            { class: "text",
                 colourVar: "black60",
                 display: "flex",
                 alignSelf: "start",
                 lineHeight: "normal"
             
             },
-            {
-                class: "footer",
+            { class: "footer",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
                 widthPercent: 100,
                 gap: 20,
             },
-            {
-                class: "wrapper",
+            { class: "wrapper",
                 position: "relative",
                 widthPercent: 100,
             },
-            {
-                class: "unit",
+            { class: "unit",
                 position: "absolute",
                 right: 14,
                 top: "50%",
@@ -284,8 +266,7 @@ export class CreateProp extends Comp {
                 colourVar: "black60",
                 pointerEvents: "none",
             },
-            {
-                class: "cover",
+            { class: "cover",
                 borderRadius: 8,
                 borderVar: "borderBlack",
             }

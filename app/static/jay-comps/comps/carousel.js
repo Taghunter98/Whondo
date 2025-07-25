@@ -23,29 +23,25 @@ export class Carousel extends Comp {
 
     createCSS() {
         return [
-            {
-                class: "carousel-container",
+            { class: "carousel-container",
                 widthPercent: 100,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
                 gap: 8,
             },
-            {
-                class: "carousel-box",
+            { class: "carousel-box",
                 position: "relative",
                 widthPercent: 100,
                 display: "flex",
                 alignItems: "centre",
                 height: 387,
             },
-            {
-                class: "carousel-scroll",
+            { class: "carousel-scroll",
                 overflow: "hidden",
                 flexGrow: 1,
             },
-            {
-                class: "carousel-track",
+            { class: "carousel-track",
                 display: "flex",
                 transition: ["transform", "0.4s", "ease-in-out"],
                 gap: 12, 
@@ -53,14 +49,12 @@ export class Carousel extends Comp {
                 paddingRight: 6, 
                 boxSizing: "border-box",
             },
-            {
-                class: "carousel-track ::slotted(*)",
+            { class: "carousel-track ::slotted(*)",
                 flex: "0 0 50%",
                 boxSizing: "border-box",
                 display: "none",
             },
-            {
-                class: "arrow",
+            { class: "arrow",
                 position: "absolute",
                 top: "50%",
                 transform: "translateY(-50%)",
@@ -72,16 +66,13 @@ export class Carousel extends Comp {
                 justifyContent: "centre",
                 cursor: "pointer",
             },
-            {
-                class: "arrow.left",
+            { class: "arrow.left",
                 left: -16,
             },
-            {
-                class: "arrow.right",
+            { class: "arrow.right",
                 right: -16,
             },
-            {
-                class: "carousel-counter",
+            { class: "carousel-counter",
                 fontSize: 14,
                 marginTop: 4,
             },

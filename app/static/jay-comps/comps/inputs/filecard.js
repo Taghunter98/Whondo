@@ -159,21 +159,13 @@ export class FileCard extends File {
 
             this._fileInput.addEventListener("change", () => {
 
-                if (this._fileInput.files?.[0]) {
-
-                    handleFile(this._fileInput.files[0]);
-                
-                }
+                if (this._fileInput.files?.[0]) { handleFile(this._fileInput.files[0]); }
             
             });
 
         }
 
-        dropArea?.addEventListener("click", () => {
-
-            this._fileInput?.click();
-        
-        });
+        dropArea?.addEventListener("click", () => { this._fileInput?.click(); });
 
         dropArea?.addEventListener("dragover", (e) => {
 
@@ -210,10 +202,6 @@ export class FileCard extends File {
     
     }
 
-    static {
-
-        super.register(this); 
-
-    }
+    static { super.register(this); }
     
 }
