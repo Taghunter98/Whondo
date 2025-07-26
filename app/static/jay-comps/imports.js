@@ -10,6 +10,8 @@ import './comps/dialog.js';
 import './comps/icons/icon.js';
 import './comps/navbar/navbar.js';
 import './comps/navbar/link.js';
+import './comps/navbar/navlinks.js';
+import './comps/navbar/navlinks_mob.js';
 import './comps/icons/iconButton.js';
 
 // Pages

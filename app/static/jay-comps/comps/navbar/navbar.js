@@ -5,52 +5,52 @@ export class Navbar extends Comp {
     lastScrollY = window.scrollY;
 
     async fetchProfile() {
-        return await this.request("/verify/me", "GET")
-            .then(res => (res.ok ? res.data : Promise.reject(res.error)));
+        const { ok, data, error } = await this.request("/verify/me", "GET");
+        if (!ok) throw new Error(error || "Failed to load profile");
+        return data.profilePicture;
     }
 
     createHTML() {
-        const { value: profile } = this.fetchOnce("profile", () => this.fetchProfile());
+        const profile = this.fetchOnce("profilePic", () => this.fetchProfile());
 
         const pictureURL = profile
-            ? `/uploads?path=${profile.profilePicture}`
-            : "";
+            ? `https://whondo.com/uploads?path=${profile.value}`
+            : "static/icons/Profile.png";
 
         return /* html */`
             <nav id="navbar" class="container">
-            <h3 class="logo">Whondo</h3>
-            <ul id="links" class="links"></ul>
+            <h3 style="font-weight: bold;">Whondo</h3>
+            <comp-nav-links></comp-nav-links>
             <comp-icon class="menu" id="menu"></comp-icon>
 
             <div class="buttons">
-                ${profile
+                ${profile.value
                 ? `<img class="profile" src="${pictureURL}">`
                 : `<comp-button id="register">Register</comp-button>
                     <comp-button id="login">Login</comp-button>`}
             </div>
             </nav>
 
-            <aside id="tray" class="tray">
-            <header class="header">
-                <h3 class="logo">Whondo</h3>
-                <comp-icon class="close" id="close"></comp-icon>
-            </header>
+            <div id="tray" class="tray">
+                <div class="header">
+                    <h3 style="font-weight: bold;">Whondo</h3>
+                    <comp-icon class="close" id="close"></comp-icon>
+                </div>
 
-            <ul id="linksTray" class="linksTray"></ul>
+                <comp-mob-nav-links></comp-mob-nav-links>
 
-            <div class="trayButtons">
-                ${profile
+                <div class="trayButtons">
+                ${profile.value
                 ? `<img class="profile" src="${pictureURL}">`
                 : `<comp-button id="registerMob">Register</comp-button>
                     <comp-button id="loginMob">Login</comp-button>`}
+                </div>
             </div>
-            </aside>
         `;
     }
 
     createCSS() {
         return [
-            this.effect.fadeIn(),
             { class: "container",
                 top: 0,
                 left: 0,
@@ -64,17 +64,9 @@ export class Navbar extends Comp {
                 padding: [10, 20],
                 justifyContent: "space-between",
                 transform: "translateY(0)",
-                transition: "transform 0.4s ease",
-                animation: this.effect.prop("fadeIn", 1, "ease-in-out")
+                transition: "transform 0.4s ease"
             },
-            { class: "links",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 20,
-                media: { maxWidthBp: 600, display: "none" }
-            },
-            { class: "menu, close",
+            { class: "menu, close, mob-links",
                 display: "none",
                 media: { maxWidthBp: 600, display: "block" }
             },
@@ -100,6 +92,7 @@ export class Navbar extends Comp {
                 background: "white",
                 padding: 20,
                 borderRadius: 14,
+                boxShadow: [0, 4, 23, 0, "var(--black20)"],
                 transition: ["bottom", "0.6s", "ease"]
             }
             },
@@ -123,7 +116,11 @@ export class Navbar extends Comp {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between"
-            }}
+            }
+            },
+            {
+            media: { maxWidthBp: 600, class: "mob-links", display: "block"}
+            }  
         ];
     }
 
@@ -137,7 +134,6 @@ export class Navbar extends Comp {
 
         this.lastScrollY = currentY;
     }
-
 
     openMenu(offset) {
         const tray = this.getById("tray");
@@ -154,22 +150,6 @@ export class Navbar extends Comp {
         const close = this.getById("close");
         const loginMob = this.getById("loginMob");
         const registerMob = this.getById("registerMob");
-        
-        const desktopList = this.getById("links");
-        const trayList = this.getById("linksTray");
-        const labels = ["About", "Landlord Portal", "GitHub"];
-
-        labels.forEach(label => {
-            // Desktop links
-            const dLink = document.createElement("comp-link");
-            dLink.text = label;
-            desktopList.appendChild(dLink);
-
-            // Tray links
-            const tLink = document.createElement("comp-link");
-            tLink.text = label;
-            trayList.appendChild(tLink);
-        });
         
         if (register || login || registerMob || loginMob) {
             register.text = "Register";
