@@ -11,7 +11,7 @@ export class CreateProp extends Comp {
 
                 <div class="modal">
 
-                    <form class="formObj" action="", method="POST">
+                    <form class="formObj" action="", method="POST" data-pg-verify>
 
                         <!-- Personal information -->
                         <div id="step1">
@@ -24,7 +24,8 @@ export class CreateProp extends Comp {
 
                             <div class="input">
                                 
-                                <comp-input id="address" name="address"></comp-input>
+                                <comp-input id="address" name="address" data-pg-address-line1></comp-input>
+                                <input id="realAddress" data-pg-address-line1 hidden />
                                 <comp-input id="title" name="title"></comp-input>
                                 <div class="wrapper">
                                     <comp-input id="rent" name="rent"></comp-input>
@@ -245,7 +246,6 @@ export class CreateProp extends Comp {
                 display: "flex",
                 alignSelf: "start",
                 lineHeight: "normal"
-            
             },
             { class: "footer",
                 display: "flex",
@@ -341,8 +341,19 @@ export class CreateProp extends Comp {
             step2.removeAttribute("hidden")
         })
 
-    }
+        const realAddress = this.getById("realAddress");
+        
 
-    static { Comp.register(this); }
+        const realInput = realAddress;
+        const shadowInput = address.shadowRoot?.querySelector("input");
+
+        if (shadowInput && realInput) {
+            shadowInput.addEventListener("input", () => {
+                realInput.value = shadowInput.value;
+            });
+            }  
+    
+}    
+static { Comp.register(this); }
 
 }

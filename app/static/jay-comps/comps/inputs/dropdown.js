@@ -57,6 +57,12 @@ export class Dropdown extends Comp {
         this.showDropdown();
     }
 
+    /**
+     * 
+     * @param {HTMLElement} query 
+     * This method filters the options based on the input query.
+     * use for find the options that match the query.
+     */
     filterOptions(query){
         const lower = query.trim().toLowerCase();
         this.filtered_ = this.options_.filter(opt => opt.toLowerCase().includes(lower));
@@ -117,7 +123,5 @@ export class Dropdown extends Comp {
         });
     }
 
-    static {
-        Comp.register(this);
-    }
+    static { Comp.register(this); } 
 }
