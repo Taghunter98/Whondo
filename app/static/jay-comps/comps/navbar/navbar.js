@@ -4,31 +4,15 @@ export class Navbar extends Comp {
 
     lastScrollY = window.scrollY;
 
-    async fetchProfile() {
-        const { ok, data, error } = await this.request("/verify/me", "GET");
-        if (!ok) throw new Error(error || "Failed to load profile");
-        return data.profilePicture;
-    }
-
     createHTML() {
-        const profile = this.fetchOnce("profilePic", () => this.fetchProfile());
-
-        const pictureURL = profile
-            ? `https://whondo.com/uploads?path=${profile.value}`
-            : "static/icons/Profile.png";
-
         return /* html */`
             <nav id="navbar" class="container">
-            <h3 style="font-weight: bold;">Whondo</h3>
-            <comp-nav-links></comp-nav-links>
-            <comp-icon class="menu" id="menu"></comp-icon>
+                <h3 style="font-weight: bold;">Whondo</h3>
+                <comp-nav-links></comp-nav-links>
+                <comp-icon class="menu" id="menu"></comp-icon>
 
-            <div class="buttons">
-                ${profile.value
-                ? `<img class="profile" src="${pictureURL}">`
-                : `<comp-button id="register">Register</comp-button>
-                    <comp-button id="login">Login</comp-button>`}
-            </div>
+                <comp-auth-profile></comp-auth-profile>
+                
             </nav>
 
             <div id="tray" class="tray">
@@ -38,13 +22,7 @@ export class Navbar extends Comp {
                 </div>
 
                 <comp-mob-nav-links></comp-mob-nav-links>
-
-                <div class="trayButtons">
-                ${profile.value
-                ? `<img class="profile" src="${pictureURL}">`
-                : `<comp-button id="registerMob">Register</comp-button>
-                    <comp-button id="loginMob">Login</comp-button>`}
-                </div>
+                <comp-auth-profile></comp-auth-profile>
             </div>
         `;
     }
@@ -70,12 +48,6 @@ export class Navbar extends Comp {
                 display: "none",
                 media: { maxWidthBp: 600, display: "block" }
             },
-            { class: "buttons",
-                display: "flex",
-                width: "auto",
-                gap: 20,
-                media: { maxWidthBp: 600, display: "none" }
-            },
             { class: "tray",
                 display: "none"
             },
@@ -93,34 +65,23 @@ export class Navbar extends Comp {
                 padding: 20,
                 borderRadius: 14,
                 boxShadow: [0, 4, 23, 0, "var(--black20)"],
-                transition: ["bottom", "0.6s", "ease"]
-            }
+                transition: ["bottom", "0.6s", "ease"]}
             },
             {
             media: { maxWidthBp: 600,
                 class: "trayButtons",
                 display: "flex",
                 gap: 10,
-                paddingTop: 40
-            }
-            },
-            { class: "profile",
-                width: 45,
-                height: 45,
-                borderVar: "border",
-                borderRadiusPercent: 50
+                paddingTop: 40}
             },
             {
             media: { maxWidthBp: 600,
                 class: "header",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between"
-            }
+                justifyContent: "space-between"}
             },
-            {
-            media: { maxWidthBp: 600, class: "mob-links", display: "block"}
-            }  
+            { media: { maxWidthBp: 600, class: "mob-links", display: "block"}}  
         ];
     }
 
@@ -142,23 +103,10 @@ export class Navbar extends Comp {
 
     afterRender() {
         this.lastScrollY = window.scrollY;
-        window.addEventListener("scroll", this.navbarScroll.bind(this));
+        window.addEventListener("scroll", () => this.navbarScroll());
 
-        const register = this.getById("register");
-        const login = this.getById("login");
         const menu = this.getById("menu");
         const close = this.getById("close");
-        const loginMob = this.getById("loginMob");
-        const registerMob = this.getById("registerMob");
-        
-        if (register || login || registerMob || loginMob) {
-            register.text = "Register";
-            register.variant = 2;
-            login.text = "login";
-            loginMob.text = "Login";
-            registerMob.text = "Register";
-            registerMob.variant = 2;
-        }
        
         menu.path = "menu.svg";
         close.path = "close.svg";
