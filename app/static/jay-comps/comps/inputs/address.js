@@ -59,24 +59,22 @@ export class Address extends Input {
             value: s,
         }));
 
-        this.addressMap = new Map(options.map(o => [o.label, o.value]));
         this.dropdown.setOptions(options.map(o => o.label));
     }
 
     afterRender(){
-        this.input = this.query("input");
+        const input = this.query("input");
         this.dropdown = this.getById("dropdown");
-        this.dropdown.attachToInput(this.input);
+        this.dropdown.attachToInput(input);
 
-         this.input.addEventListener("input", () => {
-            const query = this.input.value;
+        input.addEventListener("input", () => {
+            const query = input.value;
             this.fetchSuggestions(query);
         });
 
         this.dropdown.addEventListener("option-selected", (e) => {
             const text = e.detail.text;
-            this.input.value = text;
-            this.fullAddress = this.addressMap.get(text) || {};
+            input.value = text;
         });
     }
 

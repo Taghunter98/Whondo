@@ -97,7 +97,6 @@ export class Dropdown extends Comp {
     attachToInput(input) {
         this.inputEl = input;
 
-        this.inputEl.addEventListener("focus", () => { if(this.filtered_?.length > 0)this.resetDropdown()});
         this.inputEl.addEventListener("click", () => { if(this.filtered_?.length > 0) this.resetDropdown()});
         this.inputEl.addEventListener("input", () => this.filterOptions(this.inputEl.value));
         this.inputEl.addEventListener("blur", () => {
