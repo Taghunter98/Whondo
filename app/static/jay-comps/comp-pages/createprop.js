@@ -273,6 +273,32 @@ export class CreateProp extends Comp {
         
     }
 
+    validateStep1() {
+    const address = this.getById("address");
+    const title = this.getById("title");
+    const rent = this.getById("rent");
+    const description = this.getById("description");
+
+    const inputs = [address, title, rent, description];
+    let isValid = true;
+
+    for (let input of inputs) {
+        if (input.required && input.isEmpty()) {
+        input.query(".inputValue").classList.add("error");
+        isValid = false;
+        }
+    }
+     return isValid;
+    }
+    
+    clearError(inputs){
+
+        const field = inputs.query(".inputValue");
+        field.classList.remove("error");
+
+    };
+
+
     afterRender(){
         const step1 = this.getById("step1");
         const step2 = this.getById("step2");
@@ -316,10 +342,18 @@ export class CreateProp extends Comp {
             el.prompt = "Add Photo";
         })
 
+        address.required = true;
+        title.required = true;
+        rent.required = true;
+        description.required = true;
+
+
         nextBtn.addEventListener("click", ()=> {
-            step1.setAttribute("hidden", "");
-            step3.setAttribute("hidden", "");
-            step2.removeAttribute("hidden")
+            if (this.validateStep1()){
+                step1.setAttribute("hidden", "");
+                step3.setAttribute("hidden", "");
+                step2.removeAttribute("hidden");
+            }
         })
 
         nextBtn2.addEventListener("click", ()=> {
@@ -339,6 +373,16 @@ export class CreateProp extends Comp {
             step1.setAttribute("hidden", "");
             step2.removeAttribute("hidden")
         })
+
+        [address, title, rent, description].forEach(input => {
+
+            input.addEventListener("input", () => {
+
+                this.clearError(input);
+
+            });
+
+        });
 
     
 }    
