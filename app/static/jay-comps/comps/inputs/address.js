@@ -32,11 +32,11 @@ export class Address extends Input {
     }
 
    async fetchSuggestions(query) {
-    const key = "live_sk_ionGFmbDpoJTNcGaJWUA9N"; // Or use your actual one
+    const key = "live_sk_ionGFmbDpoJTNcGaJWUA9N"; 
 
     console.log("Sending query:", query);
 
-    const response = await fetch("https://api.postgrid.com/autocomplete/v1/addresses/suggest", {
+    const response = await fetch("https://api.postgrid.com/autocomplete/v1/suggest", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export class Address extends Input {
     try {
         result = JSON.parse(text);
     } catch (e) {
-        console.error("Failed to parse JSON:", e);
+        console.error(" Failed to parse JSON:", e);
         return;
     }
 
