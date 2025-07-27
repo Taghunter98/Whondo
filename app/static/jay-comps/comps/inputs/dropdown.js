@@ -25,7 +25,7 @@ export class Dropdown extends Comp {
                 borderRadius: 8,
                 border: "none",
                 overflowY: "auto",
-                maxHeight: 160,
+                maxHeight: 120,
                 boxShadow: [0, 4, 23, 0, "rgba(0, 0, 0, 0.12)"],
                 media: {
                     maxWidthBp: 600,
@@ -97,8 +97,8 @@ export class Dropdown extends Comp {
     attachToInput(input) {
         this.inputEl = input;
 
-        this.inputEl.addEventListener("focus", () => this.resetDropdown());
-        this.inputEl.addEventListener("click", () => this.resetDropdown());
+        this.inputEl.addEventListener("focus", () => { if(this.filtered_?.length > 0)this.resetDropdown()});
+        this.inputEl.addEventListener("click", () => { if(this.filtered_?.length > 0) this.resetDropdown()});
         this.inputEl.addEventListener("input", () => this.filterOptions(this.inputEl.value));
         this.inputEl.addEventListener("blur", () => {
             setTimeout(() => this.hideDropdown(), 150);
