@@ -23,7 +23,7 @@ export class Button extends Comp {
         this.update();
     }
 
-    get text()    { return this.text_;}
+    get text() { return this.text_;}
     get variant() { return this.variant_; }
 
     beforeRender(){

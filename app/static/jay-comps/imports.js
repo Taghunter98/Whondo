@@ -9,6 +9,7 @@ import './comps/button.js';
 import './comps/card.js';
 import './comps/input.js';
 import './comps/dialog.js';
+import './comps/promptbar.js';
 
 // Navbar
 import './comps/navbar/navbar.js';
