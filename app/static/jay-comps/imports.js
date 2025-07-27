@@ -24,6 +24,9 @@ import './comps/icons/prompt.js';
 import './comps/icons/icon.js';
 import './comps/icons/icons.js';
 
+// Animations
+import './comps/animations/spinner.js';
+
 // Pages
 import './comp-pages/login.js';
 import './comp-pages/create.js';
