@@ -2,19 +2,10 @@ import { Comp } from "jay-comp";
 
 class Promptbar extends Comp {
 
-    text_; result_;
+    text_; result_ = [];
 
-    set text(v){
-        this.text_ = v;
-        this.update();
-    }
-    set result(v) {
-        this.result_ = v;
-        this.update();
-    }
-
+    set text(v){ this.text_ = v; this.update();}
     get text() { return this.text_; }
-    get result() { return this.result_; }
 
     beforeRender(){
         if (!this.text_) 
@@ -27,10 +18,7 @@ class Promptbar extends Comp {
         return /*html*/`
         <div class="prompt-wrapper">
             <textarea name="" id="prompt" class="prompt" placeholder="${this.text_}"></textarea>
-
-            <div class="iconBtn">
-                <comp-prompt-icon></comp-prompt-icon>
-            </div>
+            <comp-prompt-icon></comp-prompt-icon>
         </div>`
     }
 
@@ -77,13 +65,32 @@ class Promptbar extends Comp {
         el.style.height = `${el.scrollHeight}px`;
     }
 
+    async sendQuery(prompt) {
+        const res = await this.request(
+            "https://whondo.com/search", "POST", { prompt }
+        );
 
+        this.result_ = res.data.results;
+        this.update();
 
-    afterRender(){
+        this.dispatchEvent(new CustomEvent("query-results", {
+            detail: this.result_,
+            bubbles: true,
+            composed: true
+        }));
+
+        return this.result_;
+    }
+
+    afterRender() {
         const textarea = this.query(".prompt");
         textarea.text = this.text_;
         this.autoResize(textarea);
         textarea.addEventListener("input", () => this.autoResize(textarea));
+
+        this.query("comp-prompt-icon").addEventListener("click", () => {
+        this.sendQuery(textarea.value);
+        });
     }
 
     static { Comp.register(this); }

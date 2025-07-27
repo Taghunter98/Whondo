@@ -1,6 +1,8 @@
 import { Comp } from "jay-comp";
 
 export class Home extends Comp {
+    searchResults = [];
+
     createHTML(){
         return /* html */`
         <div class="background">
@@ -67,6 +69,13 @@ export class Home extends Comp {
                 colourVar: "black100"
             }
         ];
+    }
+
+    afterRender() {
+        this.query("comp-promptbar").addEventListener("query-results", (evt) => {
+            this.searchResults = evt.detail;
+            console.log(this.searchResults);
+        });
     }
 
     static { Comp.register(this); }
