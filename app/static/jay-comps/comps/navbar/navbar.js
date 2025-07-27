@@ -114,14 +114,14 @@ export class Navbar extends Comp {
     }
 
     afterRender() {
-        this.lastScrollY = window.scrollY;
-        window.addEventListener("scroll", () => this.navbarScroll());
-
         const menu = this.getById("menu");
         const close = this.getById("close");
        
         menu.path = "menu.svg";
         close.path = "close.svg";
+        
+        this.lastScrollY = window.scrollY;
+        window.addEventListener("scroll", () => this.navbarScroll());
 
         menu.addEventListener("click", () => this.openMenu("0"));
         close.addEventListener("click", () => this.openMenu("-500px"));
