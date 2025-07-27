@@ -20,7 +20,6 @@ export class Home extends Comp {
 
     createHTML(){
         return /* html */`
-        <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
                 
@@ -139,8 +138,6 @@ export class Home extends Comp {
     afterRender(){
         const icon = this.query(".icon");
         const textarea = this.query(".prompt");
-
-        icon.path = "arrow_forward.svg"
 
         textarea.text = this.text_;
 

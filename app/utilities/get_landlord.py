@@ -23,7 +23,7 @@ def get_landlord_info(lID: int) -> Optional[dict[str, any]]:
 
     Returns:
         Optional[dict[str, any]]: Dictionary of landlord info
-    """    
+    """
     try:
         connection: object = connect()
         cursor: object = connection.cursor()
