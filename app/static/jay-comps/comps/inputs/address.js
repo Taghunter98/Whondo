@@ -28,6 +28,21 @@ export class Address extends Input {
         return [base, dropdown,];
     }
 
+    /**
+     * This functions set the default dropdown options to an empty array and hides the dropdown.
+     */
+    defaultDropdown(){
+        this.dropdown.setOptions([]);
+        this.dropdown.hideDropdown();
+    }
+
+    /**
+     * 
+     * @param {HTMLElement} query 
+     * This function check if the input query is less than 3 characters, it returns early. If not then fetches suggestions from the API.
+     * It then gets the suggestions from the API and formats them into options for the dropdown.
+     * 
+     */
     async fetchSuggestions(query){
 
         const trimmed = query.trim();
@@ -41,16 +56,14 @@ export class Address extends Input {
         const res = await this.request(url, "GET");
         if (!res.ok){
             console.error("autocomplete error", res.error);
-            this.dropdown.setOptions([]);
-            this.dropdown.hideDropdown();
+            this.defaultDropdown();
             return;
         }
 
         const suggestions = res.data?.suggestions || [];
 
         if (suggestions.length === 0) {
-            this.dropdown.setOptions([]);
-            this.dropdown.hideDropdown();
+            this.defaultDropdown();
             return;
         }
 
