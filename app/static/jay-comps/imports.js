@@ -19,8 +19,9 @@ import './comps/navbar/auth_profile.js';
 import './comps/navbar/nav_buttons.js';
 
 // Icons
-import './comps/icons/iconButton.js';
+import './comps/icons/prompt.js';
 import './comps/icons/icon.js';
+import './comps/icons/icons.js';
 
 // Pages
 import './comp-pages/login.js';

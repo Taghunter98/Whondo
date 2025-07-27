@@ -16,8 +16,12 @@ export class Icon extends Comp {
     
     get path() { return this.path_;}
 
+    beforeRender() {
+        if (!this.path_) this.path_ = "attow.svg";
+    }
+
     createHTML() {
-       return /* html */`<img class="icon" src="/static/icons/${this.path_}">`;
+       return /* html */`<img class="icon" src="static/icons/${this.path_}">`;
     }
 
     createCSS() {

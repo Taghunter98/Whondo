@@ -9,7 +9,7 @@ export class Navbar extends Comp {
             <nav id="navbar" class="container">
                 <h3 style="font-weight: bold;">Whondo</h3>
                 <comp-nav-links></comp-nav-links>
-                <comp-icon class="menu" id="menu"></comp-icon>
+                <comp-menu-icon class="menu" id="menu"></comp-menu-icon>
 
                 <comp-auth-profile class="desktop-profile"></comp-auth-profile>
                 
@@ -18,7 +18,7 @@ export class Navbar extends Comp {
             <div id="tray" class="tray">
                 <div class="header">
                     <h3 style="font-weight: bold;">Whondo</h3>
-                    <comp-icon class="close" id="close"></comp-icon>
+                    <comp-close-icon class="close" id="close"></comp-close-icon>
                 </div>
 
                 <comp-mob-nav-links></comp-mob-nav-links>
@@ -108,7 +108,7 @@ export class Navbar extends Comp {
         this.lastScrollY = currentY;
     }
 
-    openMenu(offset) {
+    menu(offset) {
         const tray = this.getById("tray");
         tray.style.bottom = offset;
     }
@@ -116,15 +116,12 @@ export class Navbar extends Comp {
     afterRender() {
         const menu = this.getById("menu");
         const close = this.getById("close");
-       
-        menu.path = "menu.svg";
-        close.path = "close.svg";
         
         this.lastScrollY = window.scrollY;
         window.addEventListener("scroll", () => this.navbarScroll());
 
-        menu.addEventListener("click", () => this.openMenu("0"));
-        close.addEventListener("click", () => this.openMenu("-500px"));
+        menu.addEventListener("click", () => this.menu("0"));
+        close.addEventListener("click", () => this.menu("-500px"));
     } 
     
     static { Comp.register(this); } 

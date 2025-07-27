@@ -1,19 +1,21 @@
 import { Icon } from "./icon.js";
 
 export class PromptIcon extends Icon {
+    beforeRender() {
+        this.path_ = "arrow.svg";
+    }
 
     createHTML() {
         return /* html */`
             <div class="icon-wrapper">
-                <img class="icon-img" src="/static/icons/${this.path_}">
+                <img class="icon-img" src="static/icons/${this.path_}">
             </div>
         `;
     }
 
     createCSS() {
         return [
-            {
-                class: "icon-wrapper",
+            { class: "icon-wrapper",
                 display: "flex",
                 alignItems: "centre",
                 justifyContent: "centre",
@@ -24,20 +26,15 @@ export class PromptIcon extends Icon {
                 cursor: "pointer",
                 transition: ["background", "0.2s", "ease-in-out"]
             },
-            {
-                class: "icon-wrapper",
+            { class: "icon-wrapper",
                 pseudoClass: "hover",
                 backgroundVar: "black80"  
             },
-            {
-             class: "icon-wrapper",
+            { class: "icon-wrapper",
                 pseudoClass: "active",
                 backgroundVar: "black20"
             },
-            {
-                class: "icon-img",
-                alignItems: "centre"
-            }
+            { class: "icon-img", alignItems: "centre" }
         ];
     }
 
