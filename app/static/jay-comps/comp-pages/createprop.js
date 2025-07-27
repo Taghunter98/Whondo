@@ -24,8 +24,7 @@ export class CreateProp extends Comp {
 
                             <div class="input">
                                 
-                                <comp-input id="address" name="address" data-pg-address-line1></comp-input>
-                                <input id="realAddress" data-pg-address-line1 hidden />
+                                <comp-address id="address" name="address" ></comp-address>
                                 <comp-input id="title" name="title"></comp-input>
                                 <div class="wrapper">
                                     <comp-input id="rent" name="rent"></comp-input>
@@ -341,17 +340,6 @@ export class CreateProp extends Comp {
             step2.removeAttribute("hidden")
         })
 
-        const realAddress = this.getById("realAddress");
-        
-
-        const realInput = realAddress;
-        const shadowInput = address.shadowRoot?.querySelector("input");
-
-        if (shadowInput && realInput) {
-            shadowInput.addEventListener("input", () => {
-                realInput.value = shadowInput.value;
-            });
-            }  
     
 }    
 static { Comp.register(this); }

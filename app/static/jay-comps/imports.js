@@ -16,7 +16,7 @@ import './comps/inputs/filecard.js';
 import './comps/inputs/keyword.js';
 import './comps/carousel.js';
 import './comps/inputs/dropdown.js'
-
+import './comps/inputs/address.js'
 // Pages
 import './comp-pages/login.js';
 import './comp-pages/create.js';
