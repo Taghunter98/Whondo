@@ -11,7 +11,7 @@ export class Navbar extends Comp {
                 <comp-nav-links></comp-nav-links>
                 <comp-icon class="menu" id="menu"></comp-icon>
 
-                <comp-auth-profile></comp-auth-profile>
+                <comp-auth-profile class="desktop-profile"></comp-auth-profile>
                 
             </nav>
 
@@ -47,6 +47,11 @@ export class Navbar extends Comp {
             { class: "menu, close, mob-links",
                 display: "none",
                 media: { maxWidthBp: 600, display: "block" }
+            },
+            {
+            media: { maxWidthBp: 600,  
+                class: "desktop-profile", 
+                display: "none" }
             },
             { class: "tray",
                 display: "none"

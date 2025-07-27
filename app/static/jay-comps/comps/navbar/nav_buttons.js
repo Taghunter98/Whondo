@@ -1,6 +1,6 @@
 import { Comp } from "jay-comp";
 
-class NavButtons extends Comp {
+export class NavButtons extends Comp {
     createHTML() {
         return /*html*/`
         <div class="buttons">
@@ -14,8 +14,7 @@ class NavButtons extends Comp {
         return { class: "buttons",
             display: "flex",
             width: "auto",
-            gap: 20,
-            media: { maxWidthBp: 600, display: "none" }
+            gap: 20
         };
     }
 
