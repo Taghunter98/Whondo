@@ -1,31 +1,25 @@
-import {Comp} from "jay-comp";
+import { Comp } from "jay-comp";
 
 export class Dialog extends Comp {
-     
+
     title_;
-    paragraph_ ;
+    paragraph_;
     svgIcon_;
     text_;
 
-    set title(newTitle){
-
+    set title(newTitle) {
         this.title_ = newTitle;
         this.update();
-    
     }
 
-    set paragraph(value){
-
+    set paragraph(value) {
         this.paragraph_ = value;
         this.update();
-    
     }
 
-    set svgIcon(value){
-
+    set svgIcon(value) {
         this.svgIcon_ = value;
         this.update();
-    
     }
 
     set text(v) {
@@ -36,27 +30,27 @@ export class Dialog extends Comp {
     get paragraph() {
 
         return this.paragraph_;
-    
+
     }
 
     get title() {
 
         return this.title_;
-    
+
     }
 
     get svgIcon() {
 
         return this.svgIcon_;
-    
+
     }
 
-    get text(){ return this.text_ }
+    get text() { return this.text_ }
 
-    beforeRender(){
+    beforeRender() {
         if (!this.title_) this.title_ = "Hello World";
         if (!this.paragraph_) this.paragraph_ = "This is a paragraph";
-        if (!this.svgIcon_) this.svgIcon_  = "";
+        if (!this.svgIcon_) this.svgIcon_ = "";
     }
 
     createHTML() {
@@ -75,7 +69,7 @@ export class Dialog extends Comp {
 
             </div>
         `;
-    
+
     }
 
     createCSS() {

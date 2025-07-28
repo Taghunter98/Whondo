@@ -3,10 +3,11 @@ import { Comp } from "jay-comp";
 export class Register extends Comp {
     createHTML() {
         return /* html */ `
+        <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
                 <div class="modal">
-                    <form class="formObj" action="https://whondo.com/register", method="POST">
+                    <form class="formObj">
 
                         <!-- Personal information -->
                         <div id="step1">
@@ -14,7 +15,6 @@ export class Register extends Comp {
                                 <p class="text">Step 1/2</p>
                                 <h4 class="title">Personal Details</h4> 
                             </div>
-                            <p class="text">Let's find out a bit more about you!</p>
                             <div class="input">
                                 <div class="inputRow">
                                     <comp-input id="name" name="name"></comp-input>
@@ -40,7 +40,6 @@ export class Register extends Comp {
                                 <p class="text">Step 2/2</p>
                                 <h4 class="title">Personalise</h4> 
                             </div>
-                            <p class="text">Let's find out a bit more about you!</p>
                              <div class="inputRow">
                                 <comp-input id="age" name="age"></comp-input>
                                 <comp-input id="occupation" name="occupation"></comp-input>
@@ -54,7 +53,6 @@ export class Register extends Comp {
                                     <comp-button class="back" id="backBtn2" type="button"></comp-button>
                                     <comp-button class="submit" id="submit" type="submit"></comp-button>
                                 </div>
-                                <p>Have an account?<a href="/login" class="link"> Login</a></p>
                             </div>
                         </div>
                     </form>
@@ -75,15 +73,9 @@ export class Register extends Comp {
                 heightVh: 100,
                 backgroundVar: "black100",
                 overflow: "hidden",
-                media: {
-                    maxWidthBp: 600,
-                    height: 1000
-                }
+                media: { maxWidthBp: 600, height: 1000 }
             },
-            {
-                class: "formObj",
-                widthPercent: 100,
-            },
+            { class: "formObj", widthPercent: 100 },
             {
                 class: "container",
                 display: "flex",
@@ -125,7 +117,8 @@ export class Register extends Comp {
                 padding: 20,
                 borderRadius: 14,
                 marginLeft: 100,
-                marginTop: 150,
+                marginTop: 110,
+                marginBotton: 50,
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
@@ -252,18 +245,20 @@ export class Register extends Comp {
         fd.append("email", this.getById("email").value);
         fd.append("password", this.getById("password").value);
         fd.append("age", this.getById("age").value);
-        fd.append("occupation", this.getById("occupation").value);
-        fd.append("bio", this.getById("bio").value);
 
         const p = this.getById("picture");
+        const a = this.getById("age");
+        const o = this.getById("occupation");
+        const b = this.getById("bio");
+
+        if (o.value) fd.append("occupation", o.value);
+        if (b.value) fd.append("bio", b.value);
         if (p.value) fd.append("file", p.value);
 
         const result = await this.submitForm("/register", fd);
 
-        if (result.ok) window.location.assign("/");
-        else {
-            alert(result.error);
-        };
+        if (result.ok) this.update("<comp-create></comp-create>")
+        else this.alert(result.error);
     }
 
     afterRender() {
@@ -329,6 +324,7 @@ export class Register extends Comp {
         email.required = true;
         password.required = true;
         confirmPass.required = true;
+        age.required = true;
 
         nextButton.addEventListener("click", () => {
             const inputs = [name, surname, email, password, confirmPass];
@@ -353,9 +349,19 @@ export class Register extends Comp {
         });
 
         submitButton.addEventListener("click", (e) => {
+            if (!age.value) {
+                age.query(".inputValue").classList.add("error");
+                return;
+            }
             e.preventDefault();
             this.register();
         });
+
+        const alert = this.query("comp-dialog");
+        if (alert) {
+            alert.title = "Something went wrong";
+            alert.text
+        }
     }
 
     static { Comp.register(this); }

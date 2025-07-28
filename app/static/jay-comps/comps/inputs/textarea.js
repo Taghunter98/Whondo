@@ -1,14 +1,14 @@
 import { Input } from "./input.js";
 
 export class Textarea extends Input {
-   
+
     rows_;
 
     set rows(newRows) {
 
         this.rows_ = newRows;
         this.update();
-    
+
     }
 
     get rows() { return this.rows_; }
@@ -23,11 +23,12 @@ export class Textarea extends Input {
             <textarea class="inputValue areaInput" placeholder="${this.prompt_}" rows="${this.rows_}"></textarea>
         </div>
         `;
-    
+
     }
 
     createCSS() {
         return [
+            super.createCSS(),
             {
                 class: "areaInput",
                 resize: "none",
@@ -38,11 +39,11 @@ export class Textarea extends Input {
                 boxSizing: "border-box",
                 padding: [8, 12],
                 fontFamily: "Geist",
-            }
+            },
         ];
     }
 
-    static{ super.register(this); }
+    static { super.register(this); }
 
 }
 
