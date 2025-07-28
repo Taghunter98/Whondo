@@ -311,8 +311,6 @@ export class Register extends Comp {
         if (picture.value) {
             console.log("Added data: " + picture.value);
             fd.append("file", picture.value);
-        } else {
-            fd.append("file");
         }
 
         const result = await this.submitForm("https://whondo.com/register", fd);

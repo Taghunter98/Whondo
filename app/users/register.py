@@ -64,8 +64,8 @@ def register():
         if profile_picture:
             image_path: str = upload_file(profile_picture, email)
 
-        if image_path is None:
-            return jsonify({"error": "Image failed to upload"}), 409
+            if image_path is None:
+                return jsonify({"error": "Image failed to upload"}), 409
 
         hashed_password: str = hash_function(password)
 
