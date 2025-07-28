@@ -102,7 +102,7 @@ def register():
 
         send_email(sender, name, email, subject, None, html_template)
 
-        return render_template("created.html")
+        return jsonify({"message": "Account created successfully"})
 
     else:
         return render_template("register.html")
