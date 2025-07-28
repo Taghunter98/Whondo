@@ -1,7 +1,7 @@
 import { Comp } from "jay-comp";
 
 export class Login extends Comp {
-       
+
     createHTML() {
         return /* html */ `
         <div class="background">
@@ -32,14 +32,16 @@ export class Login extends Comp {
         `;
     }
 
-    createCSS() {   
-        return[
-            { class: "background",
+    createCSS() {
+        return [
+            {
+                class: "background",
                 widthPercent: 100,
                 backgroundVar: "black100",
                 heightVh: 100,
             },
-            { class: "itemContainer",
+            {
+                class: "itemContainer",
                 display: "flex",
                 media: {
                     maxWidthBp: 600,
@@ -47,7 +49,8 @@ export class Login extends Comp {
                     alignItems: "centre"
                 }
             },
-            { class: "backgroundImage",
+            {
+                class: "backgroundImage",
                 widthPercent: 100,
                 heightVh: 100,
                 paddingLeft: 400,
@@ -58,12 +61,14 @@ export class Login extends Comp {
                     padding: 0
                 }
             },
-            { class: "image",
+            {
+                class: "image",
                 widthPercent: 100,
                 heightPercent: 100,
                 objectFit: "cover"
             },
-            { class: "modal",
+            {
+                class: "modal",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -82,34 +87,41 @@ export class Login extends Comp {
                     marginTop: 200
                 }
             },
-            { class: "inputs",
+            {
+                class: "inputs",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 10,
                 padding: [20, 0, 40, 0]
             },
-            { class: "link",
+            {
+                class: "link",
                 colourVar: "black80",
                 textDecoration: "underline",
                 cursor: "pointer"
             },
-            { class: "link", pseudoClass: "hover",
+            {
+                class: "link", pseudoClass: "hover",
                 colourVar: "black100"
             },
-            { class: "textContainer",
+            {
+                class: "textContainer",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 5
             },
-            { class: "title",
+            {
+                class: "title",
                 fontWeight: "bold"
             },
-            { class: "text",
+            {
+                class: "text",
                 colourVar: "black60"
             },
-            { class: "footer",
+            {
+                class: "footer",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -131,17 +143,18 @@ export class Login extends Comp {
         const result = this.getById("result");
         const email = this.getById("email");
         const pass = this.getById("password");
-        
+
         compButton.text = "Login";
+        compButton.fill = true;
         email.label = "Email";
         email.prompt = "Enter email";
         pass.label = "Password";
         pass.type = "password";
         pass.prompt = "Enter password";
-        
+
         compButton.addEventListener("click", () => {
             let cookie = "true";
-            let jsonData = {email : email.value, password : pass.value, consent: cookie};
+            let jsonData = { email: email.value, password: pass.value, consent: cookie };
 
             this.login(result, jsonData);
         });

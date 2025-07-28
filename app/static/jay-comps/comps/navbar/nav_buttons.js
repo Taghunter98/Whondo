@@ -11,7 +11,8 @@ export class NavButtons extends Comp {
     }
 
     createCSS() {
-        return { class: "buttons",
+        return {
+            class: "buttons",
             display: "flex",
             width: "auto",
             gap: 20
@@ -21,15 +22,15 @@ export class NavButtons extends Comp {
     afterRender() {
         const register = this.getById("register");
         const login = this.getById("login");
-        
+
         register.text = "Register";
         register.variant = 2;
         login.text = "login";
 
-        register.addEventListener("click", () => 
+        register.addEventListener("click", () =>
             window.location.assign("/register"));
 
-        login.addEventListener("click", () => 
+        login.addEventListener("click", () =>
             window.location.assign("/login"));
     }
 

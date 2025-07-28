@@ -280,12 +280,16 @@ export class Register extends Comp {
 
         backButton.text = "Back";
         backButton.variant = 2;
+        backButton.fill = true;
         backBtn2.text = "Back";
         backBtn2.variant = 2;
+        backBtn2.fill = true;
         nextButton.text = "Next";
         nextButton.variant = 1;
+        nextButton.fill = true;
         submitButton.text = "Register";
         submitButton.variant = 1;
+        submitButton.fill = true;
 
         /**
          * Form inputs and required fields

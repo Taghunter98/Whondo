@@ -52,7 +52,8 @@ export class Verified extends Comp {
         describe.paragraph = `Your account has now been verified.`;
 
         const btn = describe.query("comp-button");
-        btn.text = "Continue"
+        btn.text = "Continue";
+        btn.fill = true;
 
         btn.addEventListener("click", () => window.location.assign("/"));
     }
