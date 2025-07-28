@@ -258,7 +258,7 @@ export class Register extends Comp {
         const result = await this.submitForm("/register", fd);
 
         if (result.ok) this.update("<comp-create></comp-create>")
-        else this.alert(result.error);
+        else alert(result.error);
     }
 
     afterRender() {
@@ -360,12 +360,6 @@ export class Register extends Comp {
             e.preventDefault();
             this.register();
         });
-
-        const alert = this.query("comp-dialog");
-        if (alert) {
-            alert.title = "Something went wrong";
-            alert.text
-        }
     }
 
     static { Comp.register(this); }
