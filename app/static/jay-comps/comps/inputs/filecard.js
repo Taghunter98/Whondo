@@ -83,8 +83,13 @@ export class FileCard extends File {
             widthPercent: 100,
             position: "relative",
         };
+
+        const error = {
+            class: "error",
+            border: ["solid", 2, "var(--red100)"],
+        }
     
-        return [base, previewBox, fileBox, imageContainer,];
+        return [base, previewBox, fileBox, imageContainer,error];
     
     }
 

@@ -268,6 +268,10 @@ export class CreateProp extends Comp {
             { class: "cover",
                 borderRadius: 8,
                 borderVar: "borderBlack",
+            },
+            {
+                class: "error",
+                border: ["solid", 2, "var(--red100)"],
             }
         ];   
         
@@ -290,6 +294,33 @@ export class CreateProp extends Comp {
     }
      return isValid;
     }
+
+    validateStep2() {
+        const cover = this.getById("cover");
+        const pics = Array.from(this.queryAll(".pic"));
+        let isValid = true;
+
+        if (!cover.value){
+            cover.classList.add("error");
+            isValid = false;
+        }else {
+            cover.classList.remove("error");
+        }
+
+        const uploadedPics = pics.filter(pic => pic.value);
+        if(uploadedPics.length < 3) isValid = false;
+
+        pics.forEach(pic => {
+            const box = pic.query(".fileBox")
+            if (!pic.value){
+                box.classList.add("error");
+            }else {
+                box.classList.remove("error");
+            }
+        });
+
+        return isValid;
+    }
     
     clearError(inputs){
 
@@ -297,7 +328,6 @@ export class CreateProp extends Comp {
         field.classList.remove("error");
 
     };
-
 
     afterRender(){
         const step1 = this.getById("step1");
@@ -354,38 +384,44 @@ export class CreateProp extends Comp {
                 step3.setAttribute("hidden", "");
                 step2.removeAttribute("hidden");
             }
-        })
+        });
 
         nextBtn2.addEventListener("click", ()=> {
-            step1.setAttribute("hidden", "");
-            step2.setAttribute("hidden", "");
-            step3.removeAttribute("hidden")
-        })
+            if (this.validateStep2()){
+                step1.setAttribute("hidden", "");
+                step2.setAttribute("hidden", "");
+                step3.removeAttribute("hidden")
+            }
+        });
 
          backBtn2.addEventListener("click", () => {
             step2.setAttribute("hidden", "");
             step3.setAttribute("hidden", "");
             step1.removeAttribute("hidden")
-        })
+        });
 
          backBtn3.addEventListener("click", () => {
             step3.setAttribute("hidden", "");
             step1.setAttribute("hidden", "");
             step2.removeAttribute("hidden")
-        })
-
-        [address, title, rent, description].forEach(input => {
-
-            input.addEventListener("input", () => {
-
-                this.clearError(input);
-
-            });
-
         });
 
-    
+        const input = [address, title, rent, description,]
+        input.forEach(inputs => {
+            inputs.addEventListener("input", () => { this.clearError(inputs); 
+            });
+        });
+
+        cover.addEventListener("photo-uploaded", () => { if (cover.value) cover.classList.remove("error"); });
+
+        pic.forEach(picCard => {
+            picCard.addEventListener("photo-uploaded", () => {
+                const box = picCard.query(".fileBox");
+                if (picCard.value) box.classList.remove("error");
+            });
+        });
+
 }    
-static { Comp.register(this); }
+    static { Comp.register(this); }
 
 }
