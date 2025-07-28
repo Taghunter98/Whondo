@@ -1,81 +1,47 @@
-import {Comp} from "jay-comp";
+import { Comp } from "jay-comp";
 
 export class Dialog extends Comp {
-     
-    title_;
-    paragraph_ ;
-    svgIcon_;
-    text_;
+    title_; paragraph_; svgIcon_; text_;
 
-    set title(newTitle){
-
+    set title(newTitle) {
         this.title_ = newTitle;
         this.update();
-    
     }
-
-    set paragraph(value){
-
+    set paragraph(value) {
         this.paragraph_ = value;
         this.update();
-    
     }
-
-    set svgIcon(value){
-
+    set svgIcon(value) {
         this.svgIcon_ = value;
         this.update();
-    
     }
-
     set text(v) {
         this.text_ = v;
         this.update();
     }
+    get paragraph() { return this.paragraph_; }
+    get title() { return this.title_; }
+    get svgIcon() { return this.svgIcon_; }
+    get text() { return this.text_ }
 
-    get paragraph() {
-
-        return this.paragraph_;
-    
-    }
-
-    get title() {
-
-        return this.title_;
-    
-    }
-
-    get svgIcon() {
-
-        return this.svgIcon_;
-    
-    }
-
-    get text(){ return this.text_ }
-
-    beforeRender(){
+    beforeRender() {
         if (!this.title_) this.title_ = "Hello World";
         if (!this.paragraph_) this.paragraph_ = "This is a paragraph";
-        if (!this.svgIcon_) this.svgIcon_  = "";
+        if (!this.svgIcon_) this.svgIcon_ = "";
     }
 
     createHTML() {
-
         return /* html */ `
             <div class="background">
-
                 <div class="container">
-
-                    <!--svg logo go here-->
+                    <!--svg logo goes here-->
                     <svg class="icon" ${this.svgIcon_}></svg>
                     <h3 class="head">${this.title_}</h3>
                     <p class="dialog">${this.paragraph_}</p>
                     <comp-button class="nextBtn">${this.text_}</comp-button>
                 </div>
-
             </div>
         `;
-    
     }
 
     createCSS() {
@@ -130,5 +96,7 @@ export class Dialog extends Comp {
 
     static { Comp.register(this); }
 
-
+    afterRender() {
+        this.query("comp-button").fill = true;
+    }
 }

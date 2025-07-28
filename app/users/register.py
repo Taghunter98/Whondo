@@ -59,10 +59,13 @@ def register():
         if check_email_exits(email):
             return jsonify({"error": "Account already exists"}), 403
 
-        image_path: str = upload_file(profile_picture, email)
+        image_path = None
 
-        if image_path is None:
-            return jsonify({"error": "Image failed to upload"}), 409
+        if profile_picture:
+            image_path: str = upload_file(profile_picture, email)
+
+            if image_path is None:
+                return jsonify({"error": "Image failed to upload"}), 409
 
         hashed_password: str = hash_function(password)
 
@@ -99,7 +102,7 @@ def register():
 
         send_email(sender, name, email, subject, None, html_template)
 
-        return render_template("created.html")
+        return jsonify({"message": "Account created successfully"})
 
     else:
         return render_template("register.html")

@@ -3,11 +3,6 @@ import { Comp } from "jay-comp";
 export class NavLinks extends Comp {
     links_;
 
-    constructor() {
-        super();
-        this.host({width: "auto"});
-    }
-
     beforeRender() {
         this.links_ = ["About", "Mission", "Contribute"];
     }
@@ -17,20 +12,23 @@ export class NavLinks extends Comp {
     }
 
     createCSS() {
-        return { class: "links",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 20,
-            media: { maxWidthBp: 600, display: "none" }
-        };
+        return [
+            { width: "auto" },
+            {
+                class: "links",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 20,
+                media: { maxWidthBp: 600, display: "none" }
+            }];
     }
 
     afterRender() {
         this.links_.forEach(link => {
             const li = document.createElement("comp-link");
             li.text = link;
-            this.query("ul").appendChild(li); 
+            this.query("ul").appendChild(li);
         });
     }
 
