@@ -59,7 +59,10 @@ def register():
         if check_email_exits(email):
             return jsonify({"error": "Account already exists"}), 403
 
-        image_path: str = upload_file(profile_picture, email)
+        image_path = None
+
+        if profile_picture:
+            image_path: str = upload_file(profile_picture, email)
 
         if image_path is None:
             return jsonify({"error": "Image failed to upload"}), 409

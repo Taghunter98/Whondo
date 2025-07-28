@@ -6,11 +6,8 @@ export class Register extends Comp {
 
         return /* html */ `
         <div class="background">
-
             <div class="container">
-
                 <div class="modal">
-
                     <form class="formObj" action="https://whondo.com/register", method="POST">
 
                         <!-- Personal information -->
@@ -237,9 +234,7 @@ export class Register extends Comp {
      * @returns Valid status
      */
     checkPassword(input1, input2) {
-
         return (input1.value.trim() == input2.value.trim()) ? true : false;
-    
     }
 
     /**
@@ -281,32 +276,24 @@ export class Register extends Comp {
     }
 
     validateInputs(inputs, state) {
-
         if (state) {
-
             for (let i in inputs) inputs[i].query(".inputValue").classList.add("error");
-        
         } else {
-
             for (let i in inputs) inputs[i].query(".inputValue").classList.remove("error");
-        
         }
-    
     }
 
     clearError(inputs){
-
         const field = inputs.query(".inputValue");
         field.classList.remove("error");
-
     };
 
     async register(){
-
         const fd = new FormData();
 
         const name = this.getById("name");
         const email = this.getById("email");
+        const surname = this.getById("surname");
         const password = this.getById("password");
         const age = this.getById("age");
         const occupation  = this.getById("occupation");
@@ -314,6 +301,7 @@ export class Register extends Comp {
         const picture = this.getById("picture");
 
         fd.append("name", name.value);
+        fd.append("surname", surname.value);
         fd.append("email", email.value);
         fd.append("password", password.value);
         fd.append("age", age.value);
@@ -321,7 +309,10 @@ export class Register extends Comp {
         fd.append("bio", bio.value);
         
         if (picture.value) {
-            fd.append("file", picture.value, picture.value.name);
+            console.log("Added data: " + picture.value);
+            fd.append("file", picture.value);
+        } else {
+            fd.append("file");
         }
 
         const result = await this.submitForm("https://whondo.com/register", fd);
