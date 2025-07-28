@@ -321,6 +321,23 @@ export class CreateProp extends Comp {
 
         return isValid;
     }
+
+    validateStep3(){
+        let isValid = true;
+
+        const keywords = this.getById("keywords");
+        const box = keywords.query(".inputValue");
+
+        const selected = keywords.value || [];
+
+        if(!Array.isArray(selected) || selected.length < 1){
+            box.classList.add("error");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
     
     clearError(inputs){
 
@@ -406,6 +423,16 @@ export class CreateProp extends Comp {
             step2.removeAttribute("hidden")
         });
 
+        submit.addEventListener("click", (e) => {
+            const step1Valid = this.validateStep1();
+            const step2Valid = this.validateStep2();
+            const step3Valid = this.validateStep3();
+
+            if (!step1Valid || !step2Valid || !step3Valid) {
+            e.preventDefault(); 
+            }
+        });
+            
         const input = [address, title, rent, description,]
         input.forEach(inputs => {
             inputs.addEventListener("input", () => { this.clearError(inputs); 

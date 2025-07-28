@@ -80,6 +80,8 @@ export class Keywords extends Input {
 
         this.tags_.push(text);
 
+        this.inputEl?.classList.remove("error");
+
         const tagEl = document.createElement("div");
         tagEl.className = "tag";
         tagEl.textContent = text;
