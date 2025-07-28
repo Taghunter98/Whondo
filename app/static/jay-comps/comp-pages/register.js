@@ -1,9 +1,7 @@
 import { Comp } from "jay-comp";
 
 export class Register extends Comp {
-
     createHTML() {
-
         return /* html */ `
         <div class="background">
             <div class="container">
@@ -16,15 +14,12 @@ export class Register extends Comp {
                                 <p class="text">Step 1/2</p>
                                 <h4 class="title">Personal Details</h4> 
                             </div>
-
                             <p class="text">Let's find out a bit more about you!</p>
-
                             <div class="input">
                                 <div class="inputRow">
                                     <comp-input id="name" name="name"></comp-input>
                                     <comp-input id="surname" name="surname"></comp-input>
                                 </div>
-                                
                                 <comp-input id="email" name="email"></comp-input>
                                 <comp-password id="password" name="password"></comp-password>
                                 <comp-password id="confirm" name="confirm"></comp-password>
@@ -41,24 +36,19 @@ export class Register extends Comp {
 
                         <!-- User personalisation  -->
                         <div id="step2" hidden>
-
                             <div class="textContainer">
                                 <p class="text">Step 2/2</p>
                                 <h4 class="title">Personalise</h4> 
                             </div>
-
                             <p class="text">Let's find out a bit more about you!</p>
-
                              <div class="inputRow">
                                 <comp-input id="age" name="age"></comp-input>
                                 <comp-input id="occupation" name="occupation"></comp-input>
                             </div>
-
                             <div class="input">
                                 <comp-textarea id="bio" name="bio"></comp-textarea>
                                 <comp-file id="picture" name="picture"></comp-file>
                             </div>
-
                             <div class="footer">
                                 <div class="btnRow">
                                     <comp-button class="back" id="backBtn2" type="button"></comp-button>
@@ -66,7 +56,6 @@ export class Register extends Comp {
                                 </div>
                                 <p>Have an account?<a href="/login" class="link"> Login</a></p>
                             </div>
-
                         </div>
                     </form>
                 </div>
@@ -76,22 +65,20 @@ export class Register extends Comp {
             </div>
         </div>
         `;
-    
     }
 
-    createCSS(){
-
-        return[
+    createCSS() {
+        return [
             {
                 class: "background",
                 widthPercent: 100,
                 heightVh: 100,
-                backgroundVar: "black100",     
+                backgroundVar: "black100",
                 overflow: "hidden",
                 media: {
                     maxWidthBp: 600,
                     height: 1000
-                }      
+                }
             },
             {
                 class: "formObj",
@@ -130,7 +117,7 @@ export class Register extends Comp {
                 flexDirection: "column",
                 alignItems: "centre",
                 widthPercent: 100,
-                maxWidth: 500,  
+                maxWidth: 500,
                 minWidth: 320,
                 background: "white",
                 position: "absolute",
@@ -160,7 +147,7 @@ export class Register extends Comp {
                     maxWidthBp: 600,
                     padding: [10, 0, 20, 0],
                     gap: 15,
-                } 
+                }
             },
             {
                 class: "inputRow",
@@ -189,7 +176,7 @@ export class Register extends Comp {
             {
                 class: "link",
                 colourVar: "black80",
-                fontWeight: "bold", 
+                fontWeight: "bold",
                 textDecoration: "underline",
                 cursor: "pointer",
             },
@@ -210,7 +197,7 @@ export class Register extends Comp {
                 colourVar: "black60",
                 display: "flex",
                 alignSelf: "start",
-            
+
             },
             {
                 class: "footer",
@@ -220,239 +207,158 @@ export class Register extends Comp {
                 widthPercent: 100,
                 gap: 10,
             },
-    
-        ];   
-        
+        ];
     }
 
-    //come back to test this later !!!!
-
-    /**
-     * Helper method validates password inputs.
-     * @param {string} input1 
-     * @param {string} input2 
-     * @returns Valid status
-     */
     checkPassword(input1, input2) {
         return (input1.value.trim() == input2.value.trim()) ? true : false;
     }
 
-    /**
-     * Helper method validates a list of all inputs and returns valid status.
-     * @param {Array<HTMLElement>} inputs 
-     * @returns Valid status
-     */
     validateElements(inputs) {
-
         let isValid = true;
-        for(let i in inputs){
 
-            if(inputs[i].required && inputs[i].isEmpty()){
-
+        for (let i in inputs) {
+            if (inputs[i].required && inputs[i].isEmpty()) {
                 const inputField = inputs[i].query(".inputValue");
                 inputField.classList.add("error");
                 isValid = false;
-
             }
-            
         }
 
         return (!this.checkPassword(inputs[3], inputs[4])) ? false : isValid;
-    
     }
 
-    /**
-     * Method validates if passwords match.
-     * @param {*} password 
-     * @param {*} confirmPass 
-     * @returns Valid status
-     */
     validatePasswords(password, confirmPass) {
-
         if (confirmPass.value == '' || password.value == '') return;
         else if (confirmPass.value === password.value) confirmPass.query(".inputValue").classList.add("success");
         else confirmPass.query(".inputValue").classList.remove("success");
-    
     }
 
     validateInputs(inputs, state) {
-        if (state) {
-            for (let i in inputs) inputs[i].query(".inputValue").classList.add("error");
-        } else {
-            for (let i in inputs) inputs[i].query(".inputValue").classList.remove("error");
-        }
+        if (state) for (let i in inputs) inputs[i].query(".inputValue").classList.add("error");
+        else for (let i in inputs) inputs[i].query(".inputValue").classList.remove("error");
     }
 
-    clearError(inputs){
+    clearError(inputs) {
         const field = inputs.query(".inputValue");
         field.classList.remove("error");
     };
 
-    async register(){
+    async register() {
         const fd = new FormData();
 
-        const name = this.getById("name");
+        fd.append("name", this.getById("name").value);
+        fd.append("surname", this.getById("surname").value);
+        fd.append("email", this.getById("email").value);
+        fd.append("password", this.getById("password").value);
+        fd.append("age", this.getById("age").value);
+        fd.append("occupation", this.getById("occupation").value);
+        fd.append("bio", this.getById("bio").value);
+
+        const p = this.getById("picture");
+        if (p.value) fd.append("file", p.value);
+
+        const result = await this.submitForm("/register", fd);
+
+        if (result.ok) window.location.assign("/");
+        else {
+            alert(result.error);
+        };
+    }
+
+    afterRender() {
+        const step1 = this.getById("step1");
+        const step2 = this.getById("step2");
+        const backButton = this.getById("backBtn");
+        const backBtn2 = this.getById("backBtn2");
+        const nextButton = this.getById("nextBtn");
+        const submitButton = this.getById("submit");
         const email = this.getById("email");
-        const surname = this.getById("surname");
         const password = this.getById("password");
+        const confirmPass = this.getById("confirm");
+        const name = this.getById("name");
+        const surname = this.getById("surname");
         const age = this.getById("age");
-        const occupation  = this.getById("occupation");
+        const occupation = this.getById("occupation");
         const bio = this.getById("bio");
         const picture = this.getById("picture");
 
-        fd.append("name", name.value);
-        fd.append("surname", surname.value);
-        fd.append("email", email.value);
-        fd.append("password", password.value);
-        fd.append("age", age.value);
-        fd.append("occupation", occupation.value);
-        fd.append("bio", bio.value);
-        
-        if (picture.value) {
-            console.log("Added data: " + picture.value);
-            fd.append("file", picture.value);
-        }
-
-        const result = await this.submitForm("https://whondo.com/register", fd);
-        
-        if(result.ok) {
-            console.log(result.status);
-
-        } else {
-            console.log(result.error);
-        }
-    }
-
-    afterRender(){
-
-        const step1        = this.getById("step1");
-        const step2        = this.getById("step2");
-        const backButton   = this.getById("backBtn");
-        const backBtn2     = this.getById("backBtn2");
-        const nextButton   = this.getById("nextBtn");
-        const submitButton = this.getById("submit");
-        const email        = this.getById("email");
-        const password     = this.getById("password");
-        const confirmPass  = this.getById("confirm");
-        const name         = this.getById("name");
-        const surname      = this.getById("surname");
-        const age          = this.getById("age");
-        const occupation   = this.getById("occupation");
-        const bio          = this.getById("bio");
-        const picture      = this.getById("picture");
-        
-        backButton.text      = "Back";
-        backButton.variant   = 2;
-        backBtn2.text        = "Back";
-        backBtn2.variant     = 2;
-        nextButton.text      = "Next";
-        nextButton.variant   = 1;
-        submitButton.text    = "Register";
+        backButton.text = "Back";
+        backButton.variant = 2;
+        backBtn2.text = "Back";
+        backBtn2.variant = 2;
+        nextButton.text = "Next";
+        nextButton.variant = 1;
+        submitButton.text = "Register";
         submitButton.variant = 1;
-        
+
         /**
          * Form inputs and required fields
          */
-        email.label            = "Email";
-        email.prompt           = "Enter email";
-        email.type             = "email";
-        password.label         = "Password";
-        password.prompt        = "Password";
+        email.label = "Email";
+        email.prompt = "Enter email";
+        email.type = "email";
+        password.label = "Password";
+        password.prompt = "Password";
         password.enableEntropy = true;
-        confirmPass.label      = "Confirm Password";
-        confirmPass.prompt     = "Confirm password";
-        name.label             = "Name";
-        name.prompt            = "Enter name";
-        surname.label          = "Surname";
-        surname.prompt         = "Enter surname";
-        age.label              = "Age";
-        age.prompt             = "Enter your age";
-        age.type               = "number";
-        occupation.label       = "Occupation";
-        occupation.prompt      = "Eg. student";
-        occupation.type        = "text";
-        bio.label              = "Bio";
-        bio.prompt             = "Tell us more about you...";
-        bio.type               = "textarea";
-        picture.label          = "Profile picture";
-        picture.prompt         = "Upload photo";
-        picture.type           = "file";
+        confirmPass.label = "Confirm Password";
+        confirmPass.prompt = "Confirm password";
+        name.label = "Name";
+        name.prompt = "Enter name";
+        surname.label = "Surname";
+        surname.prompt = "Enter surname";
+        age.label = "Age";
+        age.prompt = "Enter your age";
+        age.type = "number";
+        occupation.label = "Occupation";
+        occupation.prompt = "Eg. student";
+        occupation.type = "text";
+        bio.label = "Bio";
+        bio.prompt = "Tell us more about you...";
+        bio.type = "textarea";
 
-        name.required        = true;
-        surname.required     = true;
-        email.required       = true;
-        password.required    = true;
+        if (picture) {
+            picture.label = "Profile picture";
+            picture.prompt = "Upload photo";
+            picture.type = "file";
+
+        }
+
+        name.required = true;
+        surname.required = true;
+        email.required = true;
+        password.required = true;
         confirmPass.required = true;
 
-        /**
-         * Event listener checks for all inputs to be valid, if so then the step 2 modal is revealed.
-         */
         nextButton.addEventListener("click", () => {
-
             const inputs = [name, surname, email, password, confirmPass];
-
             let valid = this.validateElements(inputs);
 
             if (valid) {
-
                 step1.setAttribute("hidden", "");
                 step2.removeAttribute("hidden");
-            
             } else this.validateInputs(inputs, true);
-        
         });
 
-        /**
-         * Event listener reviews password entropy
-         */
-        confirmPass.addEventListener("input", () => {
-            
-            this.validatePasswords(password, confirmPass);
+        confirmPass.addEventListener("input", () => this.validatePasswords(password, confirmPass));
+        password.addEventListener("input", () => this.validatePasswords(password, confirmPass));
 
-        });
-
-        /**
-         * Event listener removes password entropy check
-         */
-        password.addEventListener("input", () => {
-            
-            this.validatePasswords(password, confirmPass);
-
-        });
-
-        /**
-         * @brief clear all input field status with when user type in the box
-         * clean ui
-         */
         [name, surname, email, confirmPass].forEach(input => {
-
-            input.addEventListener("input", () => {
-
-                this.clearError(input);
-
-            });
-
+            input.addEventListener("input", () => this.clearError(input));
         });
 
-        /**
-         * Returns user to step 1
-         */
         backBtn2.addEventListener("click", () => {
-            
             step2.setAttribute("hidden", "");
             step1.removeAttribute("hidden");
-        
         });
 
         submitButton.addEventListener("click", (e) => {
             e.preventDefault();
             this.register();
-        } );
-    
+        });
     }
 
-    static {  Comp.register(this); }
-
+    static { Comp.register(this); }
 }
 
 
