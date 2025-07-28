@@ -3,27 +3,20 @@ import { Comp } from 'jay-comp';
 export class CreateProp extends Comp {
 
     createHTML() {
-
         return /* html */ `
         <div class="background">
-
             <div class="container">
-
                 <div class="modal">
-
                     <form class="formObj" action="", method="POST" data-pg-verify>
-
                         <!-- Personal information -->
                         <div id="step1">
                             <div class="textContainer">
                                 <p class="text">Step 1/3</p>
                                 <h4 class="title">Property Details</h4>
                             </div>
-
                             <p class="text">Let’s create a beautiful advert, tell us about your home!</p>
 
                             <div class="input">
-                                
                                 <comp-address id="address" name="address" ></comp-address>
                                 <comp-input id="title" name="title"></comp-input>
                                 <div class="wrapper">
@@ -31,30 +24,23 @@ export class CreateProp extends Comp {
                                     <p class="unit">p/m</p>
                                 </div>
                                 <comp-textarea id="description" name="description"></comp-textarea>
-                            
                             </div>
-
                             <div class="footer">
-
                                 <div class="btnRow">
                                     <comp-button class="back" id="backBtn" type=button></comp-button>
                                     <comp-button class="next" id="nextBtn" type=button></comp-button>
                                 </div>
-            
                             </div>
                         </div>
 
                         <!-- User personalisation  -->
                         <div id="step2" hidden >
-
                             <div class="textContainer">
                                 <p class="text">Step 2/3</p>
                                 <h4 class="title">Add Images</h4> 
                                 <p class="text">The best adverts have great pictures, we recommend at least 8 to properly show off your home! Be mindful our users mostly use mobile! So we advise taking pictures in profile.</p>
                             </div>
-
                              <div class="inputRowFile">
-                                    
                                         <comp-carousel>
                                             <comp-file-card class="cover" id="cover"></comp-file-card>
                                             <comp-file-card class="pic"></comp-file-card>
@@ -67,41 +53,30 @@ export class CreateProp extends Comp {
                                             <comp-file-card class="pic">></comp-file-card>
                                             <comp-file-card class="pic">></comp-file-card>
                                         </comp-carousel>
-                                    
                                 </div>
-
                             <div class="footer">
                                 <div class="btnRow">
                                     <comp-button class="back" id="backBtn2" type="button"></comp-button>
                                     <comp-button class="next" id="nextBtn2" type="button"></comp-button>
                                 </div>
-        
                             </div>
-
                         </div>
 
                         <div id="step3" hidden>
-
                             <div class="textContainer">
                                 <p class="text">Step 3/3</p>
                                 <h4 class="title">Add Keywords</h4> 
                             </div>
-
                             <p class="text">Whondo works with a prompting system that uses keywords to help your property be noticed. We want to show your advert to as many people as possible, so add some keywords!</p>
-
                              <div class="input">
                                 <comp-keywords class="keywords" id="keywords" name="keywords" ></comp-keywords>
                             </div>
-
                             <div class="footer">
-
                                 <div class="btnRow">
                                     <comp-button class="back" id="backBtn3" type="button"></comp-button>
                                     <comp-button class="submit" id="submit" type="submit"></comp-button>
                                 </div>
-        
                             </div>
-
                         </div>
                     </form>
                 </div>
@@ -122,7 +97,7 @@ export class CreateProp extends Comp {
                 heightVh: 100,
                 backgroundVar: "black100",     
                 overflow: "hidden",
-                media: {
+                media: { 
                     maxWidthBp: 600,
                     height: 1000
                 }      
@@ -167,7 +142,8 @@ export class CreateProp extends Comp {
                 padding: 20,
                 borderRadius: 14,
                 marginLeft: 100,
-                marginTop: 150,
+                marginTop: 110,
+                marginBottom:50,
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
@@ -338,7 +314,45 @@ export class CreateProp extends Comp {
         return isValid;
     }
 
-    
+    async createProp(){
+        const fd = new FormData();
+        const keywords = this.getById("keywords").value;
+
+        fd.append("title", this.getById("title").value);
+        fd.append("price", this.getById("rent").value);
+        fd.append("description", this.getById("description").value);
+        fd.append("keywords", JSON.stringify(keywords));
+
+        const addr = this.getById("address")?.fullAddress || {};
+
+        fd.append("name", addr.name || "");
+        fd.append("street", addr.street || "");
+        fd.append("town", addr.town || "");
+        fd.append("county", addr.county || "");
+        fd.append("postcode", addr.postcode || "");
+
+        const cover = this.getById("cover");
+        const pics = this.queryAll(".pic");
+
+        if(cover?.value) fd.append("images", cover.value);
+
+        let i = 0;
+        for (const pic of pics) {
+            if (pic?.value) {
+            const file = pic.value;
+            const filename = file.name || `pic${i}.${file.type.split("/")[1] || "jpg"}`;
+            fd.append("images", file, filename);
+            i++;
+            }
+        }
+
+        const result = await this.submitForm("/advert/new", fd);
+
+        if (result.ok) this.update("<comp-published></comp-published>")
+        else alert(result.error);
+
+    }
+
     clearError(inputs){
 
         const field = inputs.query(".inputValue");
@@ -430,6 +444,8 @@ export class CreateProp extends Comp {
 
             if (!step1Valid || !step2Valid || !step3Valid) {
             e.preventDefault(); 
+            } else {
+                this.createProp()
             }
         });
             

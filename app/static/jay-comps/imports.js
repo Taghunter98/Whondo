@@ -21,3 +21,4 @@ import './comps/inputs/address.js'
 import './comp-pages/login.js';
 import './comp-pages/create.js';
 import './comp-pages/createprop.js';
+import './comp-pages/published.js';

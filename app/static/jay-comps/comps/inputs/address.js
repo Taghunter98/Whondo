@@ -50,7 +50,7 @@ export class Address extends Input {
 
         const formattedQuery = trimmed.toUpperCase();
 
-        const key = "s5OpFhhZzEeYG0I2F23bPA47115";
+        const key = "a-dEZaTRb0mIFuelGKVd-g47127";
         const url = `https://api.getaddress.io/autocomplete/${encodeURIComponent(formattedQuery)}?api-key=${key}`;
 
         const res = await this.request(url, "GET");
@@ -67,12 +67,9 @@ export class Address extends Input {
             return;
         }
 
-         const options = suggestions.map(s => ({
-            label: s.address,
-            value: s,
-        }));
+        this.suggestionMap = new Map(suggestions.map(s => [s.address, s]));
 
-        this.dropdown.setOptions(options.map(o => o.label));
+        this.dropdown.setOptions(suggestions.map(s => s.address));
     }
 
     afterRender(){
@@ -85,9 +82,31 @@ export class Address extends Input {
             this.fetchSuggestions(query);
         });
 
-        this.dropdown.addEventListener("option-selected", (e) => {
+       this.dropdown.addEventListener("option-selected", async (e) => {
             const text = e.detail.text;
+            const selected = this.suggestionMap.get(text);
+            if (!selected) return;
+
             input.value = text;
+
+            const key = "a-dEZaTRb0mIFuelGKVd-g47127";
+            const fullUrl = `https://api.getaddress.io/get/${encodeURIComponent(selected.id)}?api-key=${key}`;
+            const fullRes = await this.request(fullUrl, "GET");
+
+            if (!fullRes.ok) {
+                console.error("full lookup error", fullRes.error);
+                return;
+            }
+
+            const { county, postcode, line_1, town_or_city, district } = fullRes.data;
+
+                this.fullAddress = {
+                name: line_1,
+                street: district, 
+                town: town_or_city,
+                county,
+                postcode,
+            };
         });
     }
 

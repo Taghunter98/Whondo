@@ -93,6 +93,10 @@ export class FileCard extends File {
     
     }
 
+    get value() {
+    return this._selectedFile || null;
+    }
+
     afterRender() {
 
         const filePrompt = this.query(".filePrompt");
