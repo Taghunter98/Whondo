@@ -1,4 +1,4 @@
-import { Input } from "./input.js";
+import { Input } from "../inputs/input.js";
 
 export class Address extends Input {
     key = "a-dEZaTRb0mIFuelGKVd-g47127"; // FIND A WAY TO REMOVE THIS

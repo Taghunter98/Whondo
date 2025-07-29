@@ -2,7 +2,7 @@ import { Input } from "../inputs/input.js";
 
 export class InputDropdown extends Input{
 
-    list_;
+    list_ = [];
 
     set list(newList){
         if(!Array.isArray(newList)) return;
