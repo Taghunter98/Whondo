@@ -1,7 +1,7 @@
 import { Comp } from "jay-comp";
 
 export class Dialog extends Comp {
-    title_; paragraph_; svgIcon_; text_;
+    title_; paragraph_; text_;
 
     set title(newTitle) {
         this.title_ = newTitle;
@@ -11,34 +11,26 @@ export class Dialog extends Comp {
         this.paragraph_ = value;
         this.update();
     }
-    set svgIcon(value) {
-        this.svgIcon_ = value;
-        this.update();
-    }
     set text(v) {
         this.text_ = v;
         this.update();
     }
     get paragraph() { return this.paragraph_; }
     get title() { return this.title_; }
-    get svgIcon() { return this.svgIcon_; }
     get text() { return this.text_ }
 
     beforeRender() {
         if (!this.title_) this.title_ = "Hello World";
         if (!this.paragraph_) this.paragraph_ = "This is a paragraph";
-        if (!this.svgIcon_) this.svgIcon_ = "";
     }
 
     createHTML() {
         return /* html */ `
             <div class="background">
                 <div class="container">
-                    <!--svg logo goes here-->
-                    <svg class="icon" ${this.svgIcon_}></svg>
                     <h3 class="head">${this.title_}</h3>
                     <p class="dialog">${this.paragraph_}</p>
-                    <comp-button class="nextBtn">${this.text_}</comp-button>
+                    <comp-button></comp-button>
                 </div>
             </div>
         `;
@@ -49,9 +41,9 @@ export class Dialog extends Comp {
             {
                 class: "background",
                 display: "flex",
+                heightVh: 100,
                 flexDirection: "column",
                 widthPercent: 100,
-                heightVh: "100",
                 alignItems: "centre",
                 border: false,
                 gap: 0,
@@ -62,21 +54,13 @@ export class Dialog extends Comp {
                 class: "container",
                 display: "flex",
                 flexDirection: "column",
-                width: "auto",
-                maxWidth: 500,
+                width: 500,
                 padding: 20,
-                alignItems: "centre",
                 borderVar: "border",
                 borderRadius: 16,
                 gap: 10,
                 background: "white",
-                textAlign: "start",
                 marginTop: 0,
-            },
-            {
-                class: "head",
-                fontSize: 24,
-                alignSelf: "center",
             },
             {
                 class: "dialog",
@@ -86,17 +70,13 @@ export class Dialog extends Comp {
                     maxWidthBp: 600,
                     fontSize: 16
                 }
-            },
-            {
-                class: "icon",
-                colourVar: "black80",
-            },
+            }
         ];
     }
 
     static { Comp.register(this); }
 
     afterRender() {
-        this.query("comp-button").fill = true;
+        this.query("comp-button").text = this.text_;
     }
 }
