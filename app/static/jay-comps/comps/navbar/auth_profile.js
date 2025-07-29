@@ -12,7 +12,7 @@ class AuthProfile extends Comp {
         const pic = data.profilePicture;
         return pic
             ? `https://whondo.com/uploads?path=${pic}`
-            : "static/icons/Profile.png";
+            : "https://whondo.com/static/icons/Profile.png";
     }
 
     createHTML() {
