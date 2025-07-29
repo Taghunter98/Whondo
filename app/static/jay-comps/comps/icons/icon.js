@@ -16,7 +16,7 @@ export class Icon extends Comp {
     }
 
     createHTML() {
-        return /* html */`<img class="icon" src="static/icons/${this.path_}">`;
+        return /* html */`<img class="icon" src="https://whondo.com/static/icons/${this.path_}">`;
     }
 
     createCSS() {
