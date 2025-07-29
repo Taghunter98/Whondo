@@ -27,6 +27,7 @@ import './comps/inputs/address.js';
 import './comps/inputs/dropdown.js';
 import './comps/inputs/filecard.js';
 import './comps/inputs/keyword.js';
+import './comps/dropdown/input-dropdown.js';
 
 // Icons
 import './comps/icons/prompt.js';
