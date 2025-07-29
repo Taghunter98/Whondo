@@ -1,7 +1,7 @@
 import { Input } from "./input.js";
 
 export class Address extends Input {
-    key = ""; // FIND A WAY TO REMOVE THIS
+    key = "a-dEZaTRb0mIFuelGKVd-g47127"; // FIND A WAY TO REMOVE THIS
 
     beforeRender() {
         super.beforeRender();

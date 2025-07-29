@@ -23,7 +23,14 @@ export class CreateProp extends Comp {
                                     <comp-input id="rent" name="rent"></comp-input>
                                     <p class="unit">p/m</p>
                                 </div>
-                                <comp-input id="tenants" name="tennants"></comp-input>
+                                <div class="inputRow">
+                                    <comp-input id="propertyType" name="propType"></comp-input>
+                                    <comp-input id="tenants" name="tennants"></comp-input>
+                                </div>
+                                <div class="inputRow">
+                                    <comp-input id="bedrooms" name="bedrooms"></comp-input>
+                                    <comp-input id="bathrooms" name="bathrooms"></comp-input>
+                                </div>
                                 <comp-textarea id="description" name="description"></comp-textarea>
                             </div>
                             <div class="footer">
@@ -96,12 +103,12 @@ export class CreateProp extends Comp {
             {
                 class: "background",
                 widthPercent: 100,
-                heightVh: 100,
+                height: 1000,
                 backgroundVar: "black100",
                 overflow: "hidden",
                 media: {
                     maxWidthBp: 600,
-                    height: 1000
+                    height: 1150
                 }
             },
             {
@@ -120,7 +127,7 @@ export class CreateProp extends Comp {
             {
                 class: "backgroundImage",
                 widthPercent: 100,
-                heightVh: 100,
+                height: 1000,
                 paddingLeft: 400,
                 media: {
                     maxWidthBp: 600,
@@ -179,7 +186,6 @@ export class CreateProp extends Comp {
                 display: "flex",
                 flexDirection: "row",
                 gap: 10,
-                padding: [20, 0, 20, 0],
                 widthPercent: 100,
                 justifyContent: "space-between",
                 media: {
@@ -273,12 +279,14 @@ export class CreateProp extends Comp {
     }
 
     validateStep1() {
-        const address = this.getById("address");
-        const title = this.getById("title");
-        const rent = this.getById("rent");
-        const description = this.getById("description");
-
-        const inputs = [address, title, rent, description];
+        const inputs = [
+            this.getById("address"),
+            this.getById("title"),
+            this.getById("rent"),
+            this.getById("description"),
+            this.getById("propertyType"),
+            this.getById("tenants")
+        ];
         let isValid = true;
 
         for (let input of inputs) {
@@ -351,6 +359,9 @@ export class CreateProp extends Comp {
         fd.append("price", this.getById("rent").value);
         fd.append("tennants", this.getById("tenants").value);
         fd.append("description", this.getById("description").value);
+        fd.append("propType", this.getById("propertyType").value);
+        fd.append("bedrooms", this.getById("bedrooms").value);
+        fd.append("bathrooms", this.getById("bathrooms").value);
         fd.append("keywords", JSON.stringify(keywords));
 
         const addr = this.getById("address")?.fullAddress || {};
@@ -396,6 +407,9 @@ export class CreateProp extends Comp {
         const rent = this.getById("rent");
         const tenants = this.getById("tenants");
         const description = this.getById("description");
+        const propType = this.getById("propertyType");
+        const bedrooms = this.getById("bedrooms");
+        const bathrooms = this.getById("bathrooms");
         const keyword = this.getById("keywords");
         const backBtn = this.getById("backBtn");
         const backBtn2 = this.getById("backBtn2");
@@ -413,7 +427,15 @@ export class CreateProp extends Comp {
         rent.label = "Rent";
         rent.prompt = "Enter a price...";
         tenants.label = "Tenants";
-        tenants.prompt = "Enter number of current tenants..."
+        tenants.prompt = "Number of tenants"
+        bedrooms.label = "Bedrooms";
+        bedrooms.prompt = "Enter bedrooms";
+        bedrooms.type = "number";
+        bathrooms.label = "Bathrooms";
+        bathrooms.prompt = "Enter bathrooms";
+        bathrooms.type = "number";
+        propType.label = "Property Type";
+        propType.prompt = "house"; // Change this to dropdown in production
 
         description.label = "Property description";
         description.prompt = "Tell us about your home, be descriptive!";
@@ -441,6 +463,8 @@ export class CreateProp extends Comp {
         title.required = true;
         rent.required = true;
         description.required = true;
+        propType.required = true;
+        tenants.required = true;
 
         nextBtn.addEventListener("click", () => {
             if (this.validateStep1()) {
