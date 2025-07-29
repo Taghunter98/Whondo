@@ -7,7 +7,7 @@ export class CreateProp extends Comp {
         <div class="background">
             <div class="container">
                 <div class="modal">
-                    <form class="formObj" action="", method="POST" data-pg-verify>
+                    <form class="formObj">
                         <!-- Personal information -->
                         <div id="step1">
                             <div class="textContainer">
@@ -284,16 +284,26 @@ export class CreateProp extends Comp {
         }
 
         const uploadedPics = pics.filter(pic => pic.value);
-        if(uploadedPics.length < 3) isValid = false;
+        if(uploadedPics.length < 3) {
+            
+            isValid = false;
 
-        pics.forEach(pic => {
-            const box = pic.query(".fileBox")
-            if (!pic.value){
-                box.classList.add("error");
-            }else {
-                box.classList.remove("error");
-            }
-        });
+            pics.forEach(pic => {
+                const box = pic.query(".fileBox")
+                
+                const isVisible = pic.offsetParent !== null;
+                if(!pic.value && isVisible){
+                    box.classList.add("error");
+                }
+            });
+
+        }else {
+            pics.forEach(pic => {
+                const box = pic.query(".fileBox");
+                const isVisible = pic.offsetParent !== null;
+                if(isVisible) box.classList.remove("error");
+            });
+        }
 
         return isValid;
     }

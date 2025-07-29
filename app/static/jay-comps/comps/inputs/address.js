@@ -50,7 +50,7 @@ export class Address extends Input {
 
         const formattedQuery = trimmed.toUpperCase();
 
-        const key = "a-dEZaTRb0mIFuelGKVd-g47127";
+        const key = "";
         const url = `https://api.getaddress.io/autocomplete/${encodeURIComponent(formattedQuery)}?api-key=${key}`;
 
         const res = await this.request(url, "GET");
@@ -89,7 +89,7 @@ export class Address extends Input {
 
             input.value = text;
 
-            const key = "a-dEZaTRb0mIFuelGKVd-g47127";
+            const key = "";
             const fullUrl = `https://api.getaddress.io/get/${encodeURIComponent(selected.id)}?api-key=${key}`;
             const fullRes = await this.request(fullUrl, "GET");
 
