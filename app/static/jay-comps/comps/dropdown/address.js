@@ -1,7 +1,7 @@
 import { Input } from "../inputs/input.js";
 
 export class Address extends Input {
-    key = "a-dEZaTRb0mIFuelGKVd-g47127"; // FIND A WAY TO REMOVE THIS
+    key = "dtoken_hEDzcyiWMr0wlL3ArWAbIjj-1cbI8XETKd4G5YEh5cPUwbvYq_4K5Y1eyhADhPZyfzU2sJaORWmDDVr6qrcxYusf4kWGtXgwtYzdKbEzbbx4bonGTIPvffGbiToGP6BMsZNwMOP2azOPPwrvlM2KhtbPt24KI_1W5HUCnaRGBTGSUzUIMaYjMZh3EN9EGMUyMogi7R2RMpY"; // FIND A WAY TO REMOVE THIS
 
     beforeRender() {
         super.beforeRender();
