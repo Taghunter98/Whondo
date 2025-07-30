@@ -8,15 +8,15 @@ export class PromptIcon extends Icon {
     createHTML() {
         return /* html */`
             <div class="container">
-                <!-- CHANGE SRC BACK IN PROD -->
-                <img class="icon" src="/app/static/icons/${this.path_}">
+                <img class="icon" src="https://whondo.com/static/icons/${this.path_}">
             </div>
         `;
     }
 
     createCSS() {
         return [
-            { class: "container",
+            {
+                class: "container",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -27,16 +27,20 @@ export class PromptIcon extends Icon {
                 cursor: "pointer",
                 transition: "background 0.2s ease-in-out"
             },
-            { class: "container", pseudoClass: "hover", 
+            {
+                class: "container", pseudoClass: "hover",
                 backgroundVar: "black80"
             },
-            { class: "container", pseudoClass: "active", 
+            {
+                class: "container", pseudoClass: "active",
                 backgroundVar: "black20"
             },
-            { class: "icon", 
+            {
+                class: "icon",
                 transform: "translateX(0)",
             },
-            { class: "container",
+            {
+                class: "container",
                 pseudoClass: "hover",
                 childClass: "icon",
                 transform: "translateX(5px)",
