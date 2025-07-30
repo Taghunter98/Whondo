@@ -32,13 +32,11 @@ export class Button extends Comp {
     get fill() { return this.fill_; }
 
     beforeRender() {
-        if (!this.text_) this.text_ = "this is button";
+        if (!this.text_) this.text_ = "Button";
         if (!this.variant_) this.variant_ = 1;
     }
 
-    createHTML() {
-        return /* html */ `<button class="button">${this.text}</button>`;
-    }
+    createHTML() { return `<button class="button">${this.text}</button>`; }
 
     createCSS() {
         let button, buttonHover, buttonActive;

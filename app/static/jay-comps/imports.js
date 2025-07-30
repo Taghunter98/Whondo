@@ -8,6 +8,9 @@ import { Comp } from 'jay-comp';
 import './comps/button.js';
 import './comps/card.js';
 import './comps/dialog.js';
+import './comps/carousel.js';
+import './comps/popup/popup.js';
+import './comps/cookie.js'
 
 // Navbar
 import './comps/navbar/navbar.js';
@@ -22,6 +25,11 @@ import './comps/inputs/input.js';
 import './comps/inputs/file.js';
 import './comps/inputs/textarea.js';
 import './comps/inputs/password.js';
+import './comps/dropdown/address.js';
+import './comps/dropdown/dropdown-list.js';
+import './comps/inputs/filecard.js';
+import './comps/inputs/keyword.js';
+import './comps/dropdown/input-dropdown.js';
 
 // Icons
 import './comps/icons/prompt.js';
@@ -33,3 +41,5 @@ import './comp-pages/login.js';
 import './comp-pages/create.js';
 import './comp-pages/home.js';
 import './comp-pages/register.js';
+import './comp-pages/create_prop.js';
+import './comp-pages/verified.js'
