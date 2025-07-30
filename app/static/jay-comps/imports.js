@@ -9,6 +9,8 @@ import './comps/button.js';
 import './comps/card.js';
 import './comps/dialog.js';
 import './comps/carousel.js';
+import './comps/popup/popup.js';
+import './comps/cookie.js'
 
 // Navbar
 import './comps/navbar/navbar.js';
@@ -40,5 +42,4 @@ import './comp-pages/create.js';
 import './comp-pages/home.js';
 import './comp-pages/register.js';
 import './comp-pages/create_prop.js';
-import './comp-pages/published.js';
 import './comp-pages/verified.js'

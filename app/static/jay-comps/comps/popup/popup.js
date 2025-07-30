@@ -1,6 +1,6 @@
 import { Comp } from "jay-comp";
 
-export class Dialog extends Comp {
+export class Popup extends Comp {
     title_; paragraph_; text_;
 
     set title(newTitle) {
@@ -38,25 +38,31 @@ export class Dialog extends Comp {
             </div>
         `;
     }
+createCSS() {
+        const effect = this.effect.slideUp(20);
+        const prop = this.effect.prop("slideUp", .5);
 
-    createCSS() {
-        return [
-            {
-                class: "background",
-                display: "flex",
-                flexDirection: "column",
-                widthPercent: 100,
-                alignItems: "centre",
-                gap: 0,
-                justifyContent: "centre",
-                media: {
-                    maxWidthBp: 600,
-                    padding: 20,
-                    width: "auto"
+        const background = {
+            class: "background",
+            display: "flex",
+            flexDirection: "column",
+            widthPercent: 100,
+            heightVh: 100,
+            justifyContent: "centre",
+            alignItems: "centre",
+            background: "rgba(0, 0, 0, 0.6)",
+            overflow: "hidden",
+            position: "fixed",
+            zIndex: 9999,
+            media: {
+                maxWidthBp: 600,
+                padding: 20,
+                width: "auto"
             }
-            },
-            {
-                class: "container",
+        };
+
+        const container = {
+            class: "container",
                 display: "flex",
                 flexDirection: "column",
                 width: "auto",
@@ -66,12 +72,14 @@ export class Dialog extends Comp {
                 borderRadius: 16,
                 gap: 10,
                 background: "white",
+                animation: prop,
                 marginTop: 0,
                 media: {
                     maxWidthBp: 600,
                 }
-            },
-            {
+        };
+
+        const dialog = {
                 class: "dialog",
                 fontSize: 16,
                 textAlign: "start",
@@ -79,18 +87,20 @@ export class Dialog extends Comp {
                     maxWidthBp: 600,
                     fontSize: 16
                 }
-            },
-            {
+            }
+
+        const icon = {
                 class: "icon",
                 display: "flex",
                 alignItems: "centre",
                 justifyContent: "centre",
                 colourVar: "black80",
-            },
-        ];
+            }
+
+        return [background, container ,dialog, icon, effect];
     }
 
-     afterRender() {
+    afterRender() {
         this.query("comp-button").text = this.text_;
         this.query("comp-button").fill = true;
         
@@ -98,4 +108,5 @@ export class Dialog extends Comp {
 
     static { Comp.register(this); }
 
+    
 }

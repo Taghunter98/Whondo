@@ -390,9 +390,21 @@ export class CreateProp extends Comp {
         const result = await this.submitForm("https://whondo.com/advert/new", fd);
 
         if (result.ok) {
-            const modal = document.createElement("comp-published");
+            const modal = document.createElement("comp-popup");
+           customElements.whenDefined("comp-popup").then(() => {
+            modal.title = "Advert Published!";
+            modal.paragraph = "Your property is now live!";
+            modal.text = "Continue";
+
+            const btn = modal.query("comp-button");
+            btn.addEventListener("click", () => {
+                window.location.href = "/dashboard";
+            });
+
             document.body.appendChild(modal);
-        }
+        });
+            
+    }
             
         else alert(result.error);
     }
@@ -403,6 +415,7 @@ export class CreateProp extends Comp {
     };
 
     afterRender() {
+        const popup = this.getById("popup");
         const step1 = this.getById("step1");
         const step2 = this.getById("step2");
         const step3 = this.getById("step3")
@@ -423,7 +436,7 @@ export class CreateProp extends Comp {
         const submit = this.getById("submit");
         const cover = this.getById("cover");
         const pic = this.queryAll(".pic")
-
+        
         address.label = "Address";
         address.prompt = "Enter your postcode";
         title.label = "Title";

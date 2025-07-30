@@ -53,7 +53,7 @@ export class Create extends Comp {
         const btn = dialogBox.query("comp-button");
         btn.style.display = "none";
         const icon = dialogBox.query("comp-icon")
-        icon.display.style = "none";
+        icon.style.display = "none";
        
     }
 
