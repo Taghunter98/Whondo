@@ -89,10 +89,6 @@ export class Dialog extends Comp {
                 justifyContent: "centre",
                 colourVar: "black80",
             },
-            {
-                class: "button-wrapper",
-                maxWidth: 125,
-            }
         ];
     }
 

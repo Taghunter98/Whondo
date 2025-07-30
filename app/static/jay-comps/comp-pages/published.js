@@ -3,7 +3,6 @@ import { Comp } from "jay-comp";
 export class Published extends Comp {
     createHTML() {
         return /* html */`
-        <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
                 <comp-dialog id="describe"></comp-dialog>
@@ -24,8 +23,10 @@ export class Published extends Comp {
             heightVh: 100,
             justifyContent: "centre",
             alignItems: "centre",
-            backgroundVar: "black100",
+            background: "rgba(0, 0, 0, 0.6)",
             overflow: "hidden",
+            zIndex: 9999,
+            PointerEvent: "auto",
             media: {
                 maxWidthBp: 600,
                 padding: 20,
@@ -51,13 +52,21 @@ export class Published extends Comp {
 
         const btn = dialogBox.query("comp-button");
         btn.style.display = "block";
+        btn.style.maxWidth = "125px";
         btn.text = "continue";
+
+
+        btn.addEventListener("click", () => {
+            window.location.assign("/");
+        })
 
         const icon = dialogBox.query("comp-icon");
         icon.style.display = "none";
 
         const background = dialogBox.query(".background");
-        background.style.background = "var(--black100)";
+        background.style.background = ("rgba(0, 0, 0, 0.6)");
+
+        
     }
 
     static { Comp.register(this); }

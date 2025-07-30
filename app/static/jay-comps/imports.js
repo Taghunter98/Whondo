@@ -24,7 +24,7 @@ import './comps/inputs/file.js';
 import './comps/inputs/textarea.js';
 import './comps/inputs/password.js';
 import './comps/dropdown/address.js';
-import './comps/dropdown/dropdown.js';
+import './comps/dropdown/dropdown-list.js';
 import './comps/inputs/filecard.js';
 import './comps/inputs/keyword.js';
 import './comps/dropdown/input-dropdown.js';

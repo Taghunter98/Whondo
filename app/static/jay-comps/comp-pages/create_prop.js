@@ -388,7 +388,11 @@ export class CreateProp extends Comp {
 
         const result = await this.submitForm("https://whondo.com/advert/new", fd);
 
-        if (result.ok) this.update("<comp-published></comp-published>")
+        if (result.ok) {
+            const modal = document.createElement("comp-published");
+            document.body.appendChild(modal);
+        }
+            
         else alert(result.error);
     }
 
