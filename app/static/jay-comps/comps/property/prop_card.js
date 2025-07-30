@@ -73,6 +73,7 @@ class PropCard extends Comp {
             {
                 class: "container",
                 position: "absolute",
+                boxSizing: "border-box",
                 top: 0,
                 left: 0,
                 widthPercent: 100,
@@ -82,10 +83,6 @@ class PropCard extends Comp {
                 alignItems: "center",
                 transform: "translateY(100vh)",
                 transition: "transform 0.4s ease",
-                media: {
-                    maxWidthBp: 600,
-                    backgroundVar: "black100"
-                }
             },
             {
                 class: "in-view",
@@ -99,11 +96,13 @@ class PropCard extends Comp {
                 class: "card",
                 display: "flex",
                 flexDirection: "column",
-                width: 386,
-                height: 685,
+                backgroundVar: "black10",
+                width: 320,
+                height: 570,
                 borderRadius: 14,
                 backgroundImageUrl: `https://whondo.com/uploads?path=${this.images_[0]}`,
                 backgroundSize: "cover",
+                marginBottom: 50,
                 media: {
                     maxWidthBp: 500,
                     widthPercent: 100,
@@ -119,6 +118,7 @@ class PropCard extends Comp {
                 borderRadius: [0, 0, 14, 14],
                 colour: "white",
                 widthPercent: 100,
+                borderBottom: 50,
                 background: "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.90) 65.57%)",
                 media: {
                     maxWidthBp: 600,
@@ -154,7 +154,7 @@ class PropCard extends Comp {
                 paddingTop: 20,
                 media: {
                     maxWidthBp: 600,
-                    paddingBottom: 100
+                    paddingBottom: 60
                 }
             }
         ]

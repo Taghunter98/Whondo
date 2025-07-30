@@ -119,8 +119,7 @@ export class Home extends Comp {
 
                 this.query(".head").classList.add("hide");
                 this.query(".modal").classList.add("stick");
-                this.query(".background").style.background = "var(--black100)";
-                this.query("comp-navbar").style.display = "none";
+                // this.query("comp-navbar").style.display = "none";
                 this.subscribe("card-dismiss", () => this.nextCard());
                 requestAnimationFrame(() => {
                     card.query(".container").classList.add("in-view");
