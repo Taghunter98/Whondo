@@ -111,7 +111,8 @@ class PropCard extends Comp {
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
-                    heightCalc: "100vh - env(safe-area-inset-bottom)",
+                    heightVh: 100,
+                    maxHeight: "none",
                     borderRadius: 0
                 }
             },
