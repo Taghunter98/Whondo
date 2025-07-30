@@ -24,6 +24,9 @@ import './comps/icons/prompt.js';
 import './comps/icons/icon.js';
 import './comps/icons/icons.js';
 
+// Property
+import './comps/property/prop_card.js';
+
 // Animations
 import './comps/animations/spinner.js';
 

@@ -13,12 +13,14 @@ class Spinner extends Comp {
                 border: "3px solid var(--black80)",
                 borderTop: "3px solid var(--black10)",
                 borderRadius: "50%",
-                animation: "spin 0.8s linear infinite"
+                animation: "spinner 0.8s linear infinite"
             },
-            `@keyframes spin {
-            0%   { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-            }`
+            {
+                keyframes: { name: "spinner",
+                    "0%": {transform: "rotate(0deg)"},
+                    "100%": {transform: "rotate(360deg)"}
+                }
+            }
         ];
     }
 

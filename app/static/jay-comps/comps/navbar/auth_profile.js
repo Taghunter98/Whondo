@@ -1,11 +1,6 @@
 import { Comp } from 'jay-comp';
 
 class AuthProfile extends Comp {
-    constructor() {
-        super();
-        this.host({width: "auto"});
-    }
-
     async fetchProfile() {
         const { ok, data, error } = await this.request(
             "https://whondo.com/verify/me",
@@ -27,12 +22,17 @@ class AuthProfile extends Comp {
     }
 
     createCSS() {
-        return { class: "profile",
-            width: 45,
-            height: 45,
-            borderVar: "border",
-            borderRadiusPercent: 50,
-        }
+        return [
+            {
+                width: "auto"
+            }, {
+                class: "profile",
+                width: 45,
+                height: 45,
+                borderVar: "border",
+                borderRadiusPercent: 50,
+            }
+        ];
     }
 
     static { Comp.register(this); }

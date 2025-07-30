@@ -12,7 +12,7 @@
 import { Comp } from "jay-comp";
 
 export class Button extends Comp {
-    text_; variant_;   
+    text_; variant_;
 
     set text(v) {
         this.text_ = v;
@@ -23,14 +23,14 @@ export class Button extends Comp {
         this.update();
     }
 
-    get text() { return this.text_;}
+    get text() { return this.text_; }
     get variant() { return this.variant_; }
 
-    beforeRender(){
+    beforeRender() {
         if (!this.text_) this.text_ = "this is button";
         if (!this.variant_) this.variant_ = 1;
     }
-    
+
     createHTML() {
         return /* html */ `<button class="button">${this.text}</button>`;
     }
@@ -48,7 +48,7 @@ export class Button extends Comp {
             borderRadius: 8,
             fontSize: 16,
             cursor: "pointer",
-            transition: ["background", "0.1s", "ease-in-out"]
+            transition: ["background", "0.1s", "ease-in-out"],
         };
 
         const primaryHover = {
@@ -62,7 +62,8 @@ export class Button extends Comp {
             class: "button",
             pseudoClass: "active",
             borderVar: "black60",
-            backgroundVar: "black60"
+            backgroundVar: "black60",
+            transform: "scale(0.95)",
         };
 
         const secondary = {
@@ -87,18 +88,19 @@ export class Button extends Comp {
         const secondaryActive = ({
             class: "button",
             pseudoClass: "active",
-            backgroundVar: "black40"
+            backgroundVar: "black40",
+            transform: "scale(0.95)",
         });
-        
+
         if (this.variant_ == 1) {
             button = primary;
-            buttonHover  = primaryHover;
+            buttonHover = primaryHover;
             buttonActive = primaryActive;
         }
-        
+
         else if (this.variant_ == 2) {
-            button  = secondary;
-            buttonHover  = secondaryHover;
+            button = secondary;
+            buttonHover = secondaryHover;
             buttonActive = secondaryActive;
         }
 

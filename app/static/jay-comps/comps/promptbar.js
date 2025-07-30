@@ -110,11 +110,7 @@ export class Promptbar extends Comp {
             const results = await this.sendQuery(prompt);
             this.loading = false;
             
-            this.dispatchEvent(new CustomEvent("query-results", {
-                detail: results,
-                bubbles: true,
-                composed: true
-            }));
+            this.publish("query-results", results);
         });
     }
 
