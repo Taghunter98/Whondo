@@ -82,6 +82,10 @@ class PropCard extends Comp {
                 alignItems: "center",
                 transform: "translateY(100vh)",
                 transition: "transform 0.4s ease",
+                media: {
+                    maxWidthBp: 600,
+                    backgroundVar: "black100"
+                }
             },
             {
                 class: "in-view",
