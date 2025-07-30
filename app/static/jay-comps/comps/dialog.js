@@ -28,9 +28,12 @@ export class Dialog extends Comp {
         return /* html */ `
             <div class="background">
                 <div class="container">
+                    <comp-icon class="icon"></comp-icon>
                     <h3 class="head">${this.title_}</h3>
                     <p class="dialog">${this.paragraph_}</p>
-                    <comp-button></comp-button>
+                    <div class="button-wrapper">
+                    <comp-button class="btn"></comp-button>
+                    </div>
                 </div>
             </div>
         `;
@@ -45,22 +48,30 @@ export class Dialog extends Comp {
                 flexDirection: "column",
                 widthPercent: 100,
                 alignItems: "centre",
-                border: false,
                 gap: 0,
                 backgroundVar: "black10",
                 justifyContent: "centre",
+                media: {
+                    maxWidthBp: 600,
+                    padding: 20,
+                    width: "auto"
+            }
             },
             {
                 class: "container",
                 display: "flex",
                 flexDirection: "column",
-                width: 500,
+                width: "auto",
+                maxWidth: 500,
                 padding: 20,
                 borderVar: "border",
                 borderRadius: 16,
                 gap: 10,
                 background: "white",
                 marginTop: 0,
+                media: {
+                    maxWidthBp: 600,
+                }
             },
             {
                 class: "dialog",
@@ -70,6 +81,17 @@ export class Dialog extends Comp {
                     maxWidthBp: 600,
                     fontSize: 16
                 }
+            },
+            {
+                class: "icon",
+                display: "flex",
+                alignItems: "centre",
+                justifyContent: "centre",
+                colourVar: "black80",
+            },
+            {
+                class: "button-wrapper",
+                maxWidth: 125,
             }
         ];
     }
@@ -78,5 +100,7 @@ export class Dialog extends Comp {
 
     afterRender() {
         this.query("comp-button").text = this.text_;
+        this.query("comp-button").fill = true;
+        
     }
 }

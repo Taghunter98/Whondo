@@ -24,7 +24,7 @@ export class Published extends Comp {
             heightVh: 100,
             justifyContent: "centre",
             alignItems: "centre",
-            backgroundVar: "black10",
+            backgroundVar: "black100",
             overflow: "hidden",
             media: {
                 maxWidthBp: 600,
@@ -45,12 +45,19 @@ export class Published extends Comp {
 
     afterRender() {
         const dialogBox = this.getById("describe");
+        
         dialogBox.title = "Advert Published!";
         dialogBox.paragraph = "Congratulations! You can now view your new advert or monitor it in your Landlord portal.";
 
         const btn = dialogBox.query("comp-button");
         btn.style.display = "block";
         btn.text = "continue";
+
+        const icon = dialogBox.query("comp-icon");
+        icon.style.display = "none";
+
+        const background = dialogBox.query(".background");
+        background.style.background = "var(--black100)";
     }
 
     static { Comp.register(this); }

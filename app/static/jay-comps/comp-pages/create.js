@@ -52,6 +52,9 @@ export class Create extends Comp {
         dialogBox.paragraph = "We have sent you an email with a verification link.<br>If you do not receive an email, please check your spam.";
         const btn = dialogBox.query("comp-button");
         btn.style.display = "none";
+        const icon = dialogBox.query("comp-icon")
+        icon.display.style = "none";
+       
     }
 
     static { Comp.register(this); }
