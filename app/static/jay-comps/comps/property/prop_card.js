@@ -41,7 +41,7 @@ class PropCard extends Comp {
 
     createHTML() {
         const profile = this.profile_
-            ? `"https://whondo.com/uploads?path=${this.profile_}`
+            ? `"https://whondo.com/uploads?path=${this.profile_}"`
             : "https://whondo.com/static/icons/Profile.png";
 
         return /*html*/`
@@ -78,11 +78,16 @@ class PropCard extends Comp {
                 left: 0,
                 widthPercent: 100,
                 heightVh: 100,
+                padding: [100, 0, 120, 0],
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                transform: "translateY(100vh)",
+                transform: "translateY(100%)",
                 transition: "transform 0.4s ease",
+                media: {
+                    maxWidthBp: 600,
+                    heightCalc: "100vh - env(safe-area-inset-bottom)"
+                }
             },
             {
                 class: "in-view",
@@ -90,24 +95,23 @@ class PropCard extends Comp {
             },
             {
                 class: "out-view",
-                transform: "translateY(-100vh)"
+                transform: "translateY(-100%)"
             },
             {
                 class: "card",
                 display: "flex",
                 flexDirection: "column",
-                backgroundVar: "black10",
-                width: 320,
-                height: 570,
+                backgroundVar: "black100",
+                aspectRatio: "9 / 16",
+                heightPercent: 100,
+                maxHeight: 700,
                 borderRadius: 14,
                 backgroundImageUrl: `https://whondo.com/uploads?path=${this.images_[0]}`,
                 backgroundSize: "cover",
-                marginBottom: 50,
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
-                    heightVh: 100,
-                    marginBottom: 0,
+                    heightCalc: "100vh - env(safe-area-inset-bottom)",
                     borderRadius: 0
                 }
             },
