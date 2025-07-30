@@ -30,11 +30,15 @@ export class Home extends Comp {
             {
                 class: "background",
                 display: "flex",
+                position: "fixed",
+                top: 0, left: 0, right: 0, bottom: 0,
+                overflow: "hidden",
                 flexDirection: "column",
                 justifyContent: "centre",
                 alignItems: "centre",
                 widthPercent: 100,
                 height: "100dvh",
+                height: " -webkit - fill - available",
                 overflow: "hidden",
                 background: "white",
             },
@@ -49,8 +53,7 @@ export class Home extends Comp {
             {
                 class: "modal",
                 position: "absolute",
-                left: 0,
-                right: 0,
+                widthPercent: 100,
                 bottom: 0,
                 display: "flex",
                 flexDirection: "column",
@@ -70,7 +73,6 @@ export class Home extends Comp {
                 colourVar: "black100",
                 textAlign: "centre",
                 fontWeight: "bold",
-                paddingBottom: 20,
                 animation: prop1,
                 media: { maxWidthBp: 600, fontSize: 24, paddingBottom: 0 }
             },
