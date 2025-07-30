@@ -1,21 +1,17 @@
 import { Comp } from "jay-comp";
 
 export class Home extends Comp {
-    searchResults = [];
+    cards = [];
+    currentIndex = 0;
 
     createHTML() {
         return /* html */`
         <comp-navbar></comp-navbar>
-        <div class="background">
+            <div class="background">
             <div id="properties"></div>
-            <div class="container">
-                
-                <h2 class="head">Describe your perfect home</h2>
-                    
-                <div class="modal">
-                    <comp-promptbar></comp-promptbar>
-                    <!-- <p><a href="#" class="help">Prompting Help</a></p> -->
-                </div>
+            <h2 class="head">Describe your perfect home</h2>
+            <div class="modal">
+                <comp-promptbar></comp-promptbar>
             </div>
         </div>
         `;
@@ -32,6 +28,7 @@ export class Home extends Comp {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "centre",
+                alignItems: "centre",
                 widthPercent: 100,
                 height: 800,
                 background: "white",
@@ -92,11 +89,25 @@ export class Home extends Comp {
         ];
     }
 
+    showCard() {
+        const container = this.query("#properties");
+        container.innerHTML = "";
+        if (this.currentIndex < this.cards.length) {
+            container.appendChild(this.cards[this.currentIndex]);
+        } else {
+            container.innerHTML = `<p>No more properties</p>`;
+        }
+    }
+
+    nextCard() {
+        this.currentIndex++;
+        this.showCard();
+    }
+
     afterRender() {
         this.subscribe("query-results", (e) => {
             const properties = e.detail;
-            console.log(properties);
-            properties.forEach(prop => {
+            this.cards = properties.map(prop => {
                 // Add prop card here
                 const card = document.createElement("comp-prop-card");
                 card.title = prop.title;
@@ -108,8 +119,15 @@ export class Home extends Comp {
 
                 this.query(".head").classList.add("hide");
                 this.query(".modal").classList.add("stick");
-                this.query("#properties").appendChild(card);
-            })
+                this.subscribe("card-dismiss", () => this.nextCard());
+                requestAnimationFrame(() => {
+                    card.query(".container").classList.add("in-view");
+                })
+                return card;
+            });
+
+            this.currentIndex++;
+            this.showCard();
         })
     }
 

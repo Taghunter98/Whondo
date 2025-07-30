@@ -71,11 +71,32 @@ class PropCard extends Comp {
     createCSS() {
         return [
             {
+                class: "container",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                widthPercent: 100,
+                heightVh: 100,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                transform: "translateY(100vh)",
+                transition: "transform 0.4s ease",
+            },
+            {
+                class: "in-view",
+                transform: "translateY(0)"
+            },
+            {
+                class: "out-view",
+                transform: "translateY(-100vh)"
+            },
+            {
                 class: "card",
                 display: "flex",
                 flexDirection: "column",
-                width: 320,
-                height: 568,
+                width: 386,
+                height: 685,
                 borderRadius: 14,
                 backgroundImageUrl: `https://whondo.com/uploads?path=${this.images_[0]}`,
                 backgroundSize: "cover",
@@ -94,7 +115,11 @@ class PropCard extends Comp {
                 borderRadius: [0, 0, 14, 14],
                 colour: "white",
                 widthPercent: 100,
-                background: "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.90) 65.57%)"
+                background: "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.90) 65.57%)",
+                media: {
+                    maxWidthBp: 600,
+                    borderRadius: 0
+                }
             },
             {
                 class: "card-elements",
@@ -122,7 +147,11 @@ class PropCard extends Comp {
                 display: "flex",
                 boxSizing: "border-box",
                 gap: 20,
-                paddingTop: 20
+                paddingTop: 20,
+                media: {
+                    maxWidthBp: 600,
+                    paddingBottom: 100
+                }
             }
         ]
     }
@@ -142,16 +171,30 @@ class PropCard extends Comp {
     }
 
     afterRender() {
+        const container = this.query(".container");
         const next = this.getById("next");
         const email = this.getById("email");
 
-        next.path = "close.svg";
-        email.path = "email.svg";
+        requestAnimationFrame(() => {
+            container.classList.add("in-view");
+        });
 
+        email.path = "mail.svg";
         email.addEventListener("click", () => {
             this.sendEmail(this.email_, this.landlord_name_, this.title_);
-        })
+        });
+
+        next.path = "close.svg";
+        next.addEventListener("click", () => {
+            container.classList.remove("in-view");
+            container.classList.add("out-view");
+
+            container.addEventListener("transitionend", () => {
+                this.publish("card-dismiss");
+            }, { once: true });
+        });
     }
+
 
     static { Comp.register(this); }
 }
