@@ -55,7 +55,7 @@ export class Home extends Comp {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: 40,
-                zIndex: 1000,
+                zIndex: 800,
                 maxWidth: 900,
                 margin: "0 auto",
                 padding: 20,

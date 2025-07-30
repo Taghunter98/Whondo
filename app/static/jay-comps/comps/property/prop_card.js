@@ -147,10 +147,6 @@ class PropCard extends Comp {
 
         next.path = "close.svg";
         email.path = "email.svg";
-
-        email.addEventListener("click", () => {
-            this.sendEmail(this.email_, this.landlord_name_, this.title_);
-        })
     }
 
     static { Comp.register(this); }
