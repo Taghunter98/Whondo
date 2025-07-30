@@ -104,9 +104,10 @@ class PropCard extends Comp {
                 backgroundSize: "cover",
                 marginBottom: 50,
                 media: {
-                    maxWidthBp: 500,
+                    maxWidthBp: 600,
                     widthPercent: 100,
                     heightVh: 100,
+                    marginBottom: 0,
                     borderRadius: 0
                 }
             },
@@ -154,7 +155,7 @@ class PropCard extends Comp {
                 paddingTop: 20,
                 media: {
                     maxWidthBp: 600,
-                    paddingBottom: 60
+                    paddingBottom: 100
                 }
             }
         ]
