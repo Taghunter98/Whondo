@@ -460,6 +460,7 @@ export class CreateProp extends Comp {
         nextBtn2.text = "Next";
         nextBtn2.fill = true;
         submit.text = "Finish";
+        submit.fill = true;
         cover.prompt = "Add Cover";
 
         pic.forEach((el) => el.prompt = "Add Photo");

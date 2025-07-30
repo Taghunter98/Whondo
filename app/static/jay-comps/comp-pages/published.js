@@ -26,7 +26,6 @@ export class Published extends Comp {
             background: "rgba(0, 0, 0, 0.6)",
             overflow: "hidden",
             position: "fixed",
-            
             zIndex: 9999,
             media: {
                 maxWidthBp: 600,
