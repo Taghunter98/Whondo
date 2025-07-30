@@ -30,7 +30,8 @@ export class Home extends Comp {
                 justifyContent: "centre",
                 alignItems: "centre",
                 widthPercent: 100,
-                height: 800,
+                heightVh: 100,
+                overflow: "hidden",
                 background: "white",
             },
             {
