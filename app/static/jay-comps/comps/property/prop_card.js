@@ -77,7 +77,7 @@ class PropCard extends Comp {
                 top: 0,
                 left: 0,
                 widthPercent: 100,
-                heightVh: 100,
+                height: "100dvh",
                 padding: [100, 0, 120, 0],
                 display: "flex",
                 justifyContent: "center",
@@ -111,7 +111,7 @@ class PropCard extends Comp {
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
-                    heightVh: 100,
+                    height: "100dvh",
                     maxHeight: "none",
                     borderRadius: 0
                 }
