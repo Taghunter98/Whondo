@@ -25,8 +25,9 @@ export class Published extends Comp {
             alignItems: "centre",
             background: "rgba(0, 0, 0, 0.6)",
             overflow: "hidden",
+            position: "fixed",
+            
             zIndex: 9999,
-            PointerEvent: "auto",
             media: {
                 maxWidthBp: 600,
                 padding: 20,
@@ -37,6 +38,7 @@ export class Published extends Comp {
         const container = {
             class: "container",
             background: "white",
+            borderRadius: 16,
             animation: prop,
             width: "auto",
         };
@@ -62,9 +64,6 @@ export class Published extends Comp {
 
         const icon = dialogBox.query("comp-icon");
         icon.style.display = "none";
-
-        const background = dialogBox.query(".background");
-        background.style.background = ("rgba(0, 0, 0, 0.6)");
 
         
     }

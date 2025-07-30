@@ -44,12 +44,10 @@ export class Dialog extends Comp {
             {
                 class: "background",
                 display: "flex",
-                heightVh: 100,
                 flexDirection: "column",
                 widthPercent: 100,
                 alignItems: "centre",
                 gap: 0,
-                backgroundVar: "black10",
                 justifyContent: "centre",
                 media: {
                     maxWidthBp: 600,

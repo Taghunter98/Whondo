@@ -3,6 +3,7 @@ import { Comp } from 'jay-comp';
 export class CreateProp extends Comp {
     createHTML() {
         return /* html */ `
+        <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
                 <div class="modal">
