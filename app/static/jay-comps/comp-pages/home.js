@@ -6,7 +6,8 @@ export class Home extends Comp {
 
     createHTML() {
         return /* html */`
-        <div class="background">
+        <comp-navbar></comp-navbar>
+            <div class="background">
             <div id="properties"></div>
             <h2 class="head">Describe your perfect home</h2>
             <div class="modal">
