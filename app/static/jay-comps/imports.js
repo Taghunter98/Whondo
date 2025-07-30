@@ -41,3 +41,4 @@ import './comp-pages/home.js';
 import './comp-pages/register.js';
 import './comp-pages/create_prop.js';
 import './comp-pages/published.js';
+import './comp-pages/verified.js'

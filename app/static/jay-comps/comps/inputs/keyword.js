@@ -149,7 +149,7 @@ export class Keywords extends Input {
         removeBtn.title = "remove"
 
         const iconEl = document.createElement("comp-icon");
-        iconEl.path = "close-black.svg"
+        iconEl.path = "close.svg"
 
         removeBtn.appendChild(iconEl);
         tagEl.appendChild(removeBtn);

@@ -34,7 +34,6 @@ export class Verified extends Comp {
 
         const container = {
             class: "container",
-            display: "flex",
             background: "white",
             animation: prop,
             width: "auto",
@@ -51,6 +50,9 @@ export class Verified extends Comp {
         const btn = describe.query("comp-button");
         btn.text = "Continue";
         btn.fill = true;
+
+        const icon = describe.query("comp-icon");
+        icon.style.display = "none";
 
         btn.addEventListener("click", () => window.location.assign("/"));
     }
