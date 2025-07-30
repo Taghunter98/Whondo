@@ -86,7 +86,7 @@ class PropCard extends Comp {
                 transition: "transform 0.4s ease",
                 media: {
                     maxWidthBp: 600,
-                    heightCalc: "100vh - env(safe-area-inset-bottom)"
+                    heightCalc: "100dvh"
                 }
             },
             {
