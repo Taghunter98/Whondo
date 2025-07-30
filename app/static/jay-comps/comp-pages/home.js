@@ -34,7 +34,7 @@ export class Home extends Comp {
                 justifyContent: "centre",
                 alignItems: "centre",
                 widthPercent: 100,
-                heightVh: 100,
+                heightCalc: "100vh - 78px",
                 overflow: "hidden",
                 background: "white",
             },
@@ -101,6 +101,8 @@ export class Home extends Comp {
             container.appendChild(this.cards[this.currentIndex]);
         } else {
             container.innerHTML = `<p>No more properties</p>`;
+            this.cards = [];
+            this.currentIndex = 0;
         }
     }
 
@@ -124,7 +126,7 @@ export class Home extends Comp {
 
                 this.query(".head").classList.add("hide");
                 this.query(".modal").classList.add("stick");
-                if (screen.width < 600) {
+                if (screen.width < 800) {
                     this.query("comp-navbar").style.display = "none";
                 }
 
