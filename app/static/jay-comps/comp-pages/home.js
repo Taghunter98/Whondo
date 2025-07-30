@@ -24,6 +24,10 @@ export class Home extends Comp {
         return [
             slideUp,
             {
+                heightPercent: 100,
+                overflow: "hidden"
+            },
+            {
                 class: "background",
                 display: "flex",
                 flexDirection: "column",
@@ -47,7 +51,7 @@ export class Home extends Comp {
                 position: "absolute",
                 left: 0,
                 right: 0,
-                bottom: 100,
+                bottom: 0,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -120,7 +124,10 @@ export class Home extends Comp {
 
                 this.query(".head").classList.add("hide");
                 this.query(".modal").classList.add("stick");
-                // this.query("comp-navbar").style.display = "none";
+                if (screen.width < 600) {
+                    this.query("comp-navbar").style.display = "none";
+                }
+
                 this.subscribe("card-dismiss", () => this.nextCard());
                 requestAnimationFrame(() => {
                     card.query(".container").classList.add("in-view");
