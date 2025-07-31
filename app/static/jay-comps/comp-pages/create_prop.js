@@ -530,7 +530,7 @@ export class CreateProp extends Comp {
             else this.createProp()
         });
 
-        const input = [address, title, rent, description,]
+        const input = [address, title, rent, description, tenants, propType]
         input.forEach(inputs => inputs.addEventListener("input", () => this.clearError(inputs)));
 
         cover.addEventListener("photo-uploaded", () => {
