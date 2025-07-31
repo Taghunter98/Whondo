@@ -9,8 +9,9 @@ Version:     1.0
 Description: Provides functions for image validation and storage.
 """
 
-from flask import Blueprint, send_from_directory, request, abort, current_app, jsonify
+from flask import Blueprint, send_file, request, abort, current_app, jsonify
 from flask import current_app
+from PIL import Image
 from datetime import datetime
 import os
 
@@ -36,19 +37,18 @@ def serve_upload():
         Response: Served image or appropriate error message
     """
 
-    path: str = request.args.get("path")
+    p = request.args.get("path")
+    src = os.path.join(current_app.config["UPLOAD_FOLDER"], p)
+    if not os.path.isfile(src):
+        abort(404)
 
-    if not path:
-        abort(400, description="Missing 'path' query parameter.")
-
-    full_path: str = os.path.join(current_app.config["UPLOAD_FOLDER"], path)
-
-    if not os.path.isfile(full_path):
-        abort(404, description="File not found.")
-
-    directory, filename = os.path.split(full_path)
-
-    return send_from_directory(directory, filename)
+    img = Image.open(src)
+    # e.g. always serve at width=800, quality=75
+    img.thumbnail((800, img.height), Image.LANCZOS)
+    buf = io.BytesIO()
+    img.save(buf, format="JPEG", optimize=True, quality=75)
+    buf.seek(0)
+    return send_file(buf, mimetype="image/jpeg")
 
 
 def validate_extention(filename: str) -> bool:

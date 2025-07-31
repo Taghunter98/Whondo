@@ -48,6 +48,5 @@ class Image extends Comp {
         });
     }
 
-
     static { Comp.register(this); }
 }
