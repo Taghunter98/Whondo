@@ -28,6 +28,7 @@ import './comps/icons/icons.js';
 import './comps/property/prop_card.js';
 import './comps/property/image.js';
 import './comps/property/Large_img.js';
+import './comps/property/chip.js';
 
 // Animations
 import './comps/animations/spinner.js';

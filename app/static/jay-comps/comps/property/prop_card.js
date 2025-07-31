@@ -3,6 +3,7 @@ import { Comp } from "jay-comp";
 class PropCard extends Comp {
     read_ = false;
     title_; profile_; landlord_name_; price_; images_; email_; description_;
+    keywords_; matched_;
 
     set read(v) {
         this.read_ = v;
@@ -35,6 +36,14 @@ class PropCard extends Comp {
         this.description_ = v;
         this.update();
     }
+    set keywords(v) {
+        this.keywords_ = v;
+        this.update();
+    }
+    set matched(v) {
+        this.matched_ = v;
+        this.update();
+    }
 
     beforeRender() {
         if (!this.title_) this.title_ = "This is a title";
@@ -43,6 +52,8 @@ class PropCard extends Comp {
         if (!this.price_) this.price_ = 1000;
         if (!this.email_) this.email_ = "jb@vmi.tv";
         if (!this.description_) this.description_ = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+        if (!this.keywords_) this.keywords_ = [];
+        if (!this.matched_) this.matched_ = [];
     }
 
     createHTML() {
@@ -82,9 +93,31 @@ class PropCard extends Comp {
                 <div class="description">
                     <p>${this.description_}</p>
                 </div>
+                <p>Images</p>
                 <div class="images"></div>
+                <p>Keywords</p>
+                <div class="keywords"></div>
             </div>
-  
+        </div>
+        <div class="details-mob">
+            <div class="mob-header">
+                <h5 style="font-weight: bold;">${this.title_}</h5>
+                <comp-close-icon id="close"></comp-close-icon>
+            </div>
+            <div class="card-elements">
+            <div class="landlord">
+                <img class="profile" src="${profile}">
+                <p>${this.landlord_name_}</p>
+            </div>
+            <h6 style="font-weight: bold">£${this.price_}</h6>
+            </div>
+            <div class="description">
+                <p>${this.description_}</p>
+            </div>
+            <p>Images</p>
+            <div id="mob-images" class="images"></div>
+            <p>Keywords</p>
+            <div id="mob-keywords" class="keywords"></div>
         </div>
         `
     }
@@ -220,7 +253,52 @@ class PropCard extends Comp {
                 display: "flex",
                 gap: 10,
                 overflow: "scroll",
-                paddingTop: 20
+                paddingTop: 5
+            },
+            {
+                class: "keywords",
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                gap: 10,
+                paddingTop: 5
+            },
+            {
+                class: "details-mob",
+                position: "fixed",
+                left: 0,
+                right: 0,
+                bottom: "-100%",
+                widthPercent: 100,
+                borderRadius: [14, 14, 0, 0],
+                height: "auto",
+                overflow: "scroll",
+                maxHeight: "90vh",
+                background: "white",
+                overflowY: "auto",
+                padding: [20, 20],
+                boxSizing: "border-box",
+                opacity: 0,
+                zIndex: 1000,
+                transition: "bottom 0.4s ease, opacity 0.4s ease"
+            },
+            {
+                class: "mobile-view",
+                bottom: 0,
+                opacity: 1
+            },
+            {
+                class: "mobile-view",
+                left: 0,
+                width: "auto",
+                opacity: 1,
+                zIndex: 1000
+            },
+            {
+                class: "mob-header",
+                display: "flex",
+                justifyContent: "space-between",
+                gap: 10
             }
         ]
     }
@@ -239,26 +317,50 @@ class PropCard extends Comp {
         window.open(mailtoURL, '_blank');
     }
 
+    createImage(path) {
+        const img = document.createElement("comp-image");
+        img.path = path;
+        return img;
+    };
+
+    createChip(value) {
+        const chip = document.createElement("comp-chip");
+        chip.text = value;
+        if (this.matched_.includes(value)) chip.matched = true;
+        return chip;
+    }
+
     afterRender() {
         const container = this.query(".container");
         const card = this.query(".card");
         const next = this.getById("next");
         const email = this.getById("email");
         const images = this.query(".images");
+        const mobImages = this.query("#mob-images");
+        const kws = this.query(".keywords");
+        const mobKws = this.query("#mob-keywords");
+        const modal = this.query(".details-mob");
+        const close = this.query("#close");
 
         requestAnimationFrame(() => {
             container.classList.add("in-view");
         });
 
-        this.images_.forEach(i => {
-            const img = document.createElement("comp-image");
-            img.path = i;
-            images.appendChild(img);
-        });
+        this.images_.forEach(i => images.appendChild(this.createImage(i)));
+        this.images_.forEach(i => mobImages.appendChild(this.createImage(i)));
+
+        this.keywords_.forEach(i => kws.appendChild(this.createChip(i)));
+        this.keywords_.forEach(i => mobKws.appendChild(this.createChip(i)));
 
         card.addEventListener("click", () => {
-            this.query(".details").classList.add("show-details");
+            if (screen.width <= 600) {
+                this.query(".details-mob").classList.add("mobile-view");
+            } else {
+                this.query(".details").classList.add("show-details");
+            }
         });
+
+        close.addEventListener("click", () => modal.classList.remove("mobile-view"))
 
         email.path = "mail.svg";
         email.addEventListener("click", () => {

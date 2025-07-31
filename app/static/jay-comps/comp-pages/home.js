@@ -119,11 +119,7 @@ export class Home extends Comp {
         if (this.currentIndex < this.cards.length)
             container.appendChild(this.cards[this.currentIndex]);
 
-        else {
-            container.innerHTML = message;
-            this.cards = [];
-            this.currentIndex = 0;
-        }
+        else container.innerHTML = message;
     }
 
     nextCard() { this.currentIndex++; this.showCard(); }
@@ -135,7 +131,7 @@ export class Home extends Comp {
             "Where would it be?",
             "Flat, House, Bungalow?",
             "Less than £1000 a month?",
-            "One bed. two bed?",
+            "One or two bed?",
             "Near a train station or uni?",
             "Quiet, Pets, LGBTQ, Vegan?",
             "Let's find your dream home :)"
@@ -167,6 +163,9 @@ export class Home extends Comp {
          * Main property scrolling loop logic
          */
         this.subscribe("query-results", (e) => {
+            this.cards = [];
+            this.currentIndex = 0;
+
             const properties = e.detail;
             this.cards = properties.map(prop => {
 
@@ -176,8 +175,11 @@ export class Home extends Comp {
                 card.profile = prop.landlord_info.profilePicture;
                 card.landlord_name = prop.landlord_info.name + " " + prop.landlord_info.surname;
                 card.price = prop.price;
+                card.description = prop.description;
                 card.images = prop.images;
                 card.email = prop.landlord_info.email;
+                card.keywords = prop.all_keywords;
+                card.matched = prop.matched_keywords;
 
                 // Remove background elements and clean up UI
                 this.query(".head").classList.add("hide");
