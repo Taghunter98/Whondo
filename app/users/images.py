@@ -14,6 +14,7 @@ from flask import current_app
 from PIL import Image
 from datetime import datetime
 import os
+import io
 
 from app.database.db_connect import connect
 from app.utilities.key_gen import auth_key
