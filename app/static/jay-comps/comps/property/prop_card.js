@@ -155,7 +155,7 @@ class PropCard extends Comp {
                 opacity: 0,
                 overflow: "scroll",
                 transform: "translateY(20px)",
-                transition: "width 0.4s ease, max-height 0.5s ease, opacity 0.4s ease, transform 0.4s ease",
+                transition: "width 0.4s ease, max-height 0.5s ease, opacity 0.4s ease, transform 0.2s ease",
                 media: {
                     maxWidthBp: 600,
                     display: "none"

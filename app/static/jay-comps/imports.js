@@ -29,6 +29,7 @@ import './comps/property/prop_card.js';
 import './comps/property/image.js';
 import './comps/property/Large_img.js';
 import './comps/property/chip.js';
+import './comps/property/scroller.js';
 
 // Animations
 import './comps/animations/spinner.js';

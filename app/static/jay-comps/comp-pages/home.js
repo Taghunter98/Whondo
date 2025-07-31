@@ -182,40 +182,17 @@ export class Home extends Comp {
             this.cards = [];
             this.currentIndex = 0;
 
-            const properties = e.detail;
-            this.cards = properties.map(prop => {
+            // Remove background elements and clean up UI
+            this.query(".head").classList.add("hide");
+            this.query(".modal").classList.add("stick");
+            if (screen.width < 800) {
+                this.query("comp-navbar").style.display = "none";
+                this.query(".background").style.background = "var(--black100)";
+            }
 
-                // Card creation and setup
-                const card = document.createElement("comp-prop-card");
-                card.title = prop.title;
-                card.profile = prop.landlord_info.profilePicture;
-                card.landlord_name = prop.landlord_info.name + " " + prop.landlord_info.surname;
-                card.price = prop.price;
-                card.description = prop.description;
-                card.images = prop.images;
-                card.email = prop.landlord_info.email;
-                card.keywords = prop.all_keywords;
-                card.matched = prop.matched_keywords;
-
-                // Remove background elements and clean up UI
-                this.query(".head").classList.add("hide");
-                this.query(".modal").classList.add("stick");
-                if (screen.width < 800) {
-                    this.query("comp-navbar").style.display = "none";
-                    this.query(".background").style.background = "var(--black100)";
-                }
-
-                // Subscribe to each cards event listener and add new class for animation
-                this.subscribe("card-dismiss", () => this.nextCard());
-                requestAnimationFrame(() => {
-                    card.query(".container").classList.add("in-view");
-                })
-
-                return card;
-            });
-
-            this.currentIndex++;
-            this.showCard();
+            const scroller = document.createElement("comp-scroller");
+            scroller.data = e.detail;
+            this.query("#properties").appendChild(scroller);
         })
     }
 
