@@ -342,7 +342,6 @@ class PropCard extends Comp {
         const modal = this.query(".details-mob");
         const close = this.query("#close");
 
-        // 1) Dismiss helper
         const dismiss = (e) => {
             if (e) e.stopPropagation();
             container.classList.remove("in-view");
@@ -381,11 +380,11 @@ class PropCard extends Comp {
 
         // 2) Swipe-Up to Dismiss
         let startY = 0;
-        modal.addEventListener("touchstart", e => {
+        card.addEventListener("touchstart", e => {
             startY = e.touches[0].clientY;
         }, { passive: true });
 
-        modal.addEventListener("touchend", e => {
+        card.addEventListener("touchend", e => {
             const endY = e.changedTouches[0].clientY;
             const delta = startY - endY;
             // if user swiped up more than 50px, dismiss
