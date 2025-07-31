@@ -11,6 +11,8 @@ import './comps/dialog.js';
 import './comps/carousel.js';
 import './comps/popup/popup.js';
 import './comps/cookie.js'
+import './comps/banner.js'
+import './comps/profile_option.js'
 
 // Navbar
 import './comps/navbar/navbar.js';
@@ -43,3 +45,4 @@ import './comp-pages/home.js';
 import './comp-pages/register.js';
 import './comp-pages/create_prop.js';
 import './comp-pages/verified.js'
+import './comp-pages/account_mana.js'
