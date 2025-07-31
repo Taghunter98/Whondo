@@ -191,7 +191,7 @@ export class Home extends Comp {
             }
 
             const scroller = document.createElement("comp-scroller");
-            scroller.data = e.detail;
+            scroller.cards = e.detail;
             this.query("#properties").appendChild(scroller);
         })
     }

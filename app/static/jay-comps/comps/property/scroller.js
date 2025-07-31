@@ -2,88 +2,126 @@ import { Comp } from "jay-comp";
 
 class Scroller extends Comp {
     cards_ = [];
-    data_;
     currentIndex = 0;
 
-    set data(c) {
-        this.data_ = c;
+    set cards(c) {
+        this.cards_ = c || [];
         this.update();
     }
 
     beforeRender() {
-        if (!this.data_) this.data_ = [];
+        if (!this.cards_) this.cards_ = [];
     }
 
-    createHTML() { return `<div id="stack"></div>`; }
+    createHTML() {
+        // Always emit a .stack container.  
+        // If empty, we’ll show the “no properties” panel in afterRender.
+        return /*html*/`<div class="stack"></div>`;
+    }
 
     createCSS() {
         return [
             {
                 class: "stack",
-                position: "relative",
-                widthPercent: 100,
                 height: "100dvh",
-                overflow: "hidden"
+                widthPercent: 100,
+                overflowY: "auto",
+                scrollSnapType: "y mandatory",
+                overscrollBehavior: "contain",
+                WebkitOverflowScrolling: "touch",
+                margin: 0,
+                padding: 0
+            },
+            {
+                class: "slide",                // ← renamed from “card”
+                scrollSnapAlign: "start",
+                height: "100dvh",
+                widthPercent: 100,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+            },
+            {
+                class: "no-properties",
+                height: "100dvh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center"
             }
-
         ];
     }
 
-    showCard() {
-        const stack = this.query("#stack");
-        stack.innerHTML = "";
+    buildCard(data) {
+        const card = document.createElement("comp-prop-card");
+        card.title = data.title;
+        card.profile = data.landlord_info.profilePicture;
+        card.landlord_name = `${data.landlord_info.name} ${data.landlord_info.surname}`;
+        card.price = data.price;
+        card.description = data.description;
+        card.images = data.images;
+        card.email = data.landlord_info.email;
+        card.keywords = data.all_keywords;
+        card.matched = data.matched_keywords;
 
-        const message = `
-        <div class="no-properties">
-            <h3 style="font-weight: bold; font-size: 24px;">No more properties :(</h3>
-            <p>It's ok! Maybe try refining your prompt, the best way is to try and say it out loud trust me!</p>
-        </div>
-        `
-
-        if (this.currentIndex < this.cards_.length) {
-            const card = this.cards_[this.currentIndex];
-            const c = card.query(".container");
-            c.classList.remove("in-view", "out-view");
-
-            stack.appendChild(card);
-
-            requestAnimationFrame(() => {
-                void c.offsetWidth;
-                c.classList.add("in-view");
-            });
-        }
-
-        else stack.innerHTML = message;
-    }
-
-    nextCard() { this.currentIndex++; this.showCard(); }
-
-    afterRender() {
-        this.cards_ = this.data_.map(prop => {
-
-            // Card creation and setup
-            const card = document.createElement("comp-prop-card");
-            card.title = prop.title;
-            card.profile = prop.landlord_info.profilePicture;
-            card.landlord_name = prop.landlord_info.name + " " + prop.landlord_info.surname;
-            card.price = prop.price;
-            card.description = prop.description;
-            card.images = prop.images;
-            card.email = prop.landlord_info.email;
-            card.keywords = prop.all_keywords;
-            card.matched = prop.matched_keywords;
-
-            // Subscribe to each cards event listener and add new class for animation
-            this.subscribe("card-dismiss", () => this.nextCard());
-            requestAnimationFrame(() => {
-                card.query(".container").classList.add("in-view");
-            })
-
-            return card;
+        requestAnimationFrame(() => {
+            card.querySelector(".container")?.classList.add("in-view");
         });
 
-        this.currentIndex++;
-        this.showCard();
+        return card;
+    }
+
+    nextCard() {
+        if (this.currentIndex < this.cards_.length - 1) {
+            this.currentIndex++;
+            const stack = this.query(".stack");
+            const nextPanel = stack.children[this.currentIndex];
+            nextPanel?.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+
+    afterRender() {
+        const stack = this.query(".stack");
+        stack.innerHTML = "";
+
+        // No cards? Show the “no properties” message
+        if (this.cards_.length === 0) {
+            const msg = document.createElement("div");
+            msg.className = "no-properties";
+            msg.innerHTML = `
+        <h3>No more properties :(</h3>
+        <p>Maybe try refining your prompt. Saying it out loud can help!</p>
+      `;
+            stack.appendChild(msg);
+            return;
+        }
+
+        // Build each card and append
+        this.cards_.forEach((prop, index) => {
+            const wrapper = document.createElement("div");
+            wrapper.className = "slide";
+
+            const cardEl = this.buildCard(prop);
+            wrapper.appendChild(cardEl);
+            stack.appendChild(wrapper);
+
+            // Listen for each card's dismiss event to advance
+            cardEl.addEventListener("card-dismiss", () => this.nextCard());
+        });
+
+        stack.addEventListener("touchstart", e => {
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+
+        stack.addEventListener("touchend", e => {
+            const endY = e.changedTouches[0].clientY;
+            const delta = startY - endY;
+            // if they flick up more than 30px, go to next
+            if (delta > 30) {
+                this.nextCard();
+            }
+        }, { passive: true });
     }
 
     static { Comp.register(this); }

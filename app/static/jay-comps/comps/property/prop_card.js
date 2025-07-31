@@ -76,7 +76,6 @@ class PropCard extends Comp {
                         <h6 style="font-weight: bold">£${this.price_}</h6>
                     </div>
                     <div class="card-buttons">
-                        <comp-card-icon id="next" class="next"></comp-card-icon>
                         <comp-card-icon id="email"></comp-card-icon>
                     </div>
                 </div>
@@ -126,22 +125,21 @@ class PropCard extends Comp {
         return [
             {
                 class: "container",
-                position: "absolute",
                 boxSizing: "border-box",
+                width: "100vw",
+                maxWidth: "100%",
+                background: "white",
                 top: 0,
                 left: 0,
-                widthPercent: 100,
                 height: "100dvh",
-                padding: [100, 0, 120, 0],
+
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                transform: "translateY(100%)",
-                opacity: 0.6,
                 transition: "transform 0.4s ease-in-out, opacity 0.4s ease-in-out",
                 media: {
                     maxWidthBp: 600,
-                    heightCalc: "100dvh",
+                    width: "100vw",
                     padding: 0
                 }
             },
@@ -168,30 +166,22 @@ class PropCard extends Comp {
                 transform: "translateY(0)"
             },
             {
-                class: "in-view",
-                transform: "translateY(0)",
-                opacity: 1
-            },
-            {
-                class: "out-view",
-                transform: "translateY(-100%)",
-                opacity: 0.6
-            },
-            {
                 class: "card",
                 display: "flex",
+                aspectRatio: "9 / 16",
+                overflow: "hidden",
+                height: "100dvh",
                 flexDirection: "column",
                 backgroundVar: "black100",
-                aspectRatio: "9 / 16",
-                heightPercent: 100,
                 maxHeight: 700,
                 borderRadius: 14,
                 backgroundImageUrl: `https://whondo.com/uploads?path=${this.images_[0]}`, backgroundSize: "cover",
                 media: {
                     maxWidthBp: 600,
-                    widthPercent: 100,
+                    width: "100vw",
                     height: "100dvh",
                     maxHeight: "none",
+                    aspectRatio: "none",
                     borderRadius: 0
                 },
                 transition: "transform 0.4s ease-in-out, opacity 0.4s ease-in-out",
@@ -304,13 +294,6 @@ class PropCard extends Comp {
                 display: "flex",
                 justifyContent: "space-between",
                 gap: 10
-            },
-            {
-                media: {
-                    class: "next",
-                    maxWidthBp: 600,
-                    display: "none"
-                }
             }
         ]
     }
@@ -345,7 +328,6 @@ class PropCard extends Comp {
     afterRender() {
         const container = this.query(".container");
         const card = this.query(".card");
-        const next = this.getById("next");
         const email = this.getById("email");
         const images = this.query(".images");
         const mobImages = this.query("#mob-images");
@@ -353,15 +335,6 @@ class PropCard extends Comp {
         const mobKws = this.query("#mob-keywords");
         const modal = this.query(".details-mob");
         const close = this.query("#close");
-
-        const dismiss = (e) => {
-            if (e) e.stopPropagation();
-            container.classList.remove("in-view");
-            container.classList.add("out-view");
-            container.addEventListener("transitionend", () => {
-                this.publish("card-dismiss");
-            }, { once: true });
-        };
 
         requestAnimationFrame(() => {
             container.classList.add("in-view");
@@ -386,20 +359,6 @@ class PropCard extends Comp {
         email.addEventListener("click", () => {
             this.sendEmail(this.email_, this.landlord_name_, this.title_);
         });
-
-        next.path = "close.svg";
-        next.addEventListener("click", dismiss);
-
-        let startY = 0;
-        card.addEventListener("touchstart", e => {
-            startY = e.touches[0].clientY;
-        }, { passive: true });
-
-        card.addEventListener("touchend", e => {
-            const endY = e.changedTouches[0].clientY;
-            const delta = startY - endY;
-            if (delta > 50) dismiss(e);
-        }, { passive: true });
     }
 
     static { Comp.register(this); }
