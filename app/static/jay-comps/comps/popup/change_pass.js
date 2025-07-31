@@ -24,13 +24,13 @@ export class ChangePass extends Comp {
                                 <h4 class="title">${this.title_}</h4> 
                             </div>
                             <div class="input">
-                                <comp-input id="current" name="current"></comp-input>
-                                <comp-input id="new" name="new"></comp-input>
-                                <comp-input id="confirm" name="confirm"></comp-input>
+                                <comp-password id="current" name="current"></comp-password>
+                                <comp-password id="new" name="new"></comp-password>
+                                <comp-password id="confirm" name="confirm"></comp-password>
                             </div>
                             <div class="footer">
                                 <div class="btnRow">
-                                    <comp-button class="back" id="backBtn2" type="button"></comp-button>
+                                    <comp-button class="back" id="back" type="button"></comp-button>
                                     <comp-button class="submit" id="submit" type="submit"></comp-button>
                                 </div>
                             </div>
@@ -44,8 +44,7 @@ export class ChangePass extends Comp {
 
     createCSS() {
         return [
-            {
-                class: "background",
+            { class: "background",
                 display: "flex",
                 justifyContent: "centre",
                 widthPercent: 100,
@@ -61,14 +60,9 @@ export class ChangePass extends Comp {
                 display: "flex",
                 alignItems: "centre",
                 justifyContent: "centre",
-                media: {
-                    maxWidthBp: 600,
-                    flexDirection: "column",
-                    alignItems: "centre",
-                }
+                media: { maxWidthBp: 600, flexDirection: "column", alignItems: "centre",}
             },
-            {
-                class: "modal",
+            { class: "modal",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -91,8 +85,7 @@ export class ChangePass extends Comp {
                     boxSizing: "border-box"
                 }
             },
-            {
-                class: "input",
+            { class: "input",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
@@ -104,8 +97,7 @@ export class ChangePass extends Comp {
                     gap: 15,
                 }
             },
-            {
-                class: "inputRow",
+            { class: "inputRow",
                 display: "flex",
                 flexDirection: "row",
                 gap: 15,
@@ -116,27 +108,23 @@ export class ChangePass extends Comp {
                     flexDirection: "column"
                 }
             },
-            {
-                class: "btnRow",
+            { class: "btnRow",
                 display: "flex",
                 flexDirection: "row",
                 gap: 15,
                 widthPercent: 100,
                 justifyContent: "space-between"
             },
-            {
-                class: "title",
+            { class: "title",
                 fontWeight: "bold"
             },
-            {
-                class: "textContainer",
+            { class: "textContainer",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 5,
             },
-            {
-                class: "footer",
+            { class: "footer",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -146,7 +134,7 @@ export class ChangePass extends Comp {
         ];
     }
 
-     async register() {
+     async passwordChange() {
         const fd = new FormData();
 
         fd.append("name", this.getById("name").value);
@@ -165,7 +153,70 @@ export class ChangePass extends Comp {
         else alert(result.error);
     }
 
+    checkPassword(input1, input2) {
+        return (input1.value.trim() == input2.value.trim()) ? true : false;
+    }
+
+    validateElements(inputs) {
+        let isValid = true;
+
+        for (let i in inputs) {
+            if (inputs[i].required && inputs[i].isEmpty()) {
+                const inputField = inputs[i].query(".inputValue");
+                inputField.classList.add("error");
+                isValid = false;
+            }
+        }
+
+        return (!this.checkPassword(inputs[1], inputs[2])) ? false : isValid;
+    }
+
+    validatePasswords(password, confirmPass) {
+        if (confirmPass.value == '' || password.value == '') return;
+        else if (confirmPass.value === password.value) confirmPass.query(".inputValue").classList.add("success");
+        else confirmPass.query(".inputValue").classList.remove("success");
+    }
+
+     clearError(inputs) {
+        const field = inputs.query(".inputValue");
+        field.classList.remove("error");
+    };
+
     afterRender(){
+        const current = this.getById("current");
+        const newPass = this.getById("new");
+        const confirm = this.getById("confirm");
+        const submit = this.query("#submit");
+
+        newPass.addEventListener("input", () => this.validatePasswords(newPass, confirm))
+        confirm.addEventListener("input", () => this.validatePasswords(newPass, confirm))
+
+        const inputs = [current,confirm];
+        inputs.forEach(input => {
+            input.addEventListener("input", () => this.clearError(input));
+        });
+
+        submit.addEventListener("click", (e) => {
+            e.preventDefault;
+            const inputs = [current, newPass, confirm];
+            const valid = this.validateElements(inputs);
+
+        if (!valid) return;
+        if (!this.checkPassword(newPass,confirm)){
+            confirm.query(".inputValue").classList.add("error");
+            return;
+        }
+
+            this.submitPasswordChange();
+
+        });
+
+        this.query("comp-button.back").addEventListener("click", () =>{
+            this.dispatchEvent(new CustomEvent("popup-back",{
+                    bubbles: true,
+                    composed: true
+            }));
+        });
 
     }
 

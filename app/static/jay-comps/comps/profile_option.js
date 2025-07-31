@@ -25,7 +25,7 @@ export class ProfileOption extends Comp {
                 <p class="subtitle">${this.subTitle_}</p>
             </div>
             <div class="icon">
-                <comp-prompt-icon></comp-prompt-icon>
+                <comp-prompt-icon class="iconBtn"></comp-prompt-icon>
             </div>
         </div>
         `;

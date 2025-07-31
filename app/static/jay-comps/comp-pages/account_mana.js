@@ -4,8 +4,8 @@ export class AccountMana extends Comp {
 
     createHTML(){
         return  /* html */`
-        <comp-update-profile id="update" style="display: block"></comp-update-profile>
-
+        <comp-update-profile id="update" style="display: none"></comp-update-profile>
+        <comp-change-pass id="pass" style="display: none"></comp-change-pass>
         <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
@@ -68,14 +68,24 @@ export class AccountMana extends Comp {
         const btn2 = banner.query("comp-button.btn2");
         btn2.variant = 1;
         
+        //setting options
         const option1 = this.getById("option1");
         option1.title = "Update Account";
         option1.subTitle = "Update your account information.";
+        const icon1 = option1.query(".iconBtn");
+        icon1.addEventListener("click", () => {
+            update.style.display = "block";
+        })
 
         const option2 = this.getById("option2");
         option2.title = "Change Password";
         option2.subTitle = "Update your password.";
+        const icon2 = option2.query(".iconBtn");
+        icon2.addEventListener("click", () => {
+            pass.style.display = "block";
+        })
 
+        //update popup
         const update = this.getById("update");
         update.title = "Update Account";
         const name = update.query("#name");
@@ -99,9 +109,48 @@ export class AccountMana extends Comp {
         back.variant = 2;
         back.fill = true;
 
+        update.addEventListener("popup-back", () => {
+            update.style.display = "none";
+        });
+
         const submit = update.query(".submit");
         submit.text = "Save";
         submit.fill = true;
+
+        //password options
+        const pass = this.getById("pass")
+        pass.title = "Change Password";
+
+        const current = pass.query("#current");
+        current.label = "Current Password";
+        current.prompt = "Enter current password";
+        current.required = true;
+
+        const newPass = pass.query("#new");
+        newPass.label = "New Password";
+        newPass.prompt = "Enter new password";
+        newPass.enableEntropy = true;
+        newPass.required = true;
+
+        const confirm = pass.query("#confirm");
+        confirm.label = "Confirm New Password";
+        confirm.prompt = "Enter new password again";
+        confirm.required = true;
+        
+        const backBtn = pass.query("#back");
+        backBtn.text = "Back";
+        backBtn.variant = 2;
+        backBtn.fill = true;
+
+        const save = pass.query("#submit");
+        save.text = "Save";
+        save.fill = true;
+
+        pass.addEventListener("popup-back", () => {
+            pass.style.display = "none";
+        });
+
+        
     }
 
     static { Comp.register(this); }
