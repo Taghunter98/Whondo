@@ -404,7 +404,7 @@ export class CreateProp extends Comp {
     };
 
     afterRender() {
-        
+       
         const step1 = this.getById("step1");
         const step2 = this.getById("step2");
         const step3 = this.getById("step3")
@@ -452,6 +452,7 @@ export class CreateProp extends Comp {
         propType.label = "Property Type";
         propType.prompt = "Select from dropdown"; 
         propType.list = ["house", "flat", "studio", "bungalow", "bedsit", "maisonette", "shared_house", "student_accommodation", "en_suite", "penthouse"];
+        propType.strict = true;
 
         description.label = "Property description";
         description.prompt = "Tell us about your home, be descriptive!";
@@ -487,10 +488,17 @@ export class CreateProp extends Comp {
             window.location.assign("/");
         })
 
+        this.prevPropType = null;
         propType.addEventListener("option-selected", (e)=>{
             const keywords = this.getById("keywords");
             const selectedText = e.detail?.text;
-            if (selectedText && typeof keywords.addTag === "function") keywords.addTag(selectedText)
+            if (!selectedText || typeof keywords.addTag !== "function") return;
+            if (this.prevPropType && typeof keyword.removeTag === "function") {
+                keywords.removeTag(this.prevPropType);
+            }
+
+            keywords.addTag(selectedText);
+            this.prevPropType = selectedText;
         })
 
         nextBtn.addEventListener("click", () => {

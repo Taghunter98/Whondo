@@ -2,7 +2,7 @@ import { Input } from "../inputs/input.js";
 
 export class InputDropdown extends Input{
 
-    list_ = [];
+    list_ = []; strict_;
 
     set list(newList){
         if(!Array.isArray(newList)) return;
@@ -13,7 +13,18 @@ export class InputDropdown extends Input{
         }
     }
 
-    get list() { return this.list_};
+    set strict(flag){
+        this.strict_ = flag;
+        this.update();
+    }
+
+    get strict() { return this.strict_;}
+    get list() { return this.list_;}
+
+    beforeRender(){
+      super.beforeRender();
+      if (!this.strict_) this.strict_ = false;
+    }
 
     createHTML() {
         return /* html */ `
@@ -54,6 +65,7 @@ export class InputDropdown extends Input{
         this.dropdown.addEventListener("option-selected", (e) => {
             if (e.detail.text) this.inputEl.value = e.detail.text;
             
+            this.inputEl.classList.remove("error");
             this.dispatchEvent(new CustomEvent("option-selected", {
                 detail: e.detail,
                 bubbles: true,
@@ -62,10 +74,21 @@ export class InputDropdown extends Input{
             
         });
 
-       
-       
-    }
+        this.inputEl.addEventListener("blur", () => {
+            if (!this.strict_) return;
+            const val = this.inputEl.value.trim();
+            const match = this.list_.includes(val);
 
+            if (!match) {
+                this.inputEl.value = "";
+                this.inputEl.classList.add("error");
+                
+            } else {
+                this.inputEl.classList.remove("error");
+            }
+        });
+    }
+       
     static { super.register(this) };
 
 }

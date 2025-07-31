@@ -1,4 +1,3 @@
-
 import { Comp } from "jay-comp";
 
 export class Dropdown extends Comp {
@@ -103,6 +102,7 @@ export class Dropdown extends Comp {
         this.inputEl = input;
 
         this.inputEl.addEventListener("click", () => { if (this.filtered_?.length > 0) this.resetDropdown() });
+        this.inputEl.addEventListener("focus", () => this.filterOptions(this.inputEl.value));
         this.inputEl.addEventListener("input", () => this.filterOptions(this.inputEl.value));
         this.inputEl.addEventListener("blur", () => {
             setTimeout(() => this.hideDropdown(), 150);
