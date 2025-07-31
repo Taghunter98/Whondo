@@ -132,12 +132,13 @@ class PropCard extends Comp {
                 left: 0,
                 widthPercent: 100,
                 height: "100dvh",
+                scrollSnapType: "y mandatory",
                 padding: [100, 0, 120, 0],
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 transform: "translateY(100%)",
-                transition: "transform .1s ease-in",
+                transition: "transform .1s ease-in-out",
                 media: {
                     maxWidthBp: 600,
                     heightCalc: "100dvh",
@@ -168,15 +169,18 @@ class PropCard extends Comp {
             },
             {
                 class: "pre-view",
-                transform: "translateY(+100%)"
+                transform: "translateY(100%)",
+                opacity: 0.6
             },
             {
                 class: "in-view",
-                transform: "translateY(0)"
+                transform: "translateY(0)",
+                opacity: 1
             },
             {
                 class: "out-view",
-                transform: "translateY(-100%)"
+                transform: "translateY(-100%)",
+                opacity: 0.6
             },
             {
                 class: "card",
@@ -194,7 +198,10 @@ class PropCard extends Comp {
                     height: "100dvh",
                     maxHeight: "none",
                     borderRadius: 0
-                }
+                },
+                transition: "transform 0.4s ease-in-out, opacity 0.4s ease-in-out",
+                willChange: "transform, opacity",
+                scrollSnapAlign: "start"
             },
             {
                 class: "info",

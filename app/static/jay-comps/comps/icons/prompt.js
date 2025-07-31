@@ -34,17 +34,6 @@ export class PromptIcon extends Icon {
             {
                 class: "container", pseudoClass: "active",
                 backgroundVar: "black20"
-            },
-            {
-                class: "icon",
-                transform: "translateX(0)",
-            },
-            {
-                class: "container",
-                pseudoClass: "hover",
-                childClass: "icon",
-                transform: "translateX(5px)",
-                transition: "transform 0.3s ease-in-out"
             }
         ];
     }
