@@ -25,7 +25,7 @@ export class CreateProp extends Comp {
                                     <p class="unit">p/m</p>
                                 </div>
                                 <div class="inputRow">
-                                    <comp-input-dropdown id="propertyType" name="propType"></comp-input-dropdown>
+                                    <comp-input-dropdown id="propertyType" name="propType" disabled></comp-input-dropdown>
                                     <comp-input id="tenants" name="tennants"></comp-input>
                                 </div>
                                 <div class="inputRow">
@@ -450,8 +450,8 @@ export class CreateProp extends Comp {
         bathrooms.prompt = "Enter bathrooms";
         bathrooms.type = "number";
         propType.label = "Property Type";
-        propType.prompt = "house"; 
-        propType.list = ["house", "flat", "studio"];
+        propType.prompt = "Select from dropdown"; 
+        propType.list = ["house", "flat", "studio", "bungalow", "bedsit", "maisonette", "shared_house", "student_accommodation", "en_suite", "penthouse"];
 
         description.label = "Property description";
         description.prompt = "Tell us about your home, be descriptive!";
