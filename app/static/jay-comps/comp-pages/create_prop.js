@@ -3,6 +3,7 @@ import { Comp } from 'jay-comp';
 export class CreateProp extends Comp {
     createHTML() {
         return /* html */ `
+        <comp-popup  id= popup style="display: none"></comp-popup>
         <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
@@ -90,7 +91,7 @@ export class CreateProp extends Comp {
                 </div>
             </div>
             <div class="backgroundImage">
-                <img class="image" src="https://images.pexels.com/photos/4569340/pexels-photo-4569340.jpeg">
+                <img class="image" src="https://images.pexels.com/photos/5563472/pexels-photo-5563472.jpeg">
             </div>
         </div>
         `;
@@ -390,21 +391,9 @@ export class CreateProp extends Comp {
         const result = await this.submitForm("https://whondo.com/advert/new", fd);
 
         if (result.ok) {
-            const modal = document.createElement("comp-popup");
-           customElements.whenDefined("comp-popup").then(() => {
-            modal.title = "Advert Published!";
-            modal.paragraph = "Your property is now live!";
-            modal.text = "Continue";
-
-            const btn = modal.query("comp-button");
-            btn.addEventListener("click", () => {
-                window.location.href = "/dashboard";
-            });
-
-            document.body.appendChild(modal);
-        });
-            
-    }
+            const popup = this.getById("popup");
+            popup.style.display = "block";
+        }
             
         else alert(result.error);
     }
@@ -415,7 +404,7 @@ export class CreateProp extends Comp {
     };
 
     afterRender() {
-        const popup = this.getById("popup");
+        
         const step1 = this.getById("step1");
         const step2 = this.getById("step2");
         const step3 = this.getById("step3")
@@ -436,6 +425,15 @@ export class CreateProp extends Comp {
         const submit = this.getById("submit");
         const cover = this.getById("cover");
         const pic = this.queryAll(".pic")
+
+        const popup = this.getById("popup");
+        popup.title = "Advert Published!";
+        popup.paragraph = "Congratulations! You can now view your new advert or monitor it in your Landlord portal.";
+        popup.text = "Continue";
+        const icon = popup.query(".icon");
+        icon.style.display = "none";
+        const btn = popup.query(".btn");
+        btn.style.width = "125px";
         
         address.label = "Address";
         address.prompt = "Enter your postcode";
@@ -484,6 +482,16 @@ export class CreateProp extends Comp {
         description.required = true;
         propType.required = true;
         tenants.required = true;
+
+        popup.addEventListener("popup-button", ()=> {
+            window.location.assign("/");
+        })
+
+        propType.addEventListener("option-selected", (e)=>{
+            const keywords = this.getById("keywords");
+            const selectedText = e.detail?.text;
+            if (selectedText && typeof keywords.addTag === "function") keywords.addTag(selectedText)
+        })
 
         nextBtn.addEventListener("click", () => {
             if (this.validateStep1()) {
