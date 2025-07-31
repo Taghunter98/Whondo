@@ -148,6 +148,17 @@ export class AccountMana extends Comp {
 
         pass.addEventListener("popup-back", () => {
             pass.style.display = "none";
+            const current = pass.query("#current");
+            const newPass = pass.query("#new");
+            const confirm = pass.query("#confirm")
+            current.query(".inputValue").value = "";
+            current.query(".inputValue").classList.remove("error")
+            newPass.query(".inputValue").value = "";
+            newPass.query(".inputValue").classList.remove("error");
+            newPass.query(".hint").style.display = "none";
+            confirm.query(".inputValue").value = "";
+            confirm.query(".inputValue").classList.remove("error")
+            
         });
 
         
