@@ -126,7 +126,6 @@ export class Home extends Comp {
             const card = this.cards[this.currentIndex];
             const c = card.query(".container");
             c.classList.remove("in-view", "out-view");
-            c.classList.add("pre-view");
 
             container.appendChild(card);
 
