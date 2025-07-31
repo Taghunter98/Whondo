@@ -91,7 +91,7 @@ export class CreateProp extends Comp {
                 </div>
             </div>
             <div class="backgroundImage">
-                <img class="image" src="https://images.pexels.com/photos/4569340/pexels-photo-4569340.jpeg">
+                <img class="image" src="https://images.pexels.com/photos/5563472/pexels-photo-5563472.jpeg">
             </div>
         </div>
         `;
