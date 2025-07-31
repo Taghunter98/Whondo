@@ -38,8 +38,8 @@ def serve_upload():
         Response: Served image or appropriate error message
     """
 
-    p = request.args.get("path")
-    src = os.path.join(current_app.config["UPLOAD_FOLDER"], p)
+    p: str = request.args.get("path")
+    src: str = os.path.join(current_app.config["UPLOAD_FOLDER"], p)
     if not os.path.isfile(src):
         abort(404)
 
@@ -47,7 +47,7 @@ def serve_upload():
     # e.g. always serve at width=800, quality=75
     img.thumbnail((800, img.height), Image.LANCZOS)
     buf = io.BytesIO()
-    img.save(buf, format="JPEG", optimize=True, quality=75)
+    img.save(buf, format="JPEG", optimize=True, quality=50)
     buf.seek(0)
     return send_file(buf, mimetype="image/jpeg")
 
