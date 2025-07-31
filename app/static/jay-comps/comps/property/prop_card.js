@@ -94,7 +94,7 @@ class PropCard extends Comp {
                 <p>Keywords</p>
                 <div class="keywords"></div>
                 <div class="card-buttons">
-                    <comp-button id="email-desk"></comp-button>
+                    <comp-button id="email-desk" style="padding-top: 20px"></comp-button>
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@ class PropCard extends Comp {
             <p>Keywords</p>
             <div id="mob-keywords" class="keywords"></div>
             <div class="card-buttons">
-                <comp-button id="email"></comp-button>
+                <comp-button id="email" style="padding-top: 20px"></comp-button>
             </div>
         </div>
         `
@@ -179,6 +179,9 @@ class PropCard extends Comp {
                 maxHeight: 700,
                 borderRadius: 14,
                 backgroundImageUrl: `https://whondo.com/uploads?path=${this.images_[0]}`, backgroundSize: "cover",
+                transition: "transform 0.4s ease-in-out, opacity 0.4s ease-in-out",
+                willChange: "transform, opacity",
+                cursor: "pointer",
                 media: {
                     maxWidthBp: 600,
                     width: "100vw",
@@ -186,10 +189,9 @@ class PropCard extends Comp {
                     maxHeight: "none",
                     aspectRatio: "none",
                     borderRadius: 0
-                },
-                transition: "transform 0.4s ease-in-out, opacity 0.4s ease-in-out",
-                willChange: "transform, opacity"
+                }
             },
+            // TODO add nice bouncy hover or something
             {
                 class: "info",
                 marginTop: "auto",
@@ -260,9 +262,8 @@ class PropCard extends Comp {
                 borderRadius: [14, 14, 0, 0],
                 height: "auto",
                 overflow: "scroll",
-                maxHeight: "90vh",
+                maxHeight: "80vh",
                 background: "white",
-                overflowY: "auto",
                 padding: [20, 20],
                 boxSizing: "border-box",
                 opacity: 0,
@@ -337,17 +338,17 @@ class PropCard extends Comp {
         this.keywords_.forEach(i => mobKws.appendChild(this.createChip(i)));
 
         card.addEventListener("click", () => {
-            if (screen.width <= 600) {
-                modal.classList.add("mobile-view");
-            } else {
-                this.query(".details").classList.add("show-details");
-            }
+            if (screen.width <= 600) modal.classList.add("mobile-view");
+            else this.query(".details").classList.add("show-details");
         });
 
         close.addEventListener("click", () => modal.classList.remove("mobile-view"));
 
-        email.path = "mail.svg";
         email.addEventListener("click", () => {
+            this.sendEmail(this.email_, this.landlord_name_, this.title_);
+        });
+
+        emailDesk.addEventListener("click", () => {
             this.sendEmail(this.email_, this.landlord_name_, this.title_);
         });
     }
