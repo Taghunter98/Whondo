@@ -11,10 +11,10 @@ export class Promptbar extends Comp {
 
     beforeRender() {
         if (!this.text_)
-        this.text_ =
-            window.innerWidth <= 600
-            ? "I want to rent a flat in London that's £2000 a month..."
-            : "I want to rent a flat in London that's £2000 a month, has two bedrooms and one bathroom and near a tube station...";
+            this.text_ =
+                window.innerWidth <= 600
+                    ? "I want to rent a flat in London that's £2000 a month..."
+                    : "I want to rent a flat in London that's £2000 a month, has two bedrooms and one bathroom and near a tube station...";
     }
 
     createHTML() {
@@ -25,9 +25,9 @@ export class Promptbar extends Comp {
             placeholder="${this.text_}"
             ></textarea>
             <button class="icon-btn" type="button">
-            ${ this.loading
+            ${this.loading
                 ? `<comp-spinner></comp-spinner>`
-                : `<comp-prompt-icon></comp-prompt-icon>` }
+                : `<comp-prompt-icon></comp-prompt-icon>`}
             </button>
         </div>
         `;
@@ -35,51 +35,56 @@ export class Promptbar extends Comp {
 
     createCSS() {
         return [
-        {
-            class: "prompt-wrapper",
-            position: "relative",
-            display: "flex",
-            gap: 20,
-            widthPercent: 100,
-            maxWidth: 900,
-            padding: 15,
-            backgroundVar: "black10",
-            borderVar: "border",
-            borderRadius: 15,
-            boxSizing: "border-box"
-        },
-        {
-            class: "prompt",
-            flexGrow: 1,
-            backgroundVar: "black10",
-            border: "none",
-            fontSize: 16,
-            lineHeight: 1.5,
-            outline: "none",
-            fontFamily: "Geist",
-            minHeight: 44,
-            maxHeight: 100,
-            resize: "none",
-            whiteSpace: "pre-wrap",
-            media: { maxWidthBp: 600, fontSize: 16 }
-        },
-        {
-            class: "prompt",
-            pseudoClass: ":placeholder",
-            fontFamily: "Geist, sans-serif",
-            fontSize: 16
-        },
-        {
-            class: "icon-btn",
-            background: "transparent",
-            border: "none",
-            padding: 0,
-            margin: 0,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
-        }
+            {
+                class: "prompt-wrapper",
+                position: "relative",
+                display: "flex",
+                gap: 20,
+                widthPercent: 100,
+                maxWidth: 900,
+                padding: 15,
+                backgroundVar: "black10",
+                borderVar: "border",
+                borderRadius: 15,
+                boxSizing: "border-box",
+                transition: "transform 0.1s ease-in-out"
+            },
+            {
+                class: "prompt-wrapper", pseudoClass: "active",
+                transform: "scale(0.95)",
+            },
+            {
+                class: "prompt",
+                flexGrow: 1,
+                backgroundVar: "black10",
+                border: "none",
+                fontSize: 16,
+                lineHeight: 1.5,
+                outline: "none",
+                fontFamily: "Geist",
+                minHeight: 44,
+                maxHeight: 100,
+                resize: "none",
+                whiteSpace: "pre-wrap",
+                media: { maxWidthBp: 600, fontSize: 16 }
+            },
+            {
+                class: "prompt",
+                pseudoClass: ":placeholder",
+                fontFamily: "Geist, sans-serif",
+                fontSize: 16
+            },
+            {
+                class: "icon-btn",
+                background: "transparent",
+                border: "none",
+                padding: 0,
+                margin: 0,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+            }
         ];
     }
 
@@ -90,7 +95,7 @@ export class Promptbar extends Comp {
 
     async sendQuery(prompt) {
         const res = await this.request(
-            "https://whondo.com/search", "POST", {prompt}
+            "https://whondo.com/search", "POST", { prompt }
         );
         this.result_ = res.data.results;
         return this.result_;
@@ -104,12 +109,12 @@ export class Promptbar extends Comp {
         this.query("button.icon-btn").addEventListener("click", async () => {
             const prompt = textarea.value.trim();
             if (this.loading || !prompt) return;
-            
+
             this.loading = true;
-            
+
             const results = await this.sendQuery(prompt);
             this.loading = false;
-            
+
             this.publish("query-results", results);
         });
     }
