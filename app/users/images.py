@@ -34,6 +34,8 @@ def serve_upload():
     Image path is accessed, if successful the image will be served to the browser,
     else an appropriate error will be returned.
 
+    The image is compressed and reformatted to JPEG for faster load times.
+
     Returns:
         Response: Served image or appropriate error message
     """
@@ -44,10 +46,19 @@ def serve_upload():
         abort(404)
 
     img = Image.open(src)
-    # e.g. always serve at width=800, quality=75
+
     img.thumbnail((800, img.height), Image.LANCZOS)
     buf = io.BytesIO()
-    img.save(buf, format="JPEG", optimize=True, quality=50)
+
+    img.save(
+        buf,
+        format="JPEG",
+        optimize=True,
+        progressive=True,
+        quality=60,     # 60 quality
+        subsampling=2,  # 4:2:0 chroma subsampling
+        exif=b"",       # strip metadata
+    )
     buf.seek(0)
     return send_file(buf, mimetype="image/jpeg")
 
