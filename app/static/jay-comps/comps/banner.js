@@ -103,11 +103,25 @@ export class Banner extends Comp {
             const btn1 = this.query(".btn1");
             btn1.text = this.btnText1_;
             btn1.fill = true;
+            btn1.addEventListener("click", () => {
+                btn1.dispatchEvent(new CustomEvent("button1-click", {
+                    bubbles: true,
+                    composed: true,
+                }));
+            });
         }
+
         if (this.btnText2_) {
             const btn2 = this.query(".btn2");
             btn2.text = this.btnText2_;
             btn2.fill = false;
+
+            btn2.addEventListener("click", () => {
+                btn2.dispatchEvent(new CustomEvent("button2-click", {
+                    bubbles: true,
+                    composed: true,
+                }));
+            });
         }
     }
 
