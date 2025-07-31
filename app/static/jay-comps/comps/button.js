@@ -27,7 +27,7 @@ export class Button extends Comp {
     get variant() { return this.variant_; }
 
     beforeRender() {
-        if (!this.text_) this.text_ = "this is button";
+        if (!this.text_) this.text_ = "Button";
         if (!this.variant_) this.variant_ = 1;
     }
 

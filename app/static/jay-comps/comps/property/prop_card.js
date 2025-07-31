@@ -75,9 +75,6 @@ class PropCard extends Comp {
                         </div>
                         <h6 style="font-weight: bold">£${this.price_}</h6>
                     </div>
-                    <div class="card-buttons">
-                        <comp-card-icon id="email"></comp-card-icon>
-                    </div>
                 </div>
             </div>
             <div class="details">
@@ -96,6 +93,9 @@ class PropCard extends Comp {
                 <div class="images"></div>
                 <p>Keywords</p>
                 <div class="keywords"></div>
+                <div class="card-buttons">
+                    <comp-button id="email-desk"></comp-button>
+                </div>
             </div>
         </div>
         <div class="details-mob">
@@ -117,6 +117,9 @@ class PropCard extends Comp {
             <div id="mob-images" class="images"></div>
             <p>Keywords</p>
             <div id="mob-keywords" class="keywords"></div>
+            <div class="card-buttons">
+                <comp-button id="email"></comp-button>
+            </div>
         </div>
         `
     }
@@ -128,17 +131,18 @@ class PropCard extends Comp {
                 boxSizing: "border-box",
                 width: "100vw",
                 maxWidth: "100%",
+                padding: [80, 0, 120, 0],
                 background: "white",
                 top: 0,
                 left: 0,
+                height: "calc(100vh - 200px)",
                 height: "100dvh",
-
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
                 transition: "transform 0.4s ease-in-out, opacity 0.4s ease-in-out",
                 media: {
                     maxWidthBp: 600,
+                    height: "100dvh",
                     width: "100vw",
                     padding: 0
                 }
@@ -170,7 +174,6 @@ class PropCard extends Comp {
                 display: "flex",
                 aspectRatio: "9 / 16",
                 overflow: "hidden",
-                height: "100dvh",
                 flexDirection: "column",
                 backgroundVar: "black100",
                 maxHeight: 700,
@@ -206,7 +209,11 @@ class PropCard extends Comp {
                 class: "card-elements",
                 display: "flex",
                 justifyContent: "space-between",
-                paddingTop: 15
+                paddingTop: 15,
+                media: {
+                    maxWidthBp: 600,
+                    paddingBottom: 80
+                }
             },
             {
                 class: "landlord",
@@ -222,17 +229,6 @@ class PropCard extends Comp {
                 borderVar: "border",
                 background: "white",
                 borderRadiusPercent: 50,
-            },
-            {
-                class: "card-buttons",
-                display: "flex",
-                boxSizing: "border-box",
-                gap: 20,
-                paddingTop: 20,
-                media: {
-                    maxWidthBp: 600,
-                    paddingBottom: 80
-                }
             },
             {
                 class: "description",
@@ -254,7 +250,6 @@ class PropCard extends Comp {
                 class: "keywords",
                 display: "flex",
                 flexWrap: "wrap",
-                justifyContent: "space-between",
                 gap: 10,
                 paddingTop: 5
             },
@@ -326,9 +321,9 @@ class PropCard extends Comp {
     }
 
     afterRender() {
-        const container = this.query(".container");
         const card = this.query(".card");
         const email = this.getById("email");
+        const emailDesk = this.getById("email-desk");
         const images = this.query(".images");
         const mobImages = this.query("#mob-images");
         const kws = this.query(".keywords");
@@ -336,9 +331,8 @@ class PropCard extends Comp {
         const modal = this.query(".details-mob");
         const close = this.query("#close");
 
-        requestAnimationFrame(() => {
-            container.classList.add("in-view");
-        });
+        email.text = "Email Landlord";
+        emailDesk.text = "Email Landlord";
 
         this.images_.forEach(i => images.appendChild(this.createImage(i)));
         this.images_.forEach(i => mobImages.appendChild(this.createImage(i)));

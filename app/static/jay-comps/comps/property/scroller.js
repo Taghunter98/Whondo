@@ -33,7 +33,7 @@ class Scroller extends Comp {
                 padding: 0
             },
             {
-                class: "slide",                // ← renamed from “card”
+                class: "slide",
                 scrollSnapAlign: "start",
                 height: "100dvh",
                 widthPercent: 100,
@@ -64,10 +64,6 @@ class Scroller extends Comp {
         card.email = data.landlord_info.email;
         card.keywords = data.all_keywords;
         card.matched = data.matched_keywords;
-
-        requestAnimationFrame(() => {
-            card.querySelector(".container")?.classList.add("in-view");
-        });
 
         return card;
     }
@@ -109,19 +105,6 @@ class Scroller extends Comp {
             // Listen for each card's dismiss event to advance
             cardEl.addEventListener("card-dismiss", () => this.nextCard());
         });
-
-        stack.addEventListener("touchstart", e => {
-            startY = e.touches[0].clientY;
-        }, { passive: true });
-
-        stack.addEventListener("touchend", e => {
-            const endY = e.changedTouches[0].clientY;
-            const delta = startY - endY;
-            // if they flick up more than 30px, go to next
-            if (delta > 30) {
-                this.nextCard();
-            }
-        }, { passive: true });
     }
 
     static { Comp.register(this); }

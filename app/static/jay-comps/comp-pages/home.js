@@ -179,6 +179,8 @@ export class Home extends Comp {
          * Main property scrolling loop logic
          */
         this.subscribe("query-results", (e) => {
+            const properties = this.query("#properties");
+            properties.innerHTML = "";
             this.cards = [];
             this.currentIndex = 0;
 
@@ -186,13 +188,13 @@ export class Home extends Comp {
             this.query(".head").classList.add("hide");
             this.query(".modal").classList.add("stick");
             if (screen.width < 800) {
-                this.query("comp-navbar").style.display = "none";
+                // this.query("comp-navbar").style.display = "none";
                 this.query(".background").style.background = "var(--black100)";
             }
 
             const scroller = document.createElement("comp-scroller");
             scroller.cards = e.detail;
-            this.query("#properties").appendChild(scroller);
+            properties.appendChild(scroller);
         })
     }
 
