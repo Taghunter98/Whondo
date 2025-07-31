@@ -46,12 +46,7 @@ export class Promptbar extends Comp {
                 backgroundVar: "black10",
                 borderVar: "border",
                 borderRadius: 15,
-                boxSizing: "border-box",
-                transition: "transform 0.1s ease-in-out"
-            },
-            {
-                class: "prompt-wrapper", pseudoClass: "active",
-                transform: "scale(0.95)",
+                boxSizing: "border-box"
             },
             {
                 class: "prompt",

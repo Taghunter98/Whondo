@@ -92,6 +92,15 @@ export class Home extends Comp {
                 fontSize: 14,
                 cursor: "pointer",
                 colourVar: "black100"
+            },
+            {
+                class: "no-properties",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "centre",
+                alignItems: "centre",
+                maxWidth: 400,
+                textAlign: "centre"
             }
         ];
     }
@@ -100,11 +109,18 @@ export class Home extends Comp {
         const container = this.query("#properties");
         container.innerHTML = "";
 
+        const message = `
+        <div class="no-properties">
+            <h3 style="font-weight: bold; font-size: 24px;">No more properties :(</h3>
+            <p>It's ok! Maybe try refining your prompt, the best way is to try and say it out loud trust me!</p>
+        </div>
+        `
+
         if (this.currentIndex < this.cards.length)
             container.appendChild(this.cards[this.currentIndex]);
 
         else {
-            container.innerHTML = `<p>No more properties</p>`;
+            container.innerHTML = message;
             this.cards = [];
             this.currentIndex = 0;
         }
