@@ -167,6 +167,10 @@ class PropCard extends Comp {
                 transform: "translateY(0)"
             },
             {
+                class: "pre-view",
+                transform: "translateY(+100%)"
+            },
+            {
                 class: "in-view",
                 transform: "translateY(0)"
             },
@@ -385,7 +389,6 @@ class PropCard extends Comp {
         next.path = "close.svg";
         next.addEventListener("click", dismiss);
 
-        // 2) Swipe-Up to Dismiss
         let startY = 0;
         card.addEventListener("touchstart", e => {
             startY = e.touches[0].clientY;
@@ -394,10 +397,7 @@ class PropCard extends Comp {
         card.addEventListener("touchend", e => {
             const endY = e.changedTouches[0].clientY;
             const delta = startY - endY;
-            // if user swiped up more than 50px, dismiss
-            if (delta > 50) {
-                dismiss(e);
-            }
+            if (delta > 50) dismiss(e);
         }, { passive: true });
     }
 

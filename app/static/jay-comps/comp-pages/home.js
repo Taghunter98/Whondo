@@ -116,8 +116,18 @@ export class Home extends Comp {
         </div>
         `
 
-        if (this.currentIndex < this.cards.length)
-            container.appendChild(this.cards[this.currentIndex]);
+        if (this.currentIndex < this.cards.length) {
+            const card = this.cards[this.currentIndex];
+            const c = card.query(".container");
+            c.classList.remove("in-view", "out-view");
+
+            container.appendChild(card);
+
+            requestAnimationFrame(() => {
+                void c.offsetWidth;
+                c.classList.add("in-view");
+            });
+        }
 
         else container.innerHTML = message;
     }
