@@ -119,7 +119,7 @@ class PropCard extends Comp {
                 maxHeight: 700,
                 padding: [0, 20, 0, 20],
                 opacity: 0,
-                overflow: "hidden",
+                overflow: "scroll",
                 transform: "translateY(20px)",
                 transition: "width 0.4s ease, max-height 0.5s ease, opacity 0.4s ease, transform 0.4s ease",
                 media: {
@@ -219,7 +219,7 @@ class PropCard extends Comp {
                 class: "images",
                 display: "flex",
                 gap: 10,
-                overflow: "hidden",
+                overflow: "scroll",
                 paddingTop: 20
             }
         ]
