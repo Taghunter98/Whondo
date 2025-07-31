@@ -342,25 +342,34 @@ class PropCard extends Comp {
         const modal = this.query(".details-mob");
         const close = this.query("#close");
 
+        // 1) Dismiss helper
+        const dismiss = (e) => {
+            if (e) e.stopPropagation();
+            container.classList.remove("in-view");
+            container.classList.add("out-view");
+            container.addEventListener("transitionend", () => {
+                this.publish("card-dismiss");
+            }, { once: true });
+        };
+
         requestAnimationFrame(() => {
             container.classList.add("in-view");
         });
 
         this.images_.forEach(i => images.appendChild(this.createImage(i)));
         this.images_.forEach(i => mobImages.appendChild(this.createImage(i)));
-
         this.keywords_.forEach(i => kws.appendChild(this.createChip(i)));
         this.keywords_.forEach(i => mobKws.appendChild(this.createChip(i)));
 
         card.addEventListener("click", () => {
             if (screen.width <= 600) {
-                this.query(".details-mob").classList.add("mobile-view");
+                modal.classList.add("mobile-view");
             } else {
                 this.query(".details").classList.add("show-details");
             }
         });
 
-        close.addEventListener("click", () => modal.classList.remove("mobile-view"))
+        close.addEventListener("click", () => modal.classList.remove("mobile-view"));
 
         email.path = "mail.svg";
         email.addEventListener("click", () => {
@@ -368,18 +377,23 @@ class PropCard extends Comp {
         });
 
         next.path = "close.svg";
-        next.addEventListener("click", (e) => {
-            e.stopPropagation();
+        next.addEventListener("click", dismiss);
 
-            container.classList.remove("in-view");
-            container.classList.add("out-view");
+        // 2) Swipe-Up to Dismiss
+        let startY = 0;
+        modal.addEventListener("touchstart", e => {
+            startY = e.touches[0].clientY;
+        }, { passive: true });
 
-            container.addEventListener("transitionend", () => {
-                this.publish("card-dismiss");
-            }, { once: true });
-        });
+        modal.addEventListener("touchend", e => {
+            const endY = e.changedTouches[0].clientY;
+            const delta = startY - endY;
+            // if user swiped up more than 50px, dismiss
+            if (delta > 50) {
+                dismiss(e);
+            }
+        }, { passive: true });
     }
-
 
     static { Comp.register(this); }
 }
