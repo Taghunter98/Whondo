@@ -9,7 +9,7 @@ export class Home extends Comp {
         <comp-navbar></comp-navbar>
             <div class="background">
             <div id="properties"></div>
-            <h2 class="head">Describe your perfect home</h2>
+            <h2 class="head"><span id="typewriter"></span></h2>
             <div class="modal">
                 <comp-promptbar></comp-promptbar>
             </div>
@@ -99,25 +99,62 @@ export class Home extends Comp {
     showCard() {
         const container = this.query("#properties");
         container.innerHTML = "";
-        if (this.currentIndex < this.cards.length) {
+
+        if (this.currentIndex < this.cards.length)
             container.appendChild(this.cards[this.currentIndex]);
-        } else {
+
+        else {
             container.innerHTML = `<p>No more properties</p>`;
             this.cards = [];
             this.currentIndex = 0;
         }
     }
 
-    nextCard() {
-        this.currentIndex++;
-        this.showCard();
-    }
+    nextCard() { this.currentIndex++; this.showCard(); }
 
     afterRender() {
+        const el = this.query("#typewriter");
+        const phrases = [
+            "Describe your perfect home",
+            "Where would it be?",
+            "Flat, House, Bungalow?",
+            "Less than £1000 a month?",
+            "One bed. two bed?",
+            "Near a train station or uni?",
+            "Quiet, Pets, LGBTQ, Vegan?",
+            "Let's find your dream home :)"
+        ];
+        let current = 0;
+
+        const typePhrase = (phrase, i = 0) => {
+            if (i <= phrase.length) {
+                el.textContent = phrase.slice(0, i);
+                setTimeout(() => typePhrase(phrase, i + 1), 30);
+            } else {
+                setTimeout(() => deletePhrase(phrase.length), 1200);
+            }
+        };
+
+        const deletePhrase = (i) => {
+            if (i >= 0) {
+                el.textContent = el.textContent.slice(0, i);
+                setTimeout(() => deletePhrase(i - 1), 30);
+            } else {
+                current = (current + 1) % phrases.length;
+                setTimeout(() => typePhrase(phrases[current]), 500);
+            }
+        };
+
+        typePhrase(phrases[current]);
+
+        /**
+         * Main property scrolling loop logic
+         */
         this.subscribe("query-results", (e) => {
             const properties = e.detail;
             this.cards = properties.map(prop => {
-                // Add prop card here
+
+                // Card creation and setup
                 const card = document.createElement("comp-prop-card");
                 card.title = prop.title;
                 card.profile = prop.landlord_info.profilePicture;
@@ -126,16 +163,19 @@ export class Home extends Comp {
                 card.images = prop.images;
                 card.email = prop.landlord_info.email;
 
+                // Remove background elements and clean up UI
                 this.query(".head").classList.add("hide");
                 this.query(".modal").classList.add("stick");
                 if (screen.width < 800) {
                     this.query("comp-navbar").style.display = "none";
                 }
 
+                // Subscribe to each cards event listener and add new class for animation
                 this.subscribe("card-dismiss", () => this.nextCard());
                 requestAnimationFrame(() => {
                     card.query(".container").classList.add("in-view");
                 })
+
                 return card;
             });
 
@@ -145,5 +185,4 @@ export class Home extends Comp {
     }
 
     static { Comp.register(this); }
-
 }
