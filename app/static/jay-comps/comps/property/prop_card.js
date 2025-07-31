@@ -1,7 +1,8 @@
 import { Comp } from "jay-comp";
 
 class PropCard extends Comp {
-    read_ = false; title_; profile_; landlord_name_; price_; images_; email_;
+    read_ = false;
+    title_; profile_; landlord_name_; price_; images_; email_; description_;
 
     set read(v) {
         this.read_ = v;
@@ -30,6 +31,10 @@ class PropCard extends Comp {
         this.email_ = v;
         this.update();
     }
+    set description(v) {
+        this.description_ = v;
+        this.update();
+    }
 
     beforeRender() {
         if (!this.title_) this.title_ = "This is a title";
@@ -37,6 +42,7 @@ class PropCard extends Comp {
         if (!this.images_) this.images_ = ["Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg"];
         if (!this.price_) this.price_ = 1000;
         if (!this.email_) this.email_ = "jb@vmi.tv";
+        if (!this.description_) this.description_ = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
     }
 
     createHTML() {
@@ -46,6 +52,7 @@ class PropCard extends Comp {
 
         return /*html*/`
         <div class="container">
+
             <div class="card">
                 <div class="info">
                     <h5 style="font-weight: bold; font-size: 24px">${this.title_}</h5>
@@ -63,7 +70,20 @@ class PropCard extends Comp {
                     </div>
                 </div>
             </div>
-            <div class="details"></div>
+            <div class="details">
+                <h4 style="font-weight: bold;">${this.title_}</h4>
+                    <div class="card-elements">
+                    <div class="landlord">
+                        <img class="profile" src="${profile}">
+                        <p>${this.landlord_name_}</p>
+                    </div>
+                    <h6 style="font-weight: bold">£${this.price_}</h6>
+                </div>
+                <div class="description">
+                    <p>${this.description_}</p>
+                </div>
+            </div>
+  
         </div>
         `
     }
@@ -91,6 +111,28 @@ class PropCard extends Comp {
                 }
             },
             {
+                class: "details",
+                overflow: "hidden",
+                widthPercent: 0,
+                maxWidth: 500,
+                maxHeight: 0,
+                padding: [0, 20, 0, 20],
+                opacity: 0,
+                transform: "translateY(20px)",
+                transition: "max-height 0.5s ease, opacity 0.4s ease, transform 0.4s ease",
+                media: {
+                    maxWidthBp: 600,
+                    display: "none"
+                }
+            },
+            {
+                class: "show-details",
+                maxHeight: 400,
+                widthPercent: 100,
+                opacity: 1,
+                transform: "translateY(0)"
+            },
+            {
                 class: "in-view",
                 transform: "translateY(0)"
             },
@@ -107,8 +149,7 @@ class PropCard extends Comp {
                 heightPercent: 100,
                 maxHeight: 700,
                 borderRadius: 14,
-                backgroundImageUrl: `https://whondo.com/uploads?path=${this.images_[0]}`,
-                backgroundSize: "cover",
+                backgroundImageUrl: `https://whondo.com/uploads?path=${this.images_[0]}`, backgroundSize: "cover",
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
@@ -163,6 +204,15 @@ class PropCard extends Comp {
                     maxWidthBp: 600,
                     paddingBottom: 80
                 }
+            },
+            {
+                class: "description",
+                display: "flex",
+                padding: 10,
+                backgroundVar: "black10",
+                borderVar: "border",
+                borderRadius: 8,
+                marginTop: 20
             }
         ]
     }
@@ -183,11 +233,16 @@ class PropCard extends Comp {
 
     afterRender() {
         const container = this.query(".container");
+        const card = this.query(".card");
         const next = this.getById("next");
         const email = this.getById("email");
 
         requestAnimationFrame(() => {
             container.classList.add("in-view");
+        });
+
+        card.addEventListener("click", () => {
+            this.query(".details").classList.add("show-details");
         });
 
         email.path = "mail.svg";

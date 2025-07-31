@@ -26,6 +26,8 @@ import './comps/icons/icons.js';
 
 // Property
 import './comps/property/prop_card.js';
+import './comps/property/image.js';
+import './comps/property/Large_img.js';
 
 // Animations
 import './comps/animations/spinner.js';
