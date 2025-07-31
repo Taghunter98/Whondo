@@ -5,6 +5,7 @@ export class AccountMana extends Comp {
     createHTML(){
         return  /* html */`
         <comp-update-profile id="update" style="display: block"></comp-update-profile>
+
         <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">

@@ -14,6 +14,7 @@ import './comps/cookie.js'
 import './comps/banner.js'
 import './comps/profile_option.js'
 import './comps/popup/update_prof.js'
+import './comps/popup/change_pass.js'
 
 // Navbar
 import './comps/navbar/navbar.js';
