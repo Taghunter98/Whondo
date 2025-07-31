@@ -202,18 +202,15 @@ class PropCard extends Comp {
                 background: "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.90) 65.57%)",
                 media: {
                     maxWidthBp: 600,
-                    borderRadius: 0
+                    borderRadius: 0,
+                    paddingBottom: 120
                 }
             },
             {
                 class: "card-elements",
                 display: "flex",
                 justifyContent: "space-between",
-                paddingTop: 15,
-                media: {
-                    maxWidthBp: 600,
-                    paddingBottom: 80
-                }
+                paddingTop: 15
             },
             {
                 class: "landlord",
