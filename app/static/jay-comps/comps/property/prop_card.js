@@ -76,7 +76,7 @@ class PropCard extends Comp {
                         <h6 style="font-weight: bold">£${this.price_}</h6>
                     </div>
                     <div class="card-buttons">
-                        <comp-card-icon id="next"></comp-card-icon>
+                        <comp-card-icon id="next" class="next"></comp-card-icon>
                         <comp-card-icon id="email"></comp-card-icon>
                     </div>
                 </div>
@@ -299,6 +299,13 @@ class PropCard extends Comp {
                 display: "flex",
                 justifyContent: "space-between",
                 gap: 10
+            },
+            {
+                media: {
+                    class: "next",
+                    maxWidthBp: 600,
+                    display: "none"
+                }
             }
         ]
     }
