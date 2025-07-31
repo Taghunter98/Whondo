@@ -155,11 +155,25 @@ export class Keywords extends Input {
         tagEl.appendChild(removeBtn);
 
         removeBtn.addEventListener("click", () => {
-            this.tags_ = this.tags_.filter(tag => tag !== text);
-            this.tagsEl.removeChild(tagEl);
+            this.removeTag(text)
         });
 
         this.tagsEl.appendChild(tagEl);
+    }
+
+    removeTag(text){
+        const tagIndex = this.tags_.findIndex(tag => tag === text);
+        if(tagIndex === -1) return;
+
+        this.tags_ = this.tags_.filter(tag => tag !== text);
+
+        const tagEls = Array.from(this.tagsEl.querySelectorAll(".tag"));
+        for (let tagEl of tagEls){
+            if(tagEl.textContent.includes(text)){
+                this.tagsEl.removeChild(tagEl);
+                break;
+            }
+        }
     }
 
     afterRender() {

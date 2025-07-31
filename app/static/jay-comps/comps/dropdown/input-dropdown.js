@@ -2,7 +2,7 @@ import { Input } from "../inputs/input.js";
 
 export class InputDropdown extends Input{
 
-    list_ = []; 
+    list_ = []; strict_;
 
     set list(newList){
         if(!Array.isArray(newList)) return;
@@ -12,7 +12,13 @@ export class InputDropdown extends Input{
             this.dropdown.attachToInput(this.inputEl);
         }
     }
-    
+
+    set strict(flag){
+        this.strict_ = flag;
+        this.update();
+    }
+
+    get strict() { return this.strict_;}
     get list() { return this.list_;}
 
     beforeRender(){
@@ -67,9 +73,22 @@ export class InputDropdown extends Input{
             }));
             
         });
-       
-    }
 
+        this.inputEl.addEventListener("blur", () => {
+            if (!this.strict_) return;
+            const val = this.inputEl.value.trim();
+            const match = this.list_.includes(val);
+
+            if (!match) {
+                this.inputEl.value = "";
+                this.inputEl.classList.add("error");
+                
+            } else {
+                this.inputEl.classList.remove("error");
+            }
+        });
+    }
+       
     static { super.register(this) };
 
 }
