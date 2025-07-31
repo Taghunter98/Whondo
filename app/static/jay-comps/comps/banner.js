@@ -104,7 +104,7 @@ export class Banner extends Comp {
             btn1.text = this.btnText1_;
             btn1.fill = true;
             btn1.addEventListener("click", () => {
-                btn1.dispatchEvent(new CustomEvent("button1-click", {
+                btn1.dispatchEvent(new CustomEvent("btn1-click", {
                     bubbles: true,
                     composed: true,
                 }));
@@ -117,7 +117,7 @@ export class Banner extends Comp {
             btn2.fill = false;
 
             btn2.addEventListener("click", () => {
-                btn2.dispatchEvent(new CustomEvent("button2-click", {
+                btn2.dispatchEvent(new CustomEvent("btn2-click", {
                     bubbles: true,
                     composed: true,
                 }));

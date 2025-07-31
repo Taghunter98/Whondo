@@ -54,11 +54,7 @@ createCSS() {
             overflow: "hidden",
             position: "fixed",
             zIndex: 9999,
-            media: {
-                maxWidthBp: 600,
-                padding: 20,
-                width: "auto"
-            }
+    
         };
 
         const container = {
