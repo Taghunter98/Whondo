@@ -86,7 +86,8 @@ class PropCard extends Comp {
                 transition: "transform 0.4s ease",
                 media: {
                     maxWidthBp: 600,
-                    heightCalc: "100dvh"
+                    heightCalc: "100dvh",
+                    padding: 0
                 }
             },
             {
@@ -160,7 +161,7 @@ class PropCard extends Comp {
                 paddingTop: 20,
                 media: {
                     maxWidthBp: 600,
-                    paddingBottom: 100
+                    paddingBottom: 80
                 }
             }
         ]
