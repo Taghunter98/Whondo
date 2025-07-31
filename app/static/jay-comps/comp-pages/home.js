@@ -95,12 +95,18 @@ export class Home extends Comp {
             },
             {
                 class: "no-properties",
+                background: "white",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "centre",
                 alignItems: "centre",
                 maxWidth: 400,
-                textAlign: "centre"
+                textAlign: "centre",
+                media: {
+                    maxWidthBp: 600,
+                    widthPercent: 100,
+                    height: "100dvh",
+                }
             }
         ];
     }
@@ -196,6 +202,7 @@ export class Home extends Comp {
                 this.query(".modal").classList.add("stick");
                 if (screen.width < 800) {
                     this.query("comp-navbar").style.display = "none";
+                    this.query(".background").style.background = "var(--black100)";
                 }
 
                 // Subscribe to each cards event listener and add new class for animation

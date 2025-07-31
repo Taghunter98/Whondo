@@ -137,7 +137,7 @@ class PropCard extends Comp {
                 justifyContent: "center",
                 alignItems: "center",
                 transform: "translateY(100%)",
-                transition: "transform 0.4s ease",
+                transition: "transform .1s ease-in",
                 media: {
                     maxWidthBp: 600,
                     heightCalc: "100dvh",
