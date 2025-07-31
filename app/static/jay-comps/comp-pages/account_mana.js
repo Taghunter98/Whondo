@@ -4,6 +4,7 @@ export class AccountMana extends Comp {
 
     createHTML(){
         return  /* html */`
+        <comp-update-profile id="update" style="display: block"></comp-update-profile>
         <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
@@ -14,8 +15,6 @@ export class AccountMana extends Comp {
                 </div>
             </div>
         </div>
-
-
         `;
     }
 
@@ -68,7 +67,6 @@ export class AccountMana extends Comp {
         const btn2 = banner.query("comp-button.btn2");
         btn2.variant = 1;
         
-
         const option1 = this.getById("option1");
         option1.title = "Update Account";
         option1.subTitle = "Update your account information.";
@@ -76,6 +74,33 @@ export class AccountMana extends Comp {
         const option2 = this.getById("option2");
         option2.title = "Change Password";
         option2.subTitle = "Update your password.";
+
+        const update = this.getById("update");
+        update.title = "Update Account";
+        const name = update.query("#name");
+        name.label = "Name";
+        name.prompt = "Enter name"
+
+        const surname = update.query("#surname");
+        surname.label = "surname";
+        surname.prompt = "Enter surname"
+
+        const bio = update.query("#bio");
+        bio.label = "Bio";
+        bio.prompt = "Tell us more about you..."
+
+        const pic = update.query("#picture");
+        pic.label = "Profile picture";
+        pic.prompt = "Upload photo";
+
+        const back = update.query(".back");
+        back.text = "Back";
+        back.variant = 2;
+        back.fill = true;
+
+        const submit = update.query(".submit");
+        submit.text = "Save";
+        submit.fill = true;
     }
 
     static { Comp.register(this); }

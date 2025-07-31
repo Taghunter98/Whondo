@@ -13,6 +13,7 @@ import './comps/popup/popup.js';
 import './comps/cookie.js'
 import './comps/banner.js'
 import './comps/profile_option.js'
+import './comps/popup/update_prof.js'
 
 // Navbar
 import './comps/navbar/navbar.js';
