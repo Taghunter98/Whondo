@@ -53,7 +53,16 @@ export class InputDropdown extends Input{
 
         this.dropdown.addEventListener("option-selected", (e) => {
             if (e.detail.text) this.inputEl.value = e.detail.text;
+            
+            this.dispatchEvent(new CustomEvent("option-selected", {
+                detail: e.detail,
+                bubbles: true,
+                composed: true
+            }));
+            
         });
+
+       
        
     }
 

@@ -103,6 +103,14 @@ createCSS() {
     afterRender() {
         this.query("comp-button").text = this.text_;
         this.query("comp-button").fill = true;
+
+         this.query("comp-button").addEventListener("click", () =>{
+            this.style.display = "none";
+            this.dispatchEvent(new CustomEvent("popup-button",{
+                bubbles: true,
+                composed: true
+            }));
+         });
         
     }
 
