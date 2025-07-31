@@ -82,6 +82,7 @@ class PropCard extends Comp {
                 <div class="description">
                     <p>${this.description_}</p>
                 </div>
+                <div class="images"></div>
             </div>
   
         </div>
@@ -112,14 +113,15 @@ class PropCard extends Comp {
             },
             {
                 class: "details",
-                overflow: "hidden",
                 widthPercent: 0,
                 maxWidth: 500,
-                maxHeight: 0,
+                heightPercent: 100,
+                maxHeight: 700,
                 padding: [0, 20, 0, 20],
                 opacity: 0,
+                overflow: "hidden",
                 transform: "translateY(20px)",
-                transition: "max-height 0.5s ease, opacity 0.4s ease, transform 0.4s ease",
+                transition: "width 0.4s ease, max-height 0.5s ease, opacity 0.4s ease, transform 0.4s ease",
                 media: {
                     maxWidthBp: 600,
                     display: "none"
@@ -127,7 +129,6 @@ class PropCard extends Comp {
             },
             {
                 class: "show-details",
-                maxHeight: 400,
                 widthPercent: 100,
                 opacity: 1,
                 transform: "translateY(0)"
@@ -213,6 +214,13 @@ class PropCard extends Comp {
                 borderVar: "border",
                 borderRadius: 8,
                 marginTop: 20
+            },
+            {
+                class: "images",
+                display: "flex",
+                gap: 10,
+                overflow: "hidden",
+                paddingTop: 20
             }
         ]
     }
@@ -236,9 +244,16 @@ class PropCard extends Comp {
         const card = this.query(".card");
         const next = this.getById("next");
         const email = this.getById("email");
+        const images = this.query(".images");
 
         requestAnimationFrame(() => {
             container.classList.add("in-view");
+        });
+
+        this.images_.forEach(i => {
+            const img = document.createElement("comp-image");
+            img.path = i;
+            images.appendChild(img);
         });
 
         card.addEventListener("click", () => {
@@ -251,7 +266,9 @@ class PropCard extends Comp {
         });
 
         next.path = "close.svg";
-        next.addEventListener("click", () => {
+        next.addEventListener("click", (e) => {
+            e.stopPropagation();
+
             container.classList.remove("in-view");
             container.classList.add("out-view");
 
