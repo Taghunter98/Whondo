@@ -137,17 +137,11 @@ export class ChangePass extends Comp {
      async passwordChange() {
         const fd = new FormData();
 
-        fd.append("name", this.getById("name").value);
-        fd.append("surname", this.getById("surname").value);
+        fd.append("current", this.getById("current").value);
+        fd.append("newPassword", this.getById("new").value);
+        fd.append("confirm", this.getById("confirm").value);
 
-        const p = this.getById("picture");
-        const b = this.getById("bio");
-
-        if (o.value) fd.append("occupation", o.value);
-        if (b.value) fd.append("bio", b.value);
-        if (p.value) fd.append("file", p.value);
-
-        const result = await this.submitForm("/register", fd);
+        const result = await this.submitForm("/", fd);
 
         if (result.ok) this.update("<comp-create></comp-create>")
         else alert(result.error);

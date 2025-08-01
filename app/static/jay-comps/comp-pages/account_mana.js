@@ -64,6 +64,8 @@ export class AccountMana extends Comp {
         popup.paragraph = paragraph;
         popup.text = buttonText;
         popup.style.display = "flex";
+        const icon = popup.query(".icon");
+        icon.style.display = "none";
     }
 
     async logout() {
@@ -71,10 +73,7 @@ export class AccountMana extends Comp {
         if (res.ok) {
             this.showPopup("logout", "Logout Successful", "You’ve been logged out.", "Back to Login");
             const popup = this.getById("logout");
-            const icon = popup.query(".icon");
-            const btn = popup.query(".btn");
-            icon.style.display = "none";
-            btn.style.width = "125px"
+           
             popup.addEventListener("popup-button", () => { window.location.assign("/login"); }, { once: true });
         } else {
             this.showPopup("logout", "Logout Failed", res.error || "Something went wrong.");
