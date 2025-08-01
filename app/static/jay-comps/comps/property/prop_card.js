@@ -166,7 +166,7 @@ class PropCard extends Comp {
                 transform: "scale(0.98)",
                 media: {
                     maxWidthBp: 600,
-                    transform: 0
+                    transform: "none"
                 }
             },
             {
