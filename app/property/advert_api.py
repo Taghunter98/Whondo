@@ -226,3 +226,8 @@ def update_ad():
             return render_template("update_advert.html")
         else:
             return redirect("/")
+
+@advert_bp.route("/advert/advertise", methods=["GET"])
+def advertise():
+    if request.method == "GET":
+        return render_template("advertise.html")

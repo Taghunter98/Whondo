@@ -68,3 +68,23 @@ def verify_user():
         return jsonify({"error": "User data not found"}), 404
 
     return jsonify(data), 200
+
+@verify_bp.route("/verify/landlord")
+def verify_landlord():
+    if not session.get("uID"):
+        return jsonify({"error": "User not logged in"}), 401
+
+    uID: int = session.get("email")
+
+    connection: object = connect()
+    cursor: object = connection.cursor()
+    
+    query: str = "INSERT INTO Landlords (uID) WHERE uID = %s"
+    cursor.execute(query, (uID,))
+    connection.commit()
+    
+    created: bool = cursor.rowcount == 1
+    if created:
+        return jsonify({"message": "landlord profile created"}), 201
+    else:
+        return jsonify({"error": "Unable to create landlord profile"}), 400
