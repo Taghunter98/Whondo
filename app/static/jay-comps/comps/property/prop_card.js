@@ -130,6 +130,7 @@ class PropCard extends Comp {
                 class: "container",
                 maxWidth: "100%",
                 display: "flex",
+                justifyContent: "centre",
                 transition: "transform 0.4s ease-in-out, opacity 0.4s ease-in-out",
                 media: {
                     maxWidthBp: 600,
@@ -162,6 +163,10 @@ class PropCard extends Comp {
                 class: "card",
                 pseudoClass: "hover",
                 transform: "scale(0.95)",
+                media: {
+                    maxWidthBp: 600,
+                    transform: 0
+                }
             },
             {
                 class: "details",

@@ -33,16 +33,7 @@ class Scroller extends Comp {
                 widthPercent: 100,
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center"
-            },
-            {
-                class: "no-properties",
-                height: "100dvh",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
                 alignItems: "center",
-                textAlign: "center"
             }
         ];
     }
@@ -75,17 +66,6 @@ class Scroller extends Comp {
         const stack = this.query(".stack");
         stack.innerHTML = "";
         this.currentIndex = 0;
-
-        if (this.cards_.length === 0) {
-            const msg = document.createElement("div");
-            msg.className = "no-properties";
-            msg.innerHTML = `
-        <h3>No more properties :(</h3>
-        <p>Maybe try refining your prompt. Saying it out loud can help!</p>
-      `;
-            stack.appendChild(msg);
-            return;
-        }
 
         // Build each card and append
         this.cards_.forEach((prop, index) => {

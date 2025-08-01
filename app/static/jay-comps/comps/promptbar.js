@@ -92,7 +92,7 @@ export class Promptbar extends Comp {
         const res = await this.request(
             "https://whondo.com/search", "POST", { prompt }
         );
-        this.result_ = res.data.results;
+        this.result_ = res;
         return this.result_;
     }
 

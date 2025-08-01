@@ -1,9 +1,6 @@
 import { Comp } from "jay-comp";
 
 export class Home extends Comp {
-    cards = [];
-    currentIndex = 0;
-
     createHTML() {
         return /* html */`
         <comp-navbar></comp-navbar>
@@ -89,18 +86,13 @@ export class Home extends Comp {
             },
             {
                 class: "no-properties",
-                background: "white",
+                height: "100dvh",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "centre",
                 alignItems: "centre",
-                maxWidth: 400,
                 textAlign: "centre",
-                media: {
-                    maxWidthBp: 600,
-                    widthPercent: 100,
-                    height: "100dvh",
-                }
+                padding: 20
             }
         ];
     }
@@ -108,13 +100,6 @@ export class Home extends Comp {
     showCard() {
         const container = this.query("#properties");
         container.innerHTML = "";
-
-        const message = `
-        <div class="no-properties">
-            <h3 style="font-weight: bold; font-size: 24px;">No more properties :(</h3>
-            <p>It's ok! Maybe try refining your prompt, the best way is to try and say it out loud trust me!</p>
-        </div>
-        `
 
         if (this.currentIndex < this.cards.length) {
             const card = this.cards[this.currentIndex];
@@ -169,21 +154,27 @@ export class Home extends Comp {
 
         typePhrase(phrases[current]);
 
-        /**
-         * Main property scrolling loop logic
-         */
         this.subscribe("query-results", (e) => {
             const properties = this.query("#properties");
             properties.innerHTML = "";
-            this.cards = [];
-            this.currentIndex = 0;
 
             // Remove background elements and clean up UI
             this.query(".head").classList.add("hide");
             this.query(".modal").classList.add("stick");
 
+            if (e.detail.error) {
+                const msg = document.createElement("div");
+                msg.className = "no-properties";
+                msg.innerHTML = `
+        <h3>No properties :(</h3>
+        <p>Maybe try refining your prompt. Saying it out loud can help!</p>
+      `;
+                properties.appendChild(msg);
+                return;
+            }
+
             const scroller = document.createElement("comp-scroller");
-            scroller.cards = e.detail;
+            scroller.cards = e.detail.data.results;
             properties.appendChild(scroller);
         })
     }
