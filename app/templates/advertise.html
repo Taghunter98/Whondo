@@ -13,9 +13,11 @@
         <script>
             const btn = document.querySelector("button");
             btn.addEventListener("click", () => {
-                fetch("/verify/landlord").then((res) => {
-                    if (res.ok) console.log(res.json());
-                    else console.log(res.data);
+                fetch("https://whondo.com/verify/landlord", {
+                    method: "POST",
+                }).then((res) => {
+                    console.log(res.json());
+                    if (res.ok) alert(res.message);
                 });
             });
         </script>
