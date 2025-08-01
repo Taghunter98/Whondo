@@ -313,7 +313,7 @@ Most people view adverts on mobile devices, so vertical (portrait) photos work b
         }
 
         const uploadedPics = pics.filter(pic => pic.value);
-        if (uploadedPics.length < 3) {
+        if (uploadedPics.length < 1) {
 
             isValid = false;
 
