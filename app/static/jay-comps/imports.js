@@ -23,6 +23,12 @@ import './comps/icons/prompt.js';
 import './comps/icons/icon.js';
 import './comps/icons/icons.js';
 
+// Inputs
+import './comps/inputs/input.js';
+import './comps/inputs/file.js';
+import './comps/inputs/password.js';
+import './comps/inputs/textarea.js';
+
 // Property
 import './comps/property/prop_card.js';
 import './comps/property/image.js';
@@ -37,3 +43,4 @@ import './comps/animations/spinner.js';
 import './comp-pages/login.js';
 import './comp-pages/create.js';
 import './comp-pages/home.js';
+import './comp-pages/register.js';
