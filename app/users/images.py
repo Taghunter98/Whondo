@@ -9,7 +9,7 @@ Version:     1.0
 Description: Provides functions for image validation and storage.
 """
 
-from flask import Blueprint, send_file, request, abort, current_app, jsonify
+from flask import Blueprint, send_file, send_from_directory, request, abort, current_app, jsonify
 from flask import current_app
 from PIL import Image
 from datetime import datetime

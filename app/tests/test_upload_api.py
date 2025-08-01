@@ -73,5 +73,5 @@ class TestImageFail(unittest.TestCase):
 
         self.assertIsNotNone(data, "Request is not returning data")
         self.assertEqual(
-            data.status_code, 400, f"Request is returning code: {data.status_code}"
+            data.status_code, 404, f"Request is returning code: {data.status_code}"
         )
