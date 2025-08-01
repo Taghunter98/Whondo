@@ -393,6 +393,7 @@ export class CreateProp extends Comp {
         if (result.ok) {
             const popup = this.getById("popup");
             popup.style.display = "block";
+            popup.addEventListener("popup-button", () => { window.location.assign("/"); }, { once: true });
         }
             
         else alert(result.error);
