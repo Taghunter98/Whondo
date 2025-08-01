@@ -427,7 +427,8 @@ Most people view adverts on mobile devices, so vertical (portrait) photos work b
         const submit = this.getById("submit");
         const cover = this.getById("cover");
         const pic = this.queryAll(".pic")
-
+        const keywords = this.getById("keywords")
+    
         const popup = this.getById("popup");
         popup.title = "Advert Published!";
         popup.paragraph = "Congratulations! You can now view your new advert or monitor it in your Landlord portal.";
@@ -453,8 +454,10 @@ Most people view adverts on mobile devices, so vertical (portrait) photos work b
         bathrooms.type = "number";
         propType.label = "Property Type";
         propType.prompt = "Select from dropdown";
-        propType.list = ["house", "flat", "studio", "bungalow", "bedsit", "maisonette", "shared_house", "student_accommodation", "penthouse"];
+        propType.list = [ { label: "House", value: "house" }, { label: "Flat", value: "flat" }, { label: "Studio", value: "studio" }, { label: "Bungalow", value: "bungalow" }, { label: "Bedsit", value: "bedsit" }, { label: "Maisonette", value: "maisonette" }, { label: "Shared House", value: "shared_house" }, { label: "Student Accommodation", value: "student_accommodation" }, { label: "Penthouse", value: "penthouse" },];
         propType.strict = true;
+        keyword.list = [ { label: "House", value: "house" }, { label: "Flat", value: "flat" }, { label: "Bungalow", value: "bungalow" }, { label: "Studio", value: "studio" },
+        { label: "Bedsit", value: "bedsit" }, { label: "Maisonette", value: "maisonette" }, { label: "Shared House", value: "shared_house" }, { label: "Student Accommodation", value: "student_accommodation" }, { label: "En Suite", value: "en_suite" }, { label: "Penthouse", value: "penthouse" },{ label: "Furnished", value: "furnished" }, { label: "Unfurnished", value: "unfurnished" }, { label: "Bills Included", value: "bills_included" }, { label: "All Inclusive", value: "all_inclusive" }, { label: "Double Room", value: "double_room" }, { label: "Single Room", value: "single_room" },{ label: "Balcony", value: "balcony" }, { label: "Garden", value: "garden" }, { label: "Parking", value: "parking" }, { label: "Pets Allowed", value: "pets_allowed" }, { label: "WiFi Included", value: "wifi_included" }, { label: "Utilities Included", value: "utilities_included" }, { label: "Short Let", value: "short_let" }, { label: "Long Let", value: "long_let" }, { label: "No Deposit", value: "no_deposit" },{ label: "Low Deposit", value: "low_deposit" }, { label: "DSS Accepted", value: "dss_accepted" }, { label: "Guarantor Required", value: "guarantor_required" }, { label: "No Guarantor", value: "no_guarantor" }, { label: "Student Friendly", value: "student_friendly" }, { label: "City Centre", value: "city_centre" },  { label: "Near University", value: "near_university" }, { label: "Close to Station", value: "close_to_station" }, { label: "Bus Route", value: "bus_route" }, { label: "Zone 1", value: "zone_1" }, { label: "Zone 2", value: "zone_2" }, { label: "Zone 3", value: "zone_3" }, { label: "Zone 4", value: "zone_4" }, { label: "Cycle Friendly", value: "cycle_friendly" },{ label: "LGBTQ+ Friendly", value: "lgbtq_friendly" }, { label: "Vegan Household", value: "vegan_household" }, { label: "Non Smoking", value: "non_smoking" }, { label: "Smoking Allowed", value: "smoking_allowed" },{ label: "Social House", value: "social_house" },{ label: "Quiet House", value: "quiet_house" },{ label: "Wheelchair Accessible", value: "wheelchair_accessible" },{ label: "Lift", value: "lift" },{ label: "Ground Floor", value: "ground_floor" },{ label: "Bike Storage", value: "bike_storage" }];
 
         description.label = "Property description";
         description.prompt = "Tell us about your home, be descriptive!";
@@ -489,14 +492,16 @@ Most people view adverts on mobile devices, so vertical (portrait) photos work b
         this.prevPropType = null;
         propType.subscribe("option-selected", (e) => {
             const keywords = this.getById("keywords");
-            const selectedText = e.detail?.text;
-            if (!selectedText || typeof keywords.addTag !== "function") return;
+            const selectedLabel = e.detail?.label;
+            if (!selectedLabel || typeof keywords.addTag !== "function") return;
+            const match = propType.list.find(opt => opt.label === selectedLabel);
+            if (!match) return
             if (this.prevPropType && typeof keyword.removeTag === "function") {
                 keywords.removeTag(this.prevPropType);
             }
 
-            keywords.addTag(selectedText);
-            this.prevPropType = selectedText;
+            keywords.addTag(selectedLabel);
+            this.prevPropType = match.value;
         })
 
         nextBtn.addEventListener("click", () => {

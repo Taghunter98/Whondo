@@ -50,7 +50,7 @@ export class Dropdown extends Comp {
     }
 
     setOptions(options) {
-        this.options_ = options || [];
+        this.options_ = (options || []).map(opt => typeof opt === "string" ? {label: opt, value: opt} : opt);
         this.filtered_ = [...this.options_]
         this.renderList();
     }
@@ -68,15 +68,15 @@ export class Dropdown extends Comp {
      * use for find the options that match the query.
      */
     filterOptions(query) {
-        const lower = query.trim().toLowerCase();
-        this.filtered_ = this.options_.filter(opt => opt.toLowerCase().includes(lower));
+        const q = query.toLowerCase();
+        this.filtered_ = this.options_.filter(opt => opt.label.toLowerCase().includes(q));
         this.renderList();
         this.showDropdown();
     }
 
     renderList() {
         this.dropdownEl.innerHTML = this.filtered_
-            .map(opt => `<div class="dropdown-item" data-value="${opt}">${opt}</div>`)
+            .map(opt => `<div class="dropdown-item" data-value="${opt.value}">${opt.label}</div>`)
             .join("");
     }
 
@@ -116,9 +116,10 @@ export class Dropdown extends Comp {
             const item = e.target.closest(".dropdown-item");
             if (!item) return;
 
-            const text = item.dataset.value;
+                const label = item.textContent;
+                const value = item.dataset.value || label;
 
-            this.publish("option-selected", {text});
+            this.publish("option-selected", {label,value});
                
 
             this.hideDropdown();
