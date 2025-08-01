@@ -32,14 +32,8 @@ export class Home extends Comp {
                 display: "flex",
                 position: "fixed",
                 top: 0, left: 0, right: 0, bottom: 0,
-                overflow: "hidden",
-                flexDirection: "column",
                 justifyContent: "centre",
                 alignItems: "centre",
-                widthPercent: 100,
-                height: "100dvh",
-                height: " -webkit - fill - available",
-                overflow: "hidden",
                 background: "white",
             },
             {
@@ -187,10 +181,6 @@ export class Home extends Comp {
             // Remove background elements and clean up UI
             this.query(".head").classList.add("hide");
             this.query(".modal").classList.add("stick");
-            if (screen.width < 800) {
-                // this.query("comp-navbar").style.display = "none";
-                this.query(".background").style.background = "var(--black100)";
-            }
 
             const scroller = document.createElement("comp-scroller");
             scroller.cards = e.detail;

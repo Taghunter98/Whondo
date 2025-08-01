@@ -128,59 +128,26 @@ class PropCard extends Comp {
         return [
             {
                 class: "container",
-                boxSizing: "border-box",
-                width: "100vw",
                 maxWidth: "100%",
-                padding: [80, 0, 120, 0],
-                background: "white",
-                top: 0,
-                left: 0,
-                height: "calc(100vh - 200px)",
-                height: "100dvh",
                 display: "flex",
-                justifyContent: "center",
                 transition: "transform 0.4s ease-in-out, opacity 0.4s ease-in-out",
                 media: {
                     maxWidthBp: 600,
-                    height: "100dvh",
                     width: "100vw",
                     padding: 0
                 }
             },
             {
-                class: "details",
-                widthPercent: 0,
-                maxWidth: 500,
-                heightPercent: 100,
-                maxHeight: 700,
-                padding: [0, 20, 0, 20],
-                opacity: 0,
-                overflow: "scroll",
-                transform: "translateY(20px)",
-                transition: "width 0.4s ease, max-height 0.5s ease, opacity 0.4s ease, transform 0.2s ease",
-                media: {
-                    maxWidthBp: 600,
-                    display: "none"
-                }
-            },
-            {
-                class: "show-details",
-                widthPercent: 100,
-                opacity: 1,
-                transform: "translateY(0)"
-            },
-            {
                 class: "card",
                 display: "flex",
                 aspectRatio: "9 / 16",
-                overflow: "hidden",
                 flexDirection: "column",
                 backgroundVar: "black100",
-                maxHeight: 700,
+                maxHeight: 570,
                 borderRadius: 14,
                 backgroundImageUrl: `https://whondo.com/uploads?path=${this.images_[0]}`, backgroundSize: "cover",
-                transition: "transform 0.4s ease-in-out, opacity 0.4s ease-in-out",
-                willChange: "transform, opacity",
+                transition: "transform 0.2s ease-in-out",
+                willChange: "transform",
                 cursor: "pointer",
                 media: {
                     maxWidthBp: 600,
@@ -191,7 +158,34 @@ class PropCard extends Comp {
                     borderRadius: 0
                 }
             },
-            // TODO add nice bouncy hover or something
+            {
+                class: "card",
+                pseudoClass: "hover",
+                transform: "scale(0.95)",
+            },
+            {
+                class: "details",
+                visibility: "hidden",
+                width: 0,
+                maxWidth: 500,
+                opacity: 0,
+                maxHeight: 570,
+                overflow: "scroll",
+                transform: "translateY(20px)",
+                transition: "opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease",
+                padding: [0, 20, 0, 20],
+                media: {
+                    maxWidthBp: 600,
+                    display: "none"
+                }
+            },
+            {
+                class: "show-details",
+                visibility: "visible",
+                widthPercent: 100,
+                opacity: 1,
+                transform: "translateY(0)"
+            },
             {
                 class: "info",
                 marginTop: "auto",
@@ -262,7 +256,7 @@ class PropCard extends Comp {
                 borderRadius: [14, 14, 0, 0],
                 height: "auto",
                 overflow: "scroll",
-                maxHeight: "80vh",
+                maxHeightVh: 70,
                 background: "white",
                 padding: [20, 20],
                 boxSizing: "border-box",
@@ -338,8 +332,10 @@ class PropCard extends Comp {
         this.keywords_.forEach(i => mobKws.appendChild(this.createChip(i)));
 
         card.addEventListener("click", () => {
+            const details = this.query(".details");
             if (screen.width <= 600) modal.classList.add("mobile-view");
-            else this.query(".details").classList.add("show-details");
+            else if (details.classList.contains("show-details")) details.classList.remove("show-details");
+            else details.classList.add("show-details");
         });
 
         close.addEventListener("click", () => modal.classList.remove("mobile-view"));

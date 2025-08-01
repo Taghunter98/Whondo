@@ -14,8 +14,6 @@ class Scroller extends Comp {
     }
 
     createHTML() {
-        // Always emit a .stack container.  
-        // If empty, we’ll show the “no properties” panel in afterRender.
         return /*html*/`<div class="stack"></div>`;
     }
 
@@ -24,13 +22,9 @@ class Scroller extends Comp {
             {
                 class: "stack",
                 height: "100dvh",
-                widthPercent: 100,
                 overflowY: "auto",
                 scrollSnapType: "y mandatory",
                 overscrollBehavior: "contain",
-                WebkitOverflowScrolling: "touch",
-                margin: 0,
-                padding: 0
             },
             {
                 class: "slide",
@@ -80,8 +74,8 @@ class Scroller extends Comp {
     afterRender() {
         const stack = this.query(".stack");
         stack.innerHTML = "";
+        this.currentIndex = 0;
 
-        // No cards? Show the “no properties” message
         if (this.cards_.length === 0) {
             const msg = document.createElement("div");
             msg.className = "no-properties";
