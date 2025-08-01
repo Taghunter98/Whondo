@@ -125,6 +125,7 @@ class PropCard extends Comp {
     }
 
     createCSS() {
+        const cardHeight = 550;
         return [
             {
                 class: "container",
@@ -144,7 +145,7 @@ class PropCard extends Comp {
                 aspectRatio: "9 / 16",
                 flexDirection: "column",
                 backgroundVar: "black100",
-                maxHeight: 570,
+                maxHeight: cardHeight,
                 borderRadius: 14,
                 backgroundImageUrl: `https://whondo.com/uploads?path=${this.images_[0]}`, backgroundSize: "cover",
                 transition: "transform 0.2s ease-in-out",
@@ -162,7 +163,7 @@ class PropCard extends Comp {
             {
                 class: "card",
                 pseudoClass: "hover",
-                transform: "scale(0.95)",
+                transform: "scale(0.98)",
                 media: {
                     maxWidthBp: 600,
                     transform: 0
@@ -174,7 +175,7 @@ class PropCard extends Comp {
                 width: 0,
                 maxWidth: 500,
                 opacity: 0,
-                maxHeight: 570,
+                maxHeight: cardHeight,
                 overflow: "scroll",
                 transform: "translateY(20px)",
                 transition: "opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease",
@@ -266,6 +267,7 @@ class PropCard extends Comp {
                 padding: [20, 20],
                 boxSizing: "border-box",
                 opacity: 0,
+                boxShadow: [0, 4, 23, 0, "var(--black20)"],
                 zIndex: 1000,
                 transition: "bottom 0.4s ease, opacity 0.4s ease"
             },

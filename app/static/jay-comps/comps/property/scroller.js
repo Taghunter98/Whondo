@@ -25,6 +25,7 @@ class Scroller extends Comp {
                 overflowY: "auto",
                 scrollSnapType: "y mandatory",
                 overscrollBehavior: "contain",
+                scrollbarWidth: "none"
             },
             {
                 class: "slide",
@@ -34,6 +35,11 @@ class Scroller extends Comp {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+            },
+            {
+                class: "stack",
+                pseudoClass: ":-webkit-scrollbar",
+                display: "none"
             }
         ];
     }
