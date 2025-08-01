@@ -80,7 +80,7 @@ export class Address extends Input {
             this.fetchSuggestions(query);
         });
 
-        this.dropdown.addEventListener("option-selected", async (e) => {
+        this.dropdown.subscribe("option-selected", async (e) => {
             const text = e.detail.text;
             const selected = this.suggestionMap.get(text);
             if (!selected) return;

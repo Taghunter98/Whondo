@@ -193,7 +193,7 @@ export class Keywords extends Input {
             }
         });
 
-        dropdown.addEventListener("option-selected", (e) => {
+        dropdown.subscribe("option-selected", (e) => {
             if (e.detail.text) {
                 this.addTag(e.detail.text);
                 this.inputEl.value = "";

@@ -118,10 +118,8 @@ export class Dropdown extends Comp {
 
             const text = item.dataset.value;
 
-            this.dispatchEvent(new CustomEvent("option-selected", {
-                detail: { text },
-                bubbles: true,
-            }));
+            this.publish("option-selected", {text});
+               
 
             this.hideDropdown();
         });
