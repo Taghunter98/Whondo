@@ -9,10 +9,12 @@ Version:     1.0
 Description: Provides functions for image validation and storage.
 """
 
-from flask import Blueprint, send_from_directory, request, abort, current_app, jsonify
+from flask import Blueprint, send_file, request, abort, current_app, jsonify
 from flask import current_app
+from PIL import Image
 from datetime import datetime
 import os
+import io
 
 from app.database.db_connect import connect
 from app.utilities.key_gen import auth_key
@@ -32,23 +34,33 @@ def serve_upload():
     Image path is accessed, if successful the image will be served to the browser,
     else an appropriate error will be returned.
 
+    The image is compressed and reformatted to JPEG for faster load times.
+
     Returns:
         Response: Served image or appropriate error message
     """
 
-    path: str = request.args.get("path")
+    p: str = request.args.get("path")
+    src: str = os.path.join(current_app.config["UPLOAD_FOLDER"], p)
+    if not os.path.isfile(src):
+        abort(404)
 
-    if not path:
-        abort(400, description="Missing 'path' query parameter.")
+    img = Image.open(src)
 
-    full_path: str = os.path.join(current_app.config["UPLOAD_FOLDER"], path)
+    img.thumbnail((800, img.height), Image.LANCZOS)
+    buf = io.BytesIO()
 
-    if not os.path.isfile(full_path):
-        abort(404, description="File not found.")
-
-    directory, filename = os.path.split(full_path)
-
-    return send_from_directory(directory, filename)
+    img.save(
+        buf,
+        format="JPEG",
+        optimize=True,
+        progressive=True,
+        quality=60,     # 60 quality
+        subsampling=2,  # 4:2:0 chroma subsampling
+        exif=b"",       # strip metadata
+    )
+    buf.seek(0)
+    return send_file(buf, mimetype="image/jpeg")
 
 
 def validate_extention(filename: str) -> bool:

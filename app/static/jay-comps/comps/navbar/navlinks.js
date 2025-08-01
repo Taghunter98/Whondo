@@ -13,7 +13,9 @@ export class NavLinks extends Comp {
 
     createCSS() {
         return [
-            { width: "auto" },
+            {
+                width: "auto"
+            },
             {
                 class: "links",
                 display: "flex",
@@ -21,7 +23,8 @@ export class NavLinks extends Comp {
                 alignItems: "center",
                 gap: 20,
                 media: { maxWidthBp: 600, display: "none" }
-            }];
+            }
+        ];
     }
 
     afterRender() {

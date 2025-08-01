@@ -20,7 +20,9 @@ class Link extends Comp {
 
     createCSS() {
         return [
-            { width: "auto" },
+            {
+                width: "auto"
+            },
             {
                 class: "link",
                 colourVar: "black80",
@@ -40,7 +42,8 @@ class Link extends Comp {
             },
             {
                 class: "link", pseudoClass: "active",
-                backgroundVar: "black20"
+                backgroundVar: "black20",
+                transform: "scale(0.95)",
             },
         ]
     }

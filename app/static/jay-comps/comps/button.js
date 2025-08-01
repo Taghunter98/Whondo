@@ -12,7 +12,7 @@
 import { Comp } from "jay-comp";
 
 export class Button extends Comp {
-    text_; variant_; fill_ = false;
+    text_; variant_;
 
     set text(v) {
         this.text_ = v;
@@ -22,17 +22,12 @@ export class Button extends Comp {
         this.variant_ = v;
         this.update();
     }
-    set fill(f) {
-        this.fill_ = f;
-        this.update();
-    }
 
     get text() { return this.text_; }
     get variant() { return this.variant_; }
-    get fill() { return this.fill_; }
 
     beforeRender() {
-        if (!this.text_) this.text_ = "this is button";
+        if (!this.text_) this.text_ = "Button";
         if (!this.variant_) this.variant_ = 1;
     }
 
@@ -53,7 +48,7 @@ export class Button extends Comp {
             borderRadius: 8,
             fontSize: 16,
             cursor: "pointer",
-            transition: ["background", "0.1s", "ease-in-out"]
+            transition: ["background", "0.1s", "ease-in-out"],
         };
 
         const primaryHover = {
@@ -67,7 +62,8 @@ export class Button extends Comp {
             class: "button",
             pseudoClass: "active",
             borderVar: "black60",
-            backgroundVar: "black60"
+            backgroundVar: "black60",
+            transform: "scale(0.95)",
         };
 
         const secondary = {
@@ -92,7 +88,8 @@ export class Button extends Comp {
         const secondaryActive = ({
             class: "button",
             pseudoClass: "active",
-            backgroundVar: "black40"
+            backgroundVar: "black40",
+            transform: "scale(0.95)",
         });
 
         if (this.variant_ == 1) {
@@ -107,9 +104,7 @@ export class Button extends Comp {
             buttonActive = secondaryActive;
         }
 
-        const fill = this.fill_ ? { widthPercent: 100 } : { width: "auto" };
-
-        return [fill, button, buttonHover, buttonActive];
+        return [button, buttonHover, buttonActive];
     }
 
     static { Comp.register(this); }
