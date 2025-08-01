@@ -102,32 +102,22 @@ Most people view adverts on mobile devices, so vertical (portrait) photos work b
     createCSS() {
 
         return [
-            {
-                class: "background",
+            { class: "background",
                 widthPercent: 100,
                 height: 1050,
                 backgroundVar: "black100",
                 overflow: "hidden",
-                media: {
-                    maxWidthBp: 600,
-                    height: 1250
-                }
+                media: { maxWidthBp: 600, height: 125 }
             },
-            {
-                class: "formObj",
+            { class: "formObj",
                 widthPercent: 100,
             },
-            {
-                class: "container",
+            { class: "container",
                 display: "flex",
-                media: {
-                    maxWidthBp: 600,
-                    flexDirection: "column",
-                    alignItems: "centre"
+                media: { maxWidthBp: 600, flexDirection: "column", alignItems: "centre"
                 }
             },
-            {
-                class: "backgroundImage",
+            { class: "backgroundImage",
                 widthPercent: 100,
                 height: 1050,
                 paddingLeft: 400,
@@ -138,14 +128,12 @@ Most people view adverts on mobile devices, so vertical (portrait) photos work b
                     padding: 0
                 }
             },
-            {
-                class: "image",
+            { class: "image",
                 widthPercent: 100,
                 heightPercent: 100,
                 objectFit: "cover"
             },
-            {
-                class: "modal",
+            { class: "modal",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -170,97 +158,75 @@ Most people view adverts on mobile devices, so vertical (portrait) photos work b
                     boxSizing: "border-box"
                 }
             },
-            {
-                class: "input",
+            { class: "input",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 20,
                 padding: [20, 0, 20, 0],
-                media: {
-                    maxWidthBp: 600,
-                    padding: [10, 0, 20, 0],
-                    gap: 15,
-                }
+                media: { maxWidthBp: 600, padding: [10, 0, 20, 0], gap: 15,}
             },
-            {
-                class: "inputRow",
+            { class: "inputRow",
                 display: "flex",
                 flexDirection: "row",
                 gap: 10,
                 widthPercent: 100,
                 justifyContent: "space-between",
-                media: {
-                    maxWidthBp: 600,
-                    flexDirection: "column"
-                }
+                media: { maxWidthBp: 600, flexDirection: "column" }
             },
-            {
-                class: "inputRowFile",
+            { class: "inputRowFile",
                 display: "flex",
                 flexDirection: "row",
                 gap: 10,
                 padding: [20, 0, 20, 0],
                 widthPercent: 100,
                 justifyContent: "space-between",
-                media: {
-                    maxWidthBp: 600,
-                    flexDirection: "column"
-                }
+                media: { maxWidthBp: 600, flexDirection: "column" }
             },
-            {
-                class: "btnRow",
+            { class: "btnRow",
                 display: "flex",
                 flexDirection: "row",
                 gap: 20,
                 widthPercent: 100,
                 justifyContent: "space-between"
             },
-            {
-                class: "title",
+            { class: "title",
                 fontWeight: "bold"
             },
-            {
-                class: "link",
+            { class: "link",
                 colourVar: "black80",
                 fontWeight: "bold",
                 textDecoration: "underline",
                 cursor: "pointer",
             },
-            {
-                class: "link",
+            { class: "link",
                 pseudoClass: "hover",
                 colourVar: "black100",
             },
-            {
-                class: "textContainer",
+            { class: "textContainer",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 10,
             },
-            {
-                class: "text",
+            { class: "text",
                 colourVar: "black60",
                 display: "flex",
                 alignSelf: "start",
                 lineHeight: "normal"
             },
-            {
-                class: "footer",
+            { class: "footer",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
                 widthPercent: 100,
                 gap: 20,
             },
-            {
-                class: "wrapper",
+            { class: "wrapper",
                 position: "relative",
                 widthPercent: 100,
             },
-            {
-                class: "unit",
+            { class: "unit",
                 position: "absolute",
                 right: 14,
                 top: "50%",
@@ -268,13 +234,11 @@ Most people view adverts on mobile devices, so vertical (portrait) photos work b
                 colourVar: "black60",
                 pointerEvents: "none",
             },
-            {
-                class: "cover",
+            { class: "cover",
                 borderRadius: 8,
                 borderVar: "borderBlack",
             },
-            {
-                class: "error",
+            { class: "error",
                 border: ["solid", 2, "var(--red100)"],
             }
         ];
