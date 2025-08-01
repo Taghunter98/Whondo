@@ -7,9 +7,19 @@ export class Advertise extends Comp {
     <div class="background">
         <div class="itemContainer">
             <div class="modal">
-                <div style="position:relative; width:100%; height:0px; padding-bottom:58.949%"><iframe allow="fullscreen" allowfullscreen height="100%" src="https://streamable.com/e/2vbvhr?nocontrols=1" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe>
-                </div>
-
+                <div class="textContainer">
+                    <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden;">
+                        <video 
+                            autoplay 
+                            muted 
+                            loop 
+                            playsinline 
+                            style="width: 100%; height: auto; object-fit: cover; border: none;"
+                        >
+                            <source src="https://www.whondo.com/static/icons/demo.mov" type="video/quicktime">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
                     <h3 class="title">Showcase Your Home the Smart Way</h3>
                     <p class="text">
                         Whondo gives your property the spotlight it deserves.<br>
