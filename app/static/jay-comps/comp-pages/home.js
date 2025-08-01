@@ -162,13 +162,17 @@ export class Home extends Comp {
             this.query(".head").classList.add("hide");
             this.query(".modal").classList.add("stick");
 
-            if (e.detail.error) {
+            if (e.detail.error || e.detail.data.results.length == 0) {
                 const msg = document.createElement("div");
                 msg.className = "no-properties";
-                msg.innerHTML = `
-        <h3>No properties :(</h3>
-        <p>Maybe try refining your prompt. Saying it out loud can help!</p>
-      `;
+                msg.innerHTML = e.detail.error
+                    ? `
+                <h6 style="font-weight: bold">Hmm, that prompt didn’t seem to work :/</h6>
+                <p>Try saying your prompt out loud, sometimes that helps clarify the intent.</p>`
+                    : `
+                <h6 style="font-weight: bold">No properties found :(</h6>
+                <p>No properties in that town yet. Try another location?</p>
+                `;
                 properties.appendChild(msg);
                 return;
             }
