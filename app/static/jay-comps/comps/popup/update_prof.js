@@ -172,17 +172,11 @@ export class UpdateProfile extends Comp {
     afterRender(){
 
         this.query("comp-button.back").addEventListener("click", () =>{
-            this.dispatchEvent(new CustomEvent("popup-back",{
-                    bubbles: true,
-                    composed: true
-            }));
+            this.publish("popup-back");
         });
 
          this.query("comp-button.submit").addEventListener("click", () =>{
-            this.dispatchEvent(new CustomEvent("popup-submit",{
-                    bubbles: true,
-                    composed: true
-            }));
+            this.publish("popup-submit");
         });
 
     }

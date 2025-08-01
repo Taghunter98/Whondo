@@ -74,7 +74,7 @@ export class AccountMana extends Comp {
             this.showPopup("logout", "Logout Successful", "You’ve been logged out.", "Back to Login");
             const popup = this.getById("logout");
            
-            popup.addEventListener("popup-button", () => { window.location.assign("/login"); }, { once: true });
+            popup.subscribe("popup-button", () => { window.location.assign("/login"); }, { once: true });
         } else {
             this.showPopup("logout", "Logout Failed", res.error || "Something went wrong.");
         }
@@ -140,7 +140,7 @@ export class AccountMana extends Comp {
         back.variant = 2;
         back.fill = true;
 
-        update.addEventListener("popup-back", () => {
+        update.subscribe("popup-back", () => {
             update.style.display = "none";
         });
 
@@ -177,7 +177,7 @@ export class AccountMana extends Comp {
         save.text = "Save";
         save.fill = true;
 
-        pass.addEventListener("popup-back", () => {
+        pass.subscribe("popup-back", () => {
             pass.style.display = "none";
             const current = pass.query("#current");
             const newPass = pass.query("#new");
@@ -192,11 +192,11 @@ export class AccountMana extends Comp {
             
         });
 
-        btn1.addEventListener("btn1-click", () => {
+        btn1.subscribe("btn1-click", () => {
             this.deleteAccount()
         })
 
-        btn2.addEventListener("btn2-click", () => {
+        btn2.subscribe("btn2-click", () => {
             this.logout();
         })
 

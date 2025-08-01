@@ -102,10 +102,7 @@ createCSS() {
 
          this.query("comp-button").addEventListener("click", () =>{
             this.style.display = "none";
-            this.dispatchEvent(new CustomEvent("popup-button",{
-                bubbles: true,
-                composed: true
-            }));
+            this.publish("popup-button");
          });
         
     }

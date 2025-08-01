@@ -206,10 +206,7 @@ export class ChangePass extends Comp {
         });
 
         this.query("comp-button.back").addEventListener("click", () =>{
-            this.dispatchEvent(new CustomEvent("popup-back",{
-                    bubbles: true,
-                    composed: true
-            }));
+            this.publish("popup-back");
         });
 
     }
