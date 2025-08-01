@@ -72,6 +72,13 @@ def verify_user():
 
 @verify_bp.route("/verify/landlord", methods=["POST"])
 def verify_landlord():
+    """
+    The REST API verifies that a user is logged in and uses the uID to set the user as a
+    Landlord.
+
+    Returns:
+        Response: HTTP Response
+    """
     if request.method == "POST":
         uID = session.get("uID")
         if not uID:

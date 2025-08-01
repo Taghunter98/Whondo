@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: "./app/static/jay-comps/imports.js",
+  entry: "./app/static/frontend/imports.js",
   mode: 'development',
   output: {
     filename: 'bundle.js',

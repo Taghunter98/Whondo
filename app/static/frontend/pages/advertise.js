@@ -1,0 +1,127 @@
+import { Comp } from "jay-comp";
+
+export class Advertise extends Comp {
+
+    createHTML() {
+        return /* html */ `
+    <div class="background">
+        <div class="itemContainer">
+            <div class="modal">
+                <div style="position:relative; width:100%; height:0px; padding-bottom:58.949%"><iframe allow="fullscreen" allowfullscreen height="100%" src="https://streamable.com/e/2vbvhr?nocontrols=1" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe>
+                </div>
+
+                    <h3 class="title">Showcase Your Home the Smart Way</h3>
+                    <p class="text">
+                        Whondo gives your property the spotlight it deserves.<br>
+                        Unlike traditional rental platforms, we show your home to one prospective tenant at a time, so it never has to compete for attention.<br>
+                        It’s a simple, effective way to make a great first impression and find the right renter faster.
+                    </p>
+                </div>
+                <div class="buttons">
+                    <comp-button id="back"></comp-button>
+                    <comp-button id="continue"></comp-button>
+                </div>
+            </div>
+            <div class="backgroundImage">
+                <img class="image" src="https://images.pexels.com/photos/5623940/pexels-photo-5623940.jpeg">
+            </div>
+        </div>
+    </div>
+    `;
+    }
+
+    createCSS() {
+        return [
+            {
+                class: "background",
+                widthPercent: 100,
+                backgroundVar: "black100",
+                heightVh: 100,
+            },
+            {
+                class: "itemContainer",
+                display: "flex",
+                media: {
+                    maxWidthBp: 600,
+                    flexDirection: "column",
+                    alignItems: "centre"
+                }
+            },
+            {
+                class: "backgroundImage",
+                widthPercent: 100,
+                heightVh: 100,
+                paddingLeft: 400,
+                media: {
+                    maxWidthBp: 600,
+                    heightVh: 40,
+                    margin: 0,
+                    padding: 0
+                }
+            },
+            {
+                class: "image",
+                widthPercent: 100,
+                heightPercent: 100,
+                objectFit: "cover"
+            },
+            {
+                class: "modal",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "centre",
+                width: 500,
+                background: "white",
+                position: "absolute",
+                zIndex: 800,
+                padding: 20,
+                borderRadius: 14,
+                marginLeft: 100,
+                marginTop: 100,
+                media: {
+                    maxWidthBp: 600,
+                    width: "auto",
+                    margin: 0,
+                    marginTop: 200
+                }
+            },
+            {
+                class: "textContainer",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                gap: 5
+            },
+            {
+                class: "title",
+                fontWeight: "bold"
+            },
+            {
+                class: "text",
+                colourVar: "black60"
+            },
+            {
+                class: "buttons",
+                display: "flex",
+                widthPercent: 100,
+                gap: 20,
+                paddingTop: 40
+            }
+        ];
+    }
+
+    afterRender() {
+        const cont = this.getById("continue");
+        const back = this.getById("back");
+
+        cont.text = "Continue";
+        back.text = "Back";
+        back.variant = 2;
+
+        compButton.addEventListener("click", () => {
+            // Fire landlord API call
+        });
+    }
+
+    static { Comp.register(this); }
+}
