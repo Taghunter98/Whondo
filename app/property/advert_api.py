@@ -227,6 +227,7 @@ def update_ad():
         else:
             return redirect("/")
 
+
 @advert_bp.route("/advert/advertise", methods=["GET"])
 def advertise():
     if request.method == "GET":

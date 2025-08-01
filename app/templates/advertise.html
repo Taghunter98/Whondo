@@ -8,7 +8,17 @@
     </head>
     <body>
         <h1>THIS IS AN ADVERTISE PAGE</h1>
-        <a href="/verify/landlord"><button>Become a landlord</button></a>
+        <button>Become a landlord</button>
+
+        <script>
+            const btn = document.querySelector("button");
+            btn.addEventListener("click", () => {
+                fetch("/verify/landlord").then((res) => {
+                    if (res.ok) console.log(res.json());
+                    else console.log(res.data);
+                });
+            });
+        </script>
 
         <!-- Import Comps -->
         <script

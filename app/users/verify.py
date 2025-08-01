@@ -9,7 +9,7 @@ Version:     1.0
 Description: Serves a Blueprint API for verifying users.
 """
 
-from flask import Blueprint, request, abort, render_template, session, jsonify
+from flask import Blueprint, request, abort, render_template, session, jsonify, redirect
 
 from app.database.db_connect import connect
 from app.utilities.authid import authenticate
@@ -69,22 +69,23 @@ def verify_user():
 
     return jsonify(data), 200
 
+
 @verify_bp.route("/verify/landlord", methods=["POST"])
 def verify_landlord():
-    uID = session.get("uID")
-    if not uID:
-        return jsonify({"error": "User not logged in"}), 401
+    if request.method == "POST":
+        uID = session.get("uID")
+        if not uID:
+            return jsonify({"error": "User not logged in"}), 401
 
-    conn = connect()
-    cursor = conn.cursor()
+        conn = connect()
+        cursor = conn.cursor()
 
-    try:
-        cursor.execute(
-            "INSERT INTO Landlords (uID) VALUES (%s)",
-            (uID,)
-        )
-        conn.commit()
-    except Exception as e:
-        return jsonify({"error": "Landlord profile already exists"}), 409
+        try:
+            cursor.execute("INSERT INTO Landlords (uID) VALUES (%s)", (uID,))
+            conn.commit()
+        except Exception as e:
+            return jsonify({"error": "Landlord profile already exists"}), 409
 
-    return jsonify({"message": "Landlord profile created"}), 201
+        return jsonify({"message": "Landlord profile created"}), 201
+    else:
+        return redirect("/")
