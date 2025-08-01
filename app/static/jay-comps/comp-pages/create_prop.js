@@ -15,7 +15,7 @@ export class CreateProp extends Comp {
                                 <p class="text">Step 1/3</p>
                                 <h4 class="title">Property Details</h4>
                             </div>
-                            <p class="text">Let’s create a beautiful advert, tell us about your home!</p>
+                            <p class="text">Let’s create your property advert. Start by telling us about your home.</p>
 
                             <div class="input">
                                 <comp-address id="address" name="address" ></comp-address>
@@ -47,7 +47,8 @@ export class CreateProp extends Comp {
                             <div class="textContainer">
                                 <p class="text">Step 2/3</p>
                                 <h4 class="title">Add Images</h4> 
-                                <p class="text">The best adverts have great pictures, we recommend at least 8 to properly show off your home! Be mindful our users mostly use mobile! So we advise taking pictures in profile.</p>
+                                <p class="text">Photos make your advert stand out. We recommend adding at least 8 clear images of your home.
+Most people view adverts on mobile devices, so vertical (portrait) photos work best.</p>
                             </div>
                              <div class="inputRowFile">
                                         <comp-carousel>
@@ -76,7 +77,7 @@ export class CreateProp extends Comp {
                                 <p class="text">Step 3/3</p>
                                 <h4 class="title">Add Keywords</h4> 
                             </div>
-                            <p class="text">Whondo works with a prompting system that uses keywords to help your property be noticed. We want to show your advert to as many people as possible, so add some keywords!</p>
+                            <p class="text">To help people find your property, Whondo uses keywords. Add words that describe your home and its best features (like ‘garden’, ‘near a station, or ‘pets allowed).</p>
                              <div class="input">
                                 <comp-keywords class="keywords" id="keywords" name="keywords" ></comp-keywords>
                             </div>
@@ -395,7 +396,7 @@ export class CreateProp extends Comp {
             popup.style.display = "block";
             popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
         }
-            
+
         else alert(result.error);
     }
 
@@ -405,7 +406,7 @@ export class CreateProp extends Comp {
     };
 
     afterRender() {
-       
+
         const step1 = this.getById("step1");
         const step2 = this.getById("step2");
         const step3 = this.getById("step3")
@@ -435,7 +436,7 @@ export class CreateProp extends Comp {
         icon.style.display = "none";
         const btn = popup.query(".btn");
         btn.style.width = "125px";
-        
+
         address.label = "Address";
         address.prompt = "Enter your postcode";
         title.label = "Title";
@@ -451,14 +452,14 @@ export class CreateProp extends Comp {
         bathrooms.prompt = "Enter bathrooms";
         bathrooms.type = "number";
         propType.label = "Property Type";
-        propType.prompt = "Select from dropdown"; 
-        propType.list = ["house", "flat", "studio", "bungalow", "bedsit", "maisonette", "shared_house", "student_accommodation", "en_suite", "penthouse"];
+        propType.prompt = "Select from dropdown";
+        propType.list = ["house", "flat", "studio", "bungalow", "bedsit", "maisonette", "shared house", "student accommodation", "penthouse"];
         propType.strict = true;
 
         description.label = "Property description";
         description.prompt = "Tell us about your home, be descriptive!";
         keyword.label = "Add keyword";
-        keyword.prompt = "Choose 10 keywords..."
+        keyword.prompt = "Choose some keywords..."
         backBtn.text = "Back";
         backBtn.fill = true;
         backBtn.variant = 2;
@@ -486,7 +487,7 @@ export class CreateProp extends Comp {
         tenants.required = true;
 
         this.prevPropType = null;
-        propType.subscribe("option-selected", (e)=>{
+        propType.subscribe("option-selected", (e) => {
             const keywords = this.getById("keywords");
             const selectedText = e.detail?.text;
             if (!selectedText || typeof keywords.addTag !== "function") return;
