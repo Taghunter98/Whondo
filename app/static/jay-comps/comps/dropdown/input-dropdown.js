@@ -62,16 +62,12 @@ export class InputDropdown extends Input{
             this.dropdown.attachToInput(this.inputEl);
         }
 
-        this.dropdown.addEventListener("option-selected", (e) => {
+        this.dropdown.subscribe("option-selected", (e) => {
             if (e.detail.text) this.inputEl.value = e.detail.text;
             
             this.inputEl.classList.remove("error");
-            this.dispatchEvent(new CustomEvent("option-selected", {
-                detail: e.detail,
-                bubbles: true,
-                composed: true
-            }));
-            
+            this.publish("option-selected", e.detail);
+               
         });
 
         this.inputEl.addEventListener("blur", () => {

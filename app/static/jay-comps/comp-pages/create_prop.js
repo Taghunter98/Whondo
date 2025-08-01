@@ -490,7 +490,7 @@ export class CreateProp extends Comp {
         })
 
         this.prevPropType = null;
-        propType.addEventListener("option-selected", (e)=>{
+        propType.subscribe("option-selected", (e)=>{
             const keywords = this.getById("keywords");
             const selectedText = e.detail?.text;
             if (!selectedText || typeof keywords.addTag !== "function") return;
