@@ -133,7 +133,7 @@ export class Carousel extends Comp {
             this.updateView();
         };
 
-        this.track.subscribe("photo-uploaded", () => {
+        this.subscribe("photo-uploaded", () => {
             const next = this.items.find(el => el.style.display === "none" || getComputedStyle(el).display === "none");
             if (next) {
                 next.style.display = "block";

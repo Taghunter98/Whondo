@@ -453,7 +453,7 @@ Most people view adverts on mobile devices, so vertical (portrait) photos work b
         bathrooms.type = "number";
         propType.label = "Property Type";
         propType.prompt = "Select from dropdown";
-        propType.list = ["house", "flat", "studio", "bungalow", "bedsit", "maisonette", "shared house", "student accommodation", "penthouse"];
+        propType.list = ["house", "flat", "studio", "bungalow", "bedsit", "maisonette", "shared_house", "student_accommodation", "penthouse"];
         propType.strict = true;
 
         description.label = "Property description";
