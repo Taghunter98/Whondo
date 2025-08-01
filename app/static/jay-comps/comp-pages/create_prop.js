@@ -393,7 +393,7 @@ export class CreateProp extends Comp {
         if (result.ok) {
             const popup = this.getById("popup");
             popup.style.display = "block";
-            popup.addEventListener("popup-button", () => { window.location.assign("/"); }, { once: true });
+            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
         }
             
         else alert(result.error);
@@ -485,10 +485,6 @@ export class CreateProp extends Comp {
         propType.required = true;
         tenants.required = true;
 
-        popup.addEventListener("popup-button", ()=> {
-            window.location.assign("/");
-        })
-
         this.prevPropType = null;
         propType.subscribe("option-selected", (e)=>{
             const keywords = this.getById("keywords");
@@ -542,12 +538,12 @@ export class CreateProp extends Comp {
         const input = [address, title, rent, description, tenants, propType]
         input.forEach(inputs => inputs.addEventListener("input", () => this.clearError(inputs)));
 
-        cover.addEventListener("photo-uploaded", () => {
+        cover.subscribe("photo-uploaded", () => {
             if (cover.value) cover.classList.remove("error");
         });
 
         pic.forEach(picCard => {
-            picCard.addEventListener("photo-uploaded", () => {
+            picCard.subscribe("photo-uploaded", () => {
                 const box = picCard.query(".fileBox");
                 if (picCard.value) box.classList.remove("error");
             });

@@ -122,9 +122,7 @@ export class FileCard extends File {
                     if (isFirstUpload) {
                         this._uploadedOnce = true;
 
-                        this.dispatchEvent(new CustomEvent("photo-uploaded", {
-                            bubbles: true,
-                        }));
+                        this.publish("photo-uploaded");
                     }
                 };
 
