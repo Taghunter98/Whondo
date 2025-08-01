@@ -230,4 +230,6 @@ def update_ad():
 @advert_bp.route("/advert/advertise", methods=["GET"])
 def advertise():
     if request.method == "GET":
+        if auth_landlord(session.get("email")):
+            return render_template("property.html")
         return render_template("advertise.html")
