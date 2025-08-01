@@ -15,7 +15,7 @@ export class CreateProp extends Comp {
                                 <p class="text">Step 1/3</p>
                                 <h4 class="title">Property Details</h4>
                             </div>
-                            <p class="text">Let’s create a beautiful advert, tell us about your home!</p>
+                            <p class="text">Let’s create your property advert. Start by telling us about your home.</p>
 
                             <div class="input">
                                 <comp-address id="address" name="address" ></comp-address>
@@ -47,7 +47,8 @@ export class CreateProp extends Comp {
                             <div class="textContainer">
                                 <p class="text">Step 2/3</p>
                                 <h4 class="title">Add Images</h4> 
-                                <p class="text">The best adverts have great pictures, we recommend at least 8 to properly show off your home! Be mindful our users mostly use mobile! So we advise taking pictures in profile.</p>
+                                <p class="text">Photos make your advert stand out. We recommend adding at least 8 clear images of your home.
+Most people view adverts on mobile devices, so vertical (portrait) photos work best.</p>
                             </div>
                              <div class="inputRowFile">
                                         <comp-carousel>
@@ -76,7 +77,7 @@ export class CreateProp extends Comp {
                                 <p class="text">Step 3/3</p>
                                 <h4 class="title">Add Keywords</h4> 
                             </div>
-                            <p class="text">Whondo works with a prompting system that uses keywords to help your property be noticed. We want to show your advert to as many people as possible, so add some keywords!</p>
+                            <p class="text">To help people find your property, Whondo uses keywords. Add words that describe your home and its best features (like ‘garden’, ‘near a station, or ‘pets allowed).</p>
                              <div class="input">
                                 <comp-keywords class="keywords" id="keywords" name="keywords" ></comp-keywords>
                             </div>
@@ -101,32 +102,22 @@ export class CreateProp extends Comp {
     createCSS() {
 
         return [
-            {
-                class: "background",
+            { class: "background",
                 widthPercent: 100,
                 height: 1050,
                 backgroundVar: "black100",
                 overflow: "hidden",
-                media: {
-                    maxWidthBp: 600,
-                    height: 1250
-                }
+                media: { maxWidthBp: 600, height: 125 }
             },
-            {
-                class: "formObj",
+            { class: "formObj",
                 widthPercent: 100,
             },
-            {
-                class: "container",
+            { class: "container",
                 display: "flex",
-                media: {
-                    maxWidthBp: 600,
-                    flexDirection: "column",
-                    alignItems: "centre"
+                media: { maxWidthBp: 600, flexDirection: "column", alignItems: "centre"
                 }
             },
-            {
-                class: "backgroundImage",
+            { class: "backgroundImage",
                 widthPercent: 100,
                 height: 1050,
                 paddingLeft: 400,
@@ -137,14 +128,12 @@ export class CreateProp extends Comp {
                     padding: 0
                 }
             },
-            {
-                class: "image",
+            { class: "image",
                 widthPercent: 100,
                 heightPercent: 100,
                 objectFit: "cover"
             },
-            {
-                class: "modal",
+            { class: "modal",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -169,97 +158,75 @@ export class CreateProp extends Comp {
                     boxSizing: "border-box"
                 }
             },
-            {
-                class: "input",
+            { class: "input",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 20,
                 padding: [20, 0, 20, 0],
-                media: {
-                    maxWidthBp: 600,
-                    padding: [10, 0, 20, 0],
-                    gap: 15,
-                }
+                media: { maxWidthBp: 600, padding: [10, 0, 20, 0], gap: 15,}
             },
-            {
-                class: "inputRow",
+            { class: "inputRow",
                 display: "flex",
                 flexDirection: "row",
                 gap: 10,
                 widthPercent: 100,
                 justifyContent: "space-between",
-                media: {
-                    maxWidthBp: 600,
-                    flexDirection: "column"
-                }
+                media: { maxWidthBp: 600, flexDirection: "column" }
             },
-            {
-                class: "inputRowFile",
+            { class: "inputRowFile",
                 display: "flex",
                 flexDirection: "row",
                 gap: 10,
                 padding: [20, 0, 20, 0],
                 widthPercent: 100,
                 justifyContent: "space-between",
-                media: {
-                    maxWidthBp: 600,
-                    flexDirection: "column"
-                }
+                media: { maxWidthBp: 600, flexDirection: "column" }
             },
-            {
-                class: "btnRow",
+            { class: "btnRow",
                 display: "flex",
                 flexDirection: "row",
                 gap: 20,
                 widthPercent: 100,
                 justifyContent: "space-between"
             },
-            {
-                class: "title",
+            { class: "title",
                 fontWeight: "bold"
             },
-            {
-                class: "link",
+            { class: "link",
                 colourVar: "black80",
                 fontWeight: "bold",
                 textDecoration: "underline",
                 cursor: "pointer",
             },
-            {
-                class: "link",
+            { class: "link",
                 pseudoClass: "hover",
                 colourVar: "black100",
             },
-            {
-                class: "textContainer",
+            { class: "textContainer",
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
                 gap: 10,
             },
-            {
-                class: "text",
+            { class: "text",
                 colourVar: "black60",
                 display: "flex",
                 alignSelf: "start",
                 lineHeight: "normal"
             },
-            {
-                class: "footer",
+            { class: "footer",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
                 widthPercent: 100,
                 gap: 20,
             },
-            {
-                class: "wrapper",
+            { class: "wrapper",
                 position: "relative",
                 widthPercent: 100,
             },
-            {
-                class: "unit",
+            { class: "unit",
                 position: "absolute",
                 right: 14,
                 top: "50%",
@@ -267,13 +234,11 @@ export class CreateProp extends Comp {
                 colourVar: "black60",
                 pointerEvents: "none",
             },
-            {
-                class: "cover",
+            { class: "cover",
                 borderRadius: 8,
                 borderVar: "borderBlack",
             },
-            {
-                class: "error",
+            { class: "error",
                 border: ["solid", 2, "var(--red100)"],
             }
         ];
@@ -312,7 +277,7 @@ export class CreateProp extends Comp {
         }
 
         const uploadedPics = pics.filter(pic => pic.value);
-        if (uploadedPics.length < 3) {
+        if (uploadedPics.length < 1) {
 
             isValid = false;
 
@@ -393,9 +358,9 @@ export class CreateProp extends Comp {
         if (result.ok) {
             const popup = this.getById("popup");
             popup.style.display = "block";
-            popup.addEventListener("popup-button", () => { window.location.assign("/"); }, { once: true });
+            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
         }
-            
+
         else alert(result.error);
     }
 
@@ -405,7 +370,7 @@ export class CreateProp extends Comp {
     };
 
     afterRender() {
-       
+
         const step1 = this.getById("step1");
         const step2 = this.getById("step2");
         const step3 = this.getById("step3")
@@ -426,7 +391,8 @@ export class CreateProp extends Comp {
         const submit = this.getById("submit");
         const cover = this.getById("cover");
         const pic = this.queryAll(".pic")
-
+        const keywords = this.getById("keywords")
+    
         const popup = this.getById("popup");
         popup.title = "Advert Published!";
         popup.paragraph = "Congratulations! You can now view your new advert or monitor it in your Landlord portal.";
@@ -435,7 +401,7 @@ export class CreateProp extends Comp {
         icon.style.display = "none";
         const btn = popup.query(".btn");
         btn.style.width = "125px";
-        
+
         address.label = "Address";
         address.prompt = "Enter your postcode";
         title.label = "Title";
@@ -451,14 +417,16 @@ export class CreateProp extends Comp {
         bathrooms.prompt = "Enter bathrooms";
         bathrooms.type = "number";
         propType.label = "Property Type";
-        propType.prompt = "Select from dropdown"; 
-        propType.list = ["house", "flat", "studio", "bungalow", "bedsit", "maisonette", "shared_house", "student_accommodation", "en_suite", "penthouse"];
+        propType.prompt = "Select from dropdown";
+        propType.list = [ { label: "House", value: "house" }, { label: "Flat", value: "flat" }, { label: "Studio", value: "studio" }, { label: "Bungalow", value: "bungalow" }, { label: "Bedsit", value: "bedsit" }, { label: "Maisonette", value: "maisonette" }, { label: "Shared House", value: "shared_house" }, { label: "Student Accommodation", value: "student_accommodation" }, { label: "Penthouse", value: "penthouse" },];
         propType.strict = true;
+        keyword.list = [ { label: "House", value: "house" }, { label: "Flat", value: "flat" }, { label: "Bungalow", value: "bungalow" }, { label: "Studio", value: "studio" },
+        { label: "Bedsit", value: "bedsit" }, { label: "Maisonette", value: "maisonette" }, { label: "Shared House", value: "shared_house" }, { label: "Student Accommodation", value: "student_accommodation" }, { label: "En Suite", value: "en_suite" }, { label: "Penthouse", value: "penthouse" },{ label: "Furnished", value: "furnished" }, { label: "Unfurnished", value: "unfurnished" }, { label: "Bills Included", value: "bills_included" }, { label: "All Inclusive", value: "all_inclusive" }, { label: "Double Room", value: "double_room" }, { label: "Single Room", value: "single_room" },{ label: "Balcony", value: "balcony" }, { label: "Garden", value: "garden" }, { label: "Parking", value: "parking" }, { label: "Pets Allowed", value: "pets_allowed" }, { label: "WiFi Included", value: "wifi_included" }, { label: "Utilities Included", value: "utilities_included" }, { label: "Short Let", value: "short_let" }, { label: "Long Let", value: "long_let" }, { label: "No Deposit", value: "no_deposit" },{ label: "Low Deposit", value: "low_deposit" }, { label: "DSS Accepted", value: "dss_accepted" }, { label: "Guarantor Required", value: "guarantor_required" }, { label: "No Guarantor", value: "no_guarantor" }, { label: "Student Friendly", value: "student_friendly" }, { label: "City Centre", value: "city_centre" },  { label: "Near University", value: "near_university" }, { label: "Close to Station", value: "close_to_station" }, { label: "Bus Route", value: "bus_route" }, { label: "Zone 1", value: "zone_1" }, { label: "Zone 2", value: "zone_2" }, { label: "Zone 3", value: "zone_3" }, { label: "Zone 4", value: "zone_4" }, { label: "Cycle Friendly", value: "cycle_friendly" },{ label: "LGBTQ+ Friendly", value: "lgbtq_friendly" }, { label: "Vegan Household", value: "vegan_household" }, { label: "Non Smoking", value: "non_smoking" }, { label: "Smoking Allowed", value: "smoking_allowed" },{ label: "Social House", value: "social_house" },{ label: "Quiet House", value: "quiet_house" },{ label: "Wheelchair Accessible", value: "wheelchair_accessible" },{ label: "Lift", value: "lift" },{ label: "Ground Floor", value: "ground_floor" },{ label: "Bike Storage", value: "bike_storage" }];
 
         description.label = "Property description";
         description.prompt = "Tell us about your home, be descriptive!";
         keyword.label = "Add keyword";
-        keyword.prompt = "Choose 10 keywords..."
+        keyword.prompt = "Choose some keywords..."
         backBtn.text = "Back";
         backBtn.fill = true;
         backBtn.variant = 2;
@@ -485,21 +453,19 @@ export class CreateProp extends Comp {
         propType.required = true;
         tenants.required = true;
 
-        popup.addEventListener("popup-button", ()=> {
-            window.location.assign("/");
-        })
-
         this.prevPropType = null;
-        propType.subscribe("option-selected", (e)=>{
+        propType.subscribe("option-selected", (e) => {
             const keywords = this.getById("keywords");
-            const selectedText = e.detail?.text;
-            if (!selectedText || typeof keywords.addTag !== "function") return;
+            const selectedLabel = e.detail?.label;
+            if (!selectedLabel || typeof keywords.addTag !== "function") return;
+            const match = propType.list.find(opt => opt.label === selectedLabel);
+            if (!match) return
             if (this.prevPropType && typeof keyword.removeTag === "function") {
                 keywords.removeTag(this.prevPropType);
             }
 
-            keywords.addTag(selectedText);
-            this.prevPropType = selectedText;
+            keywords.addTag(selectedLabel);
+            this.prevPropType = match.value;
         })
 
         nextBtn.addEventListener("click", () => {
@@ -542,12 +508,12 @@ export class CreateProp extends Comp {
         const input = [address, title, rent, description, tenants, propType]
         input.forEach(inputs => inputs.addEventListener("input", () => this.clearError(inputs)));
 
-        cover.addEventListener("photo-uploaded", () => {
+        cover.subscribe("photo-uploaded", () => {
             if (cover.value) cover.classList.remove("error");
         });
 
         pic.forEach(picCard => {
-            picCard.addEventListener("photo-uploaded", () => {
+            picCard.subscribe("photo-uploaded", () => {
                 const box = picCard.query(".fileBox");
                 if (picCard.value) box.classList.remove("error");
             });

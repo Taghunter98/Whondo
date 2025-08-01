@@ -6,7 +6,7 @@ export class InputDropdown extends Input{
 
     set list(newList){
         if(!Array.isArray(newList)) return;
-        this.list_ = newList;
+        this.list_ = newList.map(opt => typeof opt === "string" ? { label: opt, value: opt } : opt );
         if(this.dropdown && this.inputEl){
             this.dropdown.setOptions(newList);
             this.dropdown.attachToInput(this.inputEl);
@@ -16,6 +16,12 @@ export class InputDropdown extends Input{
     set strict(flag){
         this.strict_ = flag;
         this.update();
+    }
+
+    get value(){
+        const inputVal = this.inputEl?.value?.trim();
+        const match = this.list_?.find(opt => opt.label === inputVal);
+        return match?.value || inputVal || "";
     }
 
     get strict() { return this.strict_;}
@@ -63,7 +69,7 @@ export class InputDropdown extends Input{
         }
 
         this.dropdown.subscribe("option-selected", (e) => {
-            if (e.detail.text) this.inputEl.value = e.detail.text;
+            this.inputEl.value = e.detail.label;
             
             this.inputEl.classList.remove("error");
             this.publish("option-selected", e.detail);
@@ -73,7 +79,7 @@ export class InputDropdown extends Input{
         this.inputEl.addEventListener("blur", () => {
             if (!this.strict_) return;
             const val = this.inputEl.value.trim();
-            const match = this.list_.includes(val);
+            const match = this.list_.some(opt => opt.label === val);
 
             if (!match) {
                 this.inputEl.value = "";

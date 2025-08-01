@@ -3,63 +3,15 @@ import { Input } from "./input.js";
 export class Keywords extends Input {
     tags_ = [];
     validOptions_ = [];
-
-    keywords = [
-        "house",
-        "flat",
-        "bungalow",
-        "studio",
-        "bedsit",
-        "maisonette",
-        "shared_house",
-        "student_accommodation",
-        "en_suite",
-        "penthouse",
-        "furnished",
-        "unfurnished",
-        "bills_included",
-        "all_inclusive",
-        "double_room",
-        "single_room",
-        "balcony",
-        "garden",
-        "parking",
-        "pets_allowed",
-        "wifi_included",
-        "utilities_included",
-        "short_let",
-        "long_let",
-        "no_deposit",
-        "low_deposit",
-        "dss_accepted",
-        "guarantor_required",
-        "no_guarantor",
-        "student_friendly",
-        "city_centre",
-        "near_university",
-        "close_to_station",
-        "bus_route",
-        "zone_1",
-        "zone_2",
-        "zone_3",
-        "zone_4",
-        "cycle_friendly",
-        "lgbtq_friendly",
-        "vegan_household",
-        "non_smoking",
-        "smoking_allowed",
-        "social_house",
-        "quiet_house",
-        "wheelchair_accessible",
-        "lift",
-        "ground_floor",
-        "bike_storage"
-    ];
-
-
-    get value() {
-        return this.tags_
+    list_ = [];
+   
+    set list(v){
+        this.list_ = (v || []).map(opt => typeof opt === "string" ? { label: opt, value: opt } : opt );
+        this.validOptions_ = this.list_.map(opt => opt.value);
     }
+
+    get value() { return this.tags_; }
+    get list() { return this.list_; }
 
     beforeRender() {
         super.beforeRender();
@@ -133,16 +85,21 @@ export class Keywords extends Input {
         ];
     }
 
-    addTag(text) {
-        if (this.tags_.length >= 10 || this.tags_.includes(text) || !this.validOptions_.includes(text)) return;
+    addTag(label) {
+        const match = this.list_.find(opt => opt.label === label);
+        if (!match) return;
 
-        this.tags_.push(text);
+        const value = match.value;
+
+        if (this.tags_.length >= 10 || this.tags_.includes(value) || !this.validOptions_.includes(value)) return;
+
+        this.tags_.push(value);
 
         this.inputEl?.classList.remove("error");
 
         const tagEl = document.createElement("div");
         tagEl.className = "tag";
-        tagEl.textContent = text;
+        tagEl.textContent = match.label;
 
         const removeBtn = document.createElement("span");
         removeBtn.className = "remove-btn";
@@ -155,21 +112,24 @@ export class Keywords extends Input {
         tagEl.appendChild(removeBtn);
 
         removeBtn.addEventListener("click", () => {
-            this.removeTag(text)
+            this.removeTag(value)
         });
 
         this.tagsEl.appendChild(tagEl);
     }
 
-    removeTag(text){
-        const tagIndex = this.tags_.findIndex(tag => tag === text);
+    removeTag(value){
+        const tagIndex = this.tags_.findIndex(tag => tag === value);
         if(tagIndex === -1) return;
 
-        this.tags_ = this.tags_.filter(tag => tag !== text);
+        this.tags_ = this.tags_.filter(tag => tag !== value);
+
+        const label = this.list_.find(opt => opt.value === value)?.label;
+        if (!label) return;
 
         const tagEls = Array.from(this.tagsEl.querySelectorAll(".tag"));
         for (let tagEl of tagEls){
-            if(tagEl.textContent.includes(text)){
+            if(tagEl.textContent.includes(label)){
                 this.tagsEl.removeChild(tagEl);
                 break;
             }
@@ -181,8 +141,7 @@ export class Keywords extends Input {
         this.inputEl = this.query(".inputValue");
         this.tagsEl = this.query(".tags");
 
-        this.validOptions_ = this.keywords;
-        dropdown.setOptions(this.keywords)
+        dropdown.setOptions(this.list_);
         dropdown.attachToInput(this.inputEl);
 
         this.inputEl.addEventListener("keydown", (e) => {
@@ -194,8 +153,8 @@ export class Keywords extends Input {
         });
 
         dropdown.subscribe("option-selected", (e) => {
-            if (e.detail.text) {
-                this.addTag(e.detail.text);
+            if (e.detail.label) {
+                this.addTag(e.detail.label);
                 this.inputEl.value = "";
             }
         });
