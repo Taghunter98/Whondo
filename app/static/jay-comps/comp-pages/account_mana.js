@@ -31,7 +31,7 @@ export class AccountMana extends Comp {
                 background: "white",
                 maxWidthPercent: 100,
                 height: "100vh",
-                boxSizing: "border-box" 
+                boxSizing: "border-box", 
             },
             { class: "container",
                 maxWidthPercent: 100,

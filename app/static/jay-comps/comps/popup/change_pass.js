@@ -53,7 +53,6 @@ export class ChangePass extends Comp {
                 position: "fixed",
                 background: "rgba(0, 0, 0, 0.6)",
                 zIndex: 9999,
-                media: { maxWidthBp: 600, height: 1000 }
             },
             { class: "formObj", widthPercent: 100,},
             { class: "container",

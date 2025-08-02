@@ -57,7 +57,10 @@ export class UpdateProfile extends Comp {
                 position: "fixed",
                 background: "rgba(0, 0, 0, 0.6)",
                 zIndex: 9999,
-                media: { maxWidthBp: 600, height: 1000 }
+                media: {
+                    maxWidthBp: 600,
+                    overflow: "auto",
+                }
             },
             { class: "formObj", widthPercent: 100,},
             { class: "container",
@@ -91,7 +94,7 @@ export class UpdateProfile extends Comp {
                     maxWidth: 350,
                     minWidth: 250,
                     margin: 0,
-                    boxSizing: "border-box"
+                    boxSizing: "border-box",
                 }
             },
             {
