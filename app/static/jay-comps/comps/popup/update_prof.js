@@ -166,7 +166,10 @@ export class UpdateProfile extends Comp {
 
         const result = await this.submitForm("/", fd);
 
-        if (result.ok) this.update("<comp-create></comp-create>")
+        if (result.ok) {
+            this.publish("updated");
+            this.style.display = "none"
+        }
         else alert(result.error);
     }
 

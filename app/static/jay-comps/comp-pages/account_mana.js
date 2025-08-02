@@ -139,11 +139,7 @@ export class AccountMana extends Comp {
         back.text = "Back";
         back.variant = 2;
         back.fill = true;
-
-        update.subscribe("popup-back", () => {
-            update.style.display = "none";
-        });
-
+        
         const submit = update.query(".submit");
         submit.text = "Save";
         submit.fill = true;
@@ -197,7 +193,29 @@ export class AccountMana extends Comp {
             const popup = this.getById("changePass");
             popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
 
-        })
+        });
+
+          update.subscribe("popup-back", () => {
+            update.style.display = "none";
+            const name = update.query("#name");
+            const surname = update.query("#surname");
+            const bio = update.query("#bio");
+            const file = update.query("#picture");
+            name.query(".inputValue").value = "";
+            surname.query(".inputValue").value = "";
+            bio.query(".inputValue").value = "";
+            file.query(".inputValue").value = "";
+            file.query(".filePrompt").textContent = "Upload photo";
+            file.query(".filePreview").src = "";
+            file.query(".icon").removeAttribute("hidden");
+
+        });
+
+        update.subscribe("updated", () => {
+            this.showPopup("update", "Profile Updated", "Your profile has been updated successfully");
+            const popup  = this.query("#profile");
+            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
+        });
 
         btn1.subscribe("btn1-click", () => {
             this.deleteAccount()
