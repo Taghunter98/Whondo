@@ -192,6 +192,13 @@ export class AccountMana extends Comp {
             
         });
 
+        pass.subscribe("password-changed", () => {
+            this.showPopup("changePass", "Password Updated", "Your password has been changed successfully!");
+            const popup = this.getById("changePass");
+            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
+
+        })
+
         btn1.subscribe("btn1-click", () => {
             this.deleteAccount()
         })

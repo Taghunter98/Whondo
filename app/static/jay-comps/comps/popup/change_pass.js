@@ -142,8 +142,10 @@ export class ChangePass extends Comp {
 
         const result = await this.submitForm("/", fd);
 
-        if (result.ok) this.update("<comp-create></comp-create>")
-        else alert(result.error);
+        if (result.ok) {
+            this.publish("password-changed"); 
+            this.style.display = "none";
+        } else alert(result.error);
     }
 
     checkPassword(input1, input2) {
