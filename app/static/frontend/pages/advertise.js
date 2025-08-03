@@ -24,8 +24,8 @@ export class Advertise extends Comp {
         </div>
         <div class="block">
             <div class="heroText">
-                <h3 class="title">Why Whondo is Different</h3>
-                <p>We’re rethinking the way people rent. To make that work, your home needs to shine and we’ve designed Whondo to do exactly that. <br><br>Our platform puts your property front and centre with a modern, sleek interface that’s built to impress.</p>
+                <h1 class="title">Why Whondo is Different</h1>
+                <p style="text-align: center">We’re redefining renting, giving every home the spotlight it deserves. Whondo is built to make yours shine.
             </div>
         </div>
         <div class="block">
@@ -43,6 +43,10 @@ export class Advertise extends Comp {
         </div>
         <div class="block">
             <comp-cards id="cards-hero"></comp-cards>
+        </div>
+        <div class="block dark">
+            <h3 class="title white">How it Works</h3>
+            <comp-cards id="cards-about"></comp-cards>
         </div>
     </div>
     `;
@@ -131,6 +135,8 @@ export class Advertise extends Comp {
             {
                 class: "block",
                 display: "flex",
+                gap: 50,
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "centre",
                 padding: [50, 100]
@@ -141,8 +147,16 @@ export class Advertise extends Comp {
                 gap: 20,
                 flexDirection: "column",
                 widthPercent: 100,
-                maxWidth: 500,
+                maxWidth: 700,
                 alignItems: "centre"
+            },
+            {
+                class: "dark",
+                backgroundVar: "black100"
+            },
+            {
+                class: "white",
+                colour: "white"
             }
         ];
     }
@@ -150,23 +164,39 @@ export class Advertise extends Comp {
     afterRender() {
         const cont = this.getById("continue");
         const cardsHero = this.getById("cards-hero");
+        const cardsAbout = this.getById("cards-about");
 
         cont.text = "Get Started";
+
         cardsHero.cards = {
             card1: {
-                image: "https://whondo.com/static/icons/asssets/prompt.png",
-                title: "Prompt-Based Search",
+                title: "Prompt-Based Searching",
                 description: "Tenants describe what they’re looking for, we show them homes that match. No endless scrolling, no generic filters."
             },
             card2: {
-                image: "https://whondo.com/static/icons/asssets/card.png",
                 title: "Card-Style Viewing",
                 description: "A clean, TikTok-style design makes each home feel like a feature, not just another listing. Your property gets the attention it deserves."
             },
             card3: {
-                image: "https://whondo.com/static/icons/asssets/detail.png",
                 title: "One Viewer at a Time",
                 description: "No competition. Just your home, viewed intentionally by a serious prospect."
+            }
+        }
+
+        cardsAbout.query(".card").classList.add("dark");
+
+        cardsAbout.cards = {
+            card1: {
+                title: "List your home",
+                description: "Whondo gives your property the spotlight it deserves, no competition, just serious tenants."
+            },
+            card2: {
+                title: "Renters find your home",
+                description: "We use a keyword searching algorithm that allows for super fast property searching and a more personal touch. You control the keywords making your advert as engaging as you like."
+            },
+            card3: {
+                title: "Receive enquiries via email",
+                description: "Prospective renters will then be able to email you with an enquiry for a viewing."
             }
         }
 
