@@ -19,7 +19,7 @@ class Link extends Comp {
     }
 
     createHTML() {
-        return `<a href="${this.link_}"><li class="link">${this.text_}</li></a>`;
+        return `<a style="text-decoration: none" href="${this.link_}"><li class="link">${this.text_}</li></a>`;
     }
 
     createCSS() {
@@ -43,6 +43,11 @@ class Link extends Comp {
                 colourVar: "black100",
                 borderVar: "border",
                 backgroundVar: "black10"
+            },
+            {
+                class: "link",
+                pseudoClass: "visited",
+                colourVar: "black80"
             },
             {
                 class: "link", pseudoClass: "active",
