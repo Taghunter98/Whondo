@@ -8,6 +8,10 @@ export class Keywords extends Input {
     set list(v){
         this.list_ = (v || []).map(opt => typeof opt === "string" ? { label: opt, value: opt } : opt );
         this.validOptions_ = this.list_.map(opt => opt.value);
+
+        if (this.dropdown) {
+        this.dropdown.setOptions(this.list_);
+    }
     }
 
     get value() { return this.tags_; }
@@ -137,12 +141,12 @@ export class Keywords extends Input {
     }
 
     afterRender() {
-        const dropdown = this.query("comp-dropdown");
+        this.dropdown = this.query("comp-dropdown");
         this.inputEl = this.query(".inputValue");
         this.tagsEl = this.query(".tags");
 
-        dropdown.setOptions(this.list_);
-        dropdown.attachToInput(this.inputEl);
+        this.dropdown.setOptions(this.list_);
+        this.dropdown.attachToInput(this.inputEl);
 
         this.inputEl.addEventListener("keydown", (e) => {
             if (e.key === "Enter" && this.inputEl.value.trim()) {
@@ -152,7 +156,7 @@ export class Keywords extends Input {
             }
         });
 
-        dropdown.subscribe("option-selected", (e) => {
+        this.dropdown.subscribe("option-selected", (e) => {
             if (e.detail.label) {
                 this.addTag(e.detail.label);
                 this.inputEl.value = "";

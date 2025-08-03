@@ -1,7 +1,7 @@
 import { Input } from "../inputs/input.js";
 
 export class Address extends Input {
-    key = "dtoken_hEDzcyiWMr0wlL3ArWAbIjj-1cbI8XETKd4G5YEh5cPUwbvYq_4K5Y1eyhADhPZyfzU2sJaORWmDDVr6qrcxYusf4kWGtXgwtYzdKbEzbbx4bonGTIPvffGbiToGP6BMsZNwMOP2azOPPwrvlM2KhtbPt24KI_1W5HUCnaRGBTGSUzUIMaYjMZh3EN9EGMUyMogi7R2RMpY"; 
+    key = "8mlI3064b0-b6GbQ9UDKVw47127"; 
 
     beforeRender() {
         super.beforeRender();
@@ -67,7 +67,7 @@ export class Address extends Input {
 
         this.suggestionMap = new Map(suggestions.map(s => [s.address, s]));
 
-        this.dropdown.setOptions(suggestions.map(s => s.address));
+        this.dropdown.setOptions(suggestions.map(s => ({label: s.address, value: s.address})));
     }
 
     afterRender() {
@@ -81,11 +81,12 @@ export class Address extends Input {
         });
 
         this.dropdown.subscribe("option-selected", async (e) => {
-            const text = e.detail.text;
-            const selected = this.suggestionMap.get(text);
+            const addressText = e.detail?.value || e.detail?.label;
+            if(!addressText)return;
+            const selected = this.suggestionMap.get(addressText);
             if (!selected) return;
 
-            input.value = text;
+            input.value = addressText;
 
             const fullUrl = `https://api.getaddress.io/get/${encodeURIComponent(selected.id)}?api-key=${this.key}`;
             const fullRes = await this.request(fullUrl, "GET");

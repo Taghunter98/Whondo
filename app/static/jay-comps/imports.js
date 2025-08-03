@@ -41,5 +41,8 @@ import './comp-pages/login.js';
 import './comp-pages/create.js';
 import './comp-pages/home.js';
 import './comp-pages/register.js';
-import './comp-pages/create_prop.js';
-import './comp-pages/verified.js'
+import './comp-pages/create_prop/create_prop.js';
+import './comp-pages/create_prop/step1.js'
+import './comp-pages/create_prop/step2.js'
+import './comp-pages/create_prop/step3.js'
+import './comp-pages/verified.js';
