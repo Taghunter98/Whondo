@@ -9,23 +9,9 @@ export class Advertise extends Comp {
         <div class="itemContainer">
             <div class="modal">
                 <div class="textContainer">
-                    <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden;">
-                        <video 
-                            autoplay 
-                            muted 
-                            loop 
-                            playsinline 
-                            style="width: 100%; height: auto; object-fit: cover; border: none;"
-                        >
-                            <source src="https://www.whondo.com/static/icons/demo.mov" type="video/quicktime">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                    <h4 class="title">Showcase Your Home the Smart Way</h4>
+                    <h3 class="title">Showcase Your Home the Smart Way</h3>
                     <p class="text">
-                        Whondo gives your property the spotlight it deserves.<br>
-                        Unlike traditional rental platforms, we show your home to one prospective tenant at a time, so it never has to compete for attention.<br>
-                        It’s a simple, effective way to make a great first impression and find the right renter faster.
+                        Whondo gives your property the spotlight it deserves, no competition, just serious tenants.
                     </p>
                 </div>
                 <div class="buttons">
@@ -36,17 +22,38 @@ export class Advertise extends Comp {
                 <img class="image" src="https://images.pexels.com/photos/5623940/pexels-photo-5623940.jpeg">
             </div>
         </div>
+        <div class="block">
+            <div class="heroText">
+                <h3 class="title">Why Whondo is Different</h3>
+                <p>We’re rethinking the way people rent. To make that work, your home needs to shine and we’ve designed Whondo to do exactly that. <br><br>Our platform puts your property front and centre with a modern, sleek interface that’s built to impress.</p>
+            </div>
+        </div>
+        <div class="block">
+            <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden;">
+                <video 
+                    autoplay 
+                    muted 
+                    loop 
+                    playsinline 
+                    style="width: 100%; height: auto; object-fit: cover; border: none;"
+                >
+                    <source src="https://www.whondo.com/static/icons/scroll.mp4" type="video/quicktime">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
     </div>
     `;
     }
 
     createCSS() {
+        const heroHeight = 800;
         return [
             {
                 class: "background",
                 widthPercent: 100,
                 backgroundVar: "black100",
-                height: 1100,
+                height: heroHeight,
                 media: { maxWidthBp: 500, height: 1000 }
             },
             {
@@ -61,7 +68,7 @@ export class Advertise extends Comp {
             {
                 class: "backgroundImage",
                 widthPercent: 100,
-                height: 1100,
+                height: heroHeight,
                 paddingLeft: 400,
                 media: {
                     maxWidthBp: 600,
@@ -88,7 +95,7 @@ export class Advertise extends Comp {
                 padding: 20,
                 borderRadius: 14,
                 marginLeft: 100,
-                marginTop: 100,
+                marginTop: 150,
                 media: {
                     maxWidthBp: 600,
                     boxsizing: "border-box",
@@ -118,13 +125,29 @@ export class Advertise extends Comp {
                 widthPercent: 100,
                 gap: 20,
                 paddingTop: 40
+            },
+            {
+                class: "block",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "centre",
+                padding: [50, 100]
+            },
+            {
+                class: "heroText",
+                display: "flex",
+                gap: 20,
+                flexDirection: "column",
+                widthPercent: 100,
+                maxWidth: 500,
+                alignItems: "centre"
             }
         ];
     }
 
     afterRender() {
         const cont = this.getById("continue");
-        cont.text = "Advertise My Home";
+        cont.text = "Get Started";
 
         cont.addEventListener("click", async () => {
             cont.loading = true;
