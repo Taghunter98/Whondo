@@ -47,19 +47,13 @@ export class CreateProp extends Comp {
             },
             { class: "container",
                 display: "flex",
-                media: { maxWidthBp: 600, flexDirection: "column", alignItems: "centre"
-                }
+                media: { maxWidthBp: 600, flexDirection: "column", alignItems: "centre" }
             },
             { class: "backgroundImage",
                 widthPercent: 100,
                 height: 1050,
                 paddingLeft: 400,
-                media: {
-                    maxWidthBp: 600,
-                    heightVh: 40,
-                    margin: 0,
-                    padding: 0
-                }
+                media: { maxWidthBp: 600, heightVh: 40, margin: 0, padding: 0 }
             },
             { class: "image",
                 widthPercent: 100,
