@@ -12,7 +12,7 @@
 import { Comp } from "jay-comp";
 
 export class Button extends Comp {
-    text_; variant_;
+    text_; variant_; loading_ = false;
 
     set text(v) {
         this.text_ = v;
@@ -20,6 +20,10 @@ export class Button extends Comp {
     }
     set variant(v) {
         this.variant_ = v;
+        this.update();
+    }
+    set loading(v) {
+        this.loading_ = v;
         this.update();
     }
 
@@ -32,7 +36,9 @@ export class Button extends Comp {
     }
 
     createHTML() {
-        return /* html */ `<button class="button">${this.text}</button>`;
+        return !this.loading_
+            ? `<button class="button">${this.text}</button>`
+            : `<div class="loading"><comp-spinner></comp-spinner></div>`
     }
 
     createCSS() {
@@ -92,6 +98,18 @@ export class Button extends Comp {
             transform: "scale(0.95)",
         });
 
+        const loading = {
+            class: "loading",
+            display: "flex",
+            boxSizing: "border-box",
+            justifyContent: "centre",
+            widthPercent: 100,
+            backgroundVar: "black100",
+            padding: [8, 28],
+            borderVar: "black100",
+            borderRadius: 8,
+        }
+
         if (this.variant_ == 1) {
             button = primary;
             buttonHover = primaryHover;
@@ -104,7 +122,7 @@ export class Button extends Comp {
             buttonActive = secondaryActive;
         }
 
-        return [button, buttonHover, buttonActive];
+        return [button, buttonHover, buttonActive, loading];
     }
 
     static { Comp.register(this); }

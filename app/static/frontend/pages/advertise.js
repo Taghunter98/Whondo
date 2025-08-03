@@ -131,8 +131,9 @@ export class Advertise extends Comp {
         back.text = "Back";
         back.variant = 2;
 
-        cont.addEventListener("click", () => {
-            const res = this.request("/verify/landlord", "POST");
+        cont.addEventListener("click", async () => {
+            cont.loading = true;
+            const res = await this.request("/verify/landlord", "POST");
             res.ok ? window.location.assign("/advert/new") : window.location.assign("/login");
         });
 
