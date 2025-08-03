@@ -19,7 +19,7 @@ class Link extends Comp {
     }
 
     createHTML() {
-        return `<a href="${this.link_}>"<li class="link">${this.text_}</li></a>`;
+        return `<a href="${this.link_}"><li class="link">${this.text_}</li></a>`;
     }
 
     createCSS() {

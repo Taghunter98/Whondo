@@ -132,9 +132,8 @@ export class Advertise extends Comp {
         back.variant = 2;
 
         cont.addEventListener("click", () => {
-            const res = this.request("https://whondo.com/verify/landlord", "POST");
+            const res = this.request("/verify/landlord", "POST");
             res.ok ? window.location.assign("/advert/new") : window.location.assign("/login");
-            // Fire landlord API call
         });
 
         back.addEventListener("click", () => window.location.assign("/"));

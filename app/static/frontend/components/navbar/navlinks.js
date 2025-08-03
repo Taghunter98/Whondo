@@ -4,7 +4,7 @@ export class NavLinks extends Comp {
     links_;
 
     beforeRender() {
-        this.links_ = { "About": "/about", "Advertise My Home": "/advert/new" };
+        this.links_ = { "About": "/about", "Advertise My Home": "/advert/advertise" };
     }
 
     createHTML() {
