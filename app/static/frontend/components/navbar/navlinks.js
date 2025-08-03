@@ -4,7 +4,7 @@ export class NavLinks extends Comp {
     links_;
 
     beforeRender() {
-        this.links_ = ["About", "Mission", "Contribute"];
+        this.links_ = { "About": "/about", "Advertise My Home": "/advert/new" };
     }
 
     createHTML() {
@@ -28,11 +28,12 @@ export class NavLinks extends Comp {
     }
 
     afterRender() {
-        this.links_.forEach(link => {
+        for (const link in this.links_) {
             const li = document.createElement("comp-link");
             li.text = link;
+            li.link = this.links_[link];
             this.query("ul").appendChild(li);
-        });
+        };
     }
 
     static { Comp.register(this); }

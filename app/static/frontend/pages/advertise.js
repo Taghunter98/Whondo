@@ -4,6 +4,7 @@ export class Advertise extends Comp {
 
     createHTML() {
         return /* html */ `
+    <comp-navbar></comp-navbar>
     <div class="background">
         <div class="itemContainer">
             <div class="modal">
@@ -20,7 +21,7 @@ export class Advertise extends Comp {
                             Your browser does not support the video tag.
                         </video>
                     </div>
-                    <h3 class="title">Showcase Your Home the Smart Way</h3>
+                    <h4 class="title">Showcase Your Home the Smart Way</h4>
                     <p class="text">
                         Whondo gives your property the spotlight it deserves.<br>
                         Unlike traditional rental platforms, we show your home to one prospective tenant at a time, so it never has to compete for attention.<br>
@@ -46,7 +47,8 @@ export class Advertise extends Comp {
                 class: "background",
                 widthPercent: 100,
                 backgroundVar: "black100",
-                heightVh: 100,
+                height: 1100,
+                media: { maxWidthBp: 500, height: 1000 }
             },
             {
                 class: "itemContainer",
@@ -60,7 +62,7 @@ export class Advertise extends Comp {
             {
                 class: "backgroundImage",
                 widthPercent: 100,
-                heightVh: 100,
+                height: 1100,
                 paddingLeft: 400,
                 media: {
                     maxWidthBp: 600,
@@ -90,9 +92,10 @@ export class Advertise extends Comp {
                 marginTop: 100,
                 media: {
                     maxWidthBp: 600,
+                    boxsizing: "border-box",
                     width: "auto",
-                    margin: 0,
-                    marginTop: 200
+                    margin: 20,
+                    marginTop: 150
                 }
             },
             {
@@ -128,9 +131,13 @@ export class Advertise extends Comp {
         back.text = "Back";
         back.variant = 2;
 
-        compButton.addEventListener("click", () => {
+        cont.addEventListener("click", () => {
+            const res = this.request("https://whondo.com/verify/landlord", "POST");
+            res.ok ? window.location.assign("/advert/new") : window.location.assign("/login");
             // Fire landlord API call
         });
+
+        back.addEventListener("click", () => window.location.assign("/"));
     }
 
     static { Comp.register(this); }
