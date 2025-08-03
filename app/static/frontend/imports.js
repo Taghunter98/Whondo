@@ -39,6 +39,9 @@ import './components/property/scroller.js';
 // Animations
 import './components/animations/spinner.js';
 
+// Blocks
+import './components/blocks/cards.js';
+
 // Pages
 import './pages/login.js';
 import './pages/create.js';

@@ -29,18 +29,20 @@ export class Advertise extends Comp {
             </div>
         </div>
         <div class="block">
-            <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden;">
+            <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden">
                 <video 
                     autoplay 
                     muted 
                     loop 
                     playsinline 
-                    style="width: 100%; height: auto; object-fit: cover; border: none;"
+                    style="width: 100%; height: 100%; object-fit: cover; border: none; object-fit: cover; clip-path: inset(1px 1px)"
                 >
-                    <source src="https://www.whondo.com/static/icons/scroll.mp4" type="video/quicktime">
-                    Your browser does not support the video tag.
+                <source src="https://www.whondo.com/static/icons/scroll.mp4" type="video/mp4"> Your browser does not support the video tag.
                 </video>
             </div>
+        </div>
+        <div class="block">
+            <comp-cards id="cards-hero"></comp-cards>
         </div>
     </div>
     `;
@@ -147,7 +149,26 @@ export class Advertise extends Comp {
 
     afterRender() {
         const cont = this.getById("continue");
+        const cardsHero = this.getById("cards-hero");
+
         cont.text = "Get Started";
+        cardsHero.cards = {
+            card1: {
+                image: "https://whondo.com/static/icons/asssets/prompt.png",
+                title: "Prompt-Based Search",
+                description: "Tenants describe what they’re looking for, we show them homes that match. No endless scrolling, no generic filters."
+            },
+            card2: {
+                image: "https://whondo.com/static/icons/asssets/card.png",
+                title: "Card-Style Viewing",
+                description: "A clean, TikTok-style design makes each home feel like a feature, not just another listing. Your property gets the attention it deserves."
+            },
+            card3: {
+                image: "https://whondo.com/static/icons/asssets/detail.png",
+                title: "One Viewer at a Time",
+                description: "No competition. Just your home, viewed intentionally by a serious prospect."
+            }
+        }
 
         cont.addEventListener("click", async () => {
             cont.loading = true;
