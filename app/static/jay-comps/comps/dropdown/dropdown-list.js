@@ -49,6 +49,12 @@ export class Dropdown extends Comp {
         ];
     }
 
+    /**
+     * 
+     * @param {String || object} options 
+     * This function will set up the dropdown list it accept both normal list of sting or a object
+     * and also assign to a filtered for lookup
+     */
     setOptions(options) {
         this.options_ = (options || []).map(opt => typeof opt === "string" ? {label: opt, value: opt} : opt);
         this.filtered_ = [...this.options_]
@@ -112,6 +118,11 @@ export class Dropdown extends Comp {
     afterRender() {
         this.dropdownEl = this.query(".dropdown-list");
 
+        /**
+         * When the dropdown was selected emit a custom event for other comp to listen with a data in the payload
+         * Label: what show on drop down
+         * Value: real data that being send to back-end 
+         */
         this.dropdownEl.addEventListener("click", (e) => {
             const item = e.target.closest(".dropdown-item");
             if (!item) return;

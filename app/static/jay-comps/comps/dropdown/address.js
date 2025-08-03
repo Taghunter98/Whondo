@@ -43,6 +43,7 @@ export class Address extends Input {
      * This function check if the input query is less than 3 characters, it returns early. If not then fetches suggestions from the API.
      * It then gets the suggestions from the API and formats them into options for the dropdown.
      * 
+     * 
      */
     async fetchSuggestions(query) {
         const trimmed = query.trim();
@@ -70,6 +71,7 @@ export class Address extends Input {
         this.dropdown.setOptions(suggestions.map(s => ({label: s.address, value: s.address})));
     }
 
+    
     afterRender() {
         const input = this.query("input");
         this.dropdown = this.getById("dropdown");
@@ -80,6 +82,10 @@ export class Address extends Input {
             this.fetchSuggestions(query);
         });
 
+        /**
+        * When the dropdown have been click it listen to a custom event which it will then grab value the event emit and do a second fetch form the 
+        * second api with another endpoint which allow us to grab a data in more detail and pass it 
+        */
         this.dropdown.subscribe("option-selected", async (e) => {
             const addressText = e.detail?.value || e.detail?.label;
             if(!addressText)return;
