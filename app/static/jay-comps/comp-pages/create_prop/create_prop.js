@@ -96,14 +96,7 @@ export class CreateProp extends Comp {
 
      validateStep1() {
         const step1 = this.query("#step1")
-        const inputs = [
-            step1.getById("address"),
-            step1.getById("title"),
-            step1.getById("rent"),
-            step1.getById("description"),
-            step1.getById("propertyType"),
-            step1.getById("tenants")
-        ];
+        const inputs = [step1.getById("address"), step1.getById("title"), step1.getById("rent"), step1.getById("description"), step1.getById("propertyType"), step1.getById("tenants") ];
         let isValid = true;
 
         for (let input of inputs) {
