@@ -4,6 +4,7 @@ export class Login extends Comp {
 
     createHTML() {
         return /* html */ `
+        <comp-navbar></comp-navbar>
         <div class="background">
             <div class="itemContainer">
                 <div class="modal">
@@ -131,32 +132,31 @@ export class Login extends Comp {
         ];
     }
 
-    openWindow() { window.location.assign("/register"); }
-
-    async login(result, json) {
-        let resp = await this.request("/login", "POST", json);
-        (resp.ok) ? result.innerHTML = resp.data.message : result.innerHTML = resp.error;
-    }
-
     afterRender() {
-        const compButton = this.getById("submit");
+        const btn = this.getById("submit");
         const result = this.getById("result");
         const email = this.getById("email");
         const pass = this.getById("password");
 
-        compButton.text = "Login";
-        compButton.fill = true;
+        btn.text = "Login";
+        btn.fill = true;
         email.label = "Email";
         email.prompt = "Enter email";
         pass.label = "Password";
         pass.type = "password";
         pass.prompt = "Enter password";
 
-        compButton.addEventListener("click", () => {
+        btn.addEventListener("click", async () => {
+            btn.loading = true;
             let cookie = "true";
             let jsonData = { email: email.value, password: pass.value, consent: cookie };
 
-            this.login(result, jsonData);
+            const res = await this.request("/login", "POST", jsonData);
+            if (res.ok) window.location.assign("/");
+            else {
+                btn.loading = false;
+                result.innerHTML = "Incorrect email or password";
+            }
         });
     }
 

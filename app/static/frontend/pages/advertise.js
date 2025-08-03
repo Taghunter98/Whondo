@@ -29,7 +29,6 @@ export class Advertise extends Comp {
                     </p>
                 </div>
                 <div class="buttons">
-                    <comp-button id="back"></comp-button>
                     <comp-button id="continue"></comp-button>
                 </div>
             </div>
@@ -125,19 +124,13 @@ export class Advertise extends Comp {
 
     afterRender() {
         const cont = this.getById("continue");
-        const back = this.getById("back");
-
-        cont.text = "Continue";
-        back.text = "Back";
-        back.variant = 2;
+        cont.text = "Advertise My Home";
 
         cont.addEventListener("click", async () => {
             cont.loading = true;
             const res = await this.request("/verify/landlord", "POST");
             res.ok ? window.location.assign("/advert/new") : window.location.assign("/login");
         });
-
-        back.addEventListener("click", () => window.location.assign("/"));
     }
 
     static { Comp.register(this); }
