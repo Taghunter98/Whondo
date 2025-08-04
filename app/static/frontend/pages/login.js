@@ -7,7 +7,7 @@ export class Login extends Comp {
         <comp-navbar></comp-navbar>
         <div class="background">
             <div class="itemContainer">
-                <div class="modal">
+                <div class="modal" style="display: block">
                     <div class="textContainer">
                         <h3 class="title">Login</h3>
                         <p class="text">Welcome back! Let's find you a new home.</p>
@@ -28,8 +28,8 @@ export class Login extends Comp {
                     <img class="image" src="https://images.pexels.com/photos/4781426/pexels-photo-4781426.jpeg">
                 </div>
             </div>
-            
         </div>
+        <comp-footer></comp-footer>
         `;
     }
 
