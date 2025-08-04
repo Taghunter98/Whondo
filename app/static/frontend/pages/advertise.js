@@ -27,8 +27,6 @@ export class Advertise extends Comp {
                 <h1 class="title">Why Whondo is Different</h1>
                 <p style="text-align: center">We’re redefining renting, giving every home the spotlight it deserves. Whondo is built to make yours shine.
             </div>
-        </div>
-        <div class="block">
             <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden">
                 <video 
                     autoplay 
