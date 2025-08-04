@@ -66,5 +66,5 @@ def verify_user():
 
     if data is None:
         return jsonify({"error": "User data not found"}), 404
-    
+
     return jsonify(data), 200

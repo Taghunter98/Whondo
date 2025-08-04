@@ -19,19 +19,8 @@
     --green40: #d2e7d2;
     --green20: #e8f3e9;
 
-    --red100: #cd2727;
-    --red80: #d75252;
-    --red60: #e17d7d;
-    --red40: #eba9a9;
-    --red20: #f5d4d4;
-
-    --yellow100: #c5ae2b;
-    --yellow80: #d1be55;
-    --yellow60: #dcce80;
-    --yellow40: #e8dfaa;
-    --yellow20: #f3efd5;
-
     --borderDefault: solid 2px var(--white);
     --border: solid 2px var(--black40);
     --borderBlack: solid 2px var(--black100);
+    --borderGreen: solid 2px var(--green100);
 }

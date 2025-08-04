@@ -29,7 +29,8 @@ export class Navbar extends Comp {
 
     createCSS() {
         return [
-            { class: "container",
+            {
+                class: "container",
                 top: 0,
                 left: 0,
                 zIndex: 1000,
@@ -44,56 +45,75 @@ export class Navbar extends Comp {
                 transform: "translateY(0)",
                 transition: "transform 0.4s ease"
             },
-            { class: "menu",
+            {
+                class: "menu",
                 display: "none",
                 media: { maxWidthBp: 600, display: "block" }
             },
-            { class: "close",
+            {
+                class: "close",
                 display: "none",
                 media: { maxWidthBp: 600, display: "block" }
             },
-            { class: "mob-links",
+            {
+                class: "mob-links",
                 display: "none",
                 media: { maxWidthBp: 600, display: "block" }
             },
-            { media: { maxWidthBp: 600,  
-                class: "desktop-profile", 
-                display: "none" }
+            {
+                media: {
+                    maxWidthBp: 600,
+                    class: "desktop-profile",
+                    display: "none"
+                }
             },
-            { class: "tray",
+            {
+                class: "tray",
                 display: "none"
             },
-            { media: { maxWidthBp: 600,
-                class: "tray",
-                display: "flex",
-                bottom: -500,
-                position: "fixed",
-                zIndex: 1000,
-                boxSizing: "border-box",
-                flexDirection: "column",
-                widthPercent: 100,
-                background: "white",
-                padding: 20,
-                borderRadius: 14,
-                boxShadow: [0, 4, 23, 0, "var(--black20)"],
-                transition: ["bottom", "0.6s", "ease"]}
+            {
+                media: {
+                    maxWidthBp: 600,
+                    class: "tray",
+                    display: "flex",
+                    bottom: -500,
+                    position: "fixed",
+                    zIndex: 1000,
+                    boxSizing: "border-box",
+                    flexDirection: "column",
+                    widthPercent: 100,
+                    background: "white",
+                    padding: 20,
+                    borderRadius: 14,
+                    boxShadow: [0, 4, 23, 0, "var(--black20)"],
+                    transition: ["bottom", "0.6s", "ease"]
+                }
             },
-            { media: { maxWidthBp: 600,
-                class: "trayButtons",
-                display: "flex",
-                gap: 10,
-                paddingTop: 40}
+            {
+                media: {
+                    maxWidthBp: 600,
+                    class: "trayButtons",
+                    display: "flex",
+                    gap: 10,
+                    paddingTop: 40
+                }
             },
-            { media: { maxWidthBp: 600,
-                class: "header",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between"}
+            {
+                media: {
+                    maxWidthBp: 600,
+                    class: "header",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between"
+                }
             },
-            { media: { maxWidthBp: 600, 
-                class: "mob-links", 
-                display: "block"}
-            }  
+            {
+                media: {
+                    maxWidthBp: 600,
+                    class: "mob-links",
+                    display: "block"
+                }
+            }
         ];
     }
 
@@ -102,7 +122,7 @@ export class Navbar extends Comp {
         const currentY = window.scrollY;
         const delta = currentY - this.lastScrollY;
 
-        if (delta > 10 && currentY > 50)  navbar.style.transform = "translateY(-100%)";
+        if (delta > 10 && currentY > 50) navbar.style.transform = "translateY(-100%)";
         else if (delta < -10) navbar.style.transform = "translateY(0)";
 
         this.lastScrollY = currentY;
@@ -116,13 +136,13 @@ export class Navbar extends Comp {
     afterRender() {
         const menu = this.getById("menu");
         const close = this.getById("close");
-        
+
         this.lastScrollY = window.scrollY;
         window.addEventListener("scroll", () => this.navbarScroll());
 
         menu.addEventListener("click", () => this.menu("0"));
         close.addEventListener("click", () => this.menu("-500px"));
-    } 
-    
-    static { Comp.register(this); } 
+    }
+
+    static { Comp.register(this); }
 }

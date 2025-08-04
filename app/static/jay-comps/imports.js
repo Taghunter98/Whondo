@@ -11,6 +11,7 @@ import './comps/dialog.js';
 import './comps/carousel.js';
 import './comps/popup/popup.js';
 import './comps/cookie.js'
+import './comps/promptbar.js';
 
 // Navbar
 import './comps/navbar/navbar.js';
@@ -35,6 +36,16 @@ import './comps/dropdown/input-dropdown.js';
 import './comps/icons/prompt.js';
 import './comps/icons/icon.js';
 import './comps/icons/icons.js';
+
+// Property
+import './comps/property/prop_card.js';
+import './comps/property/image.js';
+import './comps/property/Large_img.js';
+import './comps/property/chip.js';
+import './comps/property/scroller.js';
+
+// Animations
+import './comps/animations/spinner.js';
 
 // Pages
 import './comp-pages/login.js';

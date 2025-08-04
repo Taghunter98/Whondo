@@ -23,14 +23,16 @@ class AuthProfile extends Comp {
 
     createCSS() {
         return [
-            { width: "auto" },
             {
+                width: "auto"
+            }, {
                 class: "profile",
                 width: 45,
                 height: 45,
                 borderVar: "border",
                 borderRadiusPercent: 50,
-            }];
+            }
+        ];
     }
 
     static { Comp.register(this); }
