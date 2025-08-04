@@ -4,12 +4,15 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../static/globalstyle.css" />
-        <title>Test Page</title>
+        <title>Created</title>
     </head>
     <body>
-        <comp-create-prop></comp-advertise>
+        <comp-advertise></comp-advertise>
 
-        <!-- Import our list of modules, including login.js -->
-        <script type="module" src="../static/bundle.js"></script>
+        <!-- Import Comps -->
+        <script
+            src="{{ url_for('static', filename='bundle.js') }}"
+            type="module"
+        ></script>
     </body>
 </html>

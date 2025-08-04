@@ -9,7 +9,15 @@ Version:     1.0
 Description: Provides functions for image validation and storage.
 """
 
-from flask import Blueprint, send_file, send_from_directory, request, abort, current_app, jsonify
+from flask import (
+    Blueprint,
+    send_file,
+    send_from_directory,
+    request,
+    abort,
+    current_app,
+    jsonify,
+)
 from flask import current_app
 from PIL import Image
 from datetime import datetime
@@ -55,9 +63,9 @@ def serve_upload():
         format="JPEG",
         optimize=True,
         progressive=True,
-        quality=60,     # 60 quality
+        quality=60,  # 60 quality
         subsampling=2,  # 4:2:0 chroma subsampling
-        exif=b"",       # strip metadata
+        exif=b"",  # strip metadata
     )
     buf.seek(0)
     return send_file(buf, mimetype="image/jpeg")

@@ -12,7 +12,7 @@
 import { Comp } from "jay-comp";
 
 export class Button extends Comp {
-    text_; variant_;
+    text_; variant_; loading_ = false; auto_ = false;
 
     set text(v) {
         this.text_ = v;
@@ -20,6 +20,14 @@ export class Button extends Comp {
     }
     set variant(v) {
         this.variant_ = v;
+        this.update();
+    }
+    set loading(v) {
+        this.loading_ = v;
+        this.update();
+    }
+    set auto(v) {
+        this.auto_ = v;
         this.update();
     }
 
@@ -31,7 +39,16 @@ export class Button extends Comp {
         if (!this.variant_) this.variant_ = 1;
     }
 
-    createHTML() { return `<button class="button">${this.text}</button>`; }
+    createHTML() {
+        return `
+    <div class="buttonWrapper">
+        ${this.loading_
+                ? `<div class="loading"><comp-spinner></comp-spinner></div>`
+                : `<button class="button">${this.text}</button>`
+            }
+    </div>`;
+    }
+
 
     createCSS() {
         let button, buttonHover, buttonActive;
@@ -39,7 +56,7 @@ export class Button extends Comp {
         const primary = {
             class: "button",
             colour: "white",
-            widthPercent: 100,
+            width: this.auto_ ? "auto" : "100%",
             backgroundVar: "black100",
             padding: [12, 28],
             borderVar: "black100",
@@ -68,7 +85,7 @@ export class Button extends Comp {
             class: "button",
             colourVar: "black100",
             backgroundVar: "black10",
-            widthPercent: 100,
+            width: this.auto_ ? "auto" : "100%",
             borderVar: "border",
             padding: [12, 28],
             borderRadius: 8,
@@ -90,6 +107,18 @@ export class Button extends Comp {
             transform: "scale(0.95)",
         });
 
+        const loading = {
+            class: "loading",
+            display: "flex",
+            boxSizing: "border-box",
+            justifyContent: "centre",
+            width: this.auto_ ? "auto" : "100%",
+            backgroundVar: "black100",
+            padding: [8, 28],
+            borderVar: "black100",
+            borderRadius: 8,
+        }
+
         if (this.variant_ == 1) {
             button = primary;
             buttonHover = primaryHover;
@@ -102,7 +131,7 @@ export class Button extends Comp {
             buttonActive = secondaryActive;
         }
 
-        return [button, buttonHover, buttonActive];
+        return [{ width: this.auto_ ? "auto" : "100%" }, button, buttonHover, buttonActive, loading];
     }
 
     static { Comp.register(this); }

@@ -54,6 +54,7 @@ export class Register extends Comp {
                                     <comp-button class="submit" id="submit" type="submit"></comp-button>
                                 </div>
                             </div>
+                            <p id="result" style="text-align: center; padding-top: 10px"></p>
                         </div>
                     </form>
                 </div>
@@ -237,7 +238,8 @@ export class Register extends Comp {
         field.classList.remove("error");
     };
 
-    async register() {
+    async register(btn) {
+        btn.loading = true;
         const fd = new FormData();
 
         fd.append("name", this.getById("name").value);
@@ -258,7 +260,10 @@ export class Register extends Comp {
         const result = await this.submitForm("/register", fd);
 
         if (result.ok) this.update("<comp-create></comp-create>")
-        else alert(result.error);
+        else {
+            btn.loading = false;
+            this.query("#result").innerHTML = result.error;
+        }
     }
 
     afterRender() {
@@ -358,7 +363,7 @@ export class Register extends Comp {
                 return;
             }
             e.preventDefault();
-            this.register();
+            this.register(submitButton);
         });
     }
 

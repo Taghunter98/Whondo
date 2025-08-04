@@ -7,7 +7,11 @@ class Spinner extends Comp {
 
     createCSS() {
         return [
-            { class: "spinner",
+            {
+                width: "auto"
+            },
+            {
+                class: "spinner",
                 width: 24,
                 height: 24,
                 border: "3px solid var(--black80)",
@@ -16,9 +20,10 @@ class Spinner extends Comp {
                 animation: "spinner 0.8s linear infinite"
             },
             {
-                keyframes: { name: "spinner",
-                    "0%": {transform: "rotate(0deg)"},
-                    "100%": {transform: "rotate(360deg)"}
+                keyframes: {
+                    name: "spinner",
+                    "0%": { transform: "rotate(0deg)" },
+                    "100%": { transform: "rotate(360deg)" }
                 }
             }
         ];
