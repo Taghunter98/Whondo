@@ -35,32 +35,38 @@ export class CreateProp extends Comp {
     createCSS() {
 
         return [
-            { class: "background",
+            {
+                class: "background",
                 widthPercent: 100,
                 height: 1050,
                 backgroundVar: "black100",
                 overflow: "hidden",
-                media: { maxWidthBp: 600, height: 1200 ,}
+                media: { maxWidthBp: 600, height: 1200, }
             },
-            { class: "formObj",
+            {
+                class: "formObj",
                 widthPercent: 100,
             },
-            { class: "container",
+            {
+                class: "container",
                 display: "flex",
                 media: { maxWidthBp: 600, flexDirection: "column", alignItems: "centre" }
             },
-            { class: "backgroundImage",
+            {
+                class: "backgroundImage",
                 widthPercent: 100,
                 height: 1050,
                 paddingLeft: 400,
                 media: { maxWidthBp: 600, heightVh: 40, margin: 0, padding: 0 }
             },
-            { class: "image",
+            {
+                class: "image",
                 widthPercent: 100,
                 heightPercent: 100,
                 objectFit: "cover"
             },
-            { class: "modal",
+            {
+                class: "modal",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",
@@ -88,9 +94,9 @@ export class CreateProp extends Comp {
         ];
     }
 
-     validateStep1() {
+    validateStep1() {
         const step1 = this.query("#step1")
-        const inputs = [step1.getById("address"), step1.getById("title"), step1.getById("rent"), step1.getById("description"), step1.getById("propertyType"), step1.getById("tenants") ];
+        const inputs = [step1.getById("address"), step1.getById("title"), step1.getById("rent"), step1.getById("description"), step1.getById("propertyType"), step1.getById("tenants")];
         let isValid = true;
 
         for (let input of inputs) {
@@ -101,7 +107,7 @@ export class CreateProp extends Comp {
         }
         return isValid;
     }
-   
+
     validateStep2() {
         const step2 = this.getById("step2")
         const cover = step2.getById("cover");
@@ -243,9 +249,9 @@ export class CreateProp extends Comp {
             bathrooms.type = "number";
             propType.label = "Property Type";
             propType.prompt = "Select from dropdown";
-            propType.list = [ { label: "House", value: "house" }, { label: "Flat", value: "flat" }, { label: "Studio", value: "studio" }, { label: "Bungalow", value: "bungalow" }, { label: "Bedsit", value: "bedsit" }, { label: "Maisonette", value: "maisonette" }, { label: "Shared House", value: "shared_house" }, { label: "Student Accommodation", value: "student_accommodation" }, { label: "Penthouse", value: "penthouse" },];
+            propType.list = [{ label: "House", value: "house" }, { label: "Flat", value: "flat" }, { label: "Studio", value: "studio" }, { label: "Bungalow", value: "bungalow" }, { label: "Bedsit", value: "bedsit" }, { label: "Maisonette", value: "maisonette" }, { label: "Shared House", value: "shared_house" }, { label: "Student Accommodation", value: "student_accommodation" }, { label: "Penthouse", value: "penthouse" },];
             propType.strict = true;
-        
+
             description.label = "Property description";
             description.prompt = "Tell us about your home, be descriptive!";
             backBtn.text = "Back";
@@ -293,7 +299,7 @@ export class CreateProp extends Comp {
         //Step2 set up
         const page2 = this.getById("page2")
         const step2 = this.getById("step2");
-        customElements.whenDefined("comp-step2").then(()=>{
+        customElements.whenDefined("comp-step2").then(() => {
             const backBtn2 = step2.getById("backBtn2");
             const nextBtn2 = step2.getById("nextBtn2");
             const cover = step2.getById("cover");
@@ -308,9 +314,9 @@ export class CreateProp extends Comp {
             pic.forEach((el) => el.prompt = "Add Photo");
 
             backBtn2.addEventListener("click", () => {
-            page2.setAttribute("hidden", "");
-            step3.setAttribute("hidden", "");
-            page1.removeAttribute("hidden")
+                page2.setAttribute("hidden", "");
+                step3.setAttribute("hidden", "");
+                page1.removeAttribute("hidden")
             });
 
             nextBtn2.addEventListener("click", () => {
@@ -336,7 +342,7 @@ export class CreateProp extends Comp {
         //Step3 setup
         const page3 = this.getById("page3");
         const step3 = this.getById("step3");
-        customElements.whenDefined("comp-step3").then(()=>{
+        customElements.whenDefined("comp-step3").then(() => {
             const backBtn3 = step3.getById("backBtn3");
             const submit = step3.getById("submit");
             const keyword = step3.getById("keywords")
@@ -349,13 +355,60 @@ export class CreateProp extends Comp {
             submit.text = "Finish";
             submit.fill = true;
 
-            keyword.list = [ { label: "House", value: "house" }, { label: "Flat", value: "flat" }, { label: "Bungalow", value: "bungalow" }, { label: "Studio", value: "studio" },
-            { label: "Bedsit", value: "bedsit" }, { label: "Maisonette", value: "maisonette" }, { label: "Shared House", value: "shared_house" }, { label: "Student Accommodation", value: "student_accommodation" }, { label: "En Suite", value: "en_suite" }, { label: "Penthouse", value: "penthouse" },{ label: "Furnished", value: "furnished" }, { label: "Unfurnished", value: "unfurnished" }, { label: "Bills Included", value: "bills_included" }, { label: "All Inclusive", value: "all_inclusive" }, { label: "Double Room", value: "double_room" }, { label: "Single Room", value: "single_room" },{ label: "Balcony", value: "balcony" }, { label: "Garden", value: "garden" }, { label: "Parking", value: "parking" }, { label: "Pets Allowed", value: "pets_allowed" }, { label: "WiFi Included", value: "wifi_included" }, { label: "Utilities Included", value: "utilities_included" }, { label: "Short Let", value: "short_let" }, { label: "Long Let", value: "long_let" }, { label: "No Deposit", value: "no_deposit" },{ label: "Low Deposit", value: "low_deposit" }, { label: "DSS Accepted", value: "dss_accepted" }, { label: "Guarantor Required", value: "guarantor_required" }, { label: "No Guarantor", value: "no_guarantor" }, { label: "Student Friendly", value: "student_friendly" }, { label: "City Centre", value: "city_centre" },  { label: "Near University", value: "near_university" }, { label: "Close to Station", value: "close_to_station" }, { label: "Bus Route", value: "bus_route" }, { label: "Zone 1", value: "zone_1" }, { label: "Zone 2", value: "zone_2" }, { label: "Zone 3", value: "zone_3" }, { label: "Zone 4", value: "zone_4" }, { label: "Cycle Friendly", value: "cycle_friendly" },{ label: "LGBTQ+ Friendly", value: "lgbtq_friendly" }, { label: "Vegan Household", value: "vegan_household" }, { label: "Non Smoking", value: "non_smoking" }, { label: "Smoking Allowed", value: "smoking_allowed" },{ label: "Social House", value: "social_house" },{ label: "Quiet House", value: "quiet_house" },{ label: "Wheelchair Accessible", value: "wheelchair_accessible" },{ label: "Lift", value: "lift" },{ label: "Ground Floor", value: "ground_floor" },{ label: "Bike Storage", value: "bike_storage" }];
+            keyword.list = [
+                { label: "House", value: "house" },
+                { label: "Flat", value: "flat" },
+                { label: "Bungalow", value: "bungalow" },
+                { label: "Studio", value: "studio" },
+                { label: "Bedsit", value: "bedsit" },
+                { label: "Maisonette", value: "maisonette" },
+                { label: "Shared House", value: "shared_house" },
+                { label: "Student Accommodation", value: "student_accommodation" },
+                { label: "En Suite", value: "en_suite" },
+                { label: "Penthouse", value: "penthouse" },
+                { label: "Furnished", value: "furnished" },
+                { label: "Unfurnished", value: "unfurnished" },
+                { label: "Bills Included", value: "bills_included" },
+                { label: "All Inclusive", value: "all_inclusive" },
+                { label: "Double Room", value: "double_room" },
+                { label: "Single Room", value: "single_room" },
+                { label: "Balcony", value: "balcony" },
+                { label: "Garden", value: "garden" },
+                { label: "Parking", value: "parking" },
+                { label: "Pets Allowed", value: "pets_allowed" },
+                { label: "WiFi Included", value: "wifi_included" },
+                { label: "Utilities Included", value: "utilities_included" },
+                { label: "Short Let", value: "short_let" },
+                { label: "Long Let", value: "long_let" },
+                { label: "No Deposit", value: "no_deposit" },
+                { label: "Low Deposit", value: "low_deposit" },
+                { label: "DSS Accepted", value: "dss_accepted" },
+                { label: "Guarantor Required", value: "guarantor_required" },
+                { label: "No Guarantor", value: "no_guarantor" },
+                { label: "Student Friendly", value: "student_friendly" },
+                { label: "City Centre", value: "city_centre" },
+                { label: "Near University", value: "near_university" },
+                { label: "Close to Station", value: "close_to_station" },
+                { label: "Bus Route", value: "bus_route" },
+                { label: "Zone 1", value: "zone_1" },
+                { label: "Zone 2", value: "zone_2" },
+                { label: "Zone 3", value: "zone_3" },
+                { label: "Zone 4", value: "zone_4" },
+                { label: "Cycle Friendly", value: "cycle_friendly" },
+                { label: "LGBTQ+ Friendly", value: "lgbtq_friendly" },
+                { label: "Vegan Household", value: "vegan_household" },
+                { label: "Non Smoking", value: "non_smoking" },
+                { label: "Smoking Allowed", value: "smoking_allowed" },
+                { label: "Social House", value: "social_house" },
+                { label: "Quiet House", value: "quiet_house" },
+                { label: "Wheelchair Accessible", value: "wheelchair_accessible" },
+                { label: "Lift", value: "lift" },
+                { label: "Ground Floor", value: "ground_floor" }, { label: "Bike Storage", value: "bike_storage" }];
 
             backBtn3.addEventListener("click", () => {
-            page3.setAttribute("hidden", "");
-            page1.setAttribute("hidden", "");
-            page2.removeAttribute("hidden")
+                page3.setAttribute("hidden", "");
+                page1.setAttribute("hidden", "");
+                page2.removeAttribute("hidden")
             });
 
             submit.addEventListener("click", (e) => {
@@ -366,7 +419,7 @@ export class CreateProp extends Comp {
                 else this.createProp()
             });
         });
-    
+
         const popup = this.getById("popup");
         popup.title = "Advert Published!";
         popup.paragraph = "Congratulations! You can now view your new advert or monitor it in your Landlord portal.";
