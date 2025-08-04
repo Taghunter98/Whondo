@@ -49,6 +49,7 @@ export class Advertise extends Comp {
             <h3 class="title white">How it Works</h3>
             <comp-cards id="cards-about"></comp-cards>
         </div>
+        <comp-modal></comp-modal>
     </div>
     `;
     }
@@ -204,7 +205,7 @@ export class Advertise extends Comp {
         viewer.title = "One Viewer at a Time";
         viewer.text = "Our clean, scrollable interface makes every home feel like a feature, designed to stand out, not blend in. Your property gets the attention it deserves, one renter at a time."
 
-        cardsAbout.query(".card").classList.add("dark");
+        cardsAbout.dark = true;
 
         cardsAbout.cards = {
             card1: {

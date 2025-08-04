@@ -1,14 +1,19 @@
 import { Comp } from "jay-comp";
 
 class Cards extends Comp {
-    cards_ = {};
+    cards_; dark_;
 
     set cards(v) {
         this.cards_ = v;
         this.update();
     }
+    set dark(v) {
+        this.dark_ = v;
+        this.update();
+    }
 
     beforeRender() {
+        if (!this.dark_) this.dark_ = false;
         if (!this.cards_) this.cards_ = {
             card1: {
                 title: "This is a card",
@@ -29,16 +34,16 @@ class Cards extends Comp {
         return /*html*/`
         <div class="container">
             <div class="card">
-                <h5 class="header">${this.cards_.card1.title}</h5>
-                <p>${this.cards_.card1.description}</p>
+                <h6 class="header dark">${this.cards_.card1.title}</h6>
+                <p class="dark">${this.cards_.card1.description}</p>
             </div>
             <div class="card">
-                <h5 class="header">${this.cards_.card2.title}</h5>
-                <p>${this.cards_.card2.description}</p>
+                <h6 class="header dark">${this.cards_.card2.title}</h6>
+                <p class="dark">${this.cards_.card2.description}</p>
             </div>
             <div class="card">
-                <h5 class="header">${this.cards_.card3.title}</h5>
-                <p>${this.cards_.card3.description}</p>
+                <h6 class="header dark">${this.cards_.card3.title}</h6>
+                <p class="dark">${this.cards_.card3.description}</p>
             </div>
         </div>
         `;
@@ -61,7 +66,7 @@ class Cards extends Comp {
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
-                gap: 20,
+                gap: 10,
                 padding: 20,
                 boxSizing: "border-box",
                 borderRadius: 14,
@@ -79,7 +84,7 @@ class Cards extends Comp {
             },
             {
                 class: "dark",
-                colour: "white"
+                colourVar: this.dark_ ? "white" : "black100"
             }
         ]
     }
