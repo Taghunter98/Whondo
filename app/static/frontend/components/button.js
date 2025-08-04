@@ -40,10 +40,15 @@ export class Button extends Comp {
     }
 
     createHTML() {
-        return !this.loading_
-            ? `<button class="button">${this.text}</button>`
-            : `<div class="loading"><comp-spinner></comp-spinner></div>`
+        return `
+    <div class="buttonWrapper">
+        ${this.loading_
+                ? `<div class="loading"><comp-spinner></comp-spinner></div>`
+                : `<button class="button">${this.text}</button>`
+            }
+    </div>`;
     }
+
 
     createCSS() {
         let button, buttonHover, buttonActive;

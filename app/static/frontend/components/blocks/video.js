@@ -36,7 +36,7 @@ class Video extends Comp {
                     muted 
                     loop 
                     playsinline 
-                    style="width: 100%; max-height: 700px; object-fit: fit; border: none; object-fit: cover; clip-path: inset(1px 1px)"
+                    class="vid"
                 >
                 <source src="https://www.whondo.com/static/icons/assets/${this.video_}" type="video/mp4"> Your browser does not support the video tag.
                 </video>
@@ -54,7 +54,24 @@ class Video extends Comp {
             flexDirection: "column",
             widthPercent: 100,
             alignItems: "centre",
-            padding: 170
+            padding: 170,
+            media: {
+                maxWidthBp: 600,
+                padding: 20
+            }
+        },
+        {
+            class: "vid",
+            widthPercent: 100,
+            maxHeight: 400,
+            border: "none",
+            objectFit: "cover",
+            clipPath: "inset(1px 1px)",
+            media: {
+                maxWidthBp: 600,
+                heightPercent: 100,
+                objectFit: "cover"
+            }
         },
         {
             class: "text-container",
@@ -66,7 +83,11 @@ class Video extends Comp {
         },
         {
             class: "title",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            media: {
+                maxWidthBp: 600,
+                fontSize: 32
+            }
         }];
     }
 
