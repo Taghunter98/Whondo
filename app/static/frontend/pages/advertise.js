@@ -13,7 +13,7 @@ export class Advertise extends Comp {
                 <h2 class="title">Showcase Your Home the Smart Way</h2>
                 <p>We’re rethinking the way people rent. To make that work, your home needs to shine and we’ve designed Whondo to do exactly that. </p>
             
-            <comp-button id="advertise"></comp-button>
+            <comp-button id="get-started"></comp-button>
             </div>
             <div>
                  <video 
@@ -103,11 +103,11 @@ export class Advertise extends Comp {
 
 
     afterRender() {
-        const advertise = this.getById("advertise");
-        advertise.text = "Get Started"
+        const btn = this.getById("get-started");
+        btn.text = "Get Started";
 
-        advertise.addEventListener("click", async () => {
-            advertise.loading = true;
+        btn.addEventListener("click", async () => {
+            btn.loading = true;
             const res = await this.request("/verify/landlord", "POST");
             res.ok ? window.location.assign("/advert/new") : window.location.assign("/login");
         });

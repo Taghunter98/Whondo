@@ -56,6 +56,7 @@ export class Button extends Comp {
         return [
             {
                 class: "button",
+                boxSizing: "border-box",
                 colour: variant === 1 ? "white" : "black100",
                 backgroundVar: variant === 1 ? "black100" : "black10",
                 width: autoWidth,
