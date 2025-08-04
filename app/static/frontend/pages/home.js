@@ -4,7 +4,7 @@ export class Home extends Comp {
     createHTML() {
         return /* html */`
         <comp-navbar></comp-navbar>
-            <div class="background">
+        <div class="background">
             <div id="properties"></div>
             <h2 class="head"><span id="typewriter"></span></h2>
             <div class="modal">
