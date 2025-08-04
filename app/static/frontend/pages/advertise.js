@@ -38,8 +38,6 @@ export class Advertise extends Comp {
                 justifyContent: "centre",
                 alignItems: "centre",
                 heightVh: 100,
-                overflowY: "auto",
-                scrollSnapType: "y mandatory"
             },
             {
                 class: "hero",
@@ -51,6 +49,8 @@ export class Advertise extends Comp {
                 media: {
                     maxWidthBp: 600,
                     flexDirection: "column",
+                    justifyContent: "flex-start",
+                    alignItems: "stretch",
                     gap: 20
                 }
             },
