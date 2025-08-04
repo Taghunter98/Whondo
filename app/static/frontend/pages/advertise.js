@@ -7,13 +7,16 @@ export class Advertise extends Comp {
     <comp-navbar></comp-navbar>
     <div class="background">
         <div>
-           <div class="hero">
+            
+                 <div class="hero">
             <div class="heroText">
                 <h2 class="title">Showcase Your Home the Smart Way</h2>
                 <p>We’re rethinking the way people rent. To make that work, your home needs to shine and we’ve designed Whondo to do exactly that. </p>
-                <comp-button id="advertise"></comp-button>
+            
+            <comp-button id="advertise"></comp-button>
             </div>
-           <video 
+            <div>
+                 <video 
                 autoplay 
                 muted 
                 loop 
@@ -23,7 +26,7 @@ export class Advertise extends Comp {
                 <source src="https://www.whondo.com/static/icons/assets/scroll.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-
+            </div>
            </div>
         </div>
     </div>
@@ -39,8 +42,7 @@ export class Advertise extends Comp {
                 alignItems: "centre",
                 heightVh: 100,
                 media: {
-                    maxWidthBp: 600,
-                    height: 1000
+                    maxWidthBp: 600
                 }
             },
             {
