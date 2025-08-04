@@ -42,7 +42,7 @@ export class CreateProp extends Comp {
                 height: 1050,
                 backgroundVar: "black100",
                 overflow: "hidden",
-                media: { maxWidthBp: 600, height: 1200, }
+                media: { maxWidthBp: 600, height: 1100, }
             },
             {
                 class: "formObj",
