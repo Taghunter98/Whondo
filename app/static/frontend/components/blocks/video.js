@@ -38,7 +38,7 @@ class Video extends Comp {
                     playsinline 
                     style="width: 100%; height: 100%; object-fit: cover; border: none; object-fit: cover; clip-path: inset(1px 1px)"
                 >
-                <source src="https://www.whondo.com/static/icons/${this.video_}" type="video/mp4"> Your browser does not support the video tag.
+                <source src="https://www.whondo.com/static/icons/assets/${this.video_}" type="video/mp4"> Your browser does not support the video tag.
                 </video>
             </div>
         </div>

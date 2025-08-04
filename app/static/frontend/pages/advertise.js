@@ -19,7 +19,7 @@ export class Advertise extends Comp {
                 </div>
             </div>
             <div class="backgroundImage">
-                <img class="image" src="https://images.pexels.com/photos/5623940/pexels-photo-5623940.jpeg">
+                <img class="image" src="https://whondo.com/static/icons/assets/home_flowers.jpg">
             </div>
         </div>
         <div class="block">
@@ -35,7 +35,7 @@ export class Advertise extends Comp {
                     playsinline 
                     style="width: 100%; height: 100%; object-fit: cover; border: none; object-fit: cover; clip-path: inset(1px 1px)"
                 >
-                <source src="https://www.whondo.com/static/icons/scroll.mp4" type="video/mp4"> Your browser does not support the video tag.
+                <source src="https://www.whondo.com/static/icons/assets/scroll.mp4" type="video/mp4"> Your browser does not support the video tag.
                 </video>
             </div>
         </div>
