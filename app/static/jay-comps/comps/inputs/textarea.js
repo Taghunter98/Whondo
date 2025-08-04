@@ -29,8 +29,7 @@ export class Textarea extends Input {
     createCSS() {
         return [
             super.createCSS(),
-            {
-                class: "areaInput",
+            { class: "areaInput",
                 resize: "none",
                 height: 80,
                 widthPercent: 100,
@@ -40,6 +39,9 @@ export class Textarea extends Input {
                 padding: [8, 12],
                 fontFamily: "Geist",
             },
+            { class: "error",
+                border: ["solid", 2, "var(--red100)"]
+            }
         ];
     }
 

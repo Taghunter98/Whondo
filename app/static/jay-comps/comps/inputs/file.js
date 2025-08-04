@@ -1,11 +1,8 @@
 import { Input } from './input.js';
 
 export class File extends Input {
-
     createHTML() {
-
         return /* html */`
-           
         <div class="inputContainer">
             <label style="color: var(--black80); font-size: 14px">${this.label_}</label>
             <div class="fileWrapper">
@@ -23,7 +20,6 @@ export class File extends Input {
             </div>
         </div>
         `;
-
     }
 
     createCSS() {
@@ -166,7 +162,6 @@ export class File extends Input {
         };
 
         const createInput = () => {
-
             const input = document.createElement("input");
             input.type = "file";
             input.className = "inputValue fileInput";
@@ -174,14 +169,10 @@ export class File extends Input {
             input.hidden = true;
 
             input.addEventListener("change", () => {
-
                 if (input.files?.[0]) {
-
                     this._fileInput = input;
                     handleFile(input.files[0]);
-
                 }
-
             });
 
             return input;
@@ -191,17 +182,11 @@ export class File extends Input {
         this._fileInput = this.query(".fileInput");
 
         if (this._fileInput) {
-
             this._fileInput.addEventListener("change", () => {
-
                 if (this._fileInput.files?.[0]) {
-
                     handleFile(this._fileInput.files[0]);
-
                 }
-
             });
-
         }
 
         dropArea?.addEventListener("click", () => {
