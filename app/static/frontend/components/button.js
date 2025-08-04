@@ -93,7 +93,7 @@ export class Button extends Comp {
             {
                 class: "buttonWrapper",
                 display: "block",
-                width: "100%"
+                widthPercent: 100
             }
         ];
     }

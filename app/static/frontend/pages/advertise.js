@@ -38,20 +38,21 @@ export class Advertise extends Comp {
                 justifyContent: "centre",
                 alignItems: "centre",
                 heightVh: 100,
+                media: {
+                    maxWidthBp: 600,
+                    height: 1000
+                }
             },
             {
                 class: "hero",
                 display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: "centre",
+                alignItems: "centre",
                 gap: 20,
-                flexDirection: "row",
                 media: {
                     maxWidthBp: 600,
-                    flexDirection: "column",
-                    justifyContent: "flex-start",
-                    alignItems: "stretch",
-                    gap: 20
+                    flexDirection: "column-reverse",
+                    gap: 0
                 }
             },
             {
@@ -71,7 +72,7 @@ export class Advertise extends Comp {
                 class: "video",
                 widthPercent: 100,
                 aspectRatio: "1 / 1",
-                maxWidth: 600,
+                maxEidth: 600,
                 maxHeight: 600,
                 objectFit: "cover",
                 border: "none",
@@ -101,7 +102,7 @@ export class Advertise extends Comp {
 
     afterRender() {
         const advertise = this.getById("advertise");
-        advertise.text = "Advertise My Home"
+        advertise.text = "Get Started"
 
         advertise.addEventListener("click", async () => {
             advertise.loading = true;
