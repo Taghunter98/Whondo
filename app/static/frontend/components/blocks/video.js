@@ -30,13 +30,13 @@ class Video extends Comp {
                 <p style="text-align: center">${this.text_}</p>
             </div>
            
-            <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden">
+            <div>
                 <video 
                     autoplay 
                     muted 
                     loop 
                     playsinline 
-                    style="width: 100%; height: 100%; object-fit: cover; border: none; object-fit: cover; clip-path: inset(1px 1px)"
+                    style="width: 100%; max-height: 700px; object-fit: fit; border: none; object-fit: cover; clip-path: inset(1px 1px)"
                 >
                 <source src="https://www.whondo.com/static/icons/assets/${this.video_}" type="video/mp4"> Your browser does not support the video tag.
                 </video>
@@ -49,10 +49,12 @@ class Video extends Comp {
         return [{
             class: "container",
             display: "flex",
+            boxSizing: "border-box",
             gap: 20,
             flexDirection: "column",
             widthPercent: 100,
-            alignItems: "centre"
+            alignItems: "centre",
+            padding: 170
         },
         {
             class: "text-container",

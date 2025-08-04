@@ -54,6 +54,7 @@ class Cards extends Comp {
             {
                 class: "container",
                 display: "flex",
+                justifyContent: "centre",
                 gap: 10,
                 widthPercent: 100,
                 media: {
@@ -66,6 +67,7 @@ class Cards extends Comp {
                 display: "flex",
                 flexDirection: "column",
                 widthPercent: 100,
+                maxWidth: 400,
                 gap: 10,
                 padding: 20,
                 boxSizing: "border-box",

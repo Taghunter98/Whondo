@@ -23,7 +23,7 @@ class Modal extends Comp {
     beforeRender() {
         if (!this.title_) this.title_ = "Title";
         if (!this.description_) this.description_ = "Lorem ipsum dolor sit amet";
-        if (!this.image_) this.title_ = "";
+        if (!this.image_) this.image_ = "london.jpg";
     }
 
     createHTML() {
@@ -31,10 +31,10 @@ class Modal extends Comp {
         <div class="background">
             <div class="modal">
                 <div class="textContainer">
-                    <h3 class="title">${this.title_}</h3>
+                    <h3 class="title" style="font-weight: bold">${this.title_}</h3>
                     <p class="text">${this.description_}</p>
                 </div>
-                <comp-button id="continue"></comp-button>
+                <comp-button></comp-button>
             </div>
         </div>
         `;
@@ -45,11 +45,10 @@ class Modal extends Comp {
             {
                 class: "background",
                 display: "flex",
-                widthPercent: 100,
                 alignItems: "centre",
                 justifyContent: "centre",
-                padding: 50,
-                backgroundImageUrl: `https://whondo.com/static/icons/${this.image_}`,
+                padding: 100,
+                backgroundImageUrl: `https://whondo.com/static/icons/assets/${this.image_}`,
                 backgroundSize: "cover"
             },
             {
@@ -67,7 +66,21 @@ class Modal extends Comp {
                     width: "auto",
                 }
             },
-        ]
+            {
+                class: "textContainer",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                gap: 5,
+                paddingBottom: 40
+            }
+        ];
+    }
+
+    afterRender() {
+        const btn = this.query("comp-button");
+        btn.text = this.button_;
+        btn.addEventListener("click", () => this.publish("modal-clicked"));
     }
 
     static { Comp.register(this); }

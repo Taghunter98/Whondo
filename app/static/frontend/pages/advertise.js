@@ -6,38 +6,34 @@ export class Advertise extends Comp {
         return /* html */ `
     <comp-navbar></comp-navbar>
     <div class="background">
-        <div class="itemContainer">
-            <div class="modal">
-                <div class="textContainer">
-                    <h3 class="title">Showcase Your Home the Smart Way</h3>
-                    <p class="text">
-                        Whondo gives your property the spotlight it deserves, no competition, just serious tenants.
-                    </p>
-                </div>
-                <div class="buttons">
-                    <comp-button id="continue"></comp-button>
-                </div>
-            </div>
-            <div class="backgroundImage">
-                <img class="image" src="https://whondo.com/static/icons/assets/home_flowers.jpg">
-            </div>
-        </div>
         <div class="block">
+           <div class="hero">
             <div class="heroText">
-                <h1 class="title">Why Whondo is Different</h1>
-                <p style="text-align: center">We’re rethinking the way people rent. To make that work, your home needs to shine and we’ve designed Whondo to do exactly that. 
+                <h2 class="title">The New Way To Rent</h2>
+                <p>We’re rethinking the way people rent. To make that work, your home needs to shine and we’ve designed Whondo to do exactly that. </p>
+                <comp-button id="advertise"></comp-button>
             </div>
-            <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden">
-                <video 
-                    autoplay 
-                    muted 
-                    loop 
-                    playsinline 
-                    style="width: 100%; height: 100%; object-fit: cover; border: none; object-fit: cover; clip-path: inset(1px 1px)"
+           <video 
+                autoplay 
+                muted 
+                loop 
+                playsinline 
+                style="
+                    width: 100%;
+                    aspect-ratio: 1 / 1;
+                    max-width: 600px;
+                    max-height: 600px;
+                    object-fit: cover;
+                    border: none;
+                    border-radius: 8px;
+                    clip-path: inset(1px 1px);
+                "
                 >
-                <source src="https://www.whondo.com/static/icons/assets/scroll.mp4" type="video/mp4"> Your browser does not support the video tag.
-                </video>
-            </div>
+                <source src="https://www.whondo.com/static/icons/assets/scroll.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+           </div>
         </div>
         <div class="block">
             <comp-video id="prompt"></comp-video>
@@ -45,86 +41,53 @@ export class Advertise extends Comp {
          <div class="block">
             <comp-video id="viewer"></comp-video>
         </div>
-        <div class="block dark">
+        <div class="block dark footer">
             <h3 class="title white">How it Works</h3>
             <comp-cards id="cards-about"></comp-cards>
+            <comp-modal id="list" style="padding-top: auto"></comp-modal>
         </div>
-        <comp-modal></comp-modal>
     </div>
     `;
     }
 
     createCSS() {
-        const heroHeight = 800;
         return [
             {
-                keyframes: {
-                    name: "blockSlideUp",
-                    "0%": { opacity: 0, transform: "translateY(40px)" },
-                    "100%": { opacity: 1, transform: "translateY(0)" }
-                }
-            },
-            {
                 class: "background",
-                widthPercent: 100,
-                backgroundVar: "black100",
-                height: heroHeight,
-                media: { maxWidthBp: 500, height: 1000 }
+                heightVh: 100,
+                overflowY: "auto",
+                scrollSnapType: "y mandatory"
             },
             {
-                class: "itemContainer",
+                class: "hero",
                 display: "flex",
-                media: {
-                    maxWidthBp: 600,
-                    flexDirection: "column",
-                    alignItems: "centre"
-                }
-            },
-            {
-                class: "backgroundImage",
-                widthPercent: 100,
-                height: heroHeight,
-                paddingLeft: 400,
-                media: {
-                    maxWidthBp: 600,
-                    heightVh: 40,
-                    margin: 0,
-                    padding: 0
-                }
-            },
-            {
-                class: "image",
-                widthPercent: 100,
-                heightPercent: 100,
-                objectFit: "cover"
-            },
-            {
-                class: "modal",
-                display: "flex",
-                flexDirection: "column",
                 alignItems: "centre",
-                width: 500,
-                background: "white",
-                position: "absolute",
-                zIndex: 800,
-                padding: 20,
-                borderRadius: 14,
-                marginLeft: 100,
-                marginTop: 150,
-                media: {
-                    maxWidthBp: 600,
-                    boxsizing: "border-box",
-                    width: "auto",
-                    margin: 20,
-                    marginTop: 150
-                }
+                gap: 20
             },
             {
-                class: "textContainer",
+                class: "block",
+                heightVh: 100,
+                scrollSnapAlign: "start",
                 display: "flex",
                 flexDirection: "column",
-                widthPercent: 100,
-                gap: 5
+                alignItems: "center",
+                justifyContent: "center",
+                transform: "translateY(50px)",
+                transition: "opacity 0.5s ease-out, transform 0.5s ease-out",
+                willChange: "opacity, transform"
+            },
+            {
+                class: "block--active",
+                opacity: 1,
+                transform: "translateY(0)"
+            },
+            {
+                class: "heroText",
+                display: "flex",
+                maxWidth: 700,
+                paddingLeft: 100,
+                gap: 20,
+                flexDirection: "column",
             },
             {
                 class: "title",
@@ -135,68 +98,33 @@ export class Advertise extends Comp {
                 colourVar: "black60"
             },
             {
-                class: "buttons",
-                display: "flex",
-                widthPercent: 100,
-                gap: 20,
-                paddingTop: 40
-            },
-            {
-                class: "block",
-                display: "flex",
-                gap: 50,
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: [50, 100],
-                opacity: 0,
-                transform: "translateY(40px)",
-                willChange: "opacity, transform",
-                transition: "opacity 0.6s ease-out, transform 0.6s ease-out"
-            },
-            {
-                class: "block-visible",
-                animation: "blockSlideUp 0.6s ease-out forwards"
-            },
-            {
-                class: "heroText",
-                display: "flex",
-                gap: 20,
-                flexDirection: "column",
-                widthPercent: 100,
-                maxWidth: 700,
-                alignItems: "centre"
-            },
-            {
                 class: "dark",
                 backgroundVar: "black100"
             },
             {
                 class: "white",
                 colour: "white"
+            },
+            {
+                class: "footer",
+                boxSizing: "border-box",
+                height: "auto",
+                padding: 0,
+                paddingTop: 50
             }
         ];
     }
 
+
     afterRender() {
-        const cont = this.getById("continue");
-        const blocks = this.queryAll(".block");
+        const advertise = this.getById("advertise");
         const prompt = this.getById("prompt");
         const viewer = this.getById("viewer");
         const cardsAbout = this.getById("cards-about");
+        const list = this.getById("list");
 
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("block-visible");
-                    obs.unobserve(entry.target);
-                }
-            });
-        },
-            { threshold: 0.20 }
-        );
-        blocks.forEach((b) => observer.observe(b));
-
+        advertise.auto = true;
+        advertise.text = "Advertise My Home"
 
         prompt.title = "Prompt Based Searching";
         prompt.text = "Tenants tell us what they’re looking for, we show them homes that match. No endless scrolling. No generic filters. You just add a few keywords that describe your home, and our smart matching algorithm does the rest."
@@ -222,8 +150,13 @@ export class Advertise extends Comp {
             }
         }
 
-        cont.addEventListener("click", async () => {
-            cont.loading = true;
+        list.title = "Ready to List?";
+        list.description = "Takes a few short minutes and we can get your home up and ready.";
+        list.button = "Advertise My Home";
+        list.image = "flowers.jpg";
+
+        this.subscribe("modal-clicked", async () => {
+            list.query("comp-button").loading = true;
             const res = await this.request("/verify/landlord", "POST");
             res.ok ? window.location.assign("/advert/new") : window.location.assign("/login");
         });

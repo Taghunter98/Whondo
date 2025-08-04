@@ -12,7 +12,7 @@
 import { Comp } from "jay-comp";
 
 export class Button extends Comp {
-    text_; variant_; loading_ = false;
+    text_; variant_; loading_ = false; auto_ = false;
 
     set text(v) {
         this.text_ = v;
@@ -24,6 +24,10 @@ export class Button extends Comp {
     }
     set loading(v) {
         this.loading_ = v;
+        this.update();
+    }
+    set auto(v) {
+        this.auto_ = v;
         this.update();
     }
 
@@ -47,7 +51,7 @@ export class Button extends Comp {
         const primary = {
             class: "button",
             colour: "white",
-            widthPercent: 100,
+            width: this.auto_ ? "auto" : "100%",
             backgroundVar: "black100",
             padding: [12, 28],
             borderVar: "black100",
@@ -76,7 +80,7 @@ export class Button extends Comp {
             class: "button",
             colourVar: "black100",
             backgroundVar: "black10",
-            widthPercent: 100,
+            width: this.auto_ ? "auto" : "100%",
             borderVar: "border",
             padding: [12, 28],
             borderRadius: 8,
@@ -103,7 +107,7 @@ export class Button extends Comp {
             display: "flex",
             boxSizing: "border-box",
             justifyContent: "centre",
-            widthPercent: 100,
+            width: this.auto_ ? "auto" : "100%",
             backgroundVar: "black100",
             padding: [8, 28],
             borderVar: "black100",
@@ -122,7 +126,7 @@ export class Button extends Comp {
             buttonActive = secondaryActive;
         }
 
-        return [button, buttonHover, buttonActive, loading];
+        return [{ width: this.auto_ ? "auto" : "100%" }, button, buttonHover, buttonActive, loading];
     }
 
     static { Comp.register(this); }
