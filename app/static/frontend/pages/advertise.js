@@ -27,6 +27,7 @@ export class Advertise extends Comp {
            </div>
         </div>
     </div>
+    <comp-footer></comp-footer>
     `;
     }
 
