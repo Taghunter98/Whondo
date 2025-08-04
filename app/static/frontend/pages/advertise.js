@@ -25,7 +25,7 @@ export class Advertise extends Comp {
         <div class="block">
             <div class="heroText">
                 <h1 class="title">Why Whondo is Different</h1>
-                <p style="text-align: center">We’re redefining renting, giving every home the spotlight it deserves. Whondo is built to make yours shine.
+                <p style="text-align: center">We’re rethinking the way people rent. To make that work, your home needs to shine and we’ve designed Whondo to do exactly that. 
             </div>
             <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden">
                 <video 
@@ -40,7 +40,10 @@ export class Advertise extends Comp {
             </div>
         </div>
         <div class="block">
-            <comp-video></comp-video>
+            <comp-video id="prompt"></comp-video>
+        </div>
+         <div class="block">
+            <comp-video id="viewer"></comp-video>
         </div>
         <div class="block dark">
             <h3 class="title white">How it Works</h3>
@@ -53,6 +56,13 @@ export class Advertise extends Comp {
     createCSS() {
         const heroHeight = 800;
         return [
+            {
+                keyframes: {
+                    name: "blockSlideUp",
+                    "0%": { opacity: 0, transform: "translateY(40px)" },
+                    "100%": { opacity: 1, transform: "translateY(0)" }
+                }
+            },
             {
                 class: "background",
                 widthPercent: 100,
@@ -136,8 +146,16 @@ export class Advertise extends Comp {
                 gap: 50,
                 flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "centre",
-                padding: [50, 100]
+                justifyContent: "center",
+                padding: [50, 100],
+                opacity: 0,
+                transform: "translateY(40px)",
+                willChange: "opacity, transform",
+                transition: "opacity 0.6s ease-out, transform 0.6s ease-out"
+            },
+            {
+                class: "block-visible",
+                animation: "blockSlideUp 0.6s ease-out forwards"
             },
             {
                 class: "heroText",
@@ -161,8 +179,30 @@ export class Advertise extends Comp {
 
     afterRender() {
         const cont = this.getById("continue");
-
+        const blocks = this.queryAll(".block");
+        const prompt = this.getById("prompt");
+        const viewer = this.getById("viewer");
         const cardsAbout = this.getById("cards-about");
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("block-visible");
+                    obs.unobserve(entry.target);
+                }
+            });
+        },
+            { threshold: 0.20 }
+        );
+        blocks.forEach((b) => observer.observe(b));
+
+
+        prompt.title = "Prompt Based Searching";
+        prompt.text = "Tenants tell us what they’re looking for, we show them homes that match. No endless scrolling. No generic filters. You just add a few keywords that describe your home, and our smart matching algorithm does the rest."
+        prompt.video = "prompt.mp4";
+
+        viewer.title = "One Viewer at a Time";
+        viewer.text = "Our clean, scrollable interface makes every home feel like a feature, designed to stand out, not blend in. Your property gets the attention it deserves, one renter at a time."
 
         cardsAbout.query(".card").classList.add("dark");
 

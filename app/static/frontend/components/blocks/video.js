@@ -25,8 +25,10 @@ class Video extends Comp {
     createHTML() {
         return /*html*/`
         <div class="container">
-            <h3 class="title">${this.title_}</h3>
-            <p style="text-align: center">${this.text_}</p>
+            <div class="text-container">
+                 <h3 class="title">${this.title_}</h3>
+                <p style="text-align: center">${this.text_}</p>
+            </div>
            
             <div style="width: 100%; height: auto; border-radius: 8px; overflow: hidden">
                 <video 
@@ -47,10 +49,18 @@ class Video extends Comp {
         return [{
             class: "container",
             display: "flex",
-            gap: 10,
+            gap: 20,
             flexDirection: "column",
             widthPercent: 100,
             alignItems: "centre"
+        },
+        {
+            class: "text-container",
+            display: "flex",
+            alignItems: "centre",
+            flexDirection: "column",
+            gap: 10,
+            maxWidth: 700
         },
         {
             class: "title",
