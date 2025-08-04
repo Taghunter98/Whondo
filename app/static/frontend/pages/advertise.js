@@ -44,13 +44,14 @@ export class Advertise extends Comp {
             {
                 class: "hero",
                 display: "flex",
-                justifyContent: "centre",
-                alignItems: "centre",
+                justifyContent: "center",
+                alignItems: "center",
                 gap: 20,
+                flexDirection: "row",
                 media: {
                     maxWidthBp: 600,
-                    flexDirection: "column-reverse",
-                    gap: 0
+                    flexDirection: "column",
+                    gap: 20
                 }
             },
             {
@@ -70,7 +71,7 @@ export class Advertise extends Comp {
                 class: "video",
                 widthPercent: 100,
                 aspectRatio: "1 / 1",
-                maxEidth: 600,
+                maxWidth: 600,
                 maxHeight: 600,
                 objectFit: "cover",
                 border: "none",
