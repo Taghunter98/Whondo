@@ -63,6 +63,7 @@ export class Register extends Comp {
                 <img class="image" src="https://images.pexels.com/photos/4569340/pexels-photo-4569340.jpeg">
             </div>
         </div>
+        <comp-footer></comp-footer>
         `;
     }
 

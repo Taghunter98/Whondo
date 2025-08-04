@@ -28,6 +28,7 @@ export class CreateProp extends Comp {
                 <img class="image" src="https://whondo.com/static/icons/assets/property.jpg">
             </div>
         </div>
+        <comp-footer></comp-footer>
         `;
 
     }
