@@ -41,6 +41,7 @@ import './components/animations/spinner.js';
 
 // Blocks
 import './components/blocks/cards.js';
+import './components/blocks/video.js';
 
 // Pages
 import './pages/login.js';

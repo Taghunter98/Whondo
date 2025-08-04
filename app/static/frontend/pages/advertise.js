@@ -40,7 +40,7 @@ export class Advertise extends Comp {
             </div>
         </div>
         <div class="block">
-            <comp-cards id="cards-hero"></comp-cards>
+            <comp-video></comp-video>
         </div>
         <div class="block dark">
             <h3 class="title white">How it Works</h3>
@@ -161,25 +161,8 @@ export class Advertise extends Comp {
 
     afterRender() {
         const cont = this.getById("continue");
-        const cardsHero = this.getById("cards-hero");
+
         const cardsAbout = this.getById("cards-about");
-
-        cont.text = "Get Started";
-
-        cardsHero.cards = {
-            card1: {
-                title: "Prompt-Based Searching",
-                description: "Tenants describe what they’re looking for, we show them homes that match. No endless scrolling, no generic filters."
-            },
-            card2: {
-                title: "Card-Style Viewing",
-                description: "A clean, TikTok-style design makes each home feel like a feature, not just another listing. Your property gets the attention it deserves."
-            },
-            card3: {
-                title: "One Viewer at a Time",
-                description: "No competition. Just your home, viewed intentionally by a serious prospect."
-            }
-        }
 
         cardsAbout.query(".card").classList.add("dark");
 
