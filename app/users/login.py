@@ -164,7 +164,7 @@ def change_password():
         cursor: object = connection.cursor()
 
         query: str = "SELECT password FROM Users WHERE uID = %s"
-        cursor.execute(query, {uID,})
+        cursor.execute(query, (uID,))
 
         hashed_pw: str = cursor.fetchone()
 
