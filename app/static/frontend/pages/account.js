@@ -58,11 +58,13 @@ export class Account extends Comp {
         ]
     }
 
-    showPopup(id, title, paragraph, buttonText = "OK") {
+    showPopup(id, title, paragraph, leftBtn = "OK", hideButton = true, rightBtn) {
         const popup = this.getById(id);
+        popup.hideButton(hideButton)
         popup.title = title;
         popup.paragraph = paragraph;
-        popup.text = buttonText;
+        popup.textLeft = leftBtn;
+        popup.textRight = rightBtn;
         popup.style.display = "flex";
         const icon = popup.query(".icon");
         icon.style.display = "none";
@@ -74,9 +76,9 @@ export class Account extends Comp {
             this.showPopup("logout", "Logout Successful", "You’ve been logged out.", "Back to Login");
             const popup = this.getById("logout");
 
-            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
+            popup.subscribe("popup-leftBtn", () => { window.location.assign("/"); }, { once: true });
         }
-        else this.showPopup("logout", "Logout Failed", res.error || "Something went wrong.");
+        else this.showPopup("logout", "Logout Failed", res.error || "Something went wrong.", "OK");
     }
 
     deleteAccount() {
