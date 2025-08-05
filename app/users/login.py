@@ -25,6 +25,7 @@ from app.security.hashing import check_password, hash_function
 
 account_bp = Blueprint("account_bp", __name__)
 
+
 @account_bp.route("/login", methods=["POST", "GET"])
 def login():
     """
@@ -115,6 +116,7 @@ def login():
 
         return render_template("login.html")
 
+
 @account_bp.route("/account/delete", methods={"POST"})
 def delete():
     """
@@ -145,12 +147,20 @@ def delete():
             return jsonify({"message": f"User account {uID} deleted successfully"}), 200
         else:
             return jsonify({"error": f"Unable to delete account {uID}"}), 404
-    
+
     else:
         return redirect("/")
-    
+
+
 @account_bp.route("/account/change-password", methods=["POST"])
 def change_password():
+    """
+    The REST API changes the users password based of the cookie uID data, with checks against the current
+    password for security.
+
+    Returns:
+        Response: HTTP Response
+    """
     if request.method == "POST":
         uID: int = session.get("uID")
         data: object = request.get_json()
@@ -159,10 +169,10 @@ def change_password():
 
         if not uID:
             return jsonify({"error": "User not logged in"}), 400
-        
+
         if not current or not new:
             return jsonify({"error": "Current and new password are required"}), 400
-        
+
         connection: object = connect()
         cursor: object = connection.cursor()
 
@@ -177,8 +187,8 @@ def change_password():
             cursor.close()
             connection.close()
             return jsonify({"error": "Incorrect password"}), 400
-        
-        hashed: str = hash_function(new) 
+
+        hashed: str = hash_function(new)
         query = "UPDATE Users SET password = %s WHERE uID = %s"
         cursor.execute(query, (hashed, uID))
         connection.commit()
@@ -195,6 +205,7 @@ def change_password():
     else:
         return redirect("/")
 
+
 @account_bp.route("/logout", methods=["GET"])
 def logout():
     """
@@ -210,7 +221,7 @@ def logout():
     session.clear()
 
     response: object = jsonify({"message": "User logged out successfully"})
-    response.set_cookie('uID', '', expires=0)
+    response.set_cookie("uID", "", expires=0)
     response.status_code = 200
 
     return response
@@ -226,5 +237,5 @@ def profile():
     """
     if not session.get("uID"):
         return redirect("/")
-    
+
     return render_template("profile.html")
