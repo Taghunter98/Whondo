@@ -118,6 +118,14 @@ def login():
         return render_template("login.html")
 
 
+@login_bp.route("/profile", methods=["GET"])
+def profile():
+    if not session.get("uID"):
+        return redirect("/")
+    
+    return render_template("profile.html")
+
+
 @logout_bp.route("/logout", methods=["GET"])
 def logout():
     """
@@ -128,9 +136,9 @@ def logout():
         Response: Flask redirect to homepage
     """
     if not session["uID"]:
-        return redirect("/")
+        return jsonify({"error": "User is not logged in"}), 400
 
     current_app.logger.info(f"User id: {session['uID']} logged out.")
     session["uID"] = None
     session["email"] = None
-    return redirect("/")
+    return jsonify({"message", "User logged out successfully"}), 200

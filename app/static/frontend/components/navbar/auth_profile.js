@@ -35,5 +35,10 @@ class AuthProfile extends Comp {
         ];
     }
 
+    afterRender() {
+        const profile = this.query(".profile");
+        if (profile) profile.addEventListener("click", () => window.location.assign("/profile"));
+    }
+
     static { Comp.register(this); }
 }
