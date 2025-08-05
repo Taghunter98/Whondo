@@ -5,6 +5,7 @@ export class Account extends Comp {
     createHTML() {
         return  /* html */`
         <comp-popup id="logout" style="display: none"></comp-popup>
+        <comp-popup id="deleted" style="display: none"></comp-popup>
         <comp-popup id="profile" style="display: none"></comp-popup>
         <comp-popup id="changePass" style="display: none"></comp-popup>
         <comp-update-profile id="update" style="display: none"></comp-update-profile>
@@ -73,13 +74,21 @@ export class Account extends Comp {
             this.showPopup("logout", "Logout Successful", "You’ve been logged out.", "Back to Login");
             const popup = this.getById("logout");
 
-            popup.subscribe("popup-button", () => { window.location.assign("/login"); }, { once: true });
+            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
         }
         else this.showPopup("logout", "Logout Failed", res.error || "Something went wrong.");
     }
 
     async deleteAccount() {
-        const res = await this.request();
+        const res = await this.request("/account/delete", "POST");
+        if (res.ok) {
+            console.log(res.data)
+            this.showPopup("deleted", "Account Deleted", "Are you sure you want to delete your account?.", "Delete");
+            const popup = this.getById("deleted");
+
+            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
+        }
+        else this.showPopup("deleted", "Deletion Failed", res.error || "Something went wrong.");
     }
 
     afterRender() {

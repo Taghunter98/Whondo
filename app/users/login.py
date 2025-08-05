@@ -23,11 +23,9 @@ from ..utilities.authid import authenticate
 from app.database.db_connect import connect
 from app.security.hashing import check_password
 
-login_bp = Blueprint("login_bp", __name__)
-logout_bp = Blueprint("logout_bp", __name__)
+account_bp = Blueprint("account_bp", __name__)
 
-
-@login_bp.route("/login", methods=["POST", "GET"])
+@account_bp.route("/login", methods=["POST", "GET"])
 def login():
     """
     The REST API is responsibe for logging in the user from an external POST
@@ -117,16 +115,33 @@ def login():
 
         return render_template("login.html")
 
+@account_bp.route("/account/delete", methods={"POST"})
+def delete():
+    if request.method == "POST":
+        uID: int = session.get("uID")
 
-@login_bp.route("/profile", methods=["GET"])
-def profile():
-    if not session.get("uID"):
-        return redirect("/")
+        if not uID:
+            return jsonify({"error", "User not logged in"}), 400
+
+        connection: object = connect()
+        cursor: object = connection.cursor()
+
+        query: str = "DELETE FROM Users WHERE uID = %s"
+
+        cursor.execute(query, (uID,))
+        connection.commit()
+
+        deleted: bool = cursor.rowcount == 1
+
+        if deleted:
+            return jsonify({"message": f"User account {uID} deleted successfully"}), 200
+        else:
+            return jsonify({"error": f"Unable to delete account {uID}"}), 404
     
-    return render_template("profile.html")
+    else:
+        return redirect("/")
 
-
-@logout_bp.route("/logout", methods=["GET"])
+@account_bp.route("/logout", methods=["GET"])
 def logout():
     """
     The REST API is responsible for logging out a user by setting the (uID) and (email) session
@@ -145,3 +160,11 @@ def logout():
     response.status_code = 200
 
     return response
+
+
+@account_bp.route("/profile", methods=["GET"])
+def profile():
+    if not session.get("uID"):
+        return redirect("/")
+    
+    return render_template("profile.html")
