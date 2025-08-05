@@ -138,6 +138,9 @@ def logout():
     if not session["uID"]:
         return jsonify({"error": "User is not logged in"}), 400
 
-    current_app.logger.info(f"User id: {session['uID']} logged out.")
     session.clear()
-    return jsonify({"message": "User logged out successfully"}), 200
+
+    response = jsonify({"message": "User logged out successfully"}), 200
+    response.delete_cookie("uID")
+
+    return response
