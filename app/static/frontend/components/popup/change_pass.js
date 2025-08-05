@@ -24,6 +24,7 @@ export class ChangePass extends Comp {
                                     <comp-button class="submit" id="submit" type="submit"></comp-button>
                                 </div>
                             </div>
+                            <p id="result" style="text-align: center; padding-top: 10px"></p>
                         </div>
                     </form>
                 </div>
@@ -133,18 +134,15 @@ export class ChangePass extends Comp {
     }
 
     async passwordChange() {
-        const fd = new FormData();
+        const res = await this.request("/account/change-password", "POST", {
+            current: this.getById("current").value,
+            new: this.getById("new").value
+        });
 
-        fd.append("current", this.getById("current").value);
-        fd.append("newPassword", this.getById("new").value);
-        fd.append("confirm", this.getById("confirm").value);
-
-        const result = await this.submitForm("/", fd);
-
-        if (result.ok) {
+        if (res.ok) {
             this.publish("password-changed");
             this.style.display = "none";
-        } else alert(result.error);
+        } else this.query("#result").innerHTML = res.error;
     }
 
     checkPassword(input1, input2) {
@@ -219,7 +217,7 @@ export class ChangePass extends Comp {
                 return;
             }
 
-            this.submitPasswordChange();
+            this.passwordChange();
 
         });
 
