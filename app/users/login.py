@@ -158,7 +158,10 @@ def change_password():
         new: str = data.get("new")
 
         if not uID:
-            return jsonify({"error", "User not logged in"}), 400
+            return jsonify({"error": "User not logged in"}), 400
+        
+        if not current or not new:
+            return jsonify({"error": "Current and new password are required"}), 400
         
         connection: object = connect()
         cursor: object = connection.cursor()

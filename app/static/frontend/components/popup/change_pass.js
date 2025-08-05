@@ -140,12 +140,12 @@ export class ChangePass extends Comp {
             new: this.getById("new").value
         });
 
-        if (res.ok) {
-            this.publish("password-changed");
-            this.style.display = "none";
-        } else {
+        if (res.error) {
             button.loading = false;
             this.query("#result").innerHTML = res.error;
+        } else {
+            this.publish("password-changed");
+            this.style.display = "none";
         }
     }
 
