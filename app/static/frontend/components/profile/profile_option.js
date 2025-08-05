@@ -59,10 +59,7 @@ export class ProfileOption extends Comp {
     }
 
     afterRender() {
-        this.query("comp-prompt-icon").addEventListener("click", () => {
-            console.log("Option clicked");
-            this.publish("option-clicked");
-        })
+        this.query("comp-prompt-icon").addEventListener("click", () => this.publish("option-clicked"));
     }
 
     static { Comp.register(this); }

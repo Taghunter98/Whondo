@@ -74,9 +74,8 @@ export class Account extends Comp {
             const popup = this.getById("logout");
 
             popup.subscribe("popup-button", () => { window.location.assign("/login"); }, { once: true });
-        } else {
-            this.showPopup("logout", "Logout Failed", res.error || "Something went wrong.");
         }
+        else this.showPopup("logout", "Logout Failed", res.error || "Something went wrong.");
     }
 
     async deleteAccount() {

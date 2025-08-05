@@ -1,6 +1,14 @@
 import { Input } from './input.js';
 
 export class File extends Input {
+    clear_;
+
+    set clear(v) {
+        this.query(".inputValue").value = "";
+        this.query(".filePreview").src = "";
+        this.query(".icon").removeAttribute("hidden");
+        this.update();
+    }
     createHTML() {
         return /* html */`
         <div class="inputContainer">
@@ -190,27 +198,20 @@ export class File extends Input {
         }
 
         dropArea?.addEventListener("click", () => {
-
             this._fileInput?.click();
-
         });
 
         dropArea?.addEventListener("dragover", (e) => {
-
             e.preventDefault();
             dropArea.classList.add("dragover");
-
         });
 
         dropArea?.addEventListener("dragleave", (e) => {
-
             e.preventDefault();
             dropArea.classList.remove("dragover");
-
         });
 
         dropArea?.addEventListener("drop", (e) => {
-
             e.preventDefault();
             dropArea.classList.remove("dragover");
 
@@ -228,7 +229,6 @@ export class File extends Input {
         });
 
         reuploadBtn?.addEventListener("click", (e) => {
-
             e.preventDefault();
             e.stopPropagation();
 
@@ -239,7 +239,6 @@ export class File extends Input {
             this._fileInput = newInput;
 
             setTimeout(() => newInput.click(), 10);
-
         });
 
     }

@@ -189,6 +189,8 @@ export class UpdateProfile extends Comp {
         back.addEventListener("click", () => {
             const vals = [name, surname, bio]
             vals.forEach(v => v.query(".inputValue").value = "");
+            pic.clear = true;
+
             this.publish("update-back")
         });
         submit.addEventListener("click", () => this.publish("popup-submit"));
