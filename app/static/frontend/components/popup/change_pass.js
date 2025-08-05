@@ -133,7 +133,8 @@ export class ChangePass extends Comp {
         ];
     }
 
-    async passwordChange() {
+    async passwordChange(button) {
+        button.loading = true;
         const res = await this.request("/account/change-password", "POST", {
             current: this.getById("current").value,
             new: this.getById("new").value
@@ -142,7 +143,10 @@ export class ChangePass extends Comp {
         if (res.ok) {
             this.publish("password-changed");
             this.style.display = "none";
-        } else this.query("#result").innerHTML = res.error;
+        } else {
+            button.loading = false;
+            this.query("#result").innerHTML = res.error;
+        }
     }
 
     checkPassword(input1, input2) {
@@ -217,8 +221,7 @@ export class ChangePass extends Comp {
                 return;
             }
 
-            this.passwordChange();
-
+            this.passwordChange(submit);
         });
 
         back.addEventListener("click", () => {

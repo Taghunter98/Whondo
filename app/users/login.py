@@ -178,6 +178,7 @@ def change_password():
         hashed: str = hash_function(new) 
         query = "UPDATE Users SET password = %s WHERE uID = %s"
         cursor.execute(query, (hashed, uID))
+        connection.commit()
 
         updated: bool = cursor.rowcount == 1
         cursor.close()
