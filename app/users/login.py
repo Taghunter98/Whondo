@@ -141,6 +141,6 @@ def logout():
     session.clear()
 
     response = jsonify({"message": "User logged out successfully"}), 200
-    response.delete_cookie("uID")
+    response.set_cookie('uID', '', expires=0)
 
     return response
