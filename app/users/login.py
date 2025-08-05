@@ -21,7 +21,7 @@ from flask import (
 
 from ..utilities.authid import authenticate
 from app.database.db_connect import connect
-from app.security.hashing import check_password
+from app.security.hashing import check_password, hash_function
 
 account_bp = Blueprint("account_bp", __name__)
 
@@ -117,6 +117,12 @@ def login():
 
 @account_bp.route("/account/delete", methods={"POST"})
 def delete():
+    """
+    The REST API deletes a user using the uID provided from the session cookie.
+
+    Returns:
+        Response: HTTP Response
+    """
     if request.method == "POST":
         uID: int = session.get("uID")
 
@@ -132,12 +138,56 @@ def delete():
         connection.commit()
 
         deleted: bool = cursor.rowcount == 1
+        cursor.close()
+        connection.close()
 
         if deleted:
             return jsonify({"message": f"User account {uID} deleted successfully"}), 200
         else:
             return jsonify({"error": f"Unable to delete account {uID}"}), 404
     
+    else:
+        return redirect("/")
+    
+@account_bp.route("/account/change-password", methods=["POST"])
+def change_password():
+    if request.method == "POST":
+        uID: int = session.get("uID")
+        data: object = request.get_json()
+        current: str = data.get("current")
+        new: str = data.get("new")
+
+        if not uID:
+            return jsonify({"error", "User not logged in"}), 400
+        
+        connection: object = connect()
+        cursor: object = connection.cursor()
+
+        query: str = "SELECT password FROM Users WHERE uID = %s"
+        cursor.execute(query, {uID,})
+
+        hashed_pw: str = cursor.fetchone()
+
+        valid: bool = check_password(current, hashed_pw)
+
+        if not valid:
+            cursor.close()
+            connection.close()
+            return jsonify({"error": "Incorrect password"})
+        
+        hashed: str = hash_function(new) 
+        query = "UPDATE Users SET password = %s WHERE uID = %s"
+        cursor.execute(query, (hashed, uID))
+
+        updated: bool = cursor.rowcount == 1
+        cursor.close()
+        connection.close()
+
+        if updated:
+            return jsonify({"message": "Password updated successfully"}), 200
+        else:
+            return jsonify({"error": "Unable to update password"}), 404
+
     else:
         return redirect("/")
 
@@ -164,6 +214,12 @@ def logout():
 
 @account_bp.route("/profile", methods=["GET"])
 def profile():
+    """
+    The REST API returns the account page if the user is logged in.
+
+    Returns:
+        Response: Flask redirect to homepage or profile.html
+    """
     if not session.get("uID"):
         return redirect("/")
     
