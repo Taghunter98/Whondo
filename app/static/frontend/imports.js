@@ -9,6 +9,7 @@ import './components/button.js';
 import './components/card.js';
 import './components/dialog.js';
 import './components/promptbar.js';
+import './components/banner.js';
 
 // Navbar
 import './components/navbar/navbar.js';
@@ -51,8 +52,13 @@ import './components/blocks/cards.js';
 import './components/blocks/video.js';
 import './components/blocks/modal.js';
 
+// Profile
+import './components/profile/profile_option.js';
+
 // Popup
 import './components/popup/popup.js';
+import './components/popup/change_pass.js';
+import './components/popup/update_prof.js';
 
 // Property
 import './pages/create_prop/create_prop.js';
@@ -66,3 +72,4 @@ import './pages/create.js';
 import './pages/home.js';
 import './pages/register.js';
 import './pages/advertise.js';
+import './pages/account.js';

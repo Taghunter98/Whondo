@@ -57,13 +57,14 @@ export class Button extends Comp {
             {
                 class: "button",
                 boxSizing: "border-box",
-                colour: variant === 1 ? "white" : "black100",
+                colourVar: variant === 1 ? "white" : "black100",
                 backgroundVar: variant === 1 ? "black100" : "black10",
                 width: autoWidth,
                 borderVar: variant === 1 ? "borderBlack" : "border",
                 padding: [12, 28],
                 borderRadius: 8,
                 fontSize: 16,
+                whiteSpace: "nowrap",
                 cursor: "pointer",
                 transition: ["background", "0.1s", "ease-in-out"]
             },
@@ -94,7 +95,7 @@ export class Button extends Comp {
             {
                 class: "buttonWrapper",
                 display: "block",
-                widthPercent: 100
+                widthPercent: autoWidth
             }
         ];
     }
