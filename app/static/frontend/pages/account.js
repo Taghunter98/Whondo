@@ -79,16 +79,15 @@ export class Account extends Comp {
         else this.showPopup("logout", "Logout Failed", res.error || "Something went wrong.");
     }
 
-    async deleteAccount() {
-        const res = await this.request("/account/delete", "POST");
-        if (res.ok) {
-            console.log(res.data)
-            this.showPopup("deleted", "Account Deleted", "Are you sure you want to delete your account?.", "Delete");
-            const popup = this.getById("deleted");
-
-            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
-        }
-        else this.showPopup("deleted", "Deletion Failed", res.error || "Something went wrong.");
+    deleteAccount() {
+        const popup = this.getById("deleted");
+        this.showPopup("deleted", "Delete Account", "Are you sure you want to delete your account?.", "Delete");
+        popup.subscribe("popup-button", async () => {
+            const res = await this.request("/account/delete", "POST");
+            console.log("Sent delete request: " + res.error)
+            if (res.ok) window.location.assign("/");
+            else this.showPopup("deleted", "Deletion Failed", res.error || "Something went wrong.");
+        }, { once: true });
     }
 
     afterRender() {

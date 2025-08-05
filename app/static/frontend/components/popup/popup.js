@@ -15,6 +15,7 @@ export class Popup extends Comp {
         this.text_ = v;
         this.update();
     }
+
     get paragraph() { return this.paragraph_; }
     get title() { return this.title_; }
     get text() { return this.text_ }
@@ -29,7 +30,7 @@ export class Popup extends Comp {
             <div class="background">
                 <div class="container">
                     <comp-icon class="icon"></comp-icon>
-                    <h3 class="head">${this.title_}</h3>
+                    <h3 style="font-weight: bold">${this.title_}</h3>
                     <p class="dialog">${this.paragraph_}</p>
                     <div class="button-wrapper">
                     <comp-button class="btn"></comp-button>
@@ -38,7 +39,7 @@ export class Popup extends Comp {
             </div>
         `;
     }
-createCSS() {
+    createCSS() {
         const effect = this.effect.slideUp(20);
         const prop = this.effect.prop("slideUp", .5);
 
@@ -63,55 +64,56 @@ createCSS() {
 
         const container = {
             class: "container",
-                display: "flex",
-                flexDirection: "column",
-                width: "auto",
-                maxWidth: 500,
-                padding: 20,
-                borderVar: "border",
-                borderRadius: 16,
-                gap: 10,
-                background: "white",
-                animation: prop,
-                marginTop: 0,
-                media: {
-                    maxWidthBp: 600,
-                }
+            display: "flex",
+            flexDirection: "column",
+            width: "auto",
+            width: 500,
+            padding: 20,
+            borderVar: "border",
+            borderRadius: 16,
+            gap: 10,
+            background: "white",
+            animation: prop,
+            marginTop: 0,
+            media: {
+                maxWidthBp: 600,
+                width: "auto"
+            }
         };
 
         const dialog = {
-                class: "dialog",
-                fontSize: 16,
-                textAlign: "start",
-                media: {
-                    maxWidthBp: 600,
-                    fontSize: 16
-                }
+            class: "dialog",
+            fontSize: 16,
+            textAlign: "start",
+            media: {
+                maxWidthBp: 600,
+                fontSize: 16
             }
+        }
 
         const icon = {
-                class: "icon",
-                display: "flex",
-                alignItems: "centre",
-                justifyContent: "centre",
-                colourVar: "black80",
-            }
+            class: "icon",
+            display: "flex",
+            alignItems: "centre",
+            justifyContent: "centre",
+            colourVar: "black80",
+        }
 
-        return [background, container ,dialog, icon, effect];
+        return [background, container, dialog, icon, effect];
     }
 
     afterRender() {
         this.query("comp-button").text = this.text_;
         this.query("comp-button").fill = true;
 
-         this.query("comp-button").addEventListener("click", () =>{
+        this.query("comp-button").addEventListener("click", () => {
             this.style.display = "none";
             this.publish("popup-button");
-         });
-        
+        });
+
     }
 
     static { Comp.register(this); }
 
-    
+
 }
