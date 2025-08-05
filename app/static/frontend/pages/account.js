@@ -83,8 +83,8 @@ export class Account extends Comp {
 
     deleteAccount() {
         const popup = this.getById("deleted");
-        this.showPopup("deleted", "Delete Account", "Are you sure you want to delete your account?.", "Delete");
-        popup.subscribe("popup-button", async () => {
+        this.showPopup("deleted", "Delete Account", "Are you sure you want to delete your account?.", "Back", false, "Delete");
+        popup.subscribe("popup-rightBtn", async () => {
             const res = await this.request("/account/delete", "POST");
             console.log("Sent delete request: " + res.error)
             if (res.ok) window.location.assign("/");
@@ -122,7 +122,7 @@ export class Account extends Comp {
         this.subscribe("password-changed", () => {
             this.showPopup("changePass", "Password Updated", "Your password has been changed successfully!");
             const popup = this.getById("changePass");
-            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
+            popup.subscribe("popup-leftBtn", () => { window.location.assign("/"); }, { once: true });
 
         });
 
@@ -133,7 +133,7 @@ export class Account extends Comp {
         this.subscribe("updated", () => {
             this.showPopup("update", "Profile Updated", "Your profile has been updated successfully");
             const popup = this.query("#profile");
-            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
+            popup.subscribe("popup-leftBtn", () => { window.location.assign("/"); }, { once: true });
         });
 
         this.subscribe("btn1-click", () => {

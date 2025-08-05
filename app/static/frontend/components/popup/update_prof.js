@@ -27,6 +27,7 @@ export class UpdateProfile extends Comp {
                                     <comp-button id="submit" type="submit"></comp-button>
                                 </div>
                             </div>
+                            <p id="result" style="text-align: center; padding-top: 10px"></p>
                         </div>
                     </form>
                 </div>
@@ -143,7 +144,7 @@ export class UpdateProfile extends Comp {
         ];
     }
 
-    async register() {
+    async update() {
         const fd = new FormData();
 
         fd.append("name", this.getById("name").value);
@@ -155,13 +156,13 @@ export class UpdateProfile extends Comp {
         if (b.value) fd.append("bio", b.value);
         if (p.value) fd.append("file", p.value);
 
-        const result = await this.submitForm("/", fd);
+        const res = await this.submitForm("/", fd);
 
-        if (result.ok) {
+        if (res.ok) {
             this.publish("updated");
             this.style.display = "none"
         }
-        else alert(result.error);
+        else this.query("#result").innerHTML = res.error
     }
 
     afterRender() {
@@ -193,7 +194,8 @@ export class UpdateProfile extends Comp {
 
             this.publish("update-back")
         });
-        submit.addEventListener("click", () => this.publish("popup-submit"));
+
+        submit.addEventListener("click", () => this.update(submit));
     }
 
     static { Comp.register(this); }
