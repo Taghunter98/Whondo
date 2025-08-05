@@ -166,7 +166,7 @@ def change_password():
         query: str = "SELECT password FROM Users WHERE uID = %s"
         cursor.execute(query, (uID,))
 
-        hashed_pw: str = cursor.fetchone()
+        hashed_pw: str = cursor.fetchone()[0]
 
         valid: bool = check_password(current, hashed_pw)
 
