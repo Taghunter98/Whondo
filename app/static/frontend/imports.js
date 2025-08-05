@@ -9,6 +9,7 @@ import './components/button.js';
 import './components/card.js';
 import './components/dialog.js';
 import './components/promptbar.js';
+import './components/carousel.js';
 import './components/banner.js';
 
 // Navbar
