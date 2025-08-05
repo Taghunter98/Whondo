@@ -176,7 +176,7 @@ def change_password():
         if not valid:
             cursor.close()
             connection.close()
-            return jsonify({"error": "Incorrect password"})
+            return jsonify({"error": "Incorrect password"}), 400
         
         hashed: str = hash_function(new) 
         query = "UPDATE Users SET password = %s WHERE uID = %s"
