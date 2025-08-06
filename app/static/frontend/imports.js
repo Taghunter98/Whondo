@@ -55,6 +55,7 @@ import './components/blocks/modal.js';
 
 // Profile
 import './components/profile/profile_option.js';
+import './components/profile/profile_setting.js'
 
 // Popup
 import './components/popup/popup.js';

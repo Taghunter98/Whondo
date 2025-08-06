@@ -12,7 +12,9 @@ export class UpdateProfile extends Comp {
                         <div>
                             <div class="textContainer">
                                 <h4 class="title">Your Profile</h4> 
+                                <comp-profile-setting></comp-profile-setting>
                             </div>
+                            <div id="update-blog">
                              <div class="inputRow">
                                 <comp-input id="name" name="name"></comp-input>
                                 <comp-input id="surname" name="surname"></comp-input>
@@ -30,6 +32,7 @@ export class UpdateProfile extends Comp {
                                     <comp-button id="back" type="button"></comp-button>
                                     <comp-button id="submit" type="submit"></comp-button>
                                 </div>
+                            </div>
                             </div>
                             <p id="result" style="text-align: center; padding-top: 10px"></p>
                         </div>
@@ -49,14 +52,10 @@ export class UpdateProfile extends Comp {
                 justifyContent: "centre",
                 widthPercent: 100,
                 heightVh: 100,
-                overflow: "hidden",
+                overflow: "auto",
                 position: "fixed",
                 background: "rgba(0, 0, 0, 0.6)",
                 zIndex: 9999,
-                media: {
-                    maxWidthBp: 600,
-                    overflow: "auto",
-                }
             },
             { class: "formObj", widthPercent: 100, },
             {
@@ -78,14 +77,15 @@ export class UpdateProfile extends Comp {
                 maxWidth: 500,
                 minWidth: 320,
                 background: "white",
-                position: "absolute",
+                margin: "auto",
+                position: "relative",
+                overflowY: "auto",
                 padding: 20,
                 borderRadius: 14,
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
-                    minWidth: 250,
-                    margin: 0,
+                    minWidth: 350,
                     boxSizing: "border-box",
                 }
             },
@@ -146,7 +146,7 @@ export class UpdateProfile extends Comp {
     }
 
     async fetchUserData(){
-        const res = await fetch("/verify/me");
+        const res = await this.request("https://whondo.com/verify/me","GET");
         if (!res.ok) {
             console.log(res.error);
             return;
