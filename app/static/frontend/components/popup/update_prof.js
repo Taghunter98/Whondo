@@ -52,7 +52,7 @@ export class UpdateProfile extends Comp {
                 justifyContent: "centre",
                 widthPercent: 100,
                 heightVh: 100,
-                overflow: "auto",
+                overflowY: "auto",
                 position: "fixed",
                 background: "rgba(0, 0, 0, 0.6)",
                 zIndex: 9999,
@@ -79,7 +79,6 @@ export class UpdateProfile extends Comp {
                 background: "white",
                 margin: "auto",
                 position: "relative",
-                overflowY: "auto",
                 padding: 20,
                 borderRadius: 14,
                 media: {
