@@ -273,7 +273,7 @@ export class UpdateProfile extends Comp {
         this.subscribe("edit-profile", () => {
              this.query("#update-blog").removeAttribute("hidden");
             this.query(".file").setAttribute("hidden", "");
-        })
+        });
 
         const input = [name, surname, age]
         input.forEach(inputs => inputs.addEventListener("input", () => this.clearError(inputs)));
