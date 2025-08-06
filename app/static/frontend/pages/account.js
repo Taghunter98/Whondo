@@ -102,7 +102,7 @@ export class Account extends Comp {
         banner.title = "My Account";
         banner.btnText1 = "Delete Account";
         banner.btnText2 = "Logout";
-        option1.title = "Update Account";
+        option1.title = "Profile";
         option2.title = "Change Password";
 
 

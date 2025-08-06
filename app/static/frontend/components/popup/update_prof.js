@@ -11,11 +11,15 @@ export class UpdateProfile extends Comp {
                         <!-- User personalisation  -->
                         <div>
                             <div class="textContainer">
-                                <h4 class="title">Account</h4> 
+                                <h4 class="title">Your Profile</h4> 
                             </div>
                              <div class="inputRow">
                                 <comp-input id="name" name="name"></comp-input>
                                 <comp-input id="surname" name="surname"></comp-input>
+                            </div>
+                             <div class="inputRow">
+                                <comp-input id="age" name="age"></comp-input>
+                                <comp-input id="occupation" name="occupation"></comp-input>
                             </div>
                             <div class="input">
                                 <comp-textarea id="bio" name="bio"></comp-textarea>
@@ -36,6 +40,7 @@ export class UpdateProfile extends Comp {
         `;
     }
 
+    // Fix shitty CSS pls :) on mob make into a cool sliding modal thing
     createCSS() {
         return [
             {
@@ -69,8 +74,6 @@ export class UpdateProfile extends Comp {
                 class: "modal",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "centre",
-                justifyContent: "centre",
                 widthPercent: 100,
                 maxWidth: 500,
                 minWidth: 320,
@@ -78,12 +81,9 @@ export class UpdateProfile extends Comp {
                 position: "absolute",
                 padding: 20,
                 borderRadius: 14,
-                marginTop: 110,
-                marginBottom: 50,
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
-                    maxWidth: 350,
                     minWidth: 250,
                     margin: 0,
                     boxSizing: "border-box",
@@ -107,6 +107,7 @@ export class UpdateProfile extends Comp {
                 display: "flex",
                 flexDirection: "row",
                 gap: 15,
+                paddingTop: 20,
                 widthPercent: 100,
                 justifyContent: "space-between",
                 media: {
@@ -149,6 +150,8 @@ export class UpdateProfile extends Comp {
 
         fd.append("name", this.getById("name").value);
         fd.append("surname", this.getById("surname").value);
+        fd.append("age", this.getById("age").value);
+        fd.append("occupation", this.getById("occupation").value);
 
         const p = this.getById("picture");
         const b = this.getById("bio");
@@ -156,18 +159,21 @@ export class UpdateProfile extends Comp {
         if (b.value) fd.append("bio", b.value);
         if (p.value) fd.append("file", p.value);
 
-        const res = await this.submitForm("/", fd);
+        const res = await this.submitForm("https://whondo.com/account/update", fd);
 
         if (res.ok) {
             this.publish("updated");
             this.style.display = "none"
         }
+
         else this.query("#result").innerHTML = res.error
     }
 
     afterRender() {
         const name = this.query("#name");
         const surname = this.query("#surname");
+        const age = this.query("#age");
+        const occupation = this.query("#occupation");
         const bio = this.query("#bio");
         const pic = this.query("#picture");
         const back = this.query("#back");
@@ -175,12 +181,17 @@ export class UpdateProfile extends Comp {
 
         name.label = "Name";
         name.prompt = "Enter name"
-        surname.label = "surname";
-        surname.prompt = "Enter surname"
+        surname.label = "Surname";
+        surname.prompt = "Enter surname";
         bio.label = "Bio";
         bio.prompt = "Tell us more about you..."
         pic.label = "Profile picture";
         pic.prompt = "Upload photo";
+        age.label = "Age";
+        age.prompt = "Enter age";
+        age.type = "number";
+        occupation.label = "Occupation";
+        occupation.prompt = "Enter your occupation"
         back.text = "Back";
         back.variant = 2;
         back.fill = true;
