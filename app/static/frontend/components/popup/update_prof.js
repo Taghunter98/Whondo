@@ -51,7 +51,7 @@ export class UpdateProfile extends Comp {
                 display: "flex",
                 justifyContent: "centre",
                 widthPercent: 100,
-                heightVh: 100,
+                heightPercent: 100,
                 overflowY: "auto",
                 position: "fixed",
                 background: "rgba(0, 0, 0, 0.6)",
@@ -84,7 +84,8 @@ export class UpdateProfile extends Comp {
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
-                    minWidth: 350,
+                    position: "absolute",
+                    heightPercent: 100,
                     boxSizing: "border-box",
                 }
             },
