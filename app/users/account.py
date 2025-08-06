@@ -277,17 +277,19 @@ def update():
 
         cursor.execute(
             query,
-            (session.get("email"), name, surname, age, occupation, bio, image_path),
+            (session.get("email"), name, surname, age, occupation, bio, image_path, uID),
         )
 
         connection.commit()
-        current_app.logger.info(f"MySQL status: {cursor.rowcount}")
+        updated: bool = cursor.rowcount == 1
 
         cursor.close()
         connection.close()
 
-
-        return jsonify({"message": "Account updated successfully"})
+        if updated:
+            return jsonify({"message": "Account updated successfully"}), 200
+        else:
+            return jsonify({"error": "Unable to update account"}), 404
 
     else:
         return ("/")
