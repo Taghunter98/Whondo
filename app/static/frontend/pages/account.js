@@ -131,7 +131,7 @@ export class Account extends Comp {
         });
 
         this.subscribe("updated", () => {
-            this.showPopup("update", "Profile Updated", "Your profile has been updated successfully");
+            this.showPopup("profile", "Profile Updated", "Your profile has been updated successfully");
             const popup = this.query("#profile");
             popup.subscribe("popup-leftBtn", () => { window.location.assign("/"); }, { once: true });
         });

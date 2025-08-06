@@ -133,6 +133,20 @@ export class File extends Input {
         return this._selectedFile || this.fileInput?.files?.[0] || null;
     }
 
+    setPreview(url){
+        const preview = this.query(".filePreview");
+        const icon = this.query(".icon");
+        const prompt = this.query(".filePrompt");
+        const reupload = this.query(".reuploadBtn");
+
+        if(!url) return
+        preview.scr = url;
+        preview.removeAttribute("hidden");
+
+        icon.setAttribute("hidden", "");
+        prompt.textContent = url.split("/").pop();
+    }
+
     afterRender() {
 
         const filePrompt = this.query(".filePrompt");

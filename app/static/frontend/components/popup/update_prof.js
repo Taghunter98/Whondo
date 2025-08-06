@@ -145,6 +145,30 @@ export class UpdateProfile extends Comp {
         ];
     }
 
+    async fetchUserData(){
+        const res = await fetch("/verify/me");
+        if (!res.ok) {
+            console.log(res.error);
+            return;
+        }
+    
+        const data = res.json();
+        console.log("Fetched user data:", data);
+
+        this.getById("name").value = data.name || ""
+        this.getById("surname").value = data.surname || "";
+        this.getById("bio").value = data.bio || "";
+        this.getById("age").value = data.age || "";
+        this.getById("occupation").value = data.occupation || "";
+
+        if(data.profilePicture){
+            const pic = this.getById("picture");
+            const url = `https://whondo.com/uploads?path=${data.profilePicture}`;
+            pic.setPreview(url);
+        }
+
+    }
+
     async update() {
         const fd = new FormData();
 
@@ -179,6 +203,8 @@ export class UpdateProfile extends Comp {
         const back = this.query("#back");
         const submit = this.query("#submit");
 
+
+
         name.label = "Name";
         name.prompt = "Enter name"
         surname.label = "Surname";
@@ -207,6 +233,8 @@ export class UpdateProfile extends Comp {
         });
 
         submit.addEventListener("click", () => this.update(submit));
+
+        this.fetchUserData();
     }
 
     static { Comp.register(this); }
