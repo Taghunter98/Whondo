@@ -137,10 +137,9 @@ export class File extends Input {
         const preview = this.query(".filePreview");
         const icon = this.query(".icon");
         const prompt = this.query(".filePrompt");
-        const reupload = this.query(".reuploadBtn");
 
         if(!url) return
-        preview.scr = url;
+        preview.src = url;
         preview.removeAttribute("hidden");
 
         icon.setAttribute("hidden", "");

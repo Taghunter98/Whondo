@@ -20,6 +20,10 @@ class ProfileSetting extends Comp {
         return `
         <div class="container">
             <img class="profile" src="${entry.value}">
+            <div>
+            <comp-button class="upload" style="display: block"></comp-button>
+            <comp-button class="back" style="display: none"></comp-button>
+            </div>
         </div>
         `;
     }
@@ -48,6 +52,23 @@ class ProfileSetting extends Comp {
     }
 
     afterRender() {   
+        const update = this.query(".upload");
+        const back = this.query(".back");
+
+        update.text = "Edit Picture";
+        back.text = "Back to Profile"
+
+        update.addEventListener("click", () => {
+            this.publish("edit");
+            update.style.display = "none";
+            back.style.display = "block";
+        });
+
+        back.addEventListener("click", () => {
+            this.publish("edit-profile");
+            back.style.display = "none";
+            update.style.display = "block";
+        });
     }
 
     static { Comp.register(this); }

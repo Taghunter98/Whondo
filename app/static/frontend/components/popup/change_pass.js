@@ -199,7 +199,7 @@ export class ChangePass extends Comp {
         confirm.required = true;
 
         submit.text = "Update";
-        back.text = "Back";
+        back.text = "Cancel";
         back.variant = 2;
 
         newPass.addEventListener("input", () => this.validatePasswords(newPass, confirm))

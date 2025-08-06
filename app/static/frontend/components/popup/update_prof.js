@@ -14,25 +14,29 @@ export class UpdateProfile extends Comp {
                                 <h4 class="title">Your Profile</h4> 
                                 <comp-profile-setting></comp-profile-setting>
                             </div>
-                            <div id="update-blog">
-                             <div class="inputRow">
-                                <comp-input id="name" name="name"></comp-input>
-                                <comp-input id="surname" name="surname"></comp-input>
+                            <div id="update-blog" >
+                                <div class="inputRow">
+                                    <comp-input id="name" name="name"></comp-input>
+                                    <comp-input id="surname" name="surname"></comp-input>
+                                </div>
+                                <div class="inputRow">
+                                    <comp-input id="age" name="age"></comp-input>
+                                    <comp-input id="occupation" name="occupation"></comp-input>
+                                </div>
+                                <div class="input">
+                                    <comp-textarea id="bio" name="bio"></comp-textarea>
+                                </div>
                             </div>
-                             <div class="inputRow">
-                                <comp-input id="age" name="age"></comp-input>
-                                <comp-input id="occupation" name="occupation"></comp-input>
-                            </div>
-                            <div class="input">
-                                <comp-textarea id="bio" name="bio"></comp-textarea>
-                                <comp-file id="picture" name="picture"></comp-file>
+                            <div class="file"  hidden>
+                                <div class="input">
+                                    <comp-file id="picture" name="picture"></comp-file>
+                                </div>
                             </div>
                             <div class="footer">
                                 <div class="btnRow">
                                     <comp-button id="back" type="button"></comp-button>
                                     <comp-button id="submit" type="submit"></comp-button>
                                 </div>
-                            </div>
                             </div>
                             <p id="result" style="text-align: center; padding-top: 10px"></p>
                         </div>
@@ -51,13 +55,17 @@ export class UpdateProfile extends Comp {
                 display: "flex",
                 justifyContent: "centre",
                 widthPercent: 100,
-                heightPercent: 100,
+                heightVh: 100,
                 overflowY: "auto",
                 position: "fixed",
                 background: "rgba(0, 0, 0, 0.6)",
                 zIndex: 9999,
+                media: {
+                    maxWidthBp: 600,
+                    position: "absolute"
+                }
             },
-            { class: "formObj", widthPercent: 100, },
+            { class: "formObj", widthPercent: 100, height: "auto"},
             {
                 class: "container",
                 display: "flex",
@@ -76,6 +84,7 @@ export class UpdateProfile extends Comp {
                 widthPercent: 100,
                 maxWidth: 500,
                 minWidth: 320,
+                overflowY: "auto",
                 background: "white",
                 margin: "auto",
                 position: "relative",
@@ -84,9 +93,9 @@ export class UpdateProfile extends Comp {
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,
-                    position: "absolute",
-                    heightPercent: 100,
+                    position: "relative",
                     boxSizing: "border-box",
+                    height: "auto",
                 }
             },
             {
@@ -165,6 +174,7 @@ export class UpdateProfile extends Comp {
             const pic = this.getById("picture");
             const url = `https://whondo.com/uploads?path=${data.profilePicture}`;
             pic.setPreview(url);
+            
         }
 
     }
@@ -203,8 +213,6 @@ export class UpdateProfile extends Comp {
         const back = this.query("#back");
         const submit = this.query("#submit");
 
-
-
         name.label = "Name";
         name.prompt = "Enter name"
         surname.label = "Surname";
@@ -218,21 +226,28 @@ export class UpdateProfile extends Comp {
         age.type = "number";
         occupation.label = "Occupation";
         occupation.prompt = "Enter your occupation"
-        back.text = "Back";
+        back.text = "Cancel";
         back.variant = 2;
         back.fill = true;
         submit.text = "Save";
         submit.fill = true;
 
         back.addEventListener("click", () => {
-            const vals = [name, surname, bio]
-            vals.forEach(v => v.query(".inputValue").value = "");
-            pic.clear = true;
-
             this.publish("update-back")
         });
 
         submit.addEventListener("click", () => this.update(submit));
+        
+        this.subscribe("edit", () => {
+            this.query("#update-blog").setAttribute("hidden", "");
+            this.query(".file").removeAttribute("hidden")
+        });
+
+        this.subscribe("edit-profile", () => {
+             this.query("#update-blog").removeAttribute("hidden")
+            this.query(".file").setAttribute("hidden", "");
+        })
+        
 
         this.fetchUserData();
     }
