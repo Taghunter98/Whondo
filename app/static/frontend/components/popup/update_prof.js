@@ -154,6 +154,24 @@ export class UpdateProfile extends Comp {
         ];
     }
 
+    validate() {
+        const inputs = [this.query("#name"), this.query("#surname"), this.query("#age")];
+        let isValid = true;
+
+        for (let input of inputs) {
+            if (input.required && input.isEmpty()) {
+                input.query(".inputValue").classList.add("error");
+                isValid = false;
+            }
+        }
+        return isValid;
+    }
+
+    clearError(inputs) {
+        const field = inputs.query(".inputValue");
+        field.classList.remove("error");
+    };
+
     async fetchUserData(){
         const res = await this.request("https://whondo.com/verify/me","GET");
         if (!res.ok) {
@@ -232,22 +250,35 @@ export class UpdateProfile extends Comp {
         submit.text = "Save";
         submit.fill = true;
 
+        name.required = true;
+        surname.required = true;
+        age.required = true;
+
         back.addEventListener("click", () => {
-            this.publish("update-back")
+            this.publish("update-back");
+            const input = [name, surname, age]
+            input.forEach(i => this.clearError(i));
         });
 
-        submit.addEventListener("click", () => this.update(submit));
+        submit.addEventListener("click", () => {
+            const valid = this.validate();
+            if(!valid) return;
+            else this.update(submit);
+        });
         
         this.subscribe("edit", () => {
             this.query("#update-blog").setAttribute("hidden", "");
-            this.query(".file").removeAttribute("hidden")
+            this.query(".file").removeAttribute("hidden");
         });
 
         this.subscribe("edit-profile", () => {
-             this.query("#update-blog").removeAttribute("hidden")
+             this.query("#update-blog").removeAttribute("hidden");
             this.query(".file").setAttribute("hidden", "");
         })
-        
+
+        const input = [name, surname, age]
+        input.forEach(inputs => inputs.addEventListener("input", () => this.clearError(inputs)));
+
 
         this.fetchUserData();
     }
