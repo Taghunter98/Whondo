@@ -277,7 +277,7 @@ def update():
 
         cursor.execute(
             query,
-            (session.get("email"), name, surname, age, occupation, bio, image_path, uID),
+            (name, surname, age, occupation, bio, image_path, uID),
         )
 
         connection.commit()
