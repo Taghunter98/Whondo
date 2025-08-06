@@ -128,7 +128,7 @@ def create_app() -> Flask:
 
     Session(app)
 
-    from .users.login import account_bp
+    from .users.account import account_bp
     from .users.register import register_bp
     from .users.images import image_bp, image_purge_bp
     from .users.verify import verify_bp

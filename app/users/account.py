@@ -22,6 +22,7 @@ from flask import (
 from ..utilities.authid import authenticate
 from app.database.db_connect import connect
 from app.security.hashing import check_password, hash_function
+from app.users.images import upload_file
 
 account_bp = Blueprint("account_bp", __name__)
 
@@ -239,3 +240,54 @@ def profile():
         return redirect("/")
 
     return render_template("profile.html")
+
+
+@account_bp.route("/account/update", methods=["POST"])
+def update():
+
+    if request.method == "POST":
+        uID: int = session.get("uID")
+
+        if not uID:
+            return jsonify({"error": "User is not logged in"}), 400
+
+        name: str = request.form.get("name")
+        surname: str = request.form.get("surname")
+        age: int = request.form.get("age")
+        occupation: str = request.form.get("occupation")
+        bio: str = request.form.get("bio")
+        profile_picture: object = request.files.get("file")
+
+        image_path = None
+
+        if profile_picture:
+            image_path: str = upload_file(profile_picture, session.get("email"))
+
+            if image_path is None:
+                return jsonify({"error": "Image failed to upload"}), 409
+
+        connection: object = connect()
+        cursor: object = connection.cursor()
+
+        query: str = """
+            UPDATE Users 
+            SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s, profilePicture = %s 
+            WHERE uID = %s;
+        """
+
+        cursor.execute(
+            query,
+            (session.get("email"), name, surname, age, occupation, bio, image_path),
+        )
+
+        connection.commit()
+        current_app.logger.info(f"MySQL status: {cursor.rowcount}")
+
+        cursor.close()
+        connection.close()
+
+
+        return jsonify({"message": "Account updated successfully"})
+
+    else:
+        return ("/")

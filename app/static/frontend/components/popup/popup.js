@@ -16,7 +16,7 @@ export class Popup extends Comp {
         this.update();
     }
 
-     set textRight(v) {
+    set textRight(v) {
         this.textRight_ = v;
         this.update();
     }
@@ -107,16 +107,16 @@ export class Popup extends Comp {
             colourVar: "black80",
         }
         const wrapper = {
-            class: "button-wrapper",     
+            class: "button-wrapper",
             display: "flex",
-            flexDirection: "row", 
-            gap: 10,  
+            flexDirection: "row",
+            gap: 10,
         }
 
         return [background, container, dialog, icon, effect, wrapper,];
     }
 
-    hideButton(f = false){
+    hideButton(f = false) {
         this.hideFlag_ = f;
     }
 
@@ -128,8 +128,8 @@ export class Popup extends Comp {
         const right = this.query(".right-btn");
         right.text = this.textRight_;
         right.fill = true;
-        
-        if(this.hideFlag_ === true) {
+
+        if (this.hideFlag_ === true) {
             right.style.display = "none";
             this.query(".left-btn").variant = 1;
         }
@@ -139,7 +139,7 @@ export class Popup extends Comp {
             this.publish("popup-leftBtn");
         });
 
-         this.query(".right-btn").addEventListener("click", () => {
+        this.query(".right-btn").addEventListener("click", () => {
             this.style.display = "none";
             this.publish("popup-rightBtn");
         });
