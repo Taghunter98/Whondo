@@ -47,7 +47,6 @@ export class UpdateProfile extends Comp {
         `;
     }
 
-    // Fix shitty CSS pls :) on mob make into a cool sliding modal thing
     createCSS() {
         return [
             {
