@@ -113,8 +113,10 @@ export class Account extends Comp {
 
         option1.subscribe("option-clicked", () => {
             updatePopup.style.display = "block";
-            updatePopup.query("#update-blog").removeAttribute("hidden");
             updatePopup.query("#result").textContent = "";
+            const profileSetting = updatePopup.query("comp-profile-setting");
+            profileSetting.resetPreview();      
+            updatePopup.fetchUserData(); 
         });
 
         option2.subscribe("option-clicked", () => {

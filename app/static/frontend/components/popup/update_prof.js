@@ -11,7 +11,7 @@ export class UpdateProfile extends Comp {
                         <!-- User personalisation  -->
                         <div>
                             <div class="textContainer">
-                                <h4 class="title">Your Profile</h4> 
+                                <h4 class="title">Edit Profile</h4> 
                                 <comp-profile-setting class="picture"></comp-profile-setting>
                             </div>
                             <div id="update-blog" >
@@ -47,6 +47,7 @@ export class UpdateProfile extends Comp {
             {
                 class: "background",
                 display: "flex",
+                flexDirection: "column",
                 justifyContent: "centre",
                 widthPercent: 100,
                 heightVh: 100,
@@ -54,22 +55,14 @@ export class UpdateProfile extends Comp {
                 position: "fixed",
                 background: "rgba(0, 0, 0, 0.6)",
                 zIndex: 9999,
-                media: {
-                    maxWidthBp: 600,
-                    position: "absolute"
-                }
             },
-            { class: "formObj", widthPercent: 100, height: "auto"},
+            { class: "formObj", widthPercent: 100,},
             {
                 class: "container",
                 display: "flex",
                 alignItems: "centre",
                 justifyContent: "centre",
-                media: {
-                    maxWidthBp: 600,
-                    flexDirection: "column",
-                    alignItems: "centre",
-                }
+                heightPercent: 100
             },
             {
                 class: "modal",
@@ -80,7 +73,6 @@ export class UpdateProfile extends Comp {
                 minWidth: 320,
                 overflowY: "auto",
                 background: "white",
-                margin: "auto",
                 position: "relative",
                 padding: 20,
                 borderRadius: 14,
@@ -89,7 +81,7 @@ export class UpdateProfile extends Comp {
                     widthPercent: 100,
                     position: "relative",
                     boxSizing: "border-box",
-                    height: "auto",
+                    heightPercent: 100,
                 }
             },
             {
@@ -181,7 +173,6 @@ export class UpdateProfile extends Comp {
         this.getById("bio").value = data.bio || "";
         this.getById("age").value = data.age || "";
         this.getById("occupation").value = data.occupation || "";
-
     }
 
     async update(file) {
@@ -253,12 +244,9 @@ export class UpdateProfile extends Comp {
             const file = profileSetting.file
             this.update(file);
         });
-        
-
 
         const input = [name, surname, age]
         input.forEach(inputs => inputs.addEventListener("input", () => this.clearError(inputs)));
-
 
         this.fetchUserData();
     }

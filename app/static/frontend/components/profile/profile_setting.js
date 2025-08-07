@@ -55,7 +55,9 @@ class ProfileSetting extends Comp {
 
     resetPreview(){
         const img = this.query(".profile");
+        const input = this.query(".fileInput");
         img.src = this.originalURL;
+        input.value = "";
         this.selectedFile = null;
     }   
 
