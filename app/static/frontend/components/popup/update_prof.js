@@ -56,7 +56,7 @@ export class UpdateProfile extends Comp {
                 background: "rgba(0, 0, 0, 0.6)",
                 zIndex: 9999,
             },
-            { class: "formObj", widthPercent: 100,},
+            { class: "formObj", widthPercent: 100, heightPercent:100},
             {
                 class: "container",
                 display: "flex",
