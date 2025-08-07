@@ -114,17 +114,7 @@ export class Account extends Comp {
         option1.subscribe("option-clicked", () => {
             updatePopup.style.display = "block";
             updatePopup.query("#update-blog").removeAttribute("hidden");
-            updatePopup.query(".file").setAttribute("hidden", "");
             updatePopup.query("#result").textContent = "";
-
-            const profileSetting = updatePopup.query("comp-profile-setting");
-            if (profileSetting) {
-                const uploadBtn = profileSetting.query(".upload");
-                const backBtn = profileSetting.query(".back");
-
-                if (uploadBtn) uploadBtn.style.display = "block";
-                if (backBtn) backBtn.style.display = "none";
-            }
         });
 
         option2.subscribe("option-clicked", () => {

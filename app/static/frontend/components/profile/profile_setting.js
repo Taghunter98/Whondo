@@ -15,15 +15,16 @@ class ProfileSetting extends Comp {
             : "https://whondo.com/static/icons/Profile.png";
     }
 
+    get file(){
+        return this.selectedFile || null;
+    }
+
     createHTML() {
         const entry = this.fetchOnce("profilePic", () => this.fetchProfile());
         return `
         <div class="container">
             <img class="profile" src="${entry.value}">
-            <div>
-            <comp-button class="upload" style="display: block"></comp-button>
-            <comp-button class="back" style="display: none"></comp-button>
-            </div>
+            <input class="inputValue fileInput" type="file" accept="image/png, image/jpeg, image/jpg" hidden />
         </div>
         `;
     }
@@ -38,6 +39,7 @@ class ProfileSetting extends Comp {
                 height: 85,
                 borderVar: "border",
                 borderRadiusPercent: 50,
+                cursor: "pointer",
             },
             {
                 class: "container",
@@ -51,24 +53,30 @@ class ProfileSetting extends Comp {
         ];
     }
 
+    resetPreview(){
+        const img = this.query(".profile");
+        img.src = this.originalURL;
+        this.selectedFile = null;
+    }   
+
     afterRender() {   
-        const update = this.query(".upload");
-        const back = this.query(".back");
+        const img = this.query(".profile");
+        const input = this.query(".fileInput");
 
-        update.text = "Edit Picture";
-        back.text = "Back to Profile"
+        this.originalURL = img.src;
 
-        update.addEventListener("click", () => {
-            this.publish("edit");
-            update.style.display = "none";
-            back.style.display = "block";
+        img.addEventListener("click", () =>  input.click());
+
+        input.addEventListener("change", () => {
+            const file = input.files?.[0];
+            if (!file) return;
+
+            const url = URL.createObjectURL(file);
+            img.src = url;
+
+            this.selectedFile = file;
         });
 
-        back.addEventListener("click", () => {
-            this.publish("edit-profile");
-            back.style.display = "none";
-            update.style.display = "block";
-        });
     }
 
     static { Comp.register(this); }
