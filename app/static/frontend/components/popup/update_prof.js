@@ -166,7 +166,6 @@ export class UpdateProfile extends Comp {
         }
     
         const data = res.json();
-        console.log("Fetched user data:", data);
 
         this.getById("name").value = data.name || ""
         this.getById("surname").value = data.surname || "";
