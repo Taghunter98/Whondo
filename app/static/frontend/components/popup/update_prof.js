@@ -173,10 +173,10 @@ export class UpdateProfile extends Comp {
         const data = res.data;
 
         this.getById("name").query(".inputValue").value = data.name || "";
-        this.getById("surname").query("inputValue").value = data.surname || "";
-        this.getById("bio").query("inputValue").value = data.bio || "";
-        this.getById("age").value = data.age || "";
-        this.getById("occupation").query("inputValue").value =
+        this.getById("surname").query(".inputValue").value = data.surname || "";
+        this.getById("bio").query(".inputValue").value = data.bio || "";
+        this.getById("age").query(".inputValue").value = data.age || "";
+        this.getById("occupation").query(".inputValue").value =
             data.occupation || "";
     }
 
