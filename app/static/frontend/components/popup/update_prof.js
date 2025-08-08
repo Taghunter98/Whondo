@@ -11,7 +11,6 @@ export class UpdateProfile extends Comp {
                         <!-- User personalisation  -->
                         <div>
                             <div class="textContainer">
-                                <h4 class="title">Edit Profile</h4> 
                                 <comp-profile-setting class="picture"></comp-profile-setting>
                             </div>
                             <div id="update-blog" >
@@ -56,13 +55,13 @@ export class UpdateProfile extends Comp {
                 background: "rgba(0, 0, 0, 0.6)",
                 zIndex: 9999,
             },
-            { class: "formObj", widthPercent: 100, heightPercent:100},
+            { class: "formObj", widthPercent: 100, heightPercent: 100 },
             {
                 class: "container",
                 display: "flex",
                 alignItems: "centre",
                 justifyContent: "centre",
-                heightPercent: 100
+                heightPercent: 100,
             },
             {
                 class: "modal",
@@ -81,8 +80,10 @@ export class UpdateProfile extends Comp {
                     widthPercent: 100,
                     position: "relative",
                     boxSizing: "border-box",
+                    overflowY: "scroll",
+                    borderRadius: 0,
                     heightPercent: 100,
-                }
+                },
             },
             {
                 class: "input",
@@ -95,7 +96,7 @@ export class UpdateProfile extends Comp {
                     maxWidthBp: 600,
                     padding: [10, 0, 20, 0],
                     gap: 15,
-                }
+                },
             },
             {
                 class: "inputRow",
@@ -107,8 +108,8 @@ export class UpdateProfile extends Comp {
                 justifyContent: "space-between",
                 media: {
                     maxWidthBp: 600,
-                    flexDirection: "column"
-                }
+                    flexDirection: "column",
+                },
             },
             {
                 class: "btnRow",
@@ -116,11 +117,11 @@ export class UpdateProfile extends Comp {
                 flexDirection: "row",
                 gap: 15,
                 widthPercent: 100,
-                justifyContent: "space-between"
+                justifyContent: "space-between",
             },
             {
                 class: "title",
-                fontWeight: "bold"
+                fontWeight: "bold",
             },
             {
                 class: "textContainer",
@@ -141,7 +142,11 @@ export class UpdateProfile extends Comp {
     }
 
     validate() {
-        const inputs = [this.query("#name"), this.query("#surname"), this.query("#age")];
+        const inputs = [
+            this.query("#name"),
+            this.query("#surname"),
+            this.query("#age"),
+        ];
         let isValid = true;
 
         for (let input of inputs) {
@@ -156,18 +161,18 @@ export class UpdateProfile extends Comp {
     clearError(inputs) {
         const field = inputs.query(".inputValue");
         field.classList.remove("error");
-    };
+    }
 
-    async fetchUserData(){
-        const res = await this.request("https://whondo.com/verify/me","GET");
+    async fetchUserData() {
+        const res = await this.request("https://whondo.com/verify/me", "GET");
         if (!res.ok) {
             console.log(res.error);
             return;
         }
-    
-        const data = res.json();
 
-        this.getById("name").value = data.name || ""
+        const data = res.data;
+
+        this.getById("name").value = data.name || "";
         this.getById("surname").value = data.surname || "";
         this.getById("bio").value = data.bio || "";
         this.getById("age").value = data.age || "";
@@ -182,20 +187,20 @@ export class UpdateProfile extends Comp {
         fd.append("age", this.getById("age").value);
         fd.append("occupation", this.getById("occupation").value);
 
-       
         const b = this.getById("bio");
 
         if (b.value) fd.append("bio", b.value);
         if (file) fd.append("file", file);
 
-        const res = await this.submitForm("https://whondo.com/account/update", fd);
+        const res = await this.submitForm(
+            "https://whondo.com/account/update",
+            fd
+        );
 
         if (res.ok) {
             this.publish("updated");
-            this.style.display = "none"
-        }
-
-        else this.query("#result").innerHTML = res.error
+            this.style.display = "none";
+        } else this.query("#result").innerHTML = res.error;
     }
 
     afterRender() {
@@ -208,16 +213,16 @@ export class UpdateProfile extends Comp {
         const submit = this.query("#submit");
 
         name.label = "Name";
-        name.prompt = "Enter name"
+        name.prompt = "Enter name";
         surname.label = "Surname";
         surname.prompt = "Enter surname";
         bio.label = "Bio";
-        bio.prompt = "Tell us more about you..."
+        bio.prompt = "Tell us more about you...";
         age.label = "Age";
         age.prompt = "Enter age";
         age.type = "number";
         occupation.label = "Occupation";
-        occupation.prompt = "Enter your occupation"
+        occupation.prompt = "Enter your occupation";
         back.text = "Cancel";
         back.variant = 2;
         back.fill = true;
@@ -233,22 +238,26 @@ export class UpdateProfile extends Comp {
         back.addEventListener("click", () => {
             this.publish("update-back");
             profileSetting.resetPreview();
-            const input = [name, surname, age]
-            input.forEach(i => this.clearError(i));
+            const input = [name, surname, age];
+            input.forEach((i) => this.clearError(i));
         });
 
         submit.addEventListener("click", () => {
             const valid = this.validate();
-            if(!valid) return;
-            const file = profileSetting.file
+            if (!valid) return;
+            const file = profileSetting.file;
             this.update(file);
         });
 
-        const input = [name, surname, age]
-        input.forEach(inputs => inputs.addEventListener("input", () => this.clearError(inputs)));
+        const input = [name, surname, age];
+        input.forEach((inputs) =>
+            inputs.addEventListener("input", () => this.clearError(inputs))
+        );
 
         this.fetchUserData();
     }
 
-    static { Comp.register(this); }
+    static {
+        Comp.register(this);
+    }
 }
