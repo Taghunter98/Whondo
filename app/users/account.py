@@ -277,22 +277,40 @@ def update():
         connection: object = connect()
         cursor: object = connection.cursor()
 
-        query: str = """
-            UPDATE Users 
-            SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s, profilePicture = %s 
-            WHERE uID = %s;
-        """
+        if image_path:
+            query: str = """
+                UPDATE Users 
+                SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s, profilePicture = %s 
+                WHERE uID = %s;
+            """
 
-        cursor.execute(
-            query,
-            (name, surname, age, occupation, bio, image_path, uID),
-        )
+            cursor.execute(
+                query,
+                (name, surname, age, occupation, bio, image_path, uID),
+            )
 
-        connection.commit()
-        updated: bool = cursor.rowcount == 1
+            connection.commit()
+            updated: bool = cursor.rowcount == 1
 
-        cursor.close()
-        connection.close()
+            cursor.close()
+            connection.close()
+        else:
+            query: str = """
+                UPDATE Users 
+                SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s 
+                WHERE uID = %s;
+            """
+
+            cursor.execute(
+                query,
+                (name, surname, age, occupation, bio, uID),
+            )
+
+            connection.commit()
+            updated: bool = cursor.rowcount == 1
+
+            cursor.close()
+            connection.close()
 
         if updated:
             return jsonify({"message": "Account updated successfully"}), 200
