@@ -172,11 +172,12 @@ export class UpdateProfile extends Comp {
 
         const data = res.data;
 
-        this.getById("name").value = data.name || "";
-        this.getById("surname").value = data.surname || "";
-        this.getById("bio").value = data.bio || "";
+        this.getById("name").query(".inputValue").value = data.name || "";
+        this.getById("surname").query("inputValue").value = data.surname || "";
+        this.getById("bio").query("inputValue").value = data.bio || "";
         this.getById("age").value = data.age || "";
-        this.getById("occupation").value = data.occupation || "";
+        this.getById("occupation").query("inputValue").value =
+            data.occupation || "";
     }
 
     async update(file) {
