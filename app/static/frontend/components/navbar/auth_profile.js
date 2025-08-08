@@ -25,13 +25,25 @@ class AuthProfile extends Comp {
         return [
             {
                 width: "auto"
-            }, {
-                class: "profile",
+            }, 
+            { class: "profile",
                 width: 45,
                 height: 45,
                 borderVar: "border",
                 borderRadiusPercent: 50,
-            }
+                cursor: "pointer",
+                transition: ["all", "0.3s" ,"ease"],
+                boxShadow: [0, "2px", "4px", "rgba(0, 0, 0, 0.1)"],
+            },
+            { class: "profile", pseudoClass: "hover",
+                colourVar: "black100",
+                transform: "scale(1.05)",
+                boxShadow: [0, 0, "8px", "rgba(0, 0, 0, 0.2)"],
+            },
+            { class: "profile", pseudoClass: "active",
+                transform: "scale(0.95)",
+                boxShadow: [0, 0, "8px", "rgba(0, 0, 0, 0.1)"],
+            },
         ];
     }
 

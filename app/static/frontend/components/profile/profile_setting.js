@@ -33,8 +33,8 @@ class ProfileSetting extends Comp {
         return [
             {
                 width: "auto"
-            }, {
-                class: "profile",
+            }, 
+            { class: "profile",
                 width: 85,
                 height: 85,
                 borderVar: "border",
@@ -43,8 +43,7 @@ class ProfileSetting extends Comp {
                 transition: ["all", "0.3s" ,"ease"],
                 boxShadow: [0, "2px", "4px", "rgba(0, 0, 0, 0.1)"],
             },
-            {
-                class: "container",
+            { class: "container",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "centre",
@@ -53,14 +52,12 @@ class ProfileSetting extends Comp {
                 gap: 10,
                 paddingTop: 20,
             },
-            {
-                class: "profile", pseudoClass: "hover",
+            { class: "profile", pseudoClass: "hover",
                 colourVar: "black100",
                 transform: "scale(1.05)",
                 boxShadow: [0, 0, "8px", "rgba(0, 0, 0, 0.2)"],
             },
-            {
-                class: "profile", pseudoClass: "active",
+            { class: "profile", pseudoClass: "active",
                 transform: "scale(0.95)",
                 boxShadow: [0, 0, "8px", "rgba(0, 0, 0, 0.1)"],
             },
