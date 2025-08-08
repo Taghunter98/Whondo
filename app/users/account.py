@@ -245,77 +245,58 @@ def profile():
 @account_bp.route("/account/update", methods=["POST"])
 def update():
     """
-    The REST API updates a users account based of the cookie user ID and provided fields.
+    The REST API updates a user's account based on the session cookie user ID and provided fields.
 
     Returns:
         Response: HTTP Response
     """    
-    if request.method == "POST":
-        uID: int = session.get("uID")
+    uID = session.get("uID")
+    if not uID:
+        return jsonify({"error": "User is not logged in"}), 400
 
-        if not uID:
-            return jsonify({"error": "User is not logged in"}), 400
+    name = request.form.get("name")
+    surname = request.form.get("surname")
+    age = request.form.get("age")
 
-        name: str = request.form.get("name")
-        surname: str = request.form.get("surname")
-        age: int = request.form.get("age")
-        occupation: str = request.form.get("occupation")
-        bio: str = request.form.get("bio")
-        profile_picture: object = request.files.get("file")
+    if not name or not surname or not age:
+        return jsonify({"error": "Required fields not provided"}), 400
 
-        if not name or not surname or not age:
-            return jsonify({"error": "Required fields not provided"}), 400
+    occupation = request.form.get("occupation")
+    bio = request.form.get("bio")
+    profile_picture = request.files.get("file")
 
-        image_path = None
+    image_path = None
+    if profile_picture:
+        image_path = upload_file(profile_picture, session.get("email"))
+        if not image_path:
+            return jsonify({"error": "Image failed to upload"}), 409
 
-        if profile_picture:
-            image_path: str = upload_file(profile_picture, session.get("email"))
+    connection = connect()
+    cursor = connection.cursor()
 
-            if image_path is None:
-                return jsonify({"error": "Image failed to upload"}), 409
-
-        connection: object = connect()
-        cursor: object = connection.cursor()
-
-        if image_path:
-            query: str = """
-                UPDATE Users 
-                SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s, profilePicture = %s 
-                WHERE uID = %s;
-            """
-
-            cursor.execute(
-                query,
-                (name, surname, age, occupation, bio, image_path, uID),
-            )
-
-            connection.commit()
-            updated: bool = cursor.rowcount == 1
-
-            cursor.close()
-            connection.close()
-        else:
-            query: str = """
-                UPDATE Users 
-                SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s 
-                WHERE uID = %s;
-            """
-
-            cursor.execute(
-                query,
-                (name, surname, age, occupation, bio, uID),
-            )
-
-            connection.commit()
-            updated: bool = cursor.rowcount == 1
-
-            cursor.close()
-            connection.close()
-
-        if updated:
-            return jsonify({"message": "Account updated successfully"}), 200
-        else:
-            return jsonify({"error": "Unable to update account"}), 404
-
+    if image_path:
+        query = """
+            UPDATE Users 
+            SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s, profilePicture = %s 
+            WHERE uID = %s;
+        """
+        params = (name, surname, age, occupation, bio, image_path, uID)
     else:
-        return ("/")
+        query = """
+            UPDATE Users 
+            SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s 
+            WHERE uID = %s;
+        """
+        params = (name, surname, age, occupation, bio, uID)
+
+    cursor.execute(query, params)
+    connection.commit()
+    updated = cursor.rowcount == 1
+
+    cursor.close()
+    connection.close()
+
+    if updated:
+        return jsonify({"message": "Account updated successfully"}), 200
+    else:
+        return jsonify({"error": "Unable to update account"}), 404
