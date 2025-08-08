@@ -1,7 +1,7 @@
 import { Comp } from "jay-comp";
 
 export class Popup extends Comp {
-    title_; paragraph_; text_;
+    title_; paragraph_; textLeft_; textRight_; hideFlag_;
 
     set title(newTitle) {
         this.title_ = newTitle;
@@ -11,13 +11,21 @@ export class Popup extends Comp {
         this.paragraph_ = value;
         this.update();
     }
-    set text(v) {
-        this.text_ = v;
+    set textLeft(v) {
+        this.textLeft_ = v;
         this.update();
     }
+
+    set textRight(v) {
+        this.textRight_ = v;
+        this.update();
+    }
+
+
     get paragraph() { return this.paragraph_; }
     get title() { return this.title_; }
-    get text() { return this.text_ }
+    get textLeft() { return this.textLeft_; }
+    get textRight() { return this.textRight_; }
 
     beforeRender() {
         if (!this.title_) this.title_ = "Hello World";
@@ -29,16 +37,18 @@ export class Popup extends Comp {
             <div class="background">
                 <div class="container">
                     <comp-icon class="icon"></comp-icon>
-                    <h3 class="head">${this.title_}</h3>
+                    <h3 style="font-weight: bold">${this.title_}</h3>
                     <p class="dialog">${this.paragraph_}</p>
                     <div class="button-wrapper">
-                    <comp-button class="btn"></comp-button>
+                    <comp-button class="left-btn"></comp-button>
+                    <comp-button class="right-btn"></comp-button>
                     </div>
                 </div>
             </div>
         `;
     }
-createCSS() {
+
+    createCSS() {
         const effect = this.effect.slideUp(20);
         const prop = this.effect.prop("slideUp", .5);
 
@@ -56,62 +66,87 @@ createCSS() {
             zIndex: 9999,
             media: {
                 maxWidthBp: 600,
-                padding: 20,
-                width: "auto"
+                widthPercent: 100
             }
         };
 
         const container = {
             class: "container",
-                display: "flex",
-                flexDirection: "column",
-                width: "auto",
-                maxWidth: 500,
-                padding: 20,
-                borderVar: "border",
-                borderRadius: 16,
-                gap: 10,
-                background: "white",
-                animation: prop,
-                marginTop: 0,
-                media: {
-                    maxWidthBp: 600,
-                }
+            display: "flex",
+            flexDirection: "column",
+            width: "auto",
+            width: 500,
+            padding: 20,
+            borderVar: "border",
+            borderRadius: 16,
+            gap: 10,
+            background: "white",
+            animation: prop,
+            marginTop: 0,
+            media: {
+                maxWidthBp: 600,
+                width: "auto"
+            }
         };
 
         const dialog = {
-                class: "dialog",
-                fontSize: 16,
-                textAlign: "start",
-                media: {
-                    maxWidthBp: 600,
-                    fontSize: 16
-                }
+            class: "dialog",
+            fontSize: 16,
+            textAlign: "start",
+            media: {
+                maxWidthBp: 600,
+                fontSize: 16
             }
+        }
 
         const icon = {
-                class: "icon",
-                display: "flex",
-                alignItems: "centre",
-                justifyContent: "centre",
-                colourVar: "black80",
-            }
+            class: "icon",
+            display: "flex",
+            alignItems: "centre",
+            justifyContent: "centre",
+            colourVar: "black80",
+        }
+        const wrapper = {
+            class: "button-wrapper",
+            display: "flex",
+            flexDirection: "row",
+            gap: 10,
+        }
 
-        return [background, container ,dialog, icon, effect];
+        return [background, container, dialog, icon, effect, wrapper,];
+    }
+
+    hideButton(f = false) {
+        this.hideFlag_ = f;
     }
 
     afterRender() {
-        this.query("comp-button").text = this.text_;
-        this.query("comp-button").fill = true;
+        this.query(".left-btn").text = this.textLeft_;
+        this.query(".left-btn").fill = true;
+        this.query(".left-btn").variant = 2;
 
-         this.query("comp-button").addEventListener("click", () =>{
+        const right = this.query(".right-btn");
+        right.text = this.textRight_;
+        right.fill = true;
+
+        if (this.hideFlag_ === true) {
+            right.style.display = "none";
+            this.query(".left-btn").variant = 1;
+        }
+
+        this.query(".left-btn").addEventListener("click", () => {
             this.style.display = "none";
-            this.publish("popup-button");
-         });
-        
+            this.publish("popup-leftBtn");
+        });
+
+        this.query(".right-btn").addEventListener("click", () => {
+            this.style.display = "none";
+            this.publish("popup-rightBtn");
+        });
+
     }
 
     static { Comp.register(this); }
 
-    
+
 }

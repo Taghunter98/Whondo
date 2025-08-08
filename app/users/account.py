@@ -1,0 +1,302 @@
+"""
+Copyright (c) 2025 Josh Bassett, whondo.com
+
+Filename:    login.py
+Author:      Josh Bassett
+Date:        05/06/2025
+Version:     1.0
+
+Description: Serves a Blueprint API for logging in and verifying users.
+"""
+
+from flask import (
+    Blueprint,
+    request,
+    session,
+    jsonify,
+    current_app,
+    render_template,
+    redirect,
+)
+
+from ..utilities.authid import authenticate
+from app.database.db_connect import connect
+from app.security.hashing import check_password, hash_function
+from app.users.images import upload_file
+
+account_bp = Blueprint("account_bp", __name__)
+
+
+@account_bp.route("/login", methods=["POST", "GET"])
+def login():
+    """
+    The REST API is responsibe for logging in the user from an external POST
+    request with the user's email and plaintext password.
+
+    If the user has a uID cookie, the user will be automatically logged in.
+
+    Data integrity is verified and the user ID is authenticated based
+    on the provided email.
+
+    Database connection is established and query is executed.
+
+    Password is verified against the hashed version and the user is validated.
+
+    Session (uID) value is set to the user ID and valid status is returned. Session
+    (email) value is set to the user's email address.
+
+    Cookie (uID) is created and stored for automatic login.
+
+    Returns:
+        Response: Response of successs or appropriate error message
+    """
+
+    if request.method == "POST":
+        data: object = request.get_json()
+        email: str = data.get("email")
+        password: str = data.get("password")
+        consent: str = data.get("consent")
+
+        if not email or not password:
+            return jsonify({"error": "User email or password not provided"}), 400
+
+        user_id: int = authenticate(email)
+
+        if user_id is None:
+            return jsonify({"error": "User email does not match database records"}), 401
+
+        connection: object = connect()
+        cursor: object = connection.cursor()
+
+        query: str = f"""
+            SELECT u.uID, u.password
+            FROM Users u
+            WHERE u.uID = {user_id};
+        """
+
+        cursor.execute(query)
+        result = cursor.fetchone()
+
+        cursor.close()
+        connection.close()
+
+        if result is not None:
+            hash_string: str = result[1]
+            valid: bool = check_password(password, hash_string)
+
+            if valid is True:
+                session["uID"] = user_id
+                session["email"] = email
+                session["consent"] = consent
+
+                current_app.logger.info("User authenticated, starting new Session")
+
+                response: object = jsonify(
+                    {"message": f"{email} logged in successfully", "status": True}
+                )
+
+                if consent and consent == "true":
+                    response.set_cookie("uID", str(user_id))
+
+                response.status_code = 200
+
+                return response
+
+            else:
+                current_app.logger.error(
+                    f"User: {email} access denied, incorrect password"
+                )
+                return jsonify({"error": "Incorrect password", "status": False}), 401
+
+        else:
+            current_app.logger.error(f"User: {email} not found")
+            return jsonify({"error": "User not found"}), 404
+    else:
+        if request.cookies.get("uID"):
+            return render_template("index.html")
+
+        return render_template("login.html")
+
+
+@account_bp.route("/account/delete", methods={"POST"})
+def delete():
+    """
+    The REST API deletes a user using the uID provided from the session cookie.
+
+    Returns:
+        Response: HTTP Response
+    """
+    if request.method == "POST":
+        uID: int = session.get("uID")
+
+        if not uID:
+            return jsonify({"error", "User not logged in"}), 400
+
+        connection: object = connect()
+        cursor: object = connection.cursor()
+
+        query: str = "DELETE FROM Users WHERE uID = %s"
+
+        cursor.execute(query, (uID,))
+        connection.commit()
+
+        deleted: bool = cursor.rowcount == 1
+        cursor.close()
+        connection.close()
+
+        if deleted:
+            return jsonify({"message": f"User account {uID} deleted successfully"}), 200
+        else:
+            return jsonify({"error": f"Unable to delete account {uID}"}), 404
+
+    else:
+        return redirect("/")
+
+
+@account_bp.route("/account/change-password", methods=["POST"])
+def change_password():
+    """
+    The REST API changes the users password based of the cookie uID data, with checks against the current
+    password for security.
+
+    Returns:
+        Response: HTTP Response
+    """
+    if request.method == "POST":
+        uID: int = session.get("uID")
+        data: object = request.get_json()
+        current: str = data.get("current")
+        new: str = data.get("new")
+
+        if not uID:
+            return jsonify({"error": "User not logged in"}), 400
+
+        if not current or not new:
+            return jsonify({"error": "Current and new password are required"}), 400
+
+        connection: object = connect()
+        cursor: object = connection.cursor()
+
+        query: str = "SELECT password FROM Users WHERE uID = %s"
+        cursor.execute(query, (uID,))
+
+        hashed_pw: str = cursor.fetchone()[0]
+
+        valid: bool = check_password(current, hashed_pw)
+
+        if not valid:
+            cursor.close()
+            connection.close()
+            return jsonify({"error": "Incorrect password"}), 400
+
+        hashed: str = hash_function(new)
+        query = "UPDATE Users SET password = %s WHERE uID = %s"
+        cursor.execute(query, (hashed, uID))
+        connection.commit()
+
+        updated: bool = cursor.rowcount == 1
+        cursor.close()
+        connection.close()
+
+        if updated:
+            return jsonify({"message": "Password updated successfully"}), 200
+        else:
+            return jsonify({"error": "Unable to update password"}), 404
+
+    else:
+        return redirect("/")
+
+
+@account_bp.route("/logout", methods=["GET"])
+def logout():
+    """
+    The REST API is responsible for logging out a user by setting the (uID) and (email) session
+    values to None.
+
+    Returns:
+        Response: Flask redirect to homepage
+    """
+    if not session["uID"]:
+        return jsonify({"error": "User is not logged in"}), 400
+
+    session.clear()
+
+    response: object = jsonify({"message": "User logged out successfully"})
+    response.set_cookie("uID", "", expires=0)
+    response.status_code = 200
+
+    return response
+
+
+@account_bp.route("/profile", methods=["GET"])
+def profile():
+    """
+    The REST API returns the account page if the user is logged in.
+
+    Returns:
+        Response: Flask redirect to homepage or profile.html
+    """
+    if not session.get("uID"):
+        return redirect("/")
+
+    return render_template("profile.html")
+
+
+@account_bp.route("/account/update", methods=["POST"])
+def update():
+    """
+    The REST API updates a user's account based on the session cookie user ID and provided fields.
+
+    Returns:
+        Response: HTTP Response
+    """    
+    uID = session.get("uID")
+    if not uID:
+        return jsonify({"error": "User is not logged in"}), 400
+
+    name = request.form.get("name")
+    surname = request.form.get("surname")
+    age = request.form.get("age")
+
+    if not name or not surname or not age:
+        return jsonify({"error": "Required fields not provided"}), 400
+
+    occupation = request.form.get("occupation")
+    bio = request.form.get("bio")
+    profile_picture = request.files.get("file")
+
+    image_path = None
+    if profile_picture:
+        image_path = upload_file(profile_picture, session.get("email"))
+        if not image_path:
+            return jsonify({"error": "Image failed to upload"}), 409
+
+    connection = connect()
+    cursor = connection.cursor()
+
+    if image_path:
+        query = """
+            UPDATE Users 
+            SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s, profilePicture = %s 
+            WHERE uID = %s;
+        """
+        params = (name, surname, age, occupation, bio, image_path, uID)
+    else:
+        query = """
+            UPDATE Users 
+            SET name = %s, surname = %s, age = %s, occupation = %s, bio = %s 
+            WHERE uID = %s;
+        """
+        params = (name, surname, age, occupation, bio, uID)
+
+    cursor.execute(query, params)
+    connection.commit()
+    updated = cursor.rowcount == 1
+
+    cursor.close()
+    connection.close()
+
+    if updated:
+        return jsonify({"message": "Account updated successfully"}), 200
+    else:
+        return jsonify({"error": "Unable to update account"}), 404

@@ -215,7 +215,7 @@ def update_ad():
         updated: bool = update_transaction(
             pkaID, keywords, prop_data, advert_data, image_paths
         )
-    
+
         if not updated:
             return jsonify({"error": "Keyword, Property or Advert update failed"}), 400
 
@@ -231,7 +231,7 @@ def update_ad():
 @advert_bp.route("/advert/advertise", methods=["GET"])
 def advertise():
     """
-    The REST API returns the advertise page unless the user is a landlord. 
+    The REST API returns the advertise page unless the user is a landlord.
 
     Returns:
         Response: HTTP Response

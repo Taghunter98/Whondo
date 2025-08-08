@@ -9,17 +9,20 @@ export class CreateProp extends Comp {
             <div class="container">
                 <div class="modal">
                     <form class="formObj">
-                        <!-- Property information -->
-                        <div id="page1">
-                        <comp-step1 id="step1"></comp-step1>
-                        </div>
-                        <!-- Photo upload  -->
-                        <div id="page2" hidden>
-                        <comp-step2 id="step2"></comp-step2>
-                        </div>
-                        <!-- Keywords section -->
-                        <div id="page3" hidden>
-                            <comp-step3 id="step3"></comp-step3>
+                        <div>
+                            <!-- Property information -->
+                            <div id="page1">
+                            <comp-step1 id="step1"></comp-step1>
+                            </div>
+                            <!-- Photo upload  -->
+                            <div id="page2" hidden>
+                            <comp-step2 id="step2"></comp-step2>
+                            </div>
+                            <!-- Keywords section -->
+                            <div id="page3" hidden>
+                                <comp-step3 id="step3"></comp-step3>
+                            </div>
+                            <p id="result" style="text-align: center; padding-top: 10px"></p>
                         </div>
                     </form>
                 </div>
@@ -206,10 +209,10 @@ export class CreateProp extends Comp {
         if (result.ok) {
             const popup = this.getById("popup");
             popup.style.display = "block";
-            popup.subscribe("popup-button", () => { window.location.assign("/"); }, { once: true });
+            popup.subscribe("popup-leftBtn", () => { window.location.assign("/"); }, { once: true });
         }
 
-        else alert(result.error);
+        else this.query("#result").innerHTML = result.error;
     }
 
     clearError(inputs) {
@@ -423,11 +426,15 @@ export class CreateProp extends Comp {
         const popup = this.getById("popup");
         popup.title = "Advert Published!";
         popup.paragraph = "Congratulations! You can now view your new advert or monitor it in your Landlord portal.";
-        popup.text = "Continue";
+        popup.textLeft = "Continue";
         const icon = popup.query(".icon");
         icon.style.display = "none";
-        const btn = popup.query(".btn");
+        const btn = popup.query(".left-btn");
+        const btn2 = popup.query(".right-btn")
+        btn2.style.display = "none";
         btn.style.width = "125px";
+        btn.variant = 1;
+
     }
 
     static { Comp.register(this); }

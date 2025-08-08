@@ -1,0 +1,264 @@
+import { Comp } from "jay-comp";
+
+export class UpdateProfile extends Comp {
+    createHTML() {
+        return /* html */ `
+        <comp-navbar></comp-navbar>
+        <div class="background">
+            <div class="container">
+                <div class="modal">
+                    <form class="formObj">
+                        <!-- User personalisation  -->
+                        <div>
+                            <div class="textContainer">
+                                <comp-profile-setting class="picture"></comp-profile-setting>
+                            </div>
+                            <div id="update-blog" >
+                                <div class="inputRow">
+                                    <comp-input id="name" name="name"></comp-input>
+                                    <comp-input id="surname" name="surname"></comp-input>
+                                </div>
+                                <div class="inputRow">
+                                    <comp-input id="age" name="age"></comp-input>
+                                    <comp-input id="occupation" name="occupation"></comp-input>
+                                </div>
+                                <div class="input">
+                                    <comp-textarea id="bio" name="bio"></comp-textarea>
+                                </div>
+                            </div>
+                            <div class="footer">
+                                <div class="btnRow">
+                                    <comp-button id="back" type="button"></comp-button>
+                                    <comp-button id="submit" type="submit"></comp-button>
+                                </div>
+                            </div>
+                            <p id="result" style="text-align: center; padding-top: 10px"></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    createCSS() {
+        return [
+            {
+                class: "background",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "centre",
+                widthPercent: 100,
+                heightVh: 100,
+                overflowY: "auto",
+                position: "fixed",
+                background: "rgba(0, 0, 0, 0.6)",
+                zIndex: 9999,
+            },
+            { class: "formObj", widthPercent: 100, heightPercent: 100 },
+            {
+                class: "container",
+                display: "flex",
+                alignItems: "centre",
+                justifyContent: "centre",
+                heightPercent: 100,
+            },
+            {
+                class: "modal",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                maxWidth: 500,
+                minWidth: 320,
+                overflowY: "auto",
+                background: "white",
+                position: "relative",
+                padding: 20,
+                borderRadius: 14,
+                media: {
+                    maxWidthBp: 600,
+                    widthPercent: 100,
+                    position: "relative",
+                    boxSizing: "border-box",
+                    overflowY: "scroll",
+                    borderRadius: 0,
+                    heightPercent: 100,
+                },
+            },
+            {
+                class: "input",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                gap: 20,
+                padding: [20, 0, 40, 0],
+                media: {
+                    maxWidthBp: 600,
+                    padding: [10, 0, 20, 0],
+                    gap: 15,
+                },
+            },
+            {
+                class: "inputRow",
+                display: "flex",
+                flexDirection: "row",
+                gap: 15,
+                paddingTop: 20,
+                widthPercent: 100,
+                justifyContent: "space-between",
+                media: {
+                    maxWidthBp: 600,
+                    flexDirection: "column",
+                },
+            },
+            {
+                class: "btnRow",
+                display: "flex",
+                flexDirection: "row",
+                gap: 15,
+                widthPercent: 100,
+                justifyContent: "space-between",
+            },
+            {
+                class: "title",
+                fontWeight: "bold",
+            },
+            {
+                class: "textContainer",
+                display: "flex",
+                flexDirection: "column",
+                widthPercent: 100,
+                gap: 5,
+            },
+            {
+                class: "footer",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "centre",
+                widthPercent: 100,
+                gap: 10,
+            },
+        ];
+    }
+
+    validate() {
+        const inputs = [
+            this.query("#name"),
+            this.query("#surname"),
+            this.query("#age"),
+        ];
+        let isValid = true;
+
+        for (let input of inputs) {
+            if (input.required && input.isEmpty()) {
+                input.query(".inputValue").classList.add("error");
+                isValid = false;
+            }
+        }
+        return isValid;
+    }
+
+    clearError(inputs) {
+        const field = inputs.query(".inputValue");
+        field.classList.remove("error");
+    }
+
+    async fetchUserData() {
+        const res = await this.request("https://whondo.com/verify/me", "GET");
+        if (!res.ok) {
+            console.log(res.error);
+            return;
+        }
+
+        const data = res.data;
+
+        this.getById("name").query(".inputValue").value = data.name || "";
+        this.getById("surname").query(".inputValue").value = data.surname || "";
+        this.getById("bio").query(".inputValue").value = data.bio || "";
+        this.getById("age").query(".inputValue").value = data.age || "";
+        this.getById("occupation").query(".inputValue").value =
+            data.occupation || "";
+    }
+
+    async update(file) {
+        const fd = new FormData();
+
+        fd.append("name", this.getById("name").value);
+        fd.append("surname", this.getById("surname").value);
+        fd.append("age", this.getById("age").value);
+        fd.append("occupation", this.getById("occupation").value);
+
+        const b = this.getById("bio");
+
+        if (b.value) fd.append("bio", b.value);
+        if (file) fd.append("file", file);
+
+        const res = await this.submitForm(
+            "https://whondo.com/account/update",
+            fd
+        );
+
+        if (res.ok) {
+            this.publish("updated");
+            this.style.display = "none";
+        } else this.query("#result").innerHTML = res.error;
+    }
+
+    afterRender() {
+        const name = this.query("#name");
+        const surname = this.query("#surname");
+        const age = this.query("#age");
+        const occupation = this.query("#occupation");
+        const bio = this.query("#bio");
+        const back = this.query("#back");
+        const submit = this.query("#submit");
+
+        name.label = "Name";
+        name.prompt = "Enter name";
+        surname.label = "Surname";
+        surname.prompt = "Enter surname";
+        bio.label = "Bio";
+        bio.prompt = "Tell us more about you...";
+        age.label = "Age";
+        age.prompt = "Enter age";
+        age.type = "number";
+        occupation.label = "Occupation";
+        occupation.prompt = "Enter your occupation";
+        back.text = "Cancel";
+        back.variant = 2;
+        back.fill = true;
+        submit.text = "Save";
+        submit.fill = true;
+
+        name.required = true;
+        surname.required = true;
+        age.required = true;
+
+        const profileSetting = this.query("comp-profile-setting");
+
+        back.addEventListener("click", () => {
+            this.publish("update-back");
+            profileSetting.resetPreview();
+            const input = [name, surname, age];
+            input.forEach((i) => this.clearError(i));
+        });
+
+        submit.addEventListener("click", () => {
+            const valid = this.validate();
+            if (!valid) return;
+            const file = profileSetting.file;
+            this.update(file);
+        });
+
+        const input = [name, surname, age];
+        input.forEach((inputs) =>
+            inputs.addEventListener("input", () => this.clearError(inputs))
+        );
+
+        this.fetchUserData();
+    }
+
+    static {
+        Comp.register(this);
+    }
+}
