@@ -56,6 +56,23 @@ export class EditProp extends Comp {
         const btn = this.getById("banner");
 
         btn.btnText = "Account";
+
+        const gallery = this.query("comp-prop-gal");
+
+        // handle events coming from children
+        gallery.subscribe("create-request", () => {
+            window.location.assign("/advert/new");
+        });
+
+        gallery.subscribe("property-edit", (e) => {
+            //Todo edit
+            console.log("edit property", e.detail?.id);
+        });
+
+        gallery.subscribe("property-delete", (e) => {
+            //todo delete api
+            console.log("delete property", e.detail?.id);
+        });
     }
 
     static { Comp.register(this); }

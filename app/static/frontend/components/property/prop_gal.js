@@ -7,6 +7,9 @@ export class PropGal extends Comp {
     beforeRender(){
         this.items_ = [
       { id: 1, title: "Sample Property A", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 25, postedAt: "2025-08-09T14:21:03Z" },
+      { id: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
+      { id: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
+      { id: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
       { id: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" }
     ];
     }
@@ -23,10 +26,14 @@ export class PropGal extends Comp {
         return [
             { class: "gallery",
                 display: "flex",
-                widthPercent: 100,
+                width: 1141,
                 overflowX: "auto",
                 padding: [20,20],
-                scrollSnapType: "x mandatory"
+                scrollSnapType: "x mandatory",
+                media:{
+                    maxWidthBp: 600,
+                    widthPercent: 100,
+                }
             },
             { class: "cards",
                 display: "flex",
@@ -40,8 +47,9 @@ export class PropGal extends Comp {
         if (!wrap) return;
         wrap.innerHTML = "";
 
+        const items = Array.isArray(this.items_) ? this.items_ : [];
         
-        this.items_.forEach(item => {
+        items.forEach(item => {
         const card = document.createElement("comp-landlord-card");
         card.id = item.id;
         card.title = item.title;
