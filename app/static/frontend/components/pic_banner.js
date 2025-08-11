@@ -2,7 +2,7 @@ import { Comp } from "jay-comp";
 
 export class PicBanner extends Comp{
 
-    buttonText_;
+    btnText_;
 
     set btnText(v) {
         this.btnText_ = v;
@@ -19,10 +19,11 @@ export class PicBanner extends Comp{
 
         if (!ok) throw new Error(error);
 
-        const pic = data.profilePicture;
-        return pic
-            ? `https://whondo.com/uploads?path=${pic}`
-            : "https://whondo.com/static/icons/Profile.png";
+        return {
+            name: data.name || "there",
+            pic: data.profilePicture ? `https://whondo.com/uploads?path=${data.profilePicture}` : "https://whondo.com/static/icons/Profile.png"
+        };
+            
     }
 
     createHTML() {
@@ -30,8 +31,8 @@ export class PicBanner extends Comp{
         return /* html */`
         <div class="banner">
             <div class="content">
-                <img class="profile" src="${entry.value}">
-                <h4 class="title"></h4>
+                <img class="profile" src="${entry.value?.pic ?? "https://whondo.com/static/icons/Profile.png"}">
+                <h4 class="title">Hi ${entry.value?.name ?? "there"}!</h4>
             </div>
             <div class="action">
                 <comp-button class="btn"></comp-button>
@@ -42,8 +43,7 @@ export class PicBanner extends Comp{
 
      createCSS() {
         return [
-            {
-                class: "banner",
+            { class: "banner",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "centre",
@@ -61,29 +61,33 @@ export class PicBanner extends Comp{
                     alignItems: "start"
                 }
             },
-            {
-                class: "content",
+            { class: "content",
                 flex: 1,
                 display: "flex",
                 alignItems: "centre",
                 justifyContent: "flex-start",
+                gap: 20,
                 media: {
                     maxWidthBp: 600,
                     justifyContent: "centre",
                 }
             },
-            {
-                class: "title",
+            { class: "title",
                 fontWeight: "bold"
             },
-            {
-                class: "action",
+            { class: "action",
                 display: "flex",
                 gap: 12,
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100
                 }
+            },
+            { class: "profile",
+                width: 50,
+                height: 50,
+                borderVar: "border",
+                borderRadiusPercent: 14,
             }
         ];
     }
@@ -95,5 +99,7 @@ export class PicBanner extends Comp{
 
         btn.addEventListener("click", () => btn.publish("btn-click"));
     }
+
+    static{ Comp.register(this); }
 
 }

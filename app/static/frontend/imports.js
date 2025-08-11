@@ -11,6 +11,7 @@ import './components/dialog.js';
 import './components/promptbar.js';
 import './components/carousel.js';
 import './components/banner.js';
+import './components/pic_banner.js';
 
 // Navbar
 import './components/navbar/navbar.js';
@@ -40,6 +41,7 @@ import './components/dropdown/input-dropdown.js';
 
 // Property
 import './components/property/prop_card.js';
+import './components/property/newprop_card.js';
 import './components/property/image.js';
 import './components/property/Large_img.js';
 import './components/property/chip.js';
@@ -75,3 +77,4 @@ import './pages/home.js';
 import './pages/register.js';
 import './pages/advertise.js';
 import './pages/account.js';
+import './pages/edit_prop.js';
