@@ -16,11 +16,11 @@ export class NewPropCard extends Comp {
     createCSS(){
         return [
             { class: "add",
-                width: 260,
-                height: 429,
+                width: 309,
+                height: 550,
                 borderRadius: 14,
                 border:[2,"dashed","rgba(0,0,0,.35)"],
-                background: "black10",
+                backgroundVar: "black10",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "centre",

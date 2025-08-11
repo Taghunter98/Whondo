@@ -1,6 +1,6 @@
 import { Comp } from "jay-comp";
 
-export class LandlordCard extends Comp {
+export class EditCard extends Comp {
     id_; title_; cover_; views_ = 0; postedAt_;
 
     set id(v){ this.id_ = v; }
@@ -53,6 +53,7 @@ export class LandlordCard extends Comp {
                 backgroundPosition: "centre", 
                 cursor: "pointer",
                 overflow: "hidden", 
+                scrollSnapAlign: "start",
                 transition: "transform 0.2s ease-in-out",
                 maxHeight: cardHeight,
             },
@@ -83,7 +84,8 @@ export class LandlordCard extends Comp {
             },
             { class: "btns", 
                 display: "flex", 
-                gap: 16, 
+                gap: 20,
+                width: 280,
                 paddingTop: 6 
             }
         ];
@@ -96,6 +98,8 @@ export class LandlordCard extends Comp {
         edit.text = "Edit";
         del.variant = 2;
         edit.variant = 2;
+        del.fill = true;
+        edit.fill = true;
 
         del.addEventListener("click", (e) => { e.stopPropagation(); this.publish("property-delete", { id: this.id_ }); });
 

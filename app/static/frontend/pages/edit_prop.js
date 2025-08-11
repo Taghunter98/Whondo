@@ -4,6 +4,7 @@ export class EditProp extends Comp {
 
     createHTML(){
         return /* html */`
+            <comp-popup id="deleted" style="display: none"></comp-popup>
             <comp-navbar></comp-navbar>
             <div class="background">
             <div class="container">
@@ -52,6 +53,29 @@ export class EditProp extends Comp {
         ]
     }
 
+    showPopup(id, title, paragraph, leftBtn = "OK", hideButton = true, rightBtn) {
+        const popup = this.getById(id);
+        popup.hideButton(hideButton)
+        popup.title = title;
+        popup.paragraph = paragraph;
+        popup.textLeft = leftBtn;
+        popup.textRight = rightBtn;
+        popup.style.display = "flex";
+        const icon = popup.query(".icon");
+        icon.style.display = "none";
+    }
+
+     deleteAccount() {
+        const popup = this.getById("deleted");
+        this.showPopup("deleted", "Delete Property", "Are you sure you want to delete your property?.", "Back", false, "Delete");
+        popup.subscribe("popup-rightBtn", async () => {
+            const res = await this.request("/advert/delete", "POST");
+            console.log("Sent delete request: " + res.error)
+            if (res.ok) window.location.assign("/");
+            else this.showPopup("deleted", "Deletion Failed", res.error || "Something went wrong.");
+        }, { once: true });
+    }
+
     afterRender(){
         const btn = this.getById("banner");
 
@@ -70,8 +94,7 @@ export class EditProp extends Comp {
         });
 
         gallery.subscribe("property-delete", (e) => {
-            //todo delete api
-            console.log("delete property", e.detail?.id);
+            this.deleteAccount()
         });
     }
 

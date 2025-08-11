@@ -27,8 +27,8 @@ export class PropGal extends Comp {
             { class: "gallery",
                 display: "flex",
                 width: 1141,
+                maxWidthPercent: 100,
                 overflowX: "auto",
-                padding: [20,20],
                 scrollSnapType: "x mandatory",
                 media:{
                     maxWidthBp: 600,
@@ -50,7 +50,7 @@ export class PropGal extends Comp {
         const items = Array.isArray(this.items_) ? this.items_ : [];
         
         items.forEach(item => {
-        const card = document.createElement("comp-landlord-card");
+        const card = document.createElement("comp-edit-card");
         card.id = item.id;
         card.title = item.title;
         card.cover = item.cover;
@@ -72,6 +72,13 @@ export class PropGal extends Comp {
     afterRender(){
         
         this.renderCards();
+
+        const scroller = this.query(".gallery");
+            if (scroller) {
+            requestAnimationFrame(() => {
+                scroller.scrollLeft = scroller.scrollWidth; 
+        });
+    }
       
     }
 
