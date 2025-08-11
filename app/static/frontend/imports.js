@@ -42,6 +42,7 @@ import './components/dropdown/input-dropdown.js';
 // Property
 import './components/property/prop_card.js';
 import './components/property/newprop_card.js';
+import './components/property/landlord-card.js';
 import './components/property/image.js';
 import './components/property/Large_img.js';
 import './components/property/chip.js';
