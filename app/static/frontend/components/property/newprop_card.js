@@ -17,8 +17,7 @@ export class NewPropCard extends Comp {
         return [
             { class: "add",
                 width: 260,
-                height: 420,
-                flex: [0, 0, 260,],
+                height: 429,
                 borderRadius: 14,
                 border:[2,"dashed","rgba(0,0,0,.35)"],
                 background: "black10",

@@ -9,7 +9,7 @@ export class EditProp extends Comp {
             <div class="container">
                 <comp-pic-banner id="banner"></comp-pic-banner>
                 <div class="options">
-                
+                    <comp-prop-gal></comp-prop-gal>
                 </div>
             </div>
         </div>
