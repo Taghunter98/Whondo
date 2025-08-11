@@ -24,17 +24,17 @@ export class LandlordCard extends Comp {
         return /*html*/`
         <div class="card">
             <div class="shade">
-            <div class="info">
-                <h5 class="title">${this.title_}</h5>
-                <div class="meta">
-                <span>${this.views_} views</span>
-                <span>Posted ${this.fmtDate(this.postedAt_)}</span>
+                <div class="info">
+                    <h5 class="title">${this.title_}</h5>
+                    <div class="meta">
+                        <span>${this.views_} views</span>
+                        <span>Posted ${this.fmtDate(this.postedAt_)}</span>
+                    </div>
+                    <div class="btns">
+                        <comp-button id="del"></comp-button>
+                        <comp-button id="edit"></comp-button>
+                    </div>
                 </div>
-                <div class="btns">
-                <comp-button id="del"></comp-button>
-                <comp-button id="edit"></comp-button>
-                </div>
-            </div>
             </div>
         </div>
         `;
