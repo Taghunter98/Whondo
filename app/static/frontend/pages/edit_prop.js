@@ -83,6 +83,10 @@ export class EditProp extends Comp {
 
         const gallery = this.query("comp-prop-gal");
 
+        btn.subscribe("btn-click", () => {
+            window.location.assign("/profile")
+        });
+
         gallery.subscribe("create-request", () => {
             window.location.assign("/advert/new");
         });
