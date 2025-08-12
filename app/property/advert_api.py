@@ -257,6 +257,7 @@ def get_properties():
 
     query: str = """
         SELECT
+            pka.pkaID,
             a.adID,
             pka.lID,
             a.title,
