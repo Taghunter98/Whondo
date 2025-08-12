@@ -242,8 +242,15 @@ def advertise():
             return render_template("property.html")
         return render_template("advertise.html")
 
+
 @advert_bp.route("/advert/get", methods=["GET"])
 def get_properties():
+    """
+    The REST API returns a list of advert data based on the landlord ID from cookie data.
+
+    Returns:
+        Response: HTTP Response
+    """
     if not session.get("uID"):
         return jsonify({"error": "User not logged in"}), 401
 
