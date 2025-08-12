@@ -240,3 +240,60 @@ def advertise():
         if auth_landlord(session.get("email")):
             return render_template("property.html")
         return render_template("advertise.html")
+
+@advert_bp.route("/advert/get", methods=["GET"])
+def get_properties():
+    if not session.get("uID"):
+        return jsonify({"error": "User not logged in"}), 401
+
+    lID: int = auth_landlord(session.get("email"))
+
+    if not lID:
+        return redirect("/")
+
+    connection: object = connect()
+    cursor: object = connection.cursor()
+
+    query: str = """
+    SELECT
+    a.adID,
+    pka.lID,
+    a.title,
+    a.description,
+    a.price,
+    p.pID AS propertyID,
+    p.name AS propertyName,
+    p.street,
+    p.town,
+    p.county,
+    p.bedrooms,
+    p.bathrooms,
+    p.propType,
+    a.image1,
+    a.image2,
+    a.image3,
+    a.image4,
+    a.image5,
+    a.image6,
+    a.image7,
+    a.image8,
+    a.image9,
+    a.image10,
+    k.*
+FROM PropertyKeywordAdvert pka
+JOIN Property p ON p.pID = pka.pID
+JOIN Adverts a ON a.adID = pka.adID
+JOIN Keywords k ON k.kID = pka.kID
+WHERE pka.lID = %s;
+    """
+
+    cursor.execute(query, (lID,))
+    data: dict = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    if data is None:
+        return jsonify({"error": "Advert data was not found"}), 404
+
+    return jsonify(data), 200
