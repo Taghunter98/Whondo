@@ -7,9 +7,9 @@ export class Update1 extends Comp {
             <div id="step1">
                 <div class="textContainer">
                     <p class="text">Step 1/3</p>
-                    <h4 class="title">Property Details</h4>
+                    <h4 class="title">Update Property</h4>
                 </div>
-                    <p class="text">Let’s create your property advert. Start by telling us about your home.</p>
+                    <p class="text">Let’s up your property advert. Start by telling us about your home.</p>
 
                 <div class="input">
                     <comp-address id="address" name="address" ></comp-address>
