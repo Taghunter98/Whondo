@@ -26,16 +26,6 @@ export class PropGal extends Comp {
         }
     }
 
-    beforeRender(){
-        this.items_ = [
-      { adID: 1, pkaID: 1, title: "Sample Property A", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 25, postedAt: "2025-08-09T14:21:03Z" },
-      { adID: 2, pkaID: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
-      { adID: 2, pkaID: 2,title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
-      { adID: 2, pkaID: 2,title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
-      { adID: 2, pkaID: 2,title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" }
-    ];
-    }
-
     createHTML(){
         return /* html */`
             <div class="gallery">
@@ -101,7 +91,7 @@ export class PropGal extends Comp {
 
     async afterRender(){
         
-        this.renderCards();
+        this.loadProperties();
 
         const scroller = this.query(".gallery");
             if (!scroller) return;
