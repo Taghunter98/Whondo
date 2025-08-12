@@ -543,7 +543,7 @@ export class UpdateProp extends Comp {
         customElements.whenDefined("comp-update3"),
         ]).then(async () => {
         const res = await this.request("/advert/get", "GET");
-        const rows = res.ok ? res.data?.results : null;
+        const rows = res.ok ? res.data?.result : null;
             if (Array.isArray(rows)) {
                 const row = rows.find(r => String(r.pkaID) === String(this.pkaID_));
                 if (row) {
