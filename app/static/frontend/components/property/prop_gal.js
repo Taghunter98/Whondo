@@ -92,7 +92,8 @@ export class PropGal extends Comp {
             requestAnimationFrame(() => { scroller.scrollLeft = scroller.scrollWidth; });
 
             if (!this._wheelBound) {
-                    this._onWheel = (e) => {
+                this._onWheel = (e) => {
+                    
                 if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
                         e.preventDefault();
                         scroller.scrollBy({ left: e.deltaY, behavior: "smooth" });
