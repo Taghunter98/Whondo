@@ -1,7 +1,7 @@
 import { Comp } from 'jay-comp';
 
 export class UpdateProp extends Comp {
-    pkaID_ = null; row_ = null;
+    pkaID_ = null; row_ = null; keywordsReady_ = false;
 
     createHTML() {
         return /* html */ `
@@ -508,6 +508,9 @@ export class UpdateProp extends Comp {
                 { label: "Lift", value: "lift" },
                 { label: "Ground Floor", value: "ground_floor" }, { label: "Bike Storage", value: "bike_storage" }];
 
+            this.keywordsReady_ = true;
+            if (this.row_) this.prefillStep3(this.row_);
+
             backBtn3.addEventListener("click", () => {
                 page3.setAttribute("hidden", "");
                 page1.setAttribute("hidden", "");
@@ -538,21 +541,23 @@ export class UpdateProp extends Comp {
         this.pkaID_ = this.getParam("pkaID");
 
         Promise.all([
-        customElements.whenDefined("comp-update1"),
-        customElements.whenDefined("comp-update2"),
-        customElements.whenDefined("comp-update3"),
-        ]).then(async () => {
-        const res = await this.request("/advert/get", "GET");
-        const rows = res.ok ? res.data?.result : null;
-            if (Array.isArray(rows)) {
-                const row = rows.find(r => String(r.pkaID) === String(this.pkaID_));
-                if (row) {
-                this.row_ = row;
-                this.prefillStep1(row);
-                this.prefillStep2(row);
-                this.prefillStep3(row);
-                }
-            }
+            customElements.whenDefined("comp-update1"),
+            customElements.whenDefined("comp-update2"),
+            customElements.whenDefined("comp-update3"),
+            ]).then(async () => {
+            const res  = await this.request("/advert/get", "GET");
+            const rows = res.ok ? res.data?.result : null;
+            if (!Array.isArray(rows)) return;
+
+            const row = rows.find(r => String(r.pkaID) === String(this.pkaID_));
+            if (!row) return;
+
+            this.row_ = row;
+
+            this.prefillStep1(row);
+            this.prefillStep2(row);
+
+            if (this.keywordsReady_) this.prefillStep3(row);
         });
 
     }
