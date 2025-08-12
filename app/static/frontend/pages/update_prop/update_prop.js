@@ -204,7 +204,7 @@ export class UpdateProp extends Comp {
             }
         }
 
-        const result = await this.submitForm("https://whondo.com/advert/new", fd);
+        const result = await this.submitForm("https://whondo.com//advert/update", fd);
 
         if (result.ok) {
             const popup = this.getById("popup");
