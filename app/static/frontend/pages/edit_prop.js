@@ -65,13 +65,13 @@ export class EditProp extends Comp {
         icon.style.display = "none";
     }
 
-     deleteAccount() {
+     deleteProperty(id) {
         const popup = this.getById("deleted");
         this.showPopup("deleted", "Delete Property", "Are you sure you want to delete your property?.", "Back", false, "Delete");
         popup.subscribe("popup-rightBtn", async () => {
-            const res = await this.request("/advert/delete", "POST");
+            const res = await this.request("/advert/delete", "POST", {pkaID: id});
             console.log("Sent delete request: " + res.error)
-            if (res.ok) window.location.assign("/");
+            if (res.ok) this.query("comp-prop-gal")?.deleteItem(id);
             else this.showPopup("deleted", "Deletion Failed", res.error || "Something went wrong.");
         }, { once: true });
     }
@@ -83,7 +83,6 @@ export class EditProp extends Comp {
 
         const gallery = this.query("comp-prop-gal");
 
-        // handle events coming from children
         gallery.subscribe("create-request", () => {
             window.location.assign("/advert/new");
         });
@@ -93,7 +92,9 @@ export class EditProp extends Comp {
         });
 
         gallery.subscribe("property-delete", (e) => {
-            this.deleteAccount()
+            const id = e?.detail?.id;
+            if(id) this.deleteProperty(id);
+            
         });
     }
 

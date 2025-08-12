@@ -2,7 +2,7 @@ import { Comp } from "jay-comp";
 
 export class PropGal extends Comp {
 
-    item_ = [];
+    items_ = [];
 
     beforeRender(){
         this.items_ = [
@@ -40,6 +40,18 @@ export class PropGal extends Comp {
                 gap: 20
             }
         ];
+    }
+
+    addItems(items){
+        if(!items) return;
+        this.items_.unshift(items);
+        this.renderCards();
+    }
+
+    deleteItem(id){
+        if(!id) return
+        this.items_ = this.items_.filter(x => String(x.id) !== String(id));
+        this.renderCards();
     }
 
     renderCards(){
