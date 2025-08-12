@@ -88,7 +88,7 @@ export class EditProp extends Comp {
         });
 
         gallery.subscribe("property-edit", (e) => {
-            //Todo edit
+            window.location.assign("/advert/update")
         });
 
         gallery.subscribe("property-delete", (e) => {
