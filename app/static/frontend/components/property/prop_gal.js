@@ -60,7 +60,7 @@ export class PropGal extends Comp {
             },
             { class: "cards",
                 display: "flex",
-                gap: 20
+                gap: 20,
             }
         ];
     }
