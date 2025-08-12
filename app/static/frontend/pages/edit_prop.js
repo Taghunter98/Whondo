@@ -90,7 +90,6 @@ export class EditProp extends Comp {
 
         gallery.subscribe("property-edit", (e) => {
             //Todo edit
-            console.log("edit property", e.detail?.id);
         });
 
         gallery.subscribe("property-delete", (e) => {
