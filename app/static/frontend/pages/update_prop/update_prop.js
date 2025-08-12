@@ -1,6 +1,8 @@
 import { Comp } from 'jay-comp';
 
 export class UpdateProp extends Comp {
+    pkaID_ = null; row_ = null;
+
     createHTML() {
         return /* html */ `
         <comp-popup  id= popup style="display: none"></comp-popup>
@@ -28,7 +30,7 @@ export class UpdateProp extends Comp {
                 </div>
             </div>
             <div class="backgroundImage">
-                <img class="image" src="https://whondo.com/static/icons/assets/property.jpg">
+                <img class="image" src="https://images.pexels.com/photos/16901229/pexels-photo-16901229.jpeg">
             </div>
         </div>
         `;
@@ -97,6 +99,111 @@ export class UpdateProp extends Comp {
         ];
     }
 
+    getParam(name) {
+        return new URLSearchParams(window.location.search).get(name);
+    }
+
+    _fallback(v, d) { return (v === null || v === undefined) ? d : v; }
+
+    hasPreview(card) {
+        const preview = card?.query(".filePreview");
+        return !!(preview && preview.src && !preview.hasAttribute("hidden"));
+    }
+
+    prefillStep1(row){
+        const s1 = this.getById("step1");
+
+        const t = s1.getById("title");
+        if (t) t.query(".inputValue").value = row.title || "";
+
+        const r = s1.getById("rent");
+        if (r) r.query(".inputValue").value = this._fallback(row.price, "");
+
+        const ten = s1.getById("tenants");
+        if (ten) ten.query(".inputValue").value = this._fallback(row.tenants, "");
+
+        const br = s1.getById("bedrooms");
+        if (br) br.query(".inputValue").value = this._fallback(row.bedrooms, "");
+
+        const ba = s1.getById("bathrooms");
+        if (ba) ba.query(".inputValue").value = this._fallback(row.bathrooms, "");
+
+        const d = s1.getById("description");
+        if (d) d.query(".inputValue").value = row.description || "";
+
+        const propType = s1.getById("propertyType");
+        if (propType && Array.isArray(propType.list)) {
+            const match = propType.list.find(o => String(o.value).toLowerCase() === String(row.propType).toLowerCase());
+            if (match) {
+            const inp = propType.query(".inputValue");
+            if (inp) inp.value = match.label;
+            }
+        }
+
+        const addr = s1.getById("address");
+        if (addr) {
+            const label = [row.propertyName, row.street, row.town, row.county, row.postcode].filter(Boolean).join(", ");
+            const inp = addr.query(".inputValue");
+            if (inp) inp.value = label;
+
+            addr.fullAddress = {
+            name: row.propertyName || "",
+            street: row.street || "",
+            town: row.town || "",
+            county: row.county || "",
+            postcode: row.postcode || ""
+            };
+        }
+    }
+
+    prefillStep2(row){
+        const s2 = this.getById("step2");
+        const cover = s2.getById("cover");
+        const pics = Array.from(s2.queryAll(".pic"));
+        const imgs = Array.isArray(row.images) ? row.images : [];
+
+        const showPreview = (fileCard, relPath) => {
+            if (!fileCard || !relPath) return;
+            const url = `https://whondo.com/uploads?path=${relPath}`;
+
+            const filePrompt = fileCard.query(".filePrompt");
+            const icon = fileCard.query(".icon");
+            const preview = fileCard.query(".filePreview");
+            const container = fileCard.query(".imageContainer");
+
+            if (filePrompt) filePrompt.setAttribute("hidden", "");
+            if (icon) icon.setAttribute("hidden", "");
+            if (container) container.removeAttribute("hidden");
+            if (preview) {
+            preview.src = url;
+            preview.removeAttribute("hidden");
+            }
+
+            // mark as already “uploaded” (prefilled) but without a File object
+            fileCard._selectedFile = null;
+            fileCard._uploadedOnce = true;
+            if (typeof fileCard.publish === "function") fileCard.publish("photo-uploaded");
+        };
+
+        if (imgs[0] && cover) showPreview(cover, imgs[0]);
+            for (let i = 1; i < imgs.length && i <= pics.length; i++){
+                showPreview(pics[i - 1], imgs[i]);
+            }
+    }
+   
+    prefillStep3(row){
+        const s3 = this.getById("step3");
+        const kw = s3.getById("keywords");
+        if (!kw || !Array.isArray(kw.list)) return;
+
+        const list = Array.isArray(row.all_keywords) ? row.all_keywords : [];
+        list.forEach(value => {
+            const opt = kw.list.find(o => o.value === value);
+            if (opt && typeof kw.addTag === "function") kw.addTag(opt.label);
+        });
+    }
+
+
     validateStep1() {
         const step1 = this.query("#step1")
         const inputs = [step1.getById("address"), step1.getById("title"), step1.getById("rent"), step1.getById("description"), step1.getById("propertyType"), step1.getById("tenants")];
@@ -112,37 +219,27 @@ export class UpdateProp extends Comp {
     }
 
     validateStep2() {
-        const step2 = this.getById("step2")
+        const step2 = this.getById("step2");
         const cover = step2.getById("cover");
-        const pics = Array.from(step2.queryAll(".pic"));
+        const pics  = Array.from(step2.queryAll(".pic"));
         let isValid = true;
 
-        if (!cover.value) {
-            cover.classList.add("error");
+        const coverOk = !!cover.value || this.hasPreview(cover);
+        if (!coverOk) { cover.classList.add("error"); isValid = false; } else { cover.classList.remove("error"); }
+
+        const anyOk = coverOk || pics.some(pic => pic.value || this.hasPreview(pic));
+        if (!anyOk) {
             isValid = false;
-        } else {
-            cover.classList.remove("error");
-        }
-
-        const uploadedPics = pics.filter(pic => pic.value);
-        if (uploadedPics.length < 1) {
-
-            isValid = false;
-
             pics.forEach(pic => {
-                const box = pic.query(".fileBox")
-
-                const isVisible = pic.offsetParent !== null;
-                if (!pic.value && isVisible) {
-                    box.classList.add("error");
-                }
+            const box = pic.query(".fileBox");
+            const visible = pic.offsetParent !== null;
+            if (visible && !(pic.value || this.hasPreview(pic))) box.classList.add("error");
             });
-
         } else {
             pics.forEach(pic => {
-                const box = pic.query(".fileBox");
-                const isVisible = pic.offsetParent !== null;
-                if (isVisible) box.classList.remove("error");
+            const box = pic.query(".fileBox");
+            const visible = pic.offsetParent !== null;
+            if (visible) box.classList.remove("error");
             });
         }
 
@@ -165,12 +262,15 @@ export class UpdateProp extends Comp {
         return isValid;
     }
 
-    async createProp() {
+    async UpdateProp() {
         const fd = new FormData();
         const step1 = this.getById("step1");
         const step2 = this.getById("step2");
         const step3 = this.getById("step3");
         const keywords = step3.getById("keywords").value;
+
+        const pkaID = this.pkaID_ ?? this.getParam("pkaID");
+        if (pkaID) fd.append("pkaID", pkaID);
 
         fd.append("title", step1.getById("title").value);
         fd.append("price", step1.getById("rent").value);
@@ -204,7 +304,7 @@ export class UpdateProp extends Comp {
             }
         }
 
-        const result = await this.submitForm("https://whondo.com//advert/update", fd);
+        const result = await this.submitForm("/advert/update", fd);
 
         if (result.ok) {
             const popup = this.getById("popup");
@@ -224,7 +324,7 @@ export class UpdateProp extends Comp {
         //Step 1 setup
         const page1 = this.getById("page1")
         const step1 = this.getById("step1");
-        customElements.whenDefined("comp-step1").then(() => {
+        customElements.whenDefined("comp-update1").then(() => {
             const address = step1.query("#address");
             const title = step1.getById("title");
             const rent = step1.getById("rent");
@@ -302,7 +402,7 @@ export class UpdateProp extends Comp {
         //Step2 set up
         const page2 = this.getById("page2")
         const step2 = this.getById("step2");
-        customElements.whenDefined("comp-step2").then(() => {
+        customElements.whenDefined("comp-update2").then(() => {
             const backBtn2 = step2.getById("backBtn2");
             const nextBtn2 = step2.getById("nextBtn2");
             const cover = step2.getById("cover");
@@ -345,7 +445,7 @@ export class UpdateProp extends Comp {
         //Step3 setup
         const page3 = this.getById("page3");
         const step3 = this.getById("step3");
-        customElements.whenDefined("comp-step3").then(() => {
+        customElements.whenDefined("comp-update3").then(() => {
             const backBtn3 = step3.getById("backBtn3");
             const submit = step3.getById("submit");
             const keyword = step3.getById("keywords")
@@ -419,7 +519,7 @@ export class UpdateProp extends Comp {
                 const step2Valid = this.validateStep2();
                 const step3Valid = this.validateStep3();
                 if (!step1Valid || !step2Valid || !step3Valid) e.preventDefault();
-                else this.createProp()
+                else this.UpdateProp()
             });
         });
 
@@ -435,7 +535,28 @@ export class UpdateProp extends Comp {
         btn.style.width = "125px";
         btn.variant = 1;
 
+        this.pkaID_ = this.getParam("pkaID");
+
+        Promise.all([
+        customElements.whenDefined("comp-update1"),
+        customElements.whenDefined("comp-update2"),
+        customElements.whenDefined("comp-update3"),
+        ]).then(async () => {
+        const res = await this.request("/advert/get", "GET");
+        const rows = res.ok ? res.data?.results : null;
+            if (Array.isArray(rows)) {
+                const row = rows.find(r => String(r.pkaID) === String(this.pkaID_));
+                if (row) {
+                this.row_ = row;
+                this.prefillStep1(row);
+                this.prefillStep2(row);
+                this.prefillStep3(row);
+                }
+            }
+        });
+
     }
+    
 
     static { Comp.register(this); }
 }

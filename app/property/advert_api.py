@@ -26,6 +26,7 @@ from app.property.keywords import store_keywords, delete_keywords
 from app.property.property import create_property, delete_property
 from app.property.advert import create_advert, delete_advert
 from app.property.property_keyword_advert import get_ids, update_transaction
+from app.search_engine.dictionaries import KEYWORDS
 
 advert_bp = Blueprint("advert_bp", __name__)
 
@@ -240,3 +241,89 @@ def advertise():
         if auth_landlord(session.get("email")):
             return render_template("property.html")
         return render_template("advertise.html")
+
+
+@advert_bp.route("/advert/get", methods=["GET"])
+def get_properties():
+    """
+    The REST API returns a list of advert data based on the landlord ID from cookie data.
+
+    Returns:
+        Response: HTTP Response
+    """
+    if not session.get("uID"):
+        return jsonify({"error": "User not logged in"}), 401
+
+    lID: int = auth_landlord(session.get("email"))
+
+    if not lID:
+        return redirect("/")
+
+    connection: object = connect()
+    cursor: object = connection.cursor()
+
+    query: str = """
+        SELECT
+            pka.pkaID,
+            a.adID,
+            pka.lID,
+            a.title,
+            a.description,
+            a.price,
+            p.pID AS propertyID,
+            p.name AS propertyName,
+            p.street,
+            p.town,
+            p.county,
+            p.bedrooms,
+            p.bathrooms,
+            p.propType,
+            a.image1,
+            a.image2,
+            a.image3,
+            a.image4,
+            a.image5,
+            a.image6,
+            a.image7,
+            a.image8,
+            a.image9,
+            a.image10,
+            k.*
+        FROM PropertyKeywordAdvert pka
+        JOIN Property p ON p.pID = pka.pID
+        JOIN Adverts a ON a.adID = pka.adID
+        JOIN Keywords k ON k.kID = pka.kID
+        WHERE pka.lID = %s;
+    """
+
+    cursor.execute(query, (lID,))
+    rows = cursor.fetchall()
+    cols = [c[0] for c in cursor.description]
+    cursor.close()
+    connection.close()
+
+    if not rows:
+        return jsonify({"error": "Advert data was not found"}), 404
+
+    # Process rows into dicts
+    dict_rows = [dict(zip(cols, row)) for row in rows]
+    image_fields = [f"image{i}" for i in range(1, 11)]
+
+    results = []
+
+    for r in dict_rows:
+        # Extract matched and all keywords
+        matched_keywords = [kw for kw in KEYWORDS if r.get(kw)]
+        all_keywords = matched_keywords.copy()
+
+        for kw in KEYWORDS:
+            r.pop(kw, None)
+
+        images = [r.pop(f, None) for f in image_fields]
+        r["images"] = [img for img in images if img]
+
+        r["all_keywords"] = all_keywords
+
+        results.append(r)
+
+    return jsonify(results=results), 200

@@ -1,9 +1,10 @@
 import { Comp } from "jay-comp";
 
 export class EditCard extends Comp {
-    id_; title_; cover_; views_ = 0; postedAt_;
+    adID_; pkaID_; title_; cover_; views_ = 0; postedAt_;
 
-    set id(v){ this.id_ = v; }
+    set adID(v){ this.adID_ = v; }
+    set pkaID(v){ this.pkaID_ = v;}
     set title(v){ this.title_ = v; this.update(); }
     set cover(v){ this.cover_ = v; this.update(); }
     set views(v){ this.views_ = Number(v||0); this.update(); }
@@ -101,9 +102,9 @@ export class EditCard extends Comp {
         del.fill = true;
         edit.fill = true;
 
-        del.addEventListener("click", (e) => { e.stopPropagation(); this.publish("property-delete", { id: this.id_ }); });
+        del.addEventListener("click", (e) => { e.stopPropagation(); this.publish("property-delete", {pkaID: this.pkaID_, adID: this.adID_ }); });
 
-        edit.addEventListener("click", (e) => { e.stopPropagation(); this.publish("property-edit",   { id: this.id_ }); });
+        edit.addEventListener("click", (e) => { e.stopPropagation(); this.publish("property-edit",   {pkaID: this.pkaID_, adID: this.adID_ }); });
     }
 
   static { Comp.register(this); }

@@ -27,10 +27,11 @@ export class EditProp extends Comp {
                 alignItems: "centre",
                 background: "white",
                 widthPercent: 100,
+                heightVh: 100,
                 boxSizing: "border-box",
                 media: {
                     maxWidthBp: 600,
-                    alignItems: "start"
+                    heightPercent: 100,
                 }
             },
             {
@@ -40,6 +41,7 @@ export class EditProp extends Comp {
                 flexDirection: "column",
                 alignItems: "centre",
                 marginTop: 100,
+                heightVh: 100,
             },
             {
                 class: "options",
@@ -49,9 +51,15 @@ export class EditProp extends Comp {
                 flexDirection: "column",
                 gap: 20,
                 padding: [0, 20],
+                 media: {
+                    maxWidthBp: 600,
+                    heightPercent: 100,
+                }
             }
         ]
     }
+
+    
 
     showPopup(id, title, paragraph, leftBtn = "OK", hideButton = true, rightBtn) {
         const popup = this.getById(id);
@@ -65,15 +73,18 @@ export class EditProp extends Comp {
         icon.style.display = "none";
     }
 
-     deleteProperty(id) {
+     deleteProperty(pkaID) {
         const popup = this.getById("deleted");
         this.showPopup("deleted", "Delete Property", "Are you sure you want to delete your property?.", "Back", false, "Delete");
         popup.subscribe("popup-rightBtn", async () => {
-            const res = await this.request("/advert/delete", "POST", {pkaID: id});
-            console.log("Sent delete request: " + res.error)
-            if (res.ok) this.query("comp-prop-gal")?.deleteItem(id);
-            else this.showPopup("deleted", "Deletion Failed", res.error || "Something went wrong.");
-        }, { once: true });
+            const res = await this.request("/advert/delete", "POST", { pkaID });
+            if (res.ok) {
+                this.query("comp-prop-gal")?.deleteItem(pkaID);
+            }else{ 
+                this.showPopup("deleted", "Deletion Failed", res.error || "Something went wrong");
+            }
+            }, { once: true }
+        );
     }
 
     afterRender(){
@@ -92,12 +103,13 @@ export class EditProp extends Comp {
         });
 
         gallery.subscribe("property-edit", (e) => {
-            window.location.assign("/advert/update")
+            const pkaID = e?.detail?.pkaID;
+            window.location.assign(`/advert/update?pkaID=${encodeURIComponent(pkaID)}`);
         });
 
         gallery.subscribe("property-delete", (e) => {
-            const id = e?.detail?.id;
-            if(id) this.deleteProperty(id);
+            const pkaID = e?.detail?.pkaID;
+            if(pkaID) this.deleteProperty(pkaID);
             
         });
     }

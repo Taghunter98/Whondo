@@ -2,15 +2,37 @@ import { Comp } from "jay-comp";
 
 export class PropGal extends Comp {
 
-    items_ = [];
+    items_ = []; _wheelBound = false; _onWheel = null;
+
+    toCard(row){
+        return {
+            adID: row.adID,
+            pkaID: row.pkaID,
+            title: row.title,
+            cover: row.images?.[0]? row.images[0] : "",
+            views: 0,
+            postedAt: new Date().toISOString()
+        };
+    }
+
+    async loadProperties(){
+        const res = await this.request("/advert/get", "get");
+        if(res.ok && Array.isArray(res.data?.result)){
+            this.items_ = res.data.result.map((r) => this.toCard(r));
+            this.renderCards();
+        } else {
+            this.items_ = [];
+            this.renderCards()
+        }
+    }
 
     beforeRender(){
         this.items_ = [
-      { id: 1, title: "Sample Property A", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 25, postedAt: "2025-08-09T14:21:03Z" },
-      { id: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
-      { id: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
-      { id: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
-      { id: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" }
+      { adID: 1, pkaID: 1, title: "Sample Property A", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 25, postedAt: "2025-08-09T14:21:03Z" },
+      { adID: 2, pkaID: 2, title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
+      { adID: 2, pkaID: 2,title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
+      { adID: 2, pkaID: 2,title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" },
+      { adID: 2, pkaID: 2,title: "Sample Property B", cover: "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg", views: 10, postedAt: "2025-08-10T10:05:12Z" }
     ];
     }
 
@@ -29,8 +51,7 @@ export class PropGal extends Comp {
                 width: 1141,
                 maxWidthPercent: 100,
                 overflowX: "auto",
-                scrollSnapType: "x mandatory",
-                overflowY: "hidden", 
+                scrollSnapType: "x mandatory", 
                 overscrollBehaviorX: "contain", 
                 media:{
                     maxWidthBp: 600,
@@ -44,15 +65,9 @@ export class PropGal extends Comp {
         ];
     }
 
-    addItems(items){
-        if(!items) return;
-        this.items_.unshift(items);
-        this.renderCards();
-    }
-
-    deleteItem(id){
-        if(!id) return
-        this.items_ = this.items_.filter(x => String(x.id) !== String(id));
+    deleteItem(pkaID){
+        if(!pkaID) return
+        this.items_ = this.items_.filter(x => String(x.pkaID) !== String(pkaID));
         this.renderCards();
     }
 
@@ -65,7 +80,8 @@ export class PropGal extends Comp {
         
         items.forEach(item => {
         const card = document.createElement("comp-edit-card");
-        card.id = item.id;
+        card.adID = item.adID;
+        card.pkaID = item.pkaID
         card.title = item.title;
         card.cover = item.cover;
         card.views = item.views ?? 0;
@@ -83,7 +99,7 @@ export class PropGal extends Comp {
         wrap.appendChild(addCard);
     }
 
-    afterRender(){
+    async afterRender(){
         
         this.renderCards();
 
@@ -93,7 +109,7 @@ export class PropGal extends Comp {
 
             if (!this._wheelBound) {
                 this._onWheel = (e) => {
-                    
+
                 if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
                         e.preventDefault();
                         scroller.scrollBy({ left: e.deltaY, behavior: "smooth" });

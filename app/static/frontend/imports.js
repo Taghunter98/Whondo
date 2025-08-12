@@ -12,6 +12,7 @@ import './components/promptbar.js';
 import './components/carousel.js';
 import './components/banner.js';
 import './components/pic_banner.js';
+import './components/footer.js';
 
 // Navbar
 import './components/navbar/navbar.js';
