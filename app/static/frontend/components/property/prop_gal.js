@@ -30,6 +30,8 @@ export class PropGal extends Comp {
                 maxWidthPercent: 100,
                 overflowX: "auto",
                 scrollSnapType: "x mandatory",
+                overflowY: "hidden", 
+                overscrollBehaviorX: "contain", 
                 media:{
                     maxWidthBp: 600,
                     widthPercent: 100,
@@ -86,12 +88,20 @@ export class PropGal extends Comp {
         this.renderCards();
 
         const scroller = this.query(".gallery");
-            if (scroller) {
-            requestAnimationFrame(() => {
-                scroller.scrollLeft = scroller.scrollWidth; 
-        });
-    }
-      
+            if (!scroller) return;
+            requestAnimationFrame(() => { scroller.scrollLeft = scroller.scrollWidth; });
+
+            if (!this._wheelBound) {
+                    this._onWheel = (e) => {
+                if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                        e.preventDefault();
+                        scroller.scrollBy({ left: e.deltaY, behavior: "smooth" });
+                    }
+                };
+
+            scroller.addEventListener("wheel", this._onWheel, { passive: false });
+            this._wheelBound = true;
+        }
     }
 
     static { Comp.register(this); }
