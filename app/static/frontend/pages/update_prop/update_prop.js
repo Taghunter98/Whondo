@@ -135,6 +135,7 @@ export class UpdateProp extends Comp {
         if (propType && Array.isArray(propType.list)) {
             const match = propType.list.find(o => String(o.value).toLowerCase() === String(row.propType).toLowerCase());
             if (match) {
+            propType.value = match.value; 
             const inp = propType.query(".inputValue");
             if (inp) inp.value = match.label;
             }
