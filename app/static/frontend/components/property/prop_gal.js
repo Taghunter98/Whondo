@@ -17,8 +17,8 @@ export class PropGal extends Comp {
 
     async loadProperties(){
         const res = await this.request("/advert/get", "get");
-        if(res.ok && Array.isArray(res.data?.result)){
-            this.items_ = res.data.result.map((r) => this.toCard(r));
+        if(res.ok && Array.isArray(res.data?.results)){
+            this.items_ = res.data.results.map((r) => this.toCard(r));
             this.renderCards();
         } else {
             this.items_ = [];

@@ -14,14 +14,14 @@ export class Update2 extends Comp {
                     <comp-carousel>
                         <comp-file-card class="cover" id="cover"></comp-file-card>
                         <comp-file-card class="pic"></comp-file-card>
-                        <comp-file-card class="pic">></comp-file-card>
-                        <comp-file-card class="pic">></comp-file-card>
-                        <comp-file-card class="pic">></comp-file-card>
-                        <comp-file-card class="pic">></comp-file-card>
-                        <comp-file-card class="pic">></comp-file-card>
-                        <comp-file-card class="pic">></comp-file-card>
-                        <comp-file-card class="pic">></comp-file-card>
-                        <comp-file-card class="pic">></comp-file-card>
+                        <comp-file-card class="pic"></comp-file-card>
+                        <comp-file-card class="pic"></comp-file-card>
+                        <comp-file-card class="pic"></comp-file-card>
+                        <comp-file-card class="pic"></comp-file-card>
+                        <comp-file-card class="pic"></comp-file-card>
+                        <comp-file-card class="pic"></comp-file-card>
+                        <comp-file-card class="pic"></comp-file-card>
+                        <comp-file-card class="pic"></comp-file-card>
                     </comp-carousel>
                 </div>
                 <div class="footer">

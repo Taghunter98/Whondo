@@ -179,7 +179,6 @@ export class UpdateProp extends Comp {
             preview.removeAttribute("hidden");
             }
 
-            // mark as already “uploaded” (prefilled) but without a File object
             fileCard._selectedFile = null;
             fileCard._uploadedOnce = true;
             if (typeof fileCard.publish === "function") fileCard.publish("photo-uploaded");
@@ -546,7 +545,7 @@ export class UpdateProp extends Comp {
             customElements.whenDefined("comp-update3"),
             ]).then(async () => {
             const res  = await this.request("/advert/get", "GET");
-            const rows = res.ok ? res.data?.result : null;
+            const rows = res.ok ? res.data?.results : null;
             if (!Array.isArray(rows)) return;
 
             const row = rows.find(r => String(r.pkaID) === String(this.pkaID_));
