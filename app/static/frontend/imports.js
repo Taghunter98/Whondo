@@ -71,6 +71,10 @@ import './pages/create_prop/create_prop.js';
 import './pages/create_prop/step1.js';
 import './pages/create_prop/step2.js';
 import './pages/create_prop/step3.js';
+import './pages/update_prop/update_prop.js';
+import './pages/update_prop/update1.js';
+import './pages/update_prop/update2.js';
+import './pages/update_prop/update3.js';
 
 // Pages
 import './pages/login.js';
