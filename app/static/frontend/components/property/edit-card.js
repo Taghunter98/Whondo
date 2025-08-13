@@ -1,18 +1,19 @@
 import { Comp } from "jay-comp";
 
 export class EditCard extends Comp {
-    adID_; pkaID_; title_; cover_; views_ = 0; postedAt_;
+    adID_; pkaID_; title_; cover_; 
 
     set adID(v){ this.adID_ = v; }
     set pkaID(v){ this.pkaID_ = v;}
     set title(v){ this.title_ = v; this.update(); }
     set cover(v){ this.cover_ = v; this.update(); }
+    
 
 
     beforeRender(){
         if (!this.title_) this.title_ = "Property Title";
         if (!this.cover_) this.cover_ = "Profile/test@test.com/2025-07-19_test@test.com_pexels-lina-1661576.jpg";
-        if (!this.postedAt_) this.postedAt_ = new Date().toISOString();
+        if (!this.description_) this.description_ = "test";
     }
 
 
@@ -23,8 +24,7 @@ export class EditCard extends Comp {
                 <div class="info">
                     <h5 class="title">${this.title_}</h5>
                     <div class="meta">
-                        <span>${this.views_} views</span>
-                        <span>Posted ${this.fmtDate(this.postedAt_)}</span>
+            
                     </div>
                     <div class="btns">
                         <comp-button id="del"></comp-button>

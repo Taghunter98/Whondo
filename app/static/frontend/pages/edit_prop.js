@@ -104,11 +104,7 @@ export class EditProp extends Comp {
     }
 
     afterRender() {
-        // Call API
-        // -> get result
-        // -> either update internal value or set varaible
-        // -> pass data to gallery component
-        // -> gallery component uses data as array
+        
         const btn = this.getById("banner");
 
         btn.btnText = "Account";

@@ -111,6 +111,7 @@ export class UpdateProp extends Comp {
     }
 
     prefillStep1(row){
+        const norm = v => String(v ?? "").toLowerCase();
         const s1 = this.getById("step1");
 
         const t = s1.getById("title");
@@ -131,13 +132,15 @@ export class UpdateProp extends Comp {
         const d = s1.getById("description");
         if (d) d.query(".inputValue").value = row.description || "";
 
-        const propType = s1.getById("propertyType");
-        if (propType && Array.isArray(propType.list)) {
-            const match = propType.list.find(o => String(o.value).toLowerCase() === String(row.propType).toLowerCase());
-            if (match) {
-            propType.value = match.value; 
-            const inp = propType.query(".inputValue");
-            if (inp) inp.value = match.label;
+         const propType = s1.getById("propertyType");
+            if (propType && Array.isArray(propType.list)) {
+                const match = propType.list.find(o => norm(o.value) === norm(row.propType));
+                if (match) {
+                propType.value = match.value;
+                const inp = propType.query(".inputValue");
+                if (inp) inp.value = match.label;
+
+                this.prevPropType = match.value;
             }
         }
 
@@ -199,11 +202,28 @@ export class UpdateProp extends Comp {
         const kw = s3.getById("keywords");
         if (!kw || !Array.isArray(kw.list)) return;
 
-        const list = Array.isArray(row.all_keywords) ? row.all_keywords : [];
-        list.forEach(value => {
-            const opt = kw.list.find(o => o.value === value);
-            if (opt && typeof kw.addTag === "function") kw.addTag(opt.label);
+        const norm = v => String(v).toLowerCase();
+        const valToLabel = new Map(kw.list.map(o => [norm(o.value), o.label]));
+        const value = Array.isArray(row.all_keywords) ? row.all_keywords : [];
+
+        value.forEach(v => {
+            const label = valToLabel.get(norm(v));
+            if (label) kw.addTag(label);
         });
+
+        if(row.propType){
+            const propValNorm = norm(row.propType);
+            const propLabel = valToLabel.get(propValNorm);
+            if(propLabel){
+                const exist = Array.isArray(kw.value) && kw.value.some(v => norm(v) === propValNorm);
+                if(!exist) kw.addTag(propLabel);
+                    if (!this.prevPropType) {
+                    const raw = kw.list.find(o => norm(o.value) === propValNorm)?.value;
+                    if (raw) this.prevPropType = raw;
+                }
+            }
+        }
+
     }
 
 
@@ -444,7 +464,7 @@ export class UpdateProp extends Comp {
 
             backBtn2.addEventListener("click", () => {
                 page2.setAttribute("hidden", "");
-                step3.setAttribute("hidden", "");
+                page3.setAttribute("hidden", "");
                 page1.removeAttribute("hidden")
             });
 
