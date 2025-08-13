@@ -77,6 +77,9 @@ export class EditProp extends Comp {
         icon.style.display = "none";
     }
 
+    /**
+     * Deleted prop card also deleted form DB base on pkaID that send from payload in custom event
+     */
     deleteProperty(pkaID) {
         const popup = this.getById("deleted");
         this.showPopup(

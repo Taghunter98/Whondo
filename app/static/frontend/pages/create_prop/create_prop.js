@@ -270,6 +270,10 @@ export class CreateProp extends Comp {
             propType.required = true;
             tenants.required = true;
 
+            /**
+             * This work with prop-type and keyword input when change prop-type
+             * also change the tag that create by prop-type (look for previous prop-type)
+             */
             this.prevPropType = null;
             propType.subscribe("option-selected", (e) => {
                 const step3 = this.getById("step3")

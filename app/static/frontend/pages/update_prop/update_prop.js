@@ -98,7 +98,7 @@ export class UpdateProp extends Comp {
             },
         ];
     }
-
+    
     getParam(name) {
         return new URLSearchParams(window.location.search).get(name);
     }

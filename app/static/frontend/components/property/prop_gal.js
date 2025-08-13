@@ -14,6 +14,11 @@ export class PropGal extends Comp {
         return this.items_;
     }
 
+    /**
+     * 
+     * @param {json} row 
+     * @returns a helper method that help to refine a data that return from a endpoint and add to a list and then use to create a card 
+     */
     toCard(row) {
         return {
             adID: row.adID,
@@ -65,6 +70,11 @@ export class PropGal extends Comp {
         ];
     }
 
+    /**
+     * 
+     * 
+     * @returns  delete card from gallery and re-render a card that exist
+     */
     deleteItem(pkaID) {
         if (!pkaID) return;
         this.items_ = this.items_.filter(
@@ -73,6 +83,12 @@ export class PropGal extends Comp {
         this.renderCards();
     }
 
+    /**
+     * This function take and items array and create a card and set the card data base on data request from advert/get and publish custom event with a payload data to use later 
+     * 
+     * @returns a list of card on the screen with the create prop-card
+     * that all way on the right 
+     */
     renderCards() {
         const wrap = this.query(".cards");
         if (!wrap) return;
@@ -109,6 +125,10 @@ export class PropGal extends Comp {
     afterRender() {
         this.loadProperties();
 
+        /**
+         * allow mouse scroller to scroll through the gallery
+         * and prevent browser scroll default when scroll in gallery
+         */
         const scroller = this.query(".gallery");
         if (!scroller) return;
         requestAnimationFrame(() => {
