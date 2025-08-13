@@ -1,9 +1,8 @@
 import { Comp } from "jay-comp";
 
 export class EditProp extends Comp {
-
-    createHTML(){
-        return /* html */`
+    createHTML() {
+        return /* html */ `
             <comp-popup id="deleted" style="display: none"></comp-popup>
             <comp-navbar></comp-navbar>
             <div class="background">
@@ -18,7 +17,6 @@ export class EditProp extends Comp {
     }
 
     createCSS() {
-
         return [
             {
                 class: "background",
@@ -32,7 +30,7 @@ export class EditProp extends Comp {
                 media: {
                     maxWidthBp: 600,
                     heightPercent: 100,
-                }
+                },
             },
             {
                 class: "container",
@@ -51,19 +49,24 @@ export class EditProp extends Comp {
                 flexDirection: "column",
                 gap: 20,
                 padding: [0, 20],
-                 media: {
+                media: {
                     maxWidthBp: 600,
                     heightPercent: 100,
-                }
-            }
-        ]
+                },
+            },
+        ];
     }
 
-    
-
-    showPopup(id, title, paragraph, leftBtn = "OK", hideButton = true, rightBtn) {
+    showPopup(
+        id,
+        title,
+        paragraph,
+        leftBtn = "OK",
+        hideButton = true,
+        rightBtn
+    ) {
         const popup = this.getById(id);
-        popup.hideButton(hideButton)
+        popup.hideButton(hideButton);
         popup.title = title;
         popup.paragraph = paragraph;
         popup.textLeft = leftBtn;
@@ -73,21 +76,42 @@ export class EditProp extends Comp {
         icon.style.display = "none";
     }
 
-     deleteProperty(pkaID) {
+    deleteProperty(pkaID) {
         const popup = this.getById("deleted");
-        this.showPopup("deleted", "Delete Property", "Are you sure you want to delete your property?.", "Back", false, "Delete");
-        popup.subscribe("popup-rightBtn", async () => {
-            const res = await this.request("/advert/delete", "POST", { pkaID });
-            if (res.ok) {
-                this.query("comp-prop-gal")?.deleteItem(pkaID);
-            }else{ 
-                this.showPopup("deleted", "Deletion Failed", res.error || "Something went wrong");
-            }
-            }, { once: true }
+        this.showPopup(
+            "deleted",
+            "Delete Property",
+            "Are you sure you want to delete your property?.",
+            "Back",
+            false,
+            "Delete"
+        );
+        popup.subscribe(
+            "popup-rightBtn",
+            async () => {
+                const res = await this.request("/advert/delete", "POST", {
+                    pkaID,
+                });
+                if (res.ok) {
+                    this.query("comp-prop-gal")?.deleteItem(pkaID);
+                } else {
+                    this.showPopup(
+                        "deleted",
+                        "Deletion Failed",
+                        res.error || "Something went wrong"
+                    );
+                }
+            },
+            { once: true }
         );
     }
 
-    afterRender(){
+    afterRender() {
+        // Call API
+        // -> get result
+        // -> either update internal value or set varaible
+        // -> pass data to gallery component
+        // -> gallery component uses data as array
         const btn = this.getById("banner");
 
         btn.btnText = "Account";
@@ -95,24 +119,27 @@ export class EditProp extends Comp {
         const gallery = this.query("comp-prop-gal");
 
         btn.subscribe("btn-click", () => {
-            window.location.assign("/profile")
+            window.location.assign("/profile");
         });
 
         gallery.subscribe("create-request", () => {
             window.location.assign("/advert/new");
         });
 
-        gallery.subscribe("property-edit", (e) => {
+        gallery.subscribe("property-edit", e => {
             const pkaID = e?.detail?.pkaID;
-            window.location.assign(`/advert/update?pkaID=${encodeURIComponent(pkaID)}`);
+            window.location.assign(
+                `/advert/update?pkaID=${encodeURIComponent(pkaID)}`
+            );
         });
 
-        gallery.subscribe("property-delete", (e) => {
+        gallery.subscribe("property-delete", e => {
             const pkaID = e?.detail?.pkaID;
-            if(pkaID) this.deleteProperty(pkaID);
-            
+            if (pkaID) this.deleteProperty(pkaID);
         });
     }
 
-    static { Comp.register(this); }
+    static {
+        Comp.register(this);
+    }
 }

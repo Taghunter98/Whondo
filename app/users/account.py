@@ -239,11 +239,24 @@ def profile():
     """
     if not session.get("uID"):
         return redirect("/")
+
+    return render_template("profile.html")
+
+@account_bp.route("/profile/properties", methods=["GET"])
+def profile():
+    """
+    The REST API returns the properties page if the user is logged in as a landlord.
+
+    Returns:
+        Response: Flask redirect to homepage or properties.html
+    """
+    if not session.get("uID"):
+        return redirect("/")
     
     if auth_landlord(session.get("email")):
         return render_template("properties.html")
 
-    return render_template("profile.html")
+    return redirect("/")
 
 
 @account_bp.route("/account/update", methods=["POST"])
