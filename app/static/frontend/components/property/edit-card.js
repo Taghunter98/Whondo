@@ -7,8 +7,7 @@ export class EditCard extends Comp {
     set pkaID(v){ this.pkaID_ = v;}
     set title(v){ this.title_ = v; this.update(); }
     set cover(v){ this.cover_ = v; this.update(); }
-    set views(v){ this.views_ = Number(v||0); this.update(); }
-    set postedAt(v){ this.postedAt_ = v; this.update(); }
+
 
     beforeRender(){
         if (!this.title_) this.title_ = "Property Title";
@@ -16,10 +15,6 @@ export class EditCard extends Comp {
         if (!this.postedAt_) this.postedAt_ = new Date().toISOString();
     }
 
-    fmtDate(iso){
-        const d = iso ? new Date(iso) : new Date();
-        return `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
-    }
 
     createHTML(){
         return /*html*/`

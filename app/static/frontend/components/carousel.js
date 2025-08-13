@@ -119,8 +119,8 @@ export class Carousel extends Comp {
         leftBtn.path = "arrow_back.svg";
         rightBtn.path = "arrow.svg";
 
-        rightBtn.style.background = "var(--black100)";
-        leftBtn.style.background = "var(--black100)";
+        rightBtn.query("img").style.background = "var(--black100)";
+        leftBtn.query("img").style.background = "var(--black100)";
 
         const updateItems = () => {
             this.items = slot.assignedElements() || [];

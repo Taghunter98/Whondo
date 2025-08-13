@@ -120,7 +120,7 @@ export class UpdateProp extends Comp {
         if (r) r.query(".inputValue").value = this._fallback(row.price, "");
 
         const ten = s1.getById("tenants");
-        if (ten) ten.query(".inputValue").value = this._fallback(row.tenants, "");
+        if (ten) ten.query(".inputValue").value = this._fallback(row.tennants, "");
 
         const br = s1.getById("bedrooms");
         if (br) br.query(".inputValue").value = this._fallback(row.bedrooms, "");
@@ -327,6 +327,17 @@ export class UpdateProp extends Comp {
     };
 
     afterRender() {
+
+        let transfer = null;
+        try{
+            transfer = JSON.parse(window.name || "{}");
+        }catch{}
+
+        window.name = "";
+
+        this.pkaID_ = transfer?.pkaID ?? this.getParam("pkaID");
+        this.row_ = transfer?.row ?? null;
+
         //Step 1 setup
         const page1 = this.getById("page1")
         const step1 = this.getById("step1");
@@ -376,6 +387,8 @@ export class UpdateProp extends Comp {
             propType.required = true;
             tenants.required = true;
 
+            if(this.row_) this.prefillStep1(this.row_);
+
             this.prevPropType = null;
             propType.subscribe("option-selected", (e) => {
                 const step3 = this.getById("step3")
@@ -391,6 +404,7 @@ export class UpdateProp extends Comp {
                 keywords.addTag(selectedLabel);
                 this.prevPropType = match.value;
             });
+
 
             nextBtn.addEventListener("click", () => {
                 if (this.validateStep1()) {
@@ -425,6 +439,8 @@ export class UpdateProp extends Comp {
             nextBtn2.fill = true;
             cover.prompt = "Add Cover";
             pic.forEach((el) => el.prompt = "Add Photo");
+
+            if (this.row_) this.prefillStep2(this.row_);
 
             backBtn2.addEventListener("click", () => {
                 page2.setAttribute("hidden", "");
@@ -523,7 +539,8 @@ export class UpdateProp extends Comp {
                 { label: "Ground Floor", value: "ground_floor" }, { label: "Bike Storage", value: "bike_storage" }];
 
             this.keywordsReady_ = true;
-            if (this.row_) this.prefillStep3(this.row_);
+
+            if(this.row_) this.prefillStep3(this.row_);
 
             backBtn3.addEventListener("click", () => {
                 page3.setAttribute("hidden", "");
@@ -551,36 +568,6 @@ export class UpdateProp extends Comp {
         btn2.style.display = "none";
         btn.style.width = "125px";
         btn.variant = 1;
-
-        this.pkaID_ = this.getParam("pkaID");
-
-        Promise.all([
-            customElements.whenDefined("comp-update1"),
-            customElements.whenDefined("comp-update1"),
-            customElements.whenDefined("comp-update2"),
-            customElements.whenDefined("comp-update3"),
-            customElements.whenDefined("comp-input"),
-            customElements.whenDefined("comp-textarea"),
-            customElements.whenDefined("comp-input-dropdown"),
-            customElements.whenDefined("comp-address"),
-            customElements.whenDefined("comp-file-card"),
-            customElements.whenDefined("comp-keywords"),
-            ]).then(async () => {
-            const res  = await this.request("https://whondo.com/advert/get", "GET");
-            const rows = res.ok ? res.data?.results : null;
-            if (!Array.isArray(rows)) return;
-
-            const row = rows.find(r => String(r.pkaID) === String(this.pkaID_));
-            if (!row) return;
-
-            this.row_ = row;
-
-            requestAnimationFrame(() => {
-                this.prefillStep1(row);
-                this.prefillStep2(row);
-                if (this.keywordsReady_) this.prefillStep3(row);
-            });
-        });
 
     }
     

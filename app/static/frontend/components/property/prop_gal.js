@@ -2,8 +2,8 @@ import { Comp } from "jay-comp";
 
 export class PropGal extends Comp {
     items_ = [];
-    _wheelBound = false;
-    _onWheel = null;
+    wheelBound_ = false;
+    onWheel_ = null;
 
     set items(v) {
         this.items_ = v;
@@ -20,15 +20,16 @@ export class PropGal extends Comp {
             pkaID: row.pkaID,
             title: row.title,
             cover: row.images?.[0] ? row.images[0] : "",
-            views: 0,
-            postedAt: new Date().toISOString(),
         };
     }
 
     async loadProperties() {
         const res = await this.request("https://whondo.com/advert/get", "GET");
         if (res.ok && Array.isArray(res.data?.results)) {
-            this.items_ = res.data.results.map(r => this.toCard(r));
+            this.items_ = res.data.results.map(r => ({
+                ...this.toCard(r),
+                row_: r,
+            }));
             this.renderCards();
         } else {
             this.items_ = [];
@@ -85,12 +86,12 @@ export class PropGal extends Comp {
             card.pkaID = item.pkaID;
             card.title = item.title;
             card.cover = item.cover;
-            card.views = item.views ?? 0;
-            card.postedAt = item.postedAt;
 
-            card.subscribe?.("property-edit", e =>
-                this.publish("property-edit", e.detail)
-            );
+            card.subscribe?.("property-edit", (e) => {
+            const detail = e?.detail || {};               
+            this.publish("property-edit", { ...detail, row: item.row_ });
+            });
+
             card.subscribe?.("property-delete", e =>
                 this.publish("property-delete", e.detail)
             );
@@ -114,18 +115,18 @@ export class PropGal extends Comp {
             scroller.scrollLeft = scroller.scrollWidth;
         });
 
-        if (!this._wheelBound) {
-            this._onWheel = e => {
+        if (!this.wheelBound_) {
+            this.onWheel_ = e => {
                 if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
                     e.preventDefault();
                     scroller.scrollBy({ left: e.deltaY, behavior: "smooth" });
                 }
             };
 
-            scroller.addEventListener("wheel", this._onWheel, {
+            scroller.addEventListener("wheel", this.onWheel_, {
                 passive: false,
             });
-            this._wheelBound = true;
+            this.wheelBound_ = true;
         }
     }
 

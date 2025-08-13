@@ -87,18 +87,14 @@ export class EditProp extends Comp {
             false,
             "Delete"
         );
-        popup.subscribe(
-            "popup-rightBtn",
-            async () => {
+        popup.subscribe("popup-rightBtn", async () => {
                 const res = await this.request("/advert/delete", "POST", {
                     pkaID,
                 });
                 if (res.ok) {
                     this.query("comp-prop-gal")?.deleteItem(pkaID);
                 } else {
-                    this.showPopup(
-                        "deleted",
-                        "Deletion Failed",
+                    this.showPopup("deleted", "Deletion Failed",
                         res.error || "Something went wrong"
                     );
                 }
@@ -127,11 +123,17 @@ export class EditProp extends Comp {
             window.location.assign("/advert/new");
         });
 
-        gallery.subscribe("property-edit", e => {
-            const pkaID = e?.detail?.pkaID;
-            window.location.assign(
-                `/advert/update?pkaID=${encodeURIComponent(pkaID)}`
-            );
+        gallery.subscribe("property-edit", (e) => {
+            const {pkaID, adID ,row} = e?.detail|| {};
+            if(!pkaID || !row) return
+            
+            window.name = JSON.stringify({
+                type:"advert-transfer",
+                pkaID,
+                adID,
+                row
+            });
+            window.location.assign("/advert/update");
         });
 
         gallery.subscribe("property-delete", e => {
