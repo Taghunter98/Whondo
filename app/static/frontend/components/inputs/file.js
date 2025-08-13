@@ -133,6 +133,11 @@ export class File extends Input {
         return this._selectedFile || this.fileInput?.files?.[0] || null;
     }
 
+    /**
+     * 
+     * @param {url} url 
+     * @returns set a img src base on file upload and display as a preview image 
+     */
     setPreview(url){
         const preview = this.query(".filePreview");
         const icon = this.query(".icon");
@@ -182,6 +187,10 @@ export class File extends Input {
 
         };
 
+        /**
+         * 
+         * @returns create new file input allow user to update same picture prevent browser default 
+         */
         const createInput = () => {
             const input = document.createElement("input");
             input.type = "file";

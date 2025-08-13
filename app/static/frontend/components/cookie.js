@@ -151,7 +151,11 @@ export class CookieBanner extends Comp {
     }
 
     afterRender(){
-
+        /**
+         * 
+         * @param {string} name 
+         * @returns cookie name that flag in the browser
+         */
         function getCookie(name) {
 
             const value = `; ${document.cookie}`;

@@ -87,7 +87,11 @@ export class Carousel extends Comp {
             },
         ];
     }
-
+    /**
+     * 
+     * @param {number} direction 
+     * @returns  track index of card that was carousel was on
+     */
     slide(direction) {
         const visibleItems = this.items.filter(el => el.style.display !== "none");
         const newIndex = this.index + direction;
@@ -97,6 +101,10 @@ export class Carousel extends Comp {
         this.updateView();
     }
 
+    /**
+     * 
+     * @returns show slide animation then index change base on slide()
+     */
     updateView() {
         const scrollBox = this.query(".carousel-scroll");
         const visibleItems = this.items.filter(el => el.style.display !== "none");

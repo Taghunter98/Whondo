@@ -1,5 +1,7 @@
 import { Comp } from "jay-comp";
-
+/**
+ * Purpose was use in the land lord portal it a card that direct to create advert page
+ */
 export class NewPropCard extends Comp {
 
     createHTML(){
