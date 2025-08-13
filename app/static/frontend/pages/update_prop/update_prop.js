@@ -527,7 +527,7 @@ export class UpdateProp extends Comp {
         });
 
         const popup = this.getById("popup");
-        popup.title = "Advert Published!";
+        popup.title = "Advert Updated!";
         popup.paragraph = "Congratulations! You can now view your new advert or monitor it in your Landlord portal.";
         popup.textLeft = "Continue";
         const icon = popup.query(".icon");
