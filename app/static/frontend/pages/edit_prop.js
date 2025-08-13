@@ -132,7 +132,7 @@ export class EditProp extends Comp {
                 adID,
                 row
             });
-            window.location.assign("/advert/update");
+            window.location.assign(`/advert/update?pkaID=${encodeURIComponent(pkaID)}`);
         });
 
         gallery.subscribe("property-delete", e => {

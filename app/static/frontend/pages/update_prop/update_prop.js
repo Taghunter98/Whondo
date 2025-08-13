@@ -98,7 +98,7 @@ export class UpdateProp extends Comp {
             },
         ];
     }
-    
+
     getParam(name) {
         return new URLSearchParams(window.location.search).get(name);
     }
@@ -350,10 +350,9 @@ export class UpdateProp extends Comp {
 
         let transfer = null;
         try{
-            transfer = JSON.parse(window.name || "{}");
+            const maybe = JSON.parse(window.name || "{}");
+            if (maybe && maybe.type === "advert-transfer") transfer = maybe;
         }catch{}
-
-        window.name = "";
 
         this.pkaID_ = transfer?.pkaID ?? this.getParam("pkaID");
         this.row_ = transfer?.row ?? null;
