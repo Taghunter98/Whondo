@@ -243,7 +243,7 @@ def profile():
     return render_template("profile.html")
 
 @account_bp.route("/profile/properties", methods=["GET"])
-def profile():
+def properties():
     """
     The REST API returns the properties page if the user is logged in as a landlord.
 
