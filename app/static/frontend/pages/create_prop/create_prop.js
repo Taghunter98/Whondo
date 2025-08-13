@@ -41,7 +41,7 @@ export class CreateProp extends Comp {
             {
                 class: "background",
                 widthPercent: 100,
-                height: 1050,
+                height: 1300,
                 backgroundVar: "black100",
                 overflow: "hidden",
                 media: { maxWidthBp: 600, height: 1200, }
@@ -58,7 +58,7 @@ export class CreateProp extends Comp {
             {
                 class: "backgroundImage",
                 widthPercent: 100,
-                height: 1050,
+                heightPercent: 100,
                 paddingLeft: 400,
                 media: { maxWidthBp: 600, heightVh: 40, margin: 0, padding: 0 }
             },

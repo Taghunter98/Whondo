@@ -54,6 +54,7 @@ export class PropGal extends Comp {
                 overflowX: "auto",
                 scrollSnapType: "x mandatory",
                 overscrollBehaviorX: "contain",
+                paddingBottom: 20,
                 media: {
                     maxWidthBp: 600,
                     widthPercent: 100,

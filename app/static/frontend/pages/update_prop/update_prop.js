@@ -43,7 +43,7 @@ export class UpdateProp extends Comp {
             {
                 class: "background",
                 widthPercent: 100,
-                height: 1050,
+                height: 1300,
                 backgroundVar: "black100",
                 overflow: "hidden",
                 media: { maxWidthBp: 600, height: 1200, }
@@ -60,7 +60,7 @@ export class UpdateProp extends Comp {
             {
                 class: "backgroundImage",
                 widthPercent: 100,
-                height: 1050,
+                heightPercent: 100,
                 paddingLeft: 400,
                 media: { maxWidthBp: 600, heightVh: 40, margin: 0, padding: 0 }
             },
@@ -400,6 +400,10 @@ export class UpdateProp extends Comp {
                 }
             });
 
+            backBtn.addEventListener("click", () => {
+                window.location.assign("/profile/properties");
+            });
+
             const input = [address, title, rent, description, tenants, propType]
             input.forEach(inputs => inputs.addEventListener("input", () => this.clearError(inputs)));
 
@@ -552,10 +556,17 @@ export class UpdateProp extends Comp {
 
         Promise.all([
             customElements.whenDefined("comp-update1"),
+            customElements.whenDefined("comp-update1"),
             customElements.whenDefined("comp-update2"),
             customElements.whenDefined("comp-update3"),
+            customElements.whenDefined("comp-input"),
+            customElements.whenDefined("comp-textarea"),
+            customElements.whenDefined("comp-input-dropdown"),
+            customElements.whenDefined("comp-address"),
+            customElements.whenDefined("comp-file-card"),
+            customElements.whenDefined("comp-keywords"),
             ]).then(async () => {
-            const res  = await this.request("/advert/get", "GET");
+            const res  = await this.request("https://whondo.com/advert/get", "GET");
             const rows = res.ok ? res.data?.results : null;
             if (!Array.isArray(rows)) return;
 
@@ -564,10 +575,11 @@ export class UpdateProp extends Comp {
 
             this.row_ = row;
 
-            this.prefillStep1(row);
-            this.prefillStep2(row);
-
-            if (this.keywordsReady_) this.prefillStep3(row);
+            requestAnimationFrame(() => {
+                this.prefillStep1(row);
+                this.prefillStep2(row);
+                if (this.keywordsReady_) this.prefillStep3(row);
+            });
         });
 
     }
