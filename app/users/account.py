@@ -240,7 +240,7 @@ def profile():
     if not session.get("uID"):
         return redirect("/")
     
-    if auth_landlord(session.get("uID")):
+    if auth_landlord(session.get("email")):
         return render_template("properties.html")
 
     return render_template("profile.html")
