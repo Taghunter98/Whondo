@@ -5,7 +5,7 @@ export class UpdateProp extends Comp {
 
     createHTML() {
         return /* html */ `
-        <comp-popup  id= popup style="display: none"></comp-popup>
+        <comp-popup  id= "popup" style="display: none"></comp-popup>
         <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
@@ -437,7 +437,9 @@ export class UpdateProp extends Comp {
             });
 
             cover.subscribe("photo-uploaded", () => {
-                if (cover.value) cover.classList.remove("error");
+                if (cover.value || this.hasPreview(cover)) {
+                    (cover.query(".fileBox") || cover).classList.remove("error");
+                }
             });
 
             pic.forEach(picCard => {
