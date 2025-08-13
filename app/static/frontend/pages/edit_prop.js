@@ -1,6 +1,7 @@
 import { Comp } from "jay-comp";
 
 export class EditProp extends Comp {
+    data = [];
     createHTML() {
         return /* html */ `
             <comp-popup id="deleted" style="display: none"></comp-popup>

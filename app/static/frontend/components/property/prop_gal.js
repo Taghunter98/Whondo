@@ -5,6 +5,11 @@ export class PropGal extends Comp {
     _wheelBound = false;
     _onWheel = null;
 
+    set items(v) {
+        this.items_ = v;
+        this.update();
+    }
+
     toCard(row) {
         return {
             adID: row.adID,
@@ -17,7 +22,7 @@ export class PropGal extends Comp {
     }
 
     async loadProperties() {
-        const res = await this.request("/advert/get", "get");
+        const res = await this.request("https://whondo.com/advert/get", "GET");
         if (res.ok && Array.isArray(res.data?.results)) {
             this.items_ = res.data.results.map(r => this.toCard(r));
             this.renderCards();
