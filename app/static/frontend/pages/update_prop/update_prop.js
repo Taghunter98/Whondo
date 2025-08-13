@@ -180,6 +180,9 @@ export class UpdateProp extends Comp {
             preview.removeAttribute("hidden");
             }
 
+            const box = fileCard.query(".fileBox") || fileCard;
+            box.classList.remove("error");
+
             fileCard._selectedFile = null;
             fileCard._uploadedOnce = true;
             if (typeof fileCard.publish === "function") fileCard.publish("photo-uploaded");
@@ -220,26 +223,29 @@ export class UpdateProp extends Comp {
 
     validateStep2() {
         const step2 = this.getById("step2");
-        const cover = step2.getById("cover");
-        const pics  = Array.from(step2.queryAll(".pic"));
+        const cover = step2?.getById?.("cover");
+        const pics  = Array.from(step2?.queryAll?.(".pic") || []);
         let isValid = true;
 
-        const coverOk = !!cover.value || this.hasPreview(cover);
-        if (!coverOk) { cover.classList.add("error"); isValid = false; } else { cover.classList.remove("error"); }
+        const coverOk = !!cover?.value || (cover && this.hasPreview(cover));
+        const picsOk  = pics.some(p => p.value || this.hasPreview(p));
+        const anyOk   = coverOk || picsOk;      
 
-        const anyOk = coverOk || pics.some(pic => pic.value || this.hasPreview(pic));
+        const coverBox = cover?.query?.(".fileBox") || cover;
+
+        coverBox?.classList?.remove("error");
+        pics.forEach(p => (p.query?.(".fileBox") || p)?.classList?.remove("error"));
+
         if (!anyOk) {
             isValid = false;
-            pics.forEach(pic => {
-            const box = pic.query(".fileBox");
-            const visible = pic.offsetParent !== null;
-            if (visible && !(pic.value || this.hasPreview(pic))) box.classList.add("error");
-            });
-        } else {
-            pics.forEach(pic => {
-            const box = pic.query(".fileBox");
-            const visible = pic.offsetParent !== null;
-            if (visible) box.classList.remove("error");
+
+            const coverVisible = cover && cover.offsetParent !== null;
+            if (coverVisible && !coverOk) coverBox?.classList?.add("error");
+
+            pics.forEach(p => {
+            const box = p.query?.(".fileBox") || p;
+            const visible = p.offsetParent !== null;
+            if (visible && !(p.value || this.hasPreview(p))) box?.classList?.add("error");
             });
         }
 
