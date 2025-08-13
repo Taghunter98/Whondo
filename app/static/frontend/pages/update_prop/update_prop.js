@@ -444,8 +444,10 @@ export class UpdateProp extends Comp {
 
             pic.forEach(picCard => {
                 picCard.subscribe("photo-uploaded", () => {
-                    const box = picCard.query(".fileBox");
-                    if (picCard.value) box.classList.remove("error");
+                    const box = picCard.query(".fileBox") || picCard;
+                    if (picCard.value || this.hasPreview(picCard)) {
+                    box.classList.remove("error");
+                    }
                 });
             });
         });
