@@ -10,6 +10,10 @@ export class PropGal extends Comp {
         this.update();
     }
 
+    get items() {
+        return this.items_;
+    }
+
     toCard(row) {
         return {
             adID: row.adID,
