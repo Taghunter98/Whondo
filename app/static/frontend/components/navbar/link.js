@@ -50,9 +50,7 @@ class Link extends Comp {
                 colourVar: "black80"
             },
             {
-                class: "link", pseudoClass: "active",
-                backgroundVar: "black20",
-                transform: "scale(0.95)",
+                
             },
         ]
     }

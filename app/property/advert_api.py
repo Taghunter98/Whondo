@@ -288,6 +288,7 @@ def get_properties():
             a.image8,
             a.image9,
             a.image10,
+            a.tennants,
             k.*
         FROM PropertyKeywordAdvert pka
         JOIN Property p ON p.pID = pka.pID

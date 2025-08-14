@@ -7,7 +7,7 @@ export class Navbar extends Comp {
     createHTML() {
         return /* html */`
             <nav id="navbar" class="container">
-                <h3 style="font-weight: bold;">Whondo</h3>
+                <a class="head"><h3 style="font-weight: bold;">Whondo</h3></a>
                 <comp-nav-links></comp-nav-links>
                 <comp-menu-icon class="menu" id="menu"></comp-menu-icon>
 
@@ -66,6 +66,10 @@ export class Navbar extends Comp {
                     class: "desktop-profile",
                     display: "none"
                 }
+            },
+            {
+                class: "head",
+                cursor: "pointer",
             },
             {
                 class: "tray",
@@ -136,10 +140,12 @@ export class Navbar extends Comp {
     afterRender() {
         const menu = this.getById("menu");
         const close = this.getById("close");
+        const heading = this.query(".head");
 
         this.lastScrollY = window.scrollY;
         window.addEventListener("scroll", () => this.navbarScroll());
 
+        heading.addEventListener("click", () => window.location.assign("/"));
         menu.addEventListener("click", () => this.menu("0"));
         close.addEventListener("click", () => this.menu("-500px"));
     }

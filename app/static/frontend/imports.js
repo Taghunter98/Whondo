@@ -11,6 +11,8 @@ import './components/dialog.js';
 import './components/promptbar.js';
 import './components/carousel.js';
 import './components/banner.js';
+import './components/pic_banner.js';
+import './components/footer.js';
 
 // Navbar
 import './components/navbar/navbar.js';
@@ -40,6 +42,9 @@ import './components/dropdown/input-dropdown.js';
 
 // Property
 import './components/property/prop_card.js';
+import './components/property/newprop_card.js';
+import './components/property/edit-card.js';
+import './components/property/prop_gal.js';
 import './components/property/image.js';
 import './components/property/Large_img.js';
 import './components/property/chip.js';
@@ -67,6 +72,10 @@ import './pages/create_prop/create_prop.js';
 import './pages/create_prop/step1.js';
 import './pages/create_prop/step2.js';
 import './pages/create_prop/step3.js';
+import './pages/update_prop/update_prop.js';
+import './pages/update_prop/update1.js';
+import './pages/update_prop/update2.js';
+import './pages/update_prop/update3.js';
 
 // Pages
 import './pages/login.js';
@@ -75,3 +84,4 @@ import './pages/home.js';
 import './pages/register.js';
 import './pages/advertise.js';
 import './pages/account.js';
+import './pages/edit_prop.js';

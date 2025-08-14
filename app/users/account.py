@@ -19,7 +19,8 @@ from flask import (
     redirect,
 )
 
-from ..utilities.authid import authenticate
+from ..utilities.authid import authenticate 
+from ..utilities.auth_lid import auth_landlord
 from app.database.db_connect import connect
 from app.security.hashing import check_password, hash_function
 from app.users.images import upload_file
@@ -240,6 +241,22 @@ def profile():
         return redirect("/")
 
     return render_template("profile.html")
+
+@account_bp.route("/profile/properties", methods=["GET"])
+def properties():
+    """
+    The REST API returns the properties page if the user is logged in as a landlord.
+
+    Returns:
+        Response: Flask redirect to homepage or properties.html
+    """
+    if not session.get("uID"):
+        return redirect("/")
+    
+    if auth_landlord(session.get("email")):
+        return render_template("properties.html")
+
+    return redirect("/")
 
 
 @account_bp.route("/account/update", methods=["POST"])

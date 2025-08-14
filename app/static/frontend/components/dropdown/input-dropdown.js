@@ -13,11 +13,18 @@ export class InputDropdown extends Input{
         }
     }
 
+    /**
+     * Set a strict behaviour with this you can not type any thing
+     * that are not match the drop down list
+     */
     set strict(flag){
         this.strict_ = flag;
         this.update();
     }
 
+    /**
+     * find the word that match in the list when type it suggest
+     */
     get value(){
         const inputVal = this.inputEl?.value?.trim();
         const match = this.list_?.find(opt => opt.label === inputVal);

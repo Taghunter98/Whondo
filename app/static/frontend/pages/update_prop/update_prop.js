@@ -1,9 +1,11 @@
 import { Comp } from 'jay-comp';
 
-export class CreateProp extends Comp {
+export class UpdateProp extends Comp {
+    pkaID_ = null; row_ = null; keywordsReady_ = false;
+
     createHTML() {
         return /* html */ `
-        <comp-popup  id= popup style="display: none"></comp-popup>
+        <comp-popup  id= "popup" style="display: none"></comp-popup>
         <comp-navbar></comp-navbar>
         <div class="background">
             <div class="container">
@@ -12,15 +14,15 @@ export class CreateProp extends Comp {
                         <div>
                             <!-- Property information -->
                             <div id="page1">
-                            <comp-step1 id="step1"></comp-step1>
+                            <comp-update1 id="step1"></comp-update1>
                             </div>
                             <!-- Photo upload  -->
                             <div id="page2" hidden>
-                            <comp-step2 id="step2"></comp-step2>
+                            <comp-update2 id="step2"></comp-update2>
                             </div>
                             <!-- Keywords section -->
                             <div id="page3" hidden>
-                                <comp-step3 id="step3"></comp-step3>
+                                <comp-update3 id="step3"></comp-update3>
                             </div>
                             <p id="result" style="text-align: center; padding-top: 10px"></p>
                         </div>
@@ -28,7 +30,7 @@ export class CreateProp extends Comp {
                 </div>
             </div>
             <div class="backgroundImage">
-                <img class="image" src="https://whondo.com/static/icons/assets/property.jpg">
+                <img class="image" src="https://images.pexels.com/photos/16901229/pexels-photo-16901229.jpeg">
             </div>
         </div>
         `;
@@ -97,6 +99,134 @@ export class CreateProp extends Comp {
         ];
     }
 
+    getParam(name) {
+        return new URLSearchParams(window.location.search).get(name);
+    }
+
+    _fallback(v, d) { return (v === null || v === undefined) ? d : v; }
+
+    hasPreview(card) {
+        const preview = card?.query(".filePreview");
+        return !!(preview && preview.src && !preview.hasAttribute("hidden"));
+    }
+
+    prefillStep1(row){
+        const norm = v => String(v ?? "").toLowerCase();
+        const s1 = this.getById("step1");
+
+        const t = s1.getById("title");
+        if (t) t.query(".inputValue").value = row.title || "";
+
+        const r = s1.getById("rent");
+        if (r) r.query(".inputValue").value = this._fallback(row.price, "");
+
+        const ten = s1.getById("tenants");
+        if (ten) ten.query(".inputValue").value = this._fallback(row.tennants, "");
+
+        const br = s1.getById("bedrooms");
+        if (br) br.query(".inputValue").value = this._fallback(row.bedrooms, "");
+
+        const ba = s1.getById("bathrooms");
+        if (ba) ba.query(".inputValue").value = this._fallback(row.bathrooms, "");
+
+        const d = s1.getById("description");
+        if (d) d.query(".inputValue").value = row.description || "";
+
+         const propType = s1.getById("propertyType");
+            if (propType && Array.isArray(propType.list)) {
+                const match = propType.list.find(o => norm(o.value) === norm(row.propType));
+                if (match) {
+                propType.value = match.value;
+                const inp = propType.query(".inputValue");
+                if (inp) inp.value = match.label;
+
+                this.prevPropType = match.value;
+            }
+        }
+
+        const addr = s1.getById("address");
+        if (addr) {
+            const label = [row.propertyName, row.street, row.town, row.county, row.postcode].filter(Boolean).join(", ");
+            const inp = addr.query(".inputValue");
+            if (inp) inp.value = label;
+
+            addr.fullAddress = {
+            name: row.propertyName || "",
+            street: row.street || "",
+            town: row.town || "",
+            county: row.county || "",
+            postcode: row.postcode || ""
+            };
+        }
+    }
+
+    prefillStep2(row){
+        const s2 = this.getById("step2");
+        const cover = s2.getById("cover");
+        const pics = Array.from(s2.queryAll(".pic"));
+        const imgs = Array.isArray(row.images) ? row.images : [];
+
+        const showPreview = (fileCard, relPath) => {
+            if (!fileCard || !relPath) return;
+            const url = `https://whondo.com/uploads?path=${relPath}`;
+
+            const filePrompt = fileCard.query(".filePrompt");
+            const icon = fileCard.query(".icon");
+            const preview = fileCard.query(".filePreview");
+            const container = fileCard.query(".imageContainer");
+
+            if (filePrompt) filePrompt.setAttribute("hidden", "");
+            if (icon) icon.setAttribute("hidden", "");
+            if (container) container.removeAttribute("hidden");
+            if (preview) {
+            preview.src = url;
+            preview.removeAttribute("hidden");
+            }
+
+            const box = fileCard.query(".fileBox") || fileCard;
+            box.classList.remove("error");
+
+            fileCard._selectedFile = null;
+            fileCard._uploadedOnce = true;
+            if (typeof fileCard.publish === "function") fileCard.publish("photo-uploaded");
+        };
+
+        if (imgs[0] && cover) showPreview(cover, imgs[0]);
+            for (let i = 1; i < imgs.length && i <= pics.length; i++){
+                showPreview(pics[i - 1], imgs[i]);
+            }
+    }
+   
+    prefillStep3(row){
+        const s3 = this.getById("step3");
+        const kw = s3.getById("keywords");
+        if (!kw || !Array.isArray(kw.list)) return;
+
+        const norm = v => String(v).toLowerCase();
+        const valToLabel = new Map(kw.list.map(o => [norm(o.value), o.label]));
+        const value = Array.isArray(row.all_keywords) ? row.all_keywords : [];
+
+        value.forEach(v => {
+            const label = valToLabel.get(norm(v));
+            if (label) kw.addTag(label);
+        });
+
+        if(row.propType){
+            const propValNorm = norm(row.propType);
+            const propLabel = valToLabel.get(propValNorm);
+            if(propLabel){
+                const exist = Array.isArray(kw.value) && kw.value.some(v => norm(v) === propValNorm);
+                if(!exist) kw.addTag(propLabel);
+                    if (!this.prevPropType) {
+                    const raw = kw.list.find(o => norm(o.value) === propValNorm)?.value;
+                    if (raw) this.prevPropType = raw;
+                }
+            }
+        }
+
+    }
+
+
     validateStep1() {
         const step1 = this.query("#step1")
         const inputs = [step1.getById("address"), step1.getById("title"), step1.getById("rent"), step1.getById("description"), step1.getById("propertyType"), step1.getById("tenants")];
@@ -112,37 +242,30 @@ export class CreateProp extends Comp {
     }
 
     validateStep2() {
-        const step2 = this.getById("step2")
-        const cover = step2.getById("cover");
-        const pics = Array.from(step2.queryAll(".pic"));
+        const step2 = this.getById("step2");
+        const cover = step2?.getById?.("cover");
+        const pics  = Array.from(step2?.queryAll?.(".pic") || []);
         let isValid = true;
 
-        if (!cover.value) {
-            cover.classList.add("error");
+        const coverOk = !!cover?.value || (cover && this.hasPreview(cover));
+        const picsOk  = pics.some(p => p.value || this.hasPreview(p));
+        const anyOk   = coverOk || picsOk;      
+
+        const coverBox = cover?.query?.(".fileBox") || cover;
+
+        coverBox?.classList?.remove("error");
+        pics.forEach(p => (p.query?.(".fileBox") || p)?.classList?.remove("error"));
+
+        if (!anyOk) {
             isValid = false;
-        } else {
-            cover.classList.remove("error");
-        }
 
-        const uploadedPics = pics.filter(pic => pic.value);
-        if (uploadedPics.length < 1) {
+            const coverVisible = cover && cover.offsetParent !== null;
+            if (coverVisible && !coverOk) coverBox?.classList?.add("error");
 
-            isValid = false;
-
-            pics.forEach(pic => {
-                const box = pic.query(".fileBox")
-
-                const isVisible = pic.offsetParent !== null;
-                if (!pic.value && isVisible) {
-                    box.classList.add("error");
-                }
-            });
-
-        } else {
-            pics.forEach(pic => {
-                const box = pic.query(".fileBox");
-                const isVisible = pic.offsetParent !== null;
-                if (isVisible) box.classList.remove("error");
+            pics.forEach(p => {
+            const box = p.query?.(".fileBox") || p;
+            const visible = p.offsetParent !== null;
+            if (visible && !(p.value || this.hasPreview(p))) box?.classList?.add("error");
             });
         }
 
@@ -165,12 +288,15 @@ export class CreateProp extends Comp {
         return isValid;
     }
 
-    async createProp() {
+    async UpdateProp() {
         const fd = new FormData();
         const step1 = this.getById("step1");
         const step2 = this.getById("step2");
         const step3 = this.getById("step3");
         const keywords = step3.getById("keywords").value;
+
+        const pkaID = this.pkaID_ ?? this.getParam("pkaID");
+        if (pkaID) fd.append("pkaID", pkaID);
 
         fd.append("title", step1.getById("title").value);
         fd.append("price", step1.getById("rent").value);
@@ -204,7 +330,7 @@ export class CreateProp extends Comp {
             }
         }
 
-        const result = await this.submitForm("https://whondo.com/advert/new", fd);
+        const result = await this.submitForm("/advert/update", fd);
 
         if (result.ok) {
             const popup = this.getById("popup");
@@ -221,10 +347,20 @@ export class CreateProp extends Comp {
     };
 
     afterRender() {
+
+        let transfer = null;
+        try{
+            const maybe = JSON.parse(window.name || "{}");
+            if (maybe && maybe.type === "advert-transfer") transfer = maybe;
+        }catch{}
+
+        this.pkaID_ = transfer?.pkaID ?? this.getParam("pkaID");
+        this.row_ = transfer?.row ?? null;
+
         //Step 1 setup
         const page1 = this.getById("page1")
         const step1 = this.getById("step1");
-        customElements.whenDefined("comp-step1").then(() => {
+        customElements.whenDefined("comp-update1").then(() => {
             const address = step1.query("#address");
             const title = step1.getById("title");
             const rent = step1.getById("rent");
@@ -270,10 +406,8 @@ export class CreateProp extends Comp {
             propType.required = true;
             tenants.required = true;
 
-            /**
-             * This work with prop-type and keyword input when change prop-type
-             * also change the tag that create by prop-type (look for previous prop-type)
-             */
+            if(this.row_) this.prefillStep1(this.row_);
+
             this.prevPropType = null;
             propType.subscribe("option-selected", (e) => {
                 const step3 = this.getById("step3")
@@ -290,12 +424,17 @@ export class CreateProp extends Comp {
                 this.prevPropType = match.value;
             });
 
+
             nextBtn.addEventListener("click", () => {
                 if (this.validateStep1()) {
                     page1.setAttribute("hidden", "");
                     page3.setAttribute("hidden", "");
                     page2.removeAttribute("hidden");
                 }
+            });
+
+            backBtn.addEventListener("click", () => {
+                window.location.assign("/profile/properties");
             });
 
             const input = [address, title, rent, description, tenants, propType]
@@ -306,7 +445,7 @@ export class CreateProp extends Comp {
         //Step2 set up
         const page2 = this.getById("page2")
         const step2 = this.getById("step2");
-        customElements.whenDefined("comp-step2").then(() => {
+        customElements.whenDefined("comp-update2").then(() => {
             const backBtn2 = step2.getById("backBtn2");
             const nextBtn2 = step2.getById("nextBtn2");
             const cover = step2.getById("cover");
@@ -320,9 +459,11 @@ export class CreateProp extends Comp {
             cover.prompt = "Add Cover";
             pic.forEach((el) => el.prompt = "Add Photo");
 
+            if (this.row_) this.prefillStep2(this.row_);
+
             backBtn2.addEventListener("click", () => {
                 page2.setAttribute("hidden", "");
-                step3.setAttribute("hidden", "");
+                page3.setAttribute("hidden", "");
                 page1.removeAttribute("hidden")
             });
 
@@ -335,13 +476,17 @@ export class CreateProp extends Comp {
             });
 
             cover.subscribe("photo-uploaded", () => {
-                if (cover.value) cover.classList.remove("error");
+                if (cover.value || this.hasPreview(cover)) {
+                    (cover.query(".fileBox") || cover).classList.remove("error");
+                }
             });
 
             pic.forEach(picCard => {
                 picCard.subscribe("photo-uploaded", () => {
-                    const box = picCard.query(".fileBox");
-                    if (picCard.value) box.classList.remove("error");
+                    const box = picCard.query(".fileBox") || picCard;
+                    if (picCard.value || this.hasPreview(picCard)) {
+                    box.classList.remove("error");
+                    }
                 });
             });
         });
@@ -349,7 +494,7 @@ export class CreateProp extends Comp {
         //Step3 setup
         const page3 = this.getById("page3");
         const step3 = this.getById("step3");
-        customElements.whenDefined("comp-step3").then(() => {
+        customElements.whenDefined("comp-update3").then(() => {
             const backBtn3 = step3.getById("backBtn3");
             const submit = step3.getById("submit");
             const keyword = step3.getById("keywords")
@@ -412,6 +557,10 @@ export class CreateProp extends Comp {
                 { label: "Lift", value: "lift" },
                 { label: "Ground Floor", value: "ground_floor" }, { label: "Bike Storage", value: "bike_storage" }];
 
+            this.keywordsReady_ = true;
+
+            if(this.row_) this.prefillStep3(this.row_);
+
             backBtn3.addEventListener("click", () => {
                 page3.setAttribute("hidden", "");
                 page1.setAttribute("hidden", "");
@@ -423,12 +572,12 @@ export class CreateProp extends Comp {
                 const step2Valid = this.validateStep2();
                 const step3Valid = this.validateStep3();
                 if (!step1Valid || !step2Valid || !step3Valid) e.preventDefault();
-                else this.createProp()
+                else this.UpdateProp()
             });
         });
 
         const popup = this.getById("popup");
-        popup.title = "Advert Published!";
+        popup.title = "Advert Updated!";
         popup.paragraph = "Congratulations! You can now view your new advert or monitor it in your Landlord portal.";
         popup.textLeft = "Continue";
         const icon = popup.query(".icon");
@@ -440,6 +589,7 @@ export class CreateProp extends Comp {
         btn.variant = 1;
 
     }
+    
 
     static { Comp.register(this); }
 }

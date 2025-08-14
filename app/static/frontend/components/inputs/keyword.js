@@ -4,7 +4,10 @@ export class Keywords extends Input {
     tags_ = [];
     validOptions_ = [];
     list_ = [];
-   
+    
+    /**
+     * set a list in to a drop down option it accept normal string list and object 
+     */
     set list(v){
         this.list_ = (v || []).map(opt => typeof opt === "string" ? { label: opt, value: opt } : opt );
         this.validOptions_ = this.list_.map(opt => opt.value);
@@ -89,6 +92,11 @@ export class Keywords extends Input {
         ];
     }
 
+    /**
+     * 
+     * @param {object} label 
+     * @returns it find the label from the object add to the tags show on the UI and keep value in a list for send to a back-end
+     */
     addTag(label) {
         const match = this.list_.find(opt => opt.label === label);
         if (!match) return;
@@ -122,6 +130,7 @@ export class Keywords extends Input {
         this.tagsEl.appendChild(tagEl);
     }
 
+    
     removeTag(value){
         const tagIndex = this.tags_.findIndex(tag => tag === value);
         if(tagIndex === -1) return;

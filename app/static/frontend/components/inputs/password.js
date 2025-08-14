@@ -32,7 +32,11 @@ export class Password extends Input {
         `;
     }
 
-
+    /**
+     * 
+     * @param {HTMLElement} password 
+     * @returns calculate entropy score use for set a password strength lower case 26 score/ upper 26 score / number 10 and symbol 32
+     */
     calculateEntropy(password) {
 
         let poolSize = 0;

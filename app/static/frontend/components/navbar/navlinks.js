@@ -4,17 +4,21 @@ export class NavLinks extends Comp {
     links_;
 
     beforeRender() {
-        this.links_ = { "About": "/about", "Advertise My Home": "/advert/advertise" };
+        this.links_ = {
+            About: "/about",
+            "Advertise My Home": "/advert/advertise",
+            "My Properties": "/profile/properties",
+        };
     }
 
     createHTML() {
-        return `<ul class="links"></ul>`
+        return `<ul class="links"></ul>`;
     }
 
     createCSS() {
         return [
             {
-                width: "auto"
+                width: "auto",
             },
             {
                 class: "links",
@@ -22,8 +26,8 @@ export class NavLinks extends Comp {
                 flexDirection: "row",
                 alignItems: "center",
                 gap: 20,
-                media: { maxWidthBp: 600, display: "none" }
-            }
+                media: { maxWidthBp: 600, display: "none" },
+            },
         ];
     }
 
@@ -33,8 +37,10 @@ export class NavLinks extends Comp {
             li.text = link;
             li.link = this.links_[link];
             this.query("ul").appendChild(li);
-        };
+        }
     }
 
-    static { Comp.register(this); }
+    static {
+        Comp.register(this);
+    }
 }

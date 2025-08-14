@@ -1,6 +1,6 @@
 import { Comp } from "jay-comp";
 
-export class Step2 extends Comp {
+export class Update2 extends Comp {
 
     createHTML(){
         return /* html */`
