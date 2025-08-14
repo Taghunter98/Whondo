@@ -1,0 +1,423 @@
+"""
+Copyright (c) 2025 Josh Bassett, whondo.com
+
+Filename:    tokenisation.py
+Author:      Josh Bassett
+Date:        17/07/2025
+Version:     1.0
+
+Description: Provides a library for tokenising prompts.
+"""
+
+import re
+from typing import Optional
+from rapidfuzz import process, fuzz
+
+from .dictionaries import (
+    SIFT_LIST,
+    TOWNS,
+    KEYWORDS,
+    SYNONYMS,
+    PROTECTD,
+    ZONE_MAP,
+    PRICE_PREDICTION,
+    UNITS,
+    TENS,
+    SCALES,
+    PHRASE_CONTEXT,
+)
+
+
+class Token:
+    def __init__(self, name: str):
+        self.name: str = name
+        self.position: int = 0
+        self.raw: str = name
+        self.is_number: bool = False
+        self.is_city: bool = False
+        self.is_price: bool = False
+        self.consumed: bool = False
+        self.next: Token = None
+        self.prev: Token = None
+
+    def printToken(self):
+        """
+        Simple debug method for printing a Token object
+        """
+
+        nxt = self.next.name if self.next else "<NONE>"
+        prev = self.prev.name if self.prev else "<NONE>"
+        print(
+            f"Name: {self.name:<6} Raw: {self.raw:<10} "
+            f"Pos: {self.position:<2} Num: {self.is_number} "
+            f"City: {self.is_city} Next: {nxt} "
+            f"Prev: {prev}"
+        )
+
+
+class Parser:
+    """
+    Class for building a Parser object.
+
+    Contains methods for parsing and converting a prompt into valid database fields.
+    """
+
+    def __init__(self, prompt: str):
+        self.prompt: str = prompt.replace("-", " ").replace("_", " ").lower()
+
+    def isTown(self, w: str) -> bool:
+        """
+        Method checks if word is a Town.
+
+        Args:
+            w (str): word
+
+        Returns:
+            bool: Town status
+        """
+        return w in TOWNS
+
+    def extractTowns(self) -> list[str]:
+        """
+        Method extracts town names and replaces spaces with - for normalisation.
+
+        Sorts by decending length, using regex to enforce word boundries avoiding
+        matching other substrings.
+
+        Subs the prompt city with underscores: stoke on trent -> stoke-on-trent
+        This ensures that city won't be broken into tokens later.
+
+        Returns:
+            list[str]: City matches
+        """
+        matches = []
+        for city in sorted(TOWNS, key=lambda c: -len(c)):
+            if re.search(rf"\b{re.escape(city)}\b", self.prompt):
+                matches.append(city)
+                self.prompt = re.sub(
+                    rf"\b{re.escape(city)}\b", city.replace(" ", "_"), self.prompt
+                )
+        return matches
+
+    def isNumber(self, token: Token, w: str) -> bool:
+        """
+        Method checks if word is a number, or price given a leading £.
+
+        Args:
+            token (Token): Token object
+            w (str): Word from prompt
+
+        Returns:
+            bool: Number status
+        """
+
+        cleaned: str = w.replace(",", "")
+        is_price = re.search(r"^£", cleaned)
+
+        if is_price:
+            cleaned = cleaned.replace("£", "")
+            token.is_price = True
+
+        if cleaned.isdigit():
+            token.is_number = True
+            token.name = cleaned
+            return True
+
+        return False
+
+    def phraseToNum(self, phrase: str) -> Optional[float]:
+        """
+        Method converts a string phrase to valid integer.
+
+        "two thousand five hundred" -> 2500
+
+        Args:
+            word (str): Word e.g "twenty two"
+
+        Returns:
+            Optional[int]: Integer version e.g 22
+        """
+        if re.fullmatch(r"\d+(?:\.\d+)?", phrase):
+            return float(phrase)
+
+        words: list[str] = re.split(r"[\s-]+", phrase.lower().strip())
+        total: float = 0
+        current: float = 0
+
+        for w in words:
+            if w in UNITS:
+                current += UNITS[w]
+            elif w in TENS:
+                current += TENS[w]
+            elif w in SCALES:
+                scale = SCALES[w]
+                current = (current or 1) * scale
+
+                if scale >= 1000:
+                    total += current
+                    current = 0
+            else:
+                return None
+
+        return total + current
+
+    def calculateValue(self, token: Token):
+        """
+        Method calculates value of string based integer (one, two three...).
+
+        The raw Token value is used to first caluclate the value then if the next value
+        is a number, it is added to the previous, then the node is unlinked.
+
+        There are additonal checks for integer based values and if it's price/rent.
+
+        Args:
+            token (Token): Current Token
+        """
+        raw: str = token.raw.strip()
+
+        for p in PRICE_PREDICTION:
+            if raw.endswith(p):
+                token.is_price
+                raw = re.sub(p, "", raw)
+
+        if raw.startswith("£"):
+            token.is_price = True
+            raw = raw[1:].strip()
+
+        raw.replace(",", "")
+
+        if re.fullmatch(r"\d+(?:\.\d+)?", raw):
+            val = float(raw)
+        else:
+            phrase: str = raw
+            val: float = self.phraseToNum(phrase)
+            next: Token = token.next
+
+            while val is not None and next and not next.is_city and not next.consumed:
+                phrase = f"{phrase} {next.raw}"
+
+                candidate: float = self.phraseToNum(phrase)
+                if candidate is None:
+                    break
+
+                val = candidate
+                next.consumed = True
+                next = next.next
+
+        if val is None:
+            return
+
+        token.is_number = True
+        token.name = str(val)
+
+        next = token.next
+        while next and next.consumed:
+            next = next.next
+
+        if next and next.raw.lower() in PRICE_PREDICTION:
+            token.is_price = True
+
+    def phraseContext(self, tokens: list[Token]) -> list[Token]:
+        """
+        Method provides a phrase context model that takes into account subsequent
+        token values and builds context based on a phrase.
+
+        "close to a station" will be interpreted as "close_to_station".
+        "zero deposit" will be interpreted as "no_deposit".
+
+        Args:
+            tokens (list[Token]): _description_
+
+        Returns:
+            list[Token]: _description_
+        """
+        PHRASE_KEYS = sorted(PHRASE_CONTEXT.keys(), key=lambda k: -len(k))
+
+        matched: list[Token] = []
+
+        for i in range(len(tokens)):
+            t: Token = tokens[i]
+
+            if t.consumed or t.is_city:
+                continue
+
+            for phrase in PHRASE_KEYS:
+                phrase_len: int = len(phrase)
+
+                if i + phrase_len > len(tokens):
+                    continue
+
+                span: list[Token] = tokens[i : i + phrase_len]
+                if all(
+                    span[j].raw == phrase[j]
+                    and not span[j].is_city
+                    and not span[j].consumed
+                    for j in range(phrase_len)
+                ):
+                    t.name = PHRASE_CONTEXT[phrase]
+                    matched.append(t)
+
+                    # Consume rest
+                    for tok in span[1:]:
+                        tok.consumed = True
+                    break
+
+        return matched
+
+    def tokenise(self) -> list[Token]:
+        """
+        Method tokenises the prompt and returns list of Tokens.
+
+        The town or towns are first cleaned, then the prompt is walked through
+        clearing unwanted chars (*/'#) etc.
+
+        The tokens are created from remaining words not in the sift list.
+
+        The token list is then returned.
+
+        Regex settings: keeps [words, £, full stops in words], cleans everything else.
+
+        Returns:
+            list[Token]: Token list
+        """
+        self.extractTowns()
+
+        raw_words: list[str] = []
+        for w in self.prompt.split():
+            clean: str = re.sub(r"[^\w\s£.]", "", w)
+            clean = re.sub(r"\b\.$", "", clean)
+
+            if clean and clean not in SIFT_LIST:
+                raw_words.append(clean)
+
+        tokens: list[Token] = []
+        for pos, w in enumerate(raw_words):
+            t = Token(w)
+            t.position = pos
+            t.is_city = self.isTown(w)
+            t.is_number = self.isNumber(t, w)
+
+            if tokens:
+                prev: Token = tokens[-1]
+                t.prev = prev
+                prev.next = t
+
+            tokens.append(t)
+        return tokens
+
+    def mapField(self, token_name: str) -> Optional[str]:
+        """
+        Method maps Tokens to database fields.
+
+        The name is checked against protected fields, existing database fields,
+        synonyms for alternative spellings and finally a fuzzy filter to catch
+        similar values.
+
+        Args:
+            token_name (str): Name of current Token
+
+        Returns:
+            str | None: Mapped field or None
+        """
+        name = token_name.lower().strip()
+
+        if name in PROTECTD:
+            return None
+
+        if name in KEYWORDS:
+            return name
+
+        if name in SYNONYMS:
+            return SYNONYMS[name]
+
+        match, score, _ = process.extractOne(
+            name, KEYWORDS, scorer=fuzz.ratio, score_cutoff=70
+        ) or (None, 0, None)
+
+        return match
+
+    def score(self, user_keywords: list[str], matched_keywords: list[str]) -> float:
+        """
+        Method scores the advert based on matched keywords and returns percentage.
+
+        Args:
+            user_keywords (list[str]): Prompt keywords
+            matched_keywords (list[str]): Matched keywords
+
+        Returns:
+            float: Percentage acuracy
+        """
+        if not user_keywords:
+            return 0.0
+
+        hits = sum(1 for kw in matched_keywords if kw in user_keywords)
+        return hits / len(user_keywords) * 100
+
+    def contextParser(self, tokens: list[Token]) -> tuple[list[Token], list]:
+        """
+        Method evaluates context and converts the Tokens into databse fields.
+
+        The location and price are found for query data and the tokens are run
+        through checks to build context and find the closest fields.
+
+        The context model takes into account factors such as:
+            - numbers including decimals as digits or text
+            - price, bed, bath, location validation from context
+            - implicit checks for dup names like 'Bath' if prev is a number
+            - london zoning rules
+            - dup field aware context built in a hash set
+
+        Args:
+            tokens (list[Token]): Token list
+
+        Returns:
+            tuple[list[Token], list]: Tuple of Tokens, location and price
+        """
+        location: str = None
+        price: float = None
+        bedrooms: int = None
+        bathrooms: int = None
+
+        seen_fields: set[str] = set()
+        context: list[Token] = self.phraseContext(tokens)
+
+        for f in context:
+            seen_fields.add(f.name)
+
+        for t in tokens:
+            if t.consumed:
+                continue
+
+            self.calculateValue(t)
+
+            next: str = t.next.name if t.next else None
+            prev: str = t.prev.name if t.prev else False
+
+            if t.is_number:
+                if t.is_price:
+                    price = float(t.name)
+                    continue
+                elif next in ("bedrooms", "bedroom", "bed"):
+                    bedrooms = int(float(t.name))
+                elif next in ("bathrooms", "bathroom", "bath"):
+                    if t.next.is_city:
+                        t.next.is_city = False
+
+                    bathrooms = int(float(t.name))
+
+            if t.name == "zone":
+                zone_field: str = ZONE_MAP.get(t.next.name)
+                if zone_field:
+                    t.name = zone_field
+
+            if t.is_city:
+                location = t.name
+                continue
+
+            field = self.mapField(t.name)
+            if field and field not in seen_fields:
+                seen_fields.add(field)
+                t.name = field
+                context.append(t)
+
+        return context, [location, price, bedrooms, bathrooms]
