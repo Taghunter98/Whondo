@@ -266,7 +266,7 @@ def update():
 
     Returns:
         Response: HTTP Response
-    """    
+    """
     uID = session.get("uID")
     if not uID:
         return jsonify({"error": "User is not logged in"}), 400
